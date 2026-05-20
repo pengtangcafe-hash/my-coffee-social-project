@@ -1,0 +1,73 @@
+{
+  "platforms": {
+    "tiktok": {
+      "format": "wide",
+      "detection": {
+        "type": "columns",
+        "keywords": [
+          "Video Views",
+          "Likes",
+          "Comments",
+          "Shares"
+        ]
+      },
+      "column_mapping": {
+        "Date": "date",
+        "Video Views": "reach",
+        "Profile Views": "profile_visits",
+        "Likes": "likes",
+        "Comments": "comments",
+        "Shares": "shares"
+      }
+    },
+    "facebook": {
+      "format": "narrow",
+      "detection": {
+        "type": "columns",
+        "keywords": [
+          "วันที่",
+          "Primary"
+        ]
+      },
+      "file_mapping": {
+        "ยอดดู": "reach",
+        "การโต้ตอบ": "engagement",
+        "การติดตาม": "new_followers",
+        "การเข้าชม": "profile_visits",
+        "การคลิกลิงก์": "link_clicks",
+        "ผู้ชม": "audience",
+        "รูปแบบเนื้อหายอดนิยม": "content_type"
+      }
+    },
+    "instagram": {
+      "format": "narrow",
+      "detection": {
+        "type": "path",
+        "keywords": [
+          "Instagram"
+        ]
+      },
+      "file_mapping": {
+        "ยอดดู": "reach",
+        "การโต้ตอบ": "engagement",
+        "การติดตาม": "new_followers",
+        "การเข้าถึง": "impressions",
+        "การเข้าชม": "profile_visits",
+        "การคลิกลิงก์": "link_clicks"
+      }
+    }
+  },
+  "unified_fields": {
+    "date": "วันที่",
+    "reach": "ยอดดู/Reach",
+    "impressions": "จำนวนครั้งที่แสดง",
+    "profile_visits": "การเข้าชม Profile",
+    "likes": "Likes",
+    "comments": "ความคิดเห็น",
+    "shares": "การแชร์",
+    "engagement": "Engagement รวม",
+    "new_followers": "Followers ใหม่",
+    "link_clicks": "การคลิกลิงก์",
+    "content_type": "ประเภท Content"
+  }
+}
