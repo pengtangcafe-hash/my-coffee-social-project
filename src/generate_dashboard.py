@@ -28,7 +28,7 @@ PLATFORM_LABELS = {
 }
 
 PLATFORM_COLORS = {
-    "tiktok":    "#010101",
+    "tiktok":    "#EE1D52",
     "facebook":  "#1877f2",
     "instagram": "#e1306c",
 }
@@ -52,7 +52,7 @@ DOUGHNUT_DEF = {
     "tiktok": [
         ("likes",    "Likes",           "#fd3e81"),
         ("comments", "Comments",        "#25f4ee"),
-        ("shares",   "Shares",          "#010101"),
+        ("shares",   "Shares",          "#a8b4c0"),
     ],
     "facebook": [
         ("engagement",   "การมีส่วนร่วม",  "#1877f2"),
@@ -89,7 +89,14 @@ INTEL_DATA_FALLBACK = [
         "promotions": ["สะสมแต้ม A Card", "ซื้อ 10 แก้ว ฟรี 1 แก้ว"],
         "weaknesses": ["Chain — ไม่มีความเป็น local", "บรรยากาศเหมือนกันทุกสาขา", "TikTok เป็น account กลาง ไม่ใช่ local"],
         "location": "หลายสาขา สกลนคร", "hours": "ตามสาขา 06:00-22:00",
-        "social_trend": {"primary_platform":"Facebook","posting_frequency":"สม่ำเสมอ","content_style":"promotional","engagement_level":"medium"}
+        "social_trend": {"primary_platform":"Facebook","posting_frequency":"สม่ำเสมอ","content_style":"promotional","engagement_level":"medium"},
+        "delivery": {
+            "primary_app": "GrabFood",
+            "apps": ["GrabFood", "LINE MAN"],
+            "peak_hours": "07:00-09:00 (เช้าก่อนทำงาน), 14:00-16:00 (Coffee Break)",
+            "active_promos": ["GrabUnlimited ส่งฟรีไม่จำกัด", "GrabRewards สะสมคะแนน", "Grab Flash Deal เป็นครั้งคราว"],
+            "notes": "สาขาในปั๊ม PTT เชื่อมต่อ GrabFood ได้ดีมาก ลูกค้า GrabUnlimited นิยมสั่งช่วงเช้าก่อนถึงออฟฟิศ ยอดสั่งสูงสุดวันทำงาน"
+        }
     },
     {
         "id": "competitor-inthanin",
@@ -111,7 +118,14 @@ INTEL_DATA_FALLBACK = [
         "promotions": ["สะสมแต้ม PTT Blue Card"],
         "weaknesses": ["ราคาสูงกว่า Amazon", "Chain ไม่มีความ local", "TikTok content น้อย"],
         "location": "สาขาในห้างและปั๊ม PTT สกลนคร", "hours": "ตามสาขา 07:00-21:00",
-        "social_trend": {"primary_platform":"Facebook","posting_frequency":"ปานกลาง","content_style":"promotional","engagement_level":"medium"}
+        "social_trend": {"primary_platform":"Facebook","posting_frequency":"ปานกลาง","content_style":"promotional","engagement_level":"medium"},
+        "delivery": {
+            "primary_app": "GrabFood",
+            "apps": ["GrabFood", "LINE MAN"],
+            "peak_hours": "10:00-12:00 (ช่วงสาย), 14:00-16:00 (Coffee Break บ่าย)",
+            "active_promos": ["GrabUnlimited ส่งฟรี", "PTT Blue Card campaign ตามเทศกาล"],
+            "notes": "กลุ่มลูกค้า premium นิยม GrabFood เพราะบริการเสถียร รวดเร็ว ตรงกับ positioning ของร้าน ยอดสูงช่วงสาย-บ่ายวันทำงาน"
+        }
     },
     {
         "id": "competitor-local-cafe",
@@ -133,7 +147,14 @@ INTEL_DATA_FALLBACK = [
         "promotions": ["บัตรสะสมแต้ม", "โปรนักศึกษา"],
         "weaknesses": ["ไม่มี brand awareness ระดับชาติ", "เปิดวันหยุดไม่สม่ำเสมอ", "TikTok ยังไม่ viral"],
         "location": "ย่านใจกลางเมืองสกลนคร", "hours": "08:00-20:00 (บางร้านปิดจันทร์)",
-        "social_trend": {"primary_platform":"Instagram","posting_frequency":"สม่ำเสมอ","content_style":"latte art","engagement_level":"medium"}
+        "social_trend": {"primary_platform":"Instagram","posting_frequency":"สม่ำเสมอ","content_style":"latte art","engagement_level":"medium"},
+        "delivery": {
+            "primary_app": "LINE MAN",
+            "apps": ["LINE MAN", "ShopeeFood"],
+            "peak_hours": "10:00-15:00 (Specialty peak วันหยุด), 14:00-16:00 (Coffee Break วันทำงาน)",
+            "active_promos": ["ShopeeFood Flash Sale 30-50% off ช่วง Payday/ต้นเดือน", "LINE MAN ส่งฟรีเมื่อสั่งครบ 150 บาท"],
+            "notes": "LINE MAN ครอบคลุม local cafe ดีที่สุด เชื่อมกับ Wongnai นักล่าโปรหลั่งไหลเข้า ShopeeFood ช่วงแคมเปญ — โอกาสดึงลูกค้าใหม่ที่ยังไม่รู้จักร้าน"
+        }
     },
     {
         "id": "competitor-wawee",
@@ -155,7 +176,42 @@ INTEL_DATA_FALLBACK = [
         "promotions": ["สมาชิก 10% off", "นักศึกษา 15% off"],
         "weaknesses": ["Chain — local connection น้อย", "ราคากลาง-สูง"],
         "location": "สาขาสกลนคร", "hours": "07:00-21:00",
-        "social_trend": {"primary_platform":"TikTok","posting_frequency":"สม่ำเสมอ","content_style":"barista process","engagement_level":"medium"}
+        "social_trend": {"primary_platform":"TikTok","posting_frequency":"สม่ำเสมอ","content_style":"barista process","engagement_level":"medium"},
+        "delivery": {
+            "primary_app": "LINE MAN",
+            "apps": ["LINE MAN", "GrabFood"],
+            "peak_hours": "07:00-09:00 (เช้า), 14:00-16:00 (Coffee Break)",
+            "active_promos": ["LINE MAN แคมเปญตามเทศกาล", "ส่วนลดสมาชิกเมื่อสั่งผ่านแอป"],
+            "notes": "Wawee ขยายสาขาต่างจังหวัดทั่วไทย LINE MAN ครอบคลุมได้ดี ยอดสั่งช่วงเช้าวันทำงานและบ่ายสูงใกล้เคียงกัน"
+        }
+    },
+    {
+        "id": "delivery-apps-overview",
+        "category": "delivery",
+        "title": "Delivery Apps ร้านกาแฟ สกลนคร — ภาพรวม 2026",
+        "summary": "LINE MAN ครองตลาดร้านท้องถิ่น · GrabFood เหมาะ chain · ShopeeFood นักล่าโปร · Foodpanda รอบนอก · Peak กาแฟ 07:00-09:00 และ 14:00-16:00",
+        "source_url": "", "thumbnail_url": "",
+        "tags": ["delivery", "LINE MAN", "GrabFood", "ShopeeFood", "สกลนคร"],
+        "relevance": "high",
+        "detail": "LINE MAN: ครอบคลุม local cafe สูงสุด เชื่อมกับ Wongnai ฐานร้านท้องถิ่นเยอะที่สุด นิยมใช้ในชีวิตประจำวัน\nGrabFood: เหมาะ chain (Amazon/Inthanin) ลูกค้า GrabUnlimited สั่งส่งฟรีไม่จำกัด บริการเสถียรรวดเร็ว\nShopeeFood: นักล่าโปร 30-50% off ช่วง Flash Sale/Payday ลูกค้าหลั่งไหลเฉพาะช่วงแคมเปญ\nFoodpanda: ครอบคลุมรอบนอกบางจุด ลูกค้า pandapro ส่งฟรี\n\nPeak Coffee Delivery:\n• เช้า 07:00-09:00 (ออฟฟิศ/โรงพยาบาล/โรงเรียน)\n• บ่าย 14:00-16:00 (Coffee Break)\n• วันหยุด Specialty 10:00-15:00\n• วันหยุดเสาร์-อาทิตย์บ่าย: Slow Bar / Craft Coffee สูง",
+        "pricing": {"espresso":{"price":"","note":""},"americano":{"price":"","note":""},"latte":{"price":"","note":""},"cappuccino":{"price":"","note":""},"cold_brew":{"price":"","note":""},"frappe":{"price":"","note":""},"matcha":{"price":"","note":""},"signature_drink":{"price":"","note":""},"food":{"price":"","note":""},"other":[]},
+        "strengths": ["LINE MAN ครอบคลุม local สูงสุด", "GrabUnlimited ดึงลูกค้า chain", "ShopeeFood Flash Sale สร้าง traffic ใหม่"],
+        "promotions": ["ShopeeFood: 30-50% off Payday", "GrabFood: GrabUnlimited ส่งฟรี", "LINE MAN: ส่งฟรีครบ 150 บาท"],
+        "social_trend": {"primary_platform":"LINE MAN","posting_frequency":"","content_style":"","engagement_level":"high"}
+    },
+    {
+        "id": "delivery-local-cafes",
+        "category": "delivery",
+        "title": "ร้านกาแฟ Slow Bar & Craft ยอดนิยมใน Delivery สกลนคร",
+        "summary": "ร้าน Specialty Coffee ที่มีฐานลูกค้า delivery สูง: Sniff Roastery, Alice Coffee, CHANN Cafe, MOKA FOX, Rebellion Coffee, มีสุข Slow Bar",
+        "source_url": "", "thumbnail_url": "",
+        "tags": ["specialty", "slow bar", "local", "delivery", "สกลนคร"],
+        "relevance": "high",
+        "detail": "ร้านกาแฟ Slow Bar & Specialty ที่มีฐาน delivery ใน LINE MAN สกลนคร:\n• Sniff Roastery — Specialty beans หลากหลาย (โซนธาตุเชิงชุม)\n• Alice Coffee and Bread Sakonnakhon — กาแฟ + เบเกอรี่\n• CHANN Cafe (ชานคาเฟ่) — คาเฟ่บรรยากาศดี\n• MOKA FOX — craft coffee\n• RAINTREE CAFE\n• Rebellion Coffee Co. — Local Roaster คุณภาพสูง\n• มีสุข Slow Bar — โฮมมี่ มินิมอล เบเกอรี่โฮมเมด\n• เพิ่งตื่น Coffee Slowbar — กาแฟดริป เป็นกันเอง\n\nแอปแนะนำช่วงเช้า-บ่าย: GrabFood + LINE MAN (เน้นความเร็ว ป้องกันเครื่องดื่มละลาย)\nPeak: 10:00-15:00 น. (เน้น Cold Brew, Drip Coffee, Refreshment)",
+        "pricing": {"espresso":{"price":"","note":""},"americano":{"price":"","note":""},"latte":{"price":"","note":""},"cappuccino":{"price":"","note":""},"cold_brew":{"price":"","note":""},"frappe":{"price":"","note":""},"matcha":{"price":"","note":""},"signature_drink":{"price":"","note":""},"food":{"price":"","note":""},"other":[]},
+        "strengths": ["ร้าน local มี LINE MAN ครอบคลุม", "Specialty = differentiator ใน delivery", "GrabFood เร็ว ป้องกันเครื่องดื่มละลาย"],
+        "promotions": ["LINE MAN ส่งฟรีครบ 150 บาท", "ShopeeFood Flash Sale ต้นเดือน"],
+        "social_trend": {"primary_platform":"LINE MAN","posting_frequency":"","content_style":"","engagement_level":"high"}
     },
     {
         "id": "knowledge-third-wave-2026",
@@ -652,7 +708,7 @@ def build_platform_view(platform: str, raw: dict) -> str:
 
 HTML_TEMPLATE = """\
 <!DOCTYPE html>
-<html lang="th" data-theme="light">
+<html lang="th" data-theme="coffee">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -697,10 +753,22 @@ HTML_TEMPLATE = """\
       --nav-active:   rgba(255,255,255,0.15);
       --nav-text:     #ffffff;
     }}
+    [data-theme="coffee"] {{
+      --bg:           #0D0700;
+      --sidebar:      #160C02;
+      --card:         #2D1A08;
+      --card-border:  #7A4A20;
+      --text:         #F8EDD5;
+      --text-muted:   #D4AC78;
+      --grid:         #3D2010;
+      --nav-active:   #3D2212;
+      --nav-text:     #F8EDD5;
+    }}
 
     /* ── Apply variables globally ── */
     body {{ background-color: var(--bg); color: var(--text); }}
     [data-theme="fancy"] body {{ background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%) fixed; background-attachment: fixed; }}
+    [data-theme="coffee"] body {{ background: linear-gradient(160deg, #0D0700 0%, #160C02 55%, #0F0900 100%); min-height: 100vh; }}
     aside {{ background-color: var(--sidebar) !important; border-color: var(--card-border) !important; }}
     [data-theme="fancy"] aside {{ backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }}
     .bg-white  {{ background-color: var(--card) !important; border-color: var(--card-border) !important; }}
@@ -726,6 +794,9 @@ HTML_TEMPLATE = """\
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }}
+    /* coffee KPI accent + card header contrast */
+    [data-theme="coffee"] .kpi-value {{ color: #F0C060 !important; }}
+    [data-theme="coffee"] h1, [data-theme="coffee"] h2 {{ color: var(--text) !important; }}
 
     /* theme toggle button */
     .theme-btn {{
@@ -811,7 +882,7 @@ HTML_TEMPLATE = """\
 <!-- Mobile top bar -->
 <div id="mobile-topbar" class="items-center justify-between px-4 py-3">
   <div>
-    <div class="text-sm font-black" style="color:var(--text)">📊 Social Analytics</div>
+    <div class="text-sm font-black" style="color:var(--text)">☕ Social Analytics</div>
     <div class="text-[10px]" style="color:var(--text-muted)">ร้านกาแฟ สกลนคร</div>
   </div>
   <button onclick="openSidebar()" class="p-2 rounded-xl transition-colors"
@@ -833,7 +904,7 @@ HTML_TEMPLATE = """\
     <!-- Logo -->
     <div class="p-5 border-b border-slate-100 flex items-center justify-between gap-2">
       <div>
-        <div class="text-lg font-black text-slate-800 leading-tight">📊 Social Analytics</div>
+        <div class="text-lg font-black text-slate-800 leading-tight">☕ Social Analytics</div>
         <div class="text-xs text-slate-400 mt-0.5">ร้านกาแฟ สกลนคร</div>
       </div>
       <button onclick="closeSidebar()" id="sidebar-close-btn"
@@ -885,7 +956,7 @@ HTML_TEMPLATE = """\
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
             d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
         </svg>
-        ราคาทำฟัน
+        ราคากลางร้านกาแฟ
       </button>
 
       <button onclick="showView('view-competitor-deep')" id="nav-competitor-deep"
@@ -895,7 +966,7 @@ HTML_TEMPLATE = """\
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
             d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
         </svg>
-        🔬 เชิงลึก
+        เชิงลึก
       </button>
 
       <div class="pt-2 pb-1">
@@ -917,9 +988,10 @@ HTML_TEMPLATE = """\
     <!-- Footer: theme toggle + date -->
     <div class="p-4 border-t border-slate-100">
       <div class="flex items-center justify-center gap-1 mb-2">
-        <button class="theme-btn" id="theme-light" onclick="setTheme('light')" title="Light Mode">☀️</button>
-        <button class="theme-btn" id="theme-dark"  onclick="setTheme('dark')"  title="Dark Mode">🌙</button>
-        <button class="theme-btn" id="theme-fancy" onclick="setTheme('fancy')" title="Fancy Mode">✨</button>
+        <button class="theme-btn" id="theme-coffee" onclick="setTheme('coffee')" title="Coffee Mode">☕</button>
+        <button class="theme-btn" id="theme-light" onclick="setTheme('light')"  title="Light Mode">☀️</button>
+        <button class="theme-btn" id="theme-dark"  onclick="setTheme('dark')"   title="Dark Mode">🌙</button>
+        <button class="theme-btn" id="theme-fancy" onclick="setTheme('fancy')"  title="Fancy Mode">✨</button>
       </div>
       <div class="text-[10px] text-slate-400 uppercase tracking-widest text-center">สร้างเมื่อ {GENERATED_AT}</div>
     </div>
@@ -946,11 +1018,11 @@ HTML_TEMPLATE = """\
           <table class="w-full text-sm">
             <thead>
               <tr class="border-b-2 border-slate-200">
-                <th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500">Platform</th>
-                <th class="px-4 py-3 text-right text-xs font-bold uppercase tracking-widest text-slate-500">ยอดดูรวม</th>
-                <th class="px-4 py-3 text-right text-xs font-bold uppercase tracking-widest text-slate-500">ยอดดูเฉลี่ย/วัน</th>
-                <th class="px-4 py-3 text-right text-xs font-bold uppercase tracking-widest text-slate-500">อัตราการมีส่วนร่วม</th>
-                <th class="px-4 py-3 text-right text-xs font-bold uppercase tracking-widest text-slate-500">การมีส่วนร่วมรวม</th>
+                <th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap">Platform</th>
+                <th class="px-4 py-3 text-right text-xs font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap">ยอดดูรวม</th>
+                <th class="px-4 py-3 text-right text-xs font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap">ยอดดูเฉลี่ย/วัน</th>
+                <th class="px-4 py-3 text-right text-xs font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap">อัตราการมีส่วนร่วม</th>
+                <th class="px-4 py-3 text-right text-xs font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap">การมีส่วนร่วมรวม</th>
               </tr>
             </thead>
             <tbody>
@@ -997,6 +1069,7 @@ HTML_TEMPLATE = """\
       <div class="flex flex-wrap gap-2 mb-5">
         <button class="intel-tab active" id="intel-tab-all"       onclick="setIntelTab('all')">ทั้งหมด</button>
         <button class="intel-tab"        id="intel-tab-competitor" onclick="setIntelTab('competitor')">☕ คู่แข่ง</button>
+        <button class="intel-tab"        id="intel-tab-delivery"   onclick="setIntelTab('delivery')">🛵 Delivery</button>
         <button class="intel-tab"        id="intel-tab-coffee_knowledge" onclick="setIntelTab('coffee_knowledge')">💡 ความรู้</button>
         <button class="intel-tab"        id="intel-tab-news_events" onclick="setIntelTab('news_events')">📅 Events</button>
         <button class="intel-tab"        id="intel-tab-equipment"  onclick="setIntelTab('equipment')">⚙️ อุปกรณ์</button>
@@ -1029,9 +1102,9 @@ HTML_TEMPLATE = """\
           <table class="w-full text-sm">
             <thead>
               <tr class="border-b-2 border-slate-200">
-                <th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500">ร้าน</th>
-                <th class="px-4 py-3 text-right text-xs font-bold uppercase tracking-widest text-slate-500">ราคา (บาท)</th>
-                <th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500">หมายเหตุ</th>
+                <th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap">ร้าน</th>
+                <th class="px-4 py-3 text-right text-xs font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap">ราคา (บาท)</th>
+                <th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap">หมายเหตุ</th>
               </tr>
             </thead>
             <tbody id="pricing-table-body"></tbody>
@@ -1046,10 +1119,10 @@ HTML_TEMPLATE = """\
           <table class="w-full text-sm">
             <thead>
               <tr class="border-b-2 border-slate-200">
-                <th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500">ร้าน</th>
-                <th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500">Platform หลัก</th>
-                <th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500">สไตล์ Content</th>
-                <th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500">Engagement</th>
+                <th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap">ร้าน</th>
+                <th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap">Platform หลัก</th>
+                <th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap">สไตล์ Content</th>
+                <th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap">Engagement</th>
               </tr>
             </thead>
             <tbody id="social-trend-body"></tbody>
@@ -1144,7 +1217,7 @@ const INTEL = {INTEL_JSON};
 const chartInstances = {{}};
 
 // ── Theme ──
-const THEMES = ['light', 'dark', 'fancy'];
+const THEMES = ['light', 'dark', 'fancy', 'coffee'];
 
 function setTheme(t) {{
   document.documentElement.setAttribute('data-theme', t);
@@ -1162,13 +1235,14 @@ function setTheme(t) {{
 
 function getThemeChartCfg() {{
   const t = document.documentElement.getAttribute('data-theme') || 'light';
-  if (t === 'dark')  return {{ grid: '#334155', tick: '#94a3b8', tooltipBg: '#0f172a', tooltipText: '#f8fafc', border: '#1e293b' }};
-  if (t === 'fancy') return {{ grid: 'rgba(255,255,255,0.1)', tick: 'rgba(255,255,255,0.65)', tooltipBg: 'rgba(15,12,41,0.92)', tooltipText: '#fff', border: 'rgba(255,255,255,0.15)' }};
+  if (t === 'dark')   return {{ grid: '#334155', tick: '#94a3b8', tooltipBg: '#0f172a', tooltipText: '#f8fafc', border: '#1e293b' }};
+  if (t === 'fancy')  return {{ grid: 'rgba(255,255,255,0.1)', tick: 'rgba(255,255,255,0.65)', tooltipBg: 'rgba(15,12,41,0.92)', tooltipText: '#fff', border: 'rgba(255,255,255,0.15)' }};
+  if (t === 'coffee') return {{ grid: '#3D2010', tick: '#D4AC78', tooltipBg: '#160C02', tooltipText: '#F8EDD5', border: '#2D1A08' }};
   return {{ grid: '#f1f5f9', tick: '#94a3b8', tooltipBg: '#1e293b', tooltipText: '#f8fafc', border: '#ffffff' }};
 }}
 
 function applyStoredTheme() {{
-  const saved = localStorage.getItem('sa-theme') || 'light';
+  const saved = localStorage.getItem('sa-theme') || 'coffee';
   document.documentElement.setAttribute('data-theme', saved);
   const btn = document.getElementById('theme-' + saved);
   if (btn) btn.classList.add('active-theme');
@@ -1216,7 +1290,7 @@ function initCharts(viewId) {{
 }}
 
 function initHomeBar() {{
-  const PCOLORS = ['#111111', '#3b82f6', '#ec4899'];
+  const PCOLORS = ['#EE1D52', '#3b82f6', '#ec4899'];
   const labels  = COMP.labels;
   const tc      = getThemeChartCfg();
   const metrics = [
@@ -1265,7 +1339,7 @@ function initLineChart(platform) {{
   const el = document.getElementById(canvasId);
   if (!el) return;
   const pd = DATA[platform];
-  const color = {{ tiktok: '#010101', facebook: '#1877f2', instagram: '#e1306c' }}[platform] || '#2563eb';
+  const color = {{ tiktok: '#EE1D52', facebook: '#1877f2', instagram: '#e1306c' }}[platform] || '#2563eb';
   const tc = getThemeChartCfg();
   chartInstances[canvasId] = new Chart(el.getContext('2d'), {{
     type: 'line',
@@ -1303,30 +1377,62 @@ function initDoughnutChart(platform) {{
   const pd = DATA[platform];
   const dough = pd.doughnut;
   const tc = getThemeChartCfg();
+
+  /* ── fallback เมื่อยังไม่มีข้อมูล engagement ── */
+  const total = dough.data.reduce((s, v) => s + v, 0);
+  const isEmpty = total === 0;
+  const chartData   = isEmpty ? [1] : dough.data;
+  const chartColors = isEmpty ? ['rgba(128,128,128,0.18)'] : dough.colors;
+  const chartLabels = isEmpty ? ['ยังไม่มีข้อมูล'] : dough.labels;
+
   chartInstances[canvasId] = new Chart(el.getContext('2d'), {{
     type: 'doughnut',
     data: {{
-      labels: dough.labels,
-      datasets: [{{ data: dough.data, backgroundColor: dough.colors, borderWidth: 2, borderColor: tc.border }}]
+      labels: chartLabels,
+      datasets: [{{
+        data: chartData,
+        backgroundColor: chartColors,
+        borderWidth: isEmpty ? 0 : 2,
+        borderColor: tc.border
+      }}]
     }},
     options: {{
       responsive: true, maintainAspectRatio: false, cutout: '60%',
       plugins: {{
         legend: {{ position: 'bottom', labels: {{ padding: 16, font: {{ size: 11 }}, color: tc.tick }} }},
         tooltip: {{
+          enabled: !isEmpty,
           backgroundColor: tc.tooltipBg, titleColor: tc.tooltipText, bodyColor: tc.tooltipText,
           callbacks: {{
             label: ctx => ctx.label + ': ' + ctx.parsed.toLocaleString('th-TH')
           }}
-        }}
+        }},
+        /* ── center label เมื่อไม่มีข้อมูล ── */
+        beforeDraw: undefined
+      }},
+      animation: {{ animateRotate: !isEmpty }}
+    }},
+    plugins: [{{
+      id: 'emptyLabel',
+      afterDraw(chart) {{
+        if (!isEmpty) return;
+        const {{ ctx, chartArea: {{ width, height, left, top }} }} = chart;
+        ctx.save();
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillStyle = tc.tick;
+        ctx.font = '600 12px Prompt, system-ui';
+        ctx.fillText('ยังไม่มีข้อมูล', left + width / 2, top + height / 2);
+        ctx.restore();
       }}
-    }}
+    }}]
   }});
 }}
 
 // ── Intel view ──
 const INTEL_BADGE = {{
   competitor:       {{ label: '☕ คู่แข่ง',   cls: 'bg-red-100 text-red-700' }},
+  delivery:         {{ label: '🛵 Delivery',  cls: 'bg-orange-100 text-orange-700' }},
   coffee_knowledge: {{ label: '💡 ความรู้',   cls: 'bg-blue-100 text-blue-700' }},
   news_events:      {{ label: '📅 Events',    cls: 'bg-green-100 text-green-700' }},
   equipment:        {{ label: '⚙️ อุปกรณ์',  cls: 'bg-purple-100 text-purple-700' }},
@@ -1351,7 +1457,7 @@ const PRICING_TABS = {{
   food:      {{ keys: ['food'], includeOther: true }},
 }};
 let currentIntelTab = 'all';
-let currentPricingTab = 'braces';
+let currentPricingTab = 'espresso';
 
 function setIntelTab(tab) {{
   currentIntelTab = tab;
@@ -1466,6 +1572,16 @@ ${{items.map((item, idx) => {{
       ${{item.promotions && item.promotions.length ? mkSection('🎯','โปรโมชัน', item.promotions) : ''}}
       ${{item.location ? `<div><div class="text-xs font-semibold mb-1" style="color:var(--text)">📍 ที่ตั้ง</div><p class="text-xs leading-relaxed" style="color:var(--text-muted)">${{item.location}}</p></div>` : ''}}
       ${{item.hours ? `<div><div class="text-xs font-semibold mb-1" style="color:var(--text)">⏰ เวลาทำการ</div><p class="text-xs" style="color:var(--text-muted)">${{item.hours}}</p></div>` : ''}}
+      ${{item.delivery ? `<div>
+        <div class="text-xs font-semibold mb-1.5" style="color:var(--text)">🛵 Delivery</div>
+        <div class="rounded-xl p-3 space-y-1.5" style="background:var(--nav-active);border:1px solid var(--card-border)">
+          <div class="flex items-center gap-2 text-xs"><span style="color:var(--text-muted)">แอปหลัก:</span><span class="font-semibold px-2 py-0.5 rounded-full bg-orange-100 text-orange-700">${{item.delivery.primary_app}}</span>
+            ${{(item.delivery.apps||[]).filter(a=>a!==item.delivery.primary_app).map(a=>`<span class="px-2 py-0.5 rounded-full text-xs" style="background:var(--card);color:var(--text-muted)">${{a}}</span>`).join('')}}</div>
+          <div class="text-xs" style="color:var(--text-muted)">⏰ Peak: <span style="color:var(--text)">${{item.delivery.peak_hours}}</span></div>
+          ${{(item.delivery.active_promos||[]).length ? `<div class="text-xs" style="color:var(--text-muted)">🎟 โปร: ${{item.delivery.active_promos.join(' · ')}}</div>` : ''}}
+          <div class="text-xs pt-0.5" style="color:var(--text-muted)">${{item.delivery.notes}}</div>
+        </div>
+      </div>` : ''}}
     </div>
   </div>`;
 }}).join('')}}
@@ -1847,7 +1963,7 @@ function renderDeepDetail() {{
     return '<option value="' + c.id + '"' + (selectedDeepComp === c.id ? ' selected' : '') + '>' + c.title + '</option>';
   }}).join('');
   el.innerHTML = '<div class="mb-5">'
-    + '<label class="text-xs font-bold uppercase tracking-widest text-slate-500 mr-3">เลือกร้าน</label>'
+    + '<label class="text-xs font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap mr-3">เลือกร้าน</label>'
     + '<select id="deep-comp-select" onchange="selectDeepComp(this.value)" class="text-sm px-4 py-2 rounded-xl border font-medium" style="background:var(--card);color:var(--text);border-color:var(--card-border)">'
     + opts + '</select></div>'
     + '<div id="deep-comp-detail"></div>';
@@ -1894,6 +2010,13 @@ function renderDeepCompDetail() {{
       ['จุดอ่อน', (comp.weaknesses || []).join(' · ') || '—'],
       ['สรุป', comp.summary || '—'],
     ]}},
+    {{ title:'🛵 6. Delivery & Food Apps', rows: comp.delivery ? [
+      ['แอปหลัก', comp.delivery.primary_app || '—'],
+      ['แอปทั้งหมด', (comp.delivery.apps || []).join(', ') || '—'],
+      ['Peak Hours', comp.delivery.peak_hours || '—'],
+      ['โปรโมชัน', (comp.delivery.active_promos || []).join(' · ') || '—'],
+      ['หมายเหตุ', comp.delivery.notes || '—'],
+    ] : [['', 'ยังไม่มีข้อมูล Delivery']]}},
   ];
   el.innerHTML = sections.map(function(sec) {{
     var rowHtml = sec.rows.map(function(r) {{
