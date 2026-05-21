@@ -217,6 +217,37 @@ INTEL_DATA_FALLBACK = [
         }
     },
     {
+        "id": "competitor-meesuk",
+        "category": "competitor",
+        "title": "มีสุขสโลว์บาร์หน้าบ้านแม่ สกลนคร (Verified 22 May 2026)",
+        "summary": "Slow Bar + Uji Matcha authentic · Concept 'หน้าบ้านแม่' brand story แข็ง · Workshop ปั้นดิน differentiator · ปิด 15:00 · ไม่มี delivery แอปเลย",
+        "updated": "22 May 2026",
+        "source_url": "https://www.facebook.com/meesookslowbar/", "thumbnail_url": "",
+        "tags": ["สกลนคร", "Local", "Independent", "SlowBar", "Matcha", "Workshop", "Minimalist"],
+        "relevance": "high",
+        "detail": "มีสุขสโลว์บาร์หน้าบ้านแม่ — ซอยเปิ้ลส้มตำ อ.เมือง จ.สกลนคร\nโทร: 090-343-8562\n\nConcept: 'หน้าบ้านแม่' — ตั้งอยู่หน้าบ้านแม่จริงๆ · Slow Bar · Homey minimalist + loft\nSlogan: 'มีสุขในทุกๆวัน' — emotional wellness + slow life positioning\n\nSocial (platforms verified, followers ไม่ทราบ — login required):\n• Facebook: meesookslowbar — active · videos + photos\n• Instagram: @meesuk_slowbar · active\n• TikTok: @meesuk_slowbar · active\n• Lemon8: organic viral (visitor reviews หลายชิ้น)\n\nSignature:\n• Matcha Latte ใช้ Uji matcha แท้จากญี่ปุ่น — differentiator ชัดที่สุด\n• MINOZ Es-yen (iced espresso signature)\n• Workshop ปั้นดิน ทุก พฤหัส + เสาร์ + อาทิตย์ (30฿/กรัม)\n• Banoffee, Shio Pan, Garlic bread with cream cheese อบสด\n\nReviews (Lemon8 organic):\n• 'มัทฉะลาเต้ หอมกลิ่นมัจฉะ ละมุนครีมมี่มาก'\n• 'คาเฟ่ลับๆ ที่ควรแวะ'\n• 'บรรยากาศสุดผ่อนคลาย ความอบอุ่นของบ้าน'\n\nช่องว่างสำหรับคู่แข่ง:\n• ปิด 15:00 — เสียตลาดบ่าย-เย็นทั้งหมด\n• ไม่มี delivery แอปใดเลย\n• ไม่มี LINE OA / loyalty program\n• Follower count ไม่ชัดเจน — reach อาจยังเล็ก",
+        "pricing": {
+            "espresso":{"price":"","note":"MINOZ Es-yen signature"},"americano":{"price":"","note":""},
+            "latte":{"price":"","note":""},"cappuccino":{"price":"","note":""},
+            "cold_brew":{"price":"","note":""},"frappe":{"price":"","note":""},
+            "matcha":{"price":"","note":"Uji matcha แท้ญี่ปุ่น (signature)"},"signature_drink":{"price":"75","note":"เริ่มต้น ~75฿"},
+            "food":{"price":"","note":"Banoffee / Shio Pan / Garlic bread อบสด"},
+            "other": [{"name":"Workshop ปั้นดิน","price":"30/กรัม"}]
+        },
+        "strengths": ["Brand story 'หน้าบ้านแม่' authentic", "Uji matcha แท้จากญี่ปุ่น", "Workshop ปั้นดิน = experience differentiator", "Organic Lemon8 viral", "3 platforms active (FB/IG/TikTok)"],
+        "promotions": [],
+        "weaknesses": ["ปิด 15:00 เสียตลาดบ่าย-เย็น", "ไม่มี delivery แอปใดเลย", "ไม่มี LINE OA/loyalty", "Followers ไม่ทราบ อาจยังเล็ก", "ราคา workshop ไม่โปร่งใสออนไลน์"],
+        "location": "ซอยเปิ้ลส้มตำ อ.เมือง จ.สกลนคร", "hours": "จ-ศ 08:00-15:00 / เสาร์-อาทิตย์ 09:00-15:00",
+        "social_trend": {"primary_platform":"Facebook","posting_frequency":"สม่ำเสมอ","content_style":"Minimalist aesthetic + slow life · #มีสุขในทุกๆวัน","engagement_level":"low-medium"},
+        "delivery": {
+            "primary_app": "ไม่มี",
+            "apps": [],
+            "peak_hours": "N/A — ไม่มี delivery",
+            "active_promos": [],
+            "notes": "ไม่พบบน LINE MAN, GrabFood, Wongnai Delivery เลย — dine-in + takeaway เท่านั้น ปิด 15:00 ทำให้ delivery window แคบมาก"
+        }
+    },
+    {
         "id": "competitor-alice",
         "category": "competitor",
         "title": "Alice Coffee and Bread สกลนคร (Verified 21 May 2026)",
