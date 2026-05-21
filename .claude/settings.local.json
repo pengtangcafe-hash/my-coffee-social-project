@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python src/generate_dashboard.py sample-data/)",
+      "Bash(python -c ' *)"
+    ]
+  }
+}
