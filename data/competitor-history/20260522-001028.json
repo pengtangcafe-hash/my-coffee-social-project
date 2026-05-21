@@ -1,0 +1,581 @@
+{
+  "date": "2026-05-22T00:10:28.245448",
+  "source": "intel-deep-command",
+  "competitors": [
+    {
+      "id": "competitor-amazon-coffee",
+      "category": "competitor",
+      "title": "Amazon Coffee สกลนคร (PTT)",
+      "summary": "Chain ใหญ่สุดในไทย มีหลายสาขาในสกลนคร Facebook page active ราคาเข้าถึงได้ เมนูครบ",
+      "source_url": "",
+      "thumbnail_url": "",
+      "tags": [
+        "สกลนคร",
+        "Chain",
+        "Amazon",
+        "PTT"
+      ],
+      "relevance": "high",
+      "detail": "Amazon Coffee จาก PTT เป็น chain กาแฟใหญ่สุดในไทย มีสาขาในสกลนครหลายจุด (ปั๊มน้ำมัน PTT และ standalone) Facebook page มีผู้ติดตามระดับชาติ ราคาเข้าถึงได้ latte เริ่มต้น 45-55 บาท cold brew 50-65 บาท มีเมนูประจำฤดูกาล loyalty app สะสมแต้มได้",
+      "pricing": {
+        "espresso": {
+          "price": "35",
+          "note": "single shot"
+        },
+        "americano": {
+          "price": "45",
+          "note": "hot/iced"
+        },
+        "latte": {
+          "price": "55",
+          "note": "hot/iced"
+        },
+        "cappuccino": {
+          "price": "55",
+          "note": ""
+        },
+        "cold_brew": {
+          "price": "65",
+          "note": ""
+        },
+        "frappe": {
+          "price": "65",
+          "note": ""
+        },
+        "matcha": {
+          "price": "60",
+          "note": ""
+        },
+        "signature_drink": {
+          "price": "65",
+          "note": "seasonal"
+        },
+        "food": {
+          "price": "35",
+          "note": "เบเกอรี่"
+        },
+        "other": [
+          {
+            "name": "ช็อคโกแลต",
+            "price": "55",
+            "note": "hot/iced"
+          }
+        ]
+      },
+      "strengths": [
+        "Brand awareness สูงมาก",
+        "Loyalty app สะสมแต้ม",
+        "สาขาเยอะ ใกล้ปั๊มน้ำมัน",
+        "ราคาเข้าถึงได้",
+        "เมนูประจำฤดูกาล"
+      ],
+      "promotions": [
+        "สะสมแต้ม A Card",
+        "ซื้อ 10 แก้ว ฟรี 1 แก้ว"
+      ],
+      "weaknesses": [
+        "Chain — ไม่มีความเป็น local",
+        "บรรยากาศเหมือนกันทุกสาขา",
+        "TikTok เป็น account กลาง ไม่ใช่ local"
+      ],
+      "location": "หลายสาขา สกลนคร",
+      "hours": "ตามสาขา 06:00-22:00",
+      "social_trend": {
+        "primary_platform": "Facebook",
+        "posting_frequency": "สม่ำเสมอ",
+        "content_style": "promotional",
+        "engagement_level": "medium"
+      },
+      "delivery": {
+        "primary_app": "GrabFood",
+        "apps": [
+          "GrabFood",
+          "LINE MAN"
+        ],
+        "peak_hours": "07:00-09:00 (เช้าก่อนทำงาน), 14:00-16:00 (Coffee Break)",
+        "active_promos": [
+          "GrabUnlimited ส่งฟรีไม่จำกัด",
+          "GrabRewards สะสมคะแนน",
+          "Grab Flash Deal เป็นครั้งคราว"
+        ],
+        "notes": "สาขาในปั๊ม PTT เชื่อมต่อ GrabFood ได้ดีมาก ลูกค้า GrabUnlimited นิยมสั่งช่วงเช้าก่อนถึงออฟฟิศ ยอดสั่งสูงสุดวันทำงาน"
+      }
+    },
+    {
+      "id": "competitor-inthanin",
+      "category": "competitor",
+      "title": "Inthanin Coffee สกลนคร",
+      "summary": "Premium chain จาก PTT เน้น specialty beans Thai origin ราคาสูงกว่า Amazon บรรยากาศดี",
+      "source_url": "",
+      "thumbnail_url": "",
+      "tags": [
+        "สกลนคร",
+        "Chain",
+        "Specialty",
+        "Premium"
+      ],
+      "relevance": "high",
+      "detail": "Inthanin Coffee เน้น Thai specialty beans จากดอยต่างๆ ราคา premium กว่า Amazon (latte 65-80 บาท) มีสาขาในห้างและปั๊ม PTT บรรยากาศดีกว่า Facebook page ระดับชาติ มีเมนู signature เช่น Doi Chaang Single Origin",
+      "pricing": {
+        "espresso": {
+          "price": "50",
+          "note": ""
+        },
+        "americano": {
+          "price": "60",
+          "note": "hot/iced"
+        },
+        "latte": {
+          "price": "75",
+          "note": "hot/iced"
+        },
+        "cappuccino": {
+          "price": "75",
+          "note": ""
+        },
+        "cold_brew": {
+          "price": "85",
+          "note": ""
+        },
+        "frappe": {
+          "price": "80",
+          "note": ""
+        },
+        "matcha": {
+          "price": "80",
+          "note": ""
+        },
+        "signature_drink": {
+          "price": "85",
+          "note": "Thai origin beans"
+        },
+        "food": {
+          "price": "45",
+          "note": "เบเกอรี่ premium"
+        },
+        "other": []
+      },
+      "strengths": [
+        "Specialty Thai beans",
+        "บรรยากาศดี",
+        "Brand premium",
+        "มีเมนู Single Origin"
+      ],
+      "promotions": [
+        "สะสมแต้ม PTT Blue Card"
+      ],
+      "weaknesses": [
+        "ราคาสูงกว่า Amazon",
+        "Chain ไม่มีความ local",
+        "TikTok content น้อย"
+      ],
+      "location": "สาขาในห้างและปั๊ม PTT สกลนคร",
+      "hours": "ตามสาขา 07:00-21:00",
+      "social_trend": {
+        "primary_platform": "Facebook",
+        "posting_frequency": "ปานกลาง",
+        "content_style": "promotional",
+        "engagement_level": "medium"
+      },
+      "delivery": {
+        "primary_app": "GrabFood",
+        "apps": [
+          "GrabFood",
+          "LINE MAN"
+        ],
+        "peak_hours": "10:00-12:00 (ช่วงสาย), 14:00-16:00 (Coffee Break บ่าย)",
+        "active_promos": [
+          "GrabUnlimited ส่งฟรี",
+          "PTT Blue Card campaign ตามเทศกาล"
+        ],
+        "notes": "กลุ่มลูกค้า premium นิยม GrabFood เพราะบริการเสถียร รวดเร็ว ตรงกับ positioning ของร้าน ยอดสูงช่วงสาย-บ่ายวันทำงาน"
+      }
+    },
+    {
+      "id": "competitor-local-cafe",
+      "category": "competitor",
+      "title": "ร้านกาแฟ Local สกลนคร (Independent)",
+      "summary": "ร้านกาแฟ local independent ในสกลนคร เน้นบรรยากาศ ราคากลาง มี Instagram/TikTok content น่าสนใจ",
+      "source_url": "",
+      "thumbnail_url": "",
+      "tags": [
+        "สกลนคร",
+        "Local",
+        "Independent",
+        "Aesthetic"
+      ],
+      "relevance": "high",
+      "detail": "กลุ่มร้านกาแฟ independent ในสกลนคร เน้น aesthetic บรรยากาศ latte art content บน Instagram และ TikTok ราคา mid-range (latte 60-80 บาท) หลายร้านใช้ beans local จากภาคอีสาน มีเมนู signature เป็น USP",
+      "pricing": {
+        "espresso": {
+          "price": "40",
+          "note": ""
+        },
+        "americano": {
+          "price": "55",
+          "note": ""
+        },
+        "latte": {
+          "price": "70",
+          "note": "hot/iced"
+        },
+        "cappuccino": {
+          "price": "70",
+          "note": ""
+        },
+        "cold_brew": {
+          "price": "75",
+          "note": ""
+        },
+        "frappe": {
+          "price": "70",
+          "note": ""
+        },
+        "matcha": {
+          "price": "70",
+          "note": ""
+        },
+        "signature_drink": {
+          "price": "80",
+          "note": "แตกต่างตามร้าน"
+        },
+        "food": {
+          "price": "50",
+          "note": "เค้ก/ขนม homemade"
+        },
+        "other": []
+      },
+      "strengths": [
+        "บรรยากาศน่านั่ง",
+        "Instagram-worthy",
+        "Local vibe",
+        "เมนู signature unique",
+        "Latte art"
+      ],
+      "promotions": [
+        "บัตรสะสมแต้ม",
+        "โปรนักศึกษา"
+      ],
+      "weaknesses": [
+        "ไม่มี brand awareness ระดับชาติ",
+        "เปิดวันหยุดไม่สม่ำเสมอ",
+        "TikTok ยังไม่ viral"
+      ],
+      "location": "ย่านใจกลางเมืองสกลนคร",
+      "hours": "08:00-20:00 (บางร้านปิดจันทร์)",
+      "social_trend": {
+        "primary_platform": "Instagram",
+        "posting_frequency": "สม่ำเสมอ",
+        "content_style": "latte art",
+        "engagement_level": "medium"
+      },
+      "delivery": {
+        "primary_app": "LINE MAN",
+        "apps": [
+          "LINE MAN",
+          "ShopeeFood"
+        ],
+        "peak_hours": "10:00-15:00 (Specialty peak วันหยุด), 14:00-16:00 (Coffee Break วันทำงาน)",
+        "active_promos": [
+          "ShopeeFood Flash Sale 30-50% off ช่วง Payday/ต้นเดือน",
+          "LINE MAN ส่งฟรีเมื่อสั่งครบ 150 บาท"
+        ],
+        "notes": "LINE MAN ครอบคลุม local cafe ดีที่สุด เชื่อมกับ Wongnai นักล่าโปรหลั่งไหลเข้า ShopeeFood ช่วงแคมเปญ — โอกาสดึงลูกค้าใหม่ที่ยังไม่รู้จักร้าน"
+      }
+    },
+    {
+      "id": "competitor-wawee",
+      "category": "competitor",
+      "title": "Wawee Coffee สกลนคร",
+      "summary": "Chain จากเชียงใหม่ขยายทั่วไทย เน้น beans คุณภาพดี ราคา mid-premium มี TikTok ระดับชาติ",
+      "source_url": "",
+      "thumbnail_url": "",
+      "tags": [
+        "สกลนคร",
+        "Chain",
+        "Wawee",
+        "เชียงใหม่"
+      ],
+      "relevance": "medium",
+      "detail": "Wawee Coffee chain จากเชียงใหม่ เน้น Northern Thai beans ราคา mid-premium latte 65-80 บาท มีสาขาในหลายจังหวัด รวมถึงสกลนคร TikTok มีผู้ติดตามระดับชาติ content เน้น barista process และ beans story",
+      "pricing": {
+        "espresso": {
+          "price": "45",
+          "note": ""
+        },
+        "americano": {
+          "price": "55",
+          "note": ""
+        },
+        "latte": {
+          "price": "75",
+          "note": ""
+        },
+        "cappuccino": {
+          "price": "75",
+          "note": ""
+        },
+        "cold_brew": {
+          "price": "80",
+          "note": ""
+        },
+        "frappe": {
+          "price": "75",
+          "note": ""
+        },
+        "matcha": {
+          "price": "75",
+          "note": ""
+        },
+        "signature_drink": {
+          "price": "80",
+          "note": "Northern Thai beans"
+        },
+        "food": {
+          "price": "40",
+          "note": "เบเกอรี่"
+        },
+        "other": []
+      },
+      "strengths": [
+        "Beans quality story ดี",
+        "TikTok following ระดับชาติ",
+        "Northern Thailand branding ชัด"
+      ],
+      "promotions": [
+        "สมาชิก 10% off",
+        "นักศึกษา 15% off"
+      ],
+      "weaknesses": [
+        "Chain — local connection น้อย",
+        "ราคากลาง-สูง"
+      ],
+      "location": "สาขาสกลนคร",
+      "hours": "07:00-21:00",
+      "social_trend": {
+        "primary_platform": "TikTok",
+        "posting_frequency": "สม่ำเสมอ",
+        "content_style": "barista process",
+        "engagement_level": "medium"
+      },
+      "delivery": {
+        "primary_app": "LINE MAN",
+        "apps": [
+          "LINE MAN",
+          "GrabFood"
+        ],
+        "peak_hours": "07:00-09:00 (เช้า), 14:00-16:00 (Coffee Break)",
+        "active_promos": [
+          "LINE MAN แคมเปญตามเทศกาล",
+          "ส่วนลดสมาชิกเมื่อสั่งผ่านแอป"
+        ],
+        "notes": "Wawee ขยายสาขาต่างจังหวัดทั่วไทย LINE MAN ครอบคลุมได้ดี ยอดสั่งช่วงเช้าวันทำงานและบ่ายสูงใกล้เคียงกัน"
+      }
+    },
+    {
+      "id": "competitor-raintree",
+      "category": "competitor",
+      "title": "RAINTREE CAFE สกลนคร (Verified 21 May 2026)",
+      "summary": "Destination cafe ระดับกลาง-บน Concept 'เขาใหญ่กลางเมือง' · Facebook 77K · Google 4.7/5 · Day cafe + Night cocktail bar · Pet-friendly",
+      "updated": "21 May 2026",
+      "source_url": "https://www.facebook.com/p/Raintreecafe-61552983815422/",
+      "thumbnail_url": "",
+      "tags": [
+        "สกลนคร",
+        "Local",
+        "Independent",
+        "Destination",
+        "Pet-friendly",
+        "Cocktail"
+      ],
+      "relevance": "high",
+      "detail": "RAINTREE CAFE — 391 ถนนสกลนคร-กาฬสินธุ์ ต.ดงมะไฟ อ.เมือง จ.สกลนคร (ตรงข้าม ปตท.ศูนย์ราชการ)\nโทร: 065-391-4662 / 081-345-4643\n\nSocial Media (verified):\n• Facebook: ~77,000 followers — ใหญ่มากสำหรับ local cafe · crosspost TikTok content\n• Instagram: @raintree_sakon · 11,000 followers · 293 posts · Aesthetic nature photography\n• TikTok: @raintree91 · Comedy/personality-driven · 1 viral video 152,900 likes confirmed\n\nTikTok Content Strategy (verified):\n• Tone: Comedy + personality-driven ไม่ใช่ polished brand content\n• เจ้าของออกกล้องเอง · พนักงานเป็น recurring characters\n• Themes: staff humor ('เจ้านายอยู่ vs ไม่อยู่'), barista spotlight, customer comedy, photo tips\n• เนื้อหา night/bar segment: 'กาแฟดึกที่ Raintree' — promote evening visits\n\nHashtag Strategy:\n• Always-on: #raintreecafe #เรนทรีคาเฟ่ #คาเฟ่สกลนคร #สกลนคร\n• Branded UGC: #raintreemoments — เก็บ fan content\n• Secondary: #sakonnakhon #ร้านกาแฟสกลนคร\n\nReviews:\n• Google Maps: 4.7/5 จาก 246 รีวิว · #14 จาก 246 คาเฟ่สกลนคร\n• Wongnai: 4.1/5 · #3 จาก 181 คาเฟ่\n• Sentiment: 'ฟิลเขาใหญ่กลางเมือง' พูดถึงซ้ำทุก review\n\nจุดแข็ง:\n• Concept 'เขาใหญ่กลางเมือง' ชัดเจน ลูกค้าจำได้\n• พื้นที่ใหญ่มาก 81-150 ที่นั่ง Indoor+Outdoor (สนามหญ้า/สระน้ำ/ต้นจามจุรี)\n• Double segment: Day cafe (กาแฟ/ชา) + Night bar (Cocktail)\n• Pet-friendly — niche หายากในสกลนคร\n• เมนูดัง: มัทฉะน้ำส้มสด 'อร่อยที่สุดในเมือง'\n\nช่องว่างสำหรับคู่แข่ง:\n• Wongnai presence น้อย (3 รีวิว) — โอกาสสำหรับร้านที่ทำ Wongnai marketing\n• เวลาเปิดไม่สม่ำเสมอ (บางรีวิวระบุปิดก่อนเวลา)\n• Delivery Wongnai-direct เท่านั้น ไม่พบ LINE MAN/GrabFood\n• เน้น aesthetic + comedy มากกว่า specialty/origin beans story",
+      "pricing": {
+        "espresso": {
+          "price": "",
+          "note": ""
+        },
+        "americano": {
+          "price": "80",
+          "note": "~ประมาณ"
+        },
+        "latte": {
+          "price": "",
+          "note": ""
+        },
+        "cappuccino": {
+          "price": "",
+          "note": ""
+        },
+        "cold_brew": {
+          "price": "",
+          "note": ""
+        },
+        "frappe": {
+          "price": "",
+          "note": ""
+        },
+        "matcha": {
+          "price": "120",
+          "note": "น้ำส้มสด (ขายดี)"
+        },
+        "signature_drink": {
+          "price": "130",
+          "note": "มัทฉะมะพร้าว"
+        },
+        "food": {
+          "price": "90",
+          "note": "เค้กชาเขียว"
+        },
+        "other": [
+          {
+            "name": "คาราเมล มัคคิอาโต้",
+            "price": "110"
+          },
+          {
+            "name": "เฉลี่ย/คน",
+            "price": "101-250"
+          }
+        ]
+      },
+      "strengths": [
+        "Facebook 77K reach ใหญ่มาก",
+        "TikTok viral (152K likes) comedy content",
+        "Branded hashtag #raintreemoments สร้าง UGC",
+        "Concept 'เขาใหญ่กลางเมือง' จำง่าย",
+        "Google 4.7/5 Top of Mind",
+        "Pet-friendly niche",
+        "Day + Night double segment"
+      ],
+      "promotions": [],
+      "weaknesses": [
+        "Wongnai ยังน้อยมาก (3 รีวิว)",
+        "Delivery Wongnai-direct เท่านั้น ไม่อยู่บน LINE MAN/GrabFood",
+        "เวลาเปิดบางครั้งไม่สม่ำเสมอ",
+        "ไม่มี specialty/origin beans story"
+      ],
+      "location": "391 ถนนสกลนคร-กาฬสินธุ์ ต.ดงมะไฟ อ.เมือง จ.สกลนคร",
+      "hours": "จ-ศ 08:00-23:00 / ส-อา 08:00-00:00",
+      "social_trend": {
+        "primary_platform": "TikTok+Facebook",
+        "posting_frequency": "สม่ำเสมอ",
+        "content_style": "Comedy/personality-driven · staff humor · เจ้าของออกกล้อง · #raintreemoments UGC",
+        "engagement_level": "very high"
+      },
+      "delivery": {
+        "primary_app": "Wongnai",
+        "apps": [
+          "Wongnai delivery (08:00-17:00)"
+        ],
+        "peak_hours": "ไม่ทราบ — delivery เป็น secondary จาก dine-in",
+        "active_promos": [],
+        "notes": "Wongnai-direct delivery เท่านั้น (08:00-17:00) — LINE MAN และ GrabFood ไม่ verified ณ พ.ค. 2026 ร้านเน้น dine-in experience เป็นหลัก"
+      }
+    },
+    {
+      "id": "competitor-alice",
+      "category": "competitor",
+      "title": "Alice Coffee and Bread สกลนคร (Verified 21 May 2026)",
+      "summary": "Minimalist White + Rabbit Theme · ราคาเข้าถึงได้ (เริ่ม ~45฿) · ทำเลดีใกล้ศาลากลาง · LINE MAN delivery ยืนยัน · Instagram อ่อนมาก (29 followers) · ไม่มี TikTok official",
+      "updated": "21 May 2026",
+      "source_url": "https://www.facebook.com/p/Alice-Cafe-Sakonnakhon-61550985398170/",
+      "thumbnail_url": "",
+      "tags": [
+        "สกลนคร",
+        "Local",
+        "Independent",
+        "Minimalist",
+        "Bakery",
+        "Instagrammable"
+      ],
+      "relevance": "high",
+      "detail": "Alice Coffee and Bread Sakonnakhon — 1894/89 ถ.สุขสวัสดิ์ แขวงธาตุเชิงชุม เมืองสกลนคร (ใกล้ศาลากลางจังหวัด)\nเปิด: ม.ค. 2024 | โทร: 094-274-5558\n\nConcept: Minimalist White + Rabbit Theme — โทนขาวอบอุ่น Instagram-worthy\nสวนเล็กสไตล์ญี่ปุ่น (outdoor) + แอร์ (indoor) · Wi-Fi · Pet-friendly\n\nSocial Media (verified):\n• Facebook: ~2,629 likes / 3,378 check-ins — มี 2 หน้า (แยก follower)\n• Instagram: @alicecoffee.sakon · 29 followers · 16 posts (อ่อนมาก)\n• TikTok: ไม่มี official account — แต่ creator รีวิวเยอะ (@woranitbell ฯลฯ)\n• Wongnai: 5.0/5.0 (1 review เท่านั้น)\n\nDelivery: LINE MAN ยืนยัน, Wongnai x LINE MAN · จ-ศ 08:30-16:30 / เสาร์ 09:00-17:30\nเมนู delivery ยอดนิยม: Thai Tea Special Blend 65฿, Coco Dirty 95฿, Chocolate Hazelnut 90฿\n\nช่องว่างสำหรับคู่แข่ง:\n• TikTok official — Alice ยังไม่มีเลย ทั้งที่ organic viral มีแล้ว\n• Wongnai reviews — มีแค่ 1 review\n• GrabFood/ShopeeFood — ยังไม่อยู่บนแพลตฟอร์ม\n• ราคาเมนูโปร่งใสออนไลน์ — ระบุชัดแค่ 3 เมนู",
+      "pricing": {
+        "espresso": {
+          "price": "",
+          "note": ""
+        },
+        "americano": {
+          "price": "",
+          "note": ""
+        },
+        "latte": {
+          "price": "",
+          "note": ""
+        },
+        "cappuccino": {
+          "price": "",
+          "note": ""
+        },
+        "cold_brew": {
+          "price": "",
+          "note": ""
+        },
+        "frappe": {
+          "price": "",
+          "note": ""
+        },
+        "matcha": {
+          "price": "",
+          "note": "Matcha Margarita"
+        },
+        "signature_drink": {
+          "price": "95",
+          "note": "Coco Dirty (ขายดี)"
+        },
+        "food": {
+          "price": "",
+          "note": "Chiffon/Tiramisu/Dirty Cake อบสด"
+        },
+        "other": [
+          {
+            "name": "Thai Tea Special Blend",
+            "price": "65"
+          },
+          {
+            "name": "Chocolate Hazelnut",
+            "price": "90"
+          },
+          {
+            "name": "ราคาเริ่มต้น",
+            "price": "~45"
+          }
+        ]
+      },
+      "strengths": [
+        "ราคาเข้าถึงได้ เริ่ม ~45฿",
+        "Concept ชัด Rabbit+Minimalist",
+        "Organic TikTok viral ไม่ต้องซื้อ ads",
+        "ทำเลดีใกล้ศาลากลาง",
+        "LINE MAN delivery ยืนยัน",
+        "เบเกอรีอบสดหลากหลาย"
+      ],
+      "promotions": [],
+      "weaknesses": [
+        "Instagram 29 followers (16 posts) อ่อนมาก",
+        "ไม่มี TikTok official",
+        "Wongnai 1 review credibility ต่ำ",
+        "Facebook 2 หน้า — follower กระจัดกระจาย",
+        "GrabFood/ShopeeFood ยังไม่มี"
+      ],
+      "location": "1894/89 ถ.สุขสวัสดิ์ แขวงธาตุเชิงชุม เมืองสกลนคร",
+      "hours": "จ-ศ 08:00-17:00 / พุธ,เสาร์-อาทิตย์ 09:00-18:00",
+      "social_trend": {
+        "primary_platform": "Facebook",
+        "posting_frequency": "ปานกลาง",
+        "content_style": "Minimalist aesthetic + เบเกอรี",
+        "engagement_level": "low"
+      },
+      "delivery": {
+        "primary_app": "LINE MAN",
+        "apps": [
+          "LINE MAN",
+          "Wongnai Delivery"
+        ],
+        "peak_hours": "08:30-16:30 (ตามเวลาร้าน)",
+        "active_promos": [],
+        "notes": "LINE MAN verified, Wongnai x LINE MAN ยืนยัน · ไม่พบบน GrabFood/ShopeeFood · ค่าส่งเริ่ม 0 บาทในพื้นที่บริการ"
+      }
+    }
+  ]
+}

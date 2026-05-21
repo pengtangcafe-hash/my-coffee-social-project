@@ -25,7 +25,7 @@ def save_snapshot(competitors_data: list, source: str = "manual") -> Path:
     }
     with open(filepath, "w", encoding="utf-8") as f:
         json.dump(snapshot, f, ensure_ascii=False, indent=2)
-    print(f"[competitor_history] saved → {filepath.name}")
+    print(f"[competitor_history] saved -> {filepath.name}")
     return filepath
 
 
