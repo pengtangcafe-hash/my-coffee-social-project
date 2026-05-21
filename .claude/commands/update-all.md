@@ -2,9 +2,15 @@
 
 ## ขั้นตอน
 
-1. **วิเคราะห์ Social Media** (ภาพรวม + Platforms)
-   - รัน `/analyze data/imports/` ถ้ามีไฟล์ใหม่ใน data/imports/
-   - ถ้าไม่มีไฟล์ใหม่ ให้ข้ามและแจ้งว่า "ไม่มีไฟล์ใหม่ใน data/imports/"
+1. **ดึงข้อมูล Social Media จาก API** (อัตโนมัติ)
+   ```
+   python src/fetch_social.py --days 30
+   ```
+   - ถ้าสำเร็จ → ไฟล์ CSV ใหม่จะอยู่ใน `data/imports/`
+   - ถ้า platform ไหนล้มเหลว → แจ้งผู้ใช้ตรวจสอบ `.env` แต่ทำขั้นตอนอื่นต่อ
+
+2. **วิเคราะห์ Social Media** (ภาพรวม + Platforms)
+   - รัน `/analyze data/imports/` เพื่อประมวลผลข้อมูลที่ดึงมา
 
 2. **อัพเดทข่าวกรองตลาด**
    - รัน `/intel` เพื่อค้นหาข้อมูลตลาด delivery trends และ market intel ใหม่
