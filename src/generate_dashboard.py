@@ -217,6 +217,68 @@ INTEL_DATA_FALLBACK = [
         }
     },
     {
+        "id": "competitor-zmd",
+        "category": "competitor",
+        "title": "Z M d cafe' Specialty Coffee สกลนคร (Verified 22 May 2026)",
+        "summary": "Dark aesthetic specialty café · Zignature (กาแฟส้ม) signature drink · LINE MAN delivery ✅ · Wongnai 5.0/5 #33/436 · ราคากลาง-ล่าง 75-150฿ · Community collab Soulrun",
+        "updated": "22 May 2026",
+        "source_url": "https://www.facebook.com/p/Z-M-d-cafe-Specialty-Coffee-100083302782620/", "thumbnail_url": "",
+        "tags": ["สกลนคร", "Local", "Independent", "DarkAesthetic", "Specialty", "SlowBar", "SpeedBar"],
+        "relevance": "high",
+        "detail": "Z M d cafe' Specialty Coffee — 1268/6 ถ.กำจัดภัย ธาตุเชิงชุม เมืองสกลนคร (ใกล้โรงแรมสมเกียรติ แยกอารยา)\nโทร: 093-916-6399 | เปิด 07:30-18:00 ทุกวัน\n\nConcept: Dark aesthetic / specialty — 'มืด, แหลมคม, อินดี้'\nบริการ: Specialty // Speedbar // Slowbar\n\nSocial (verified):\n• Facebook: ~3,243 likes / ~1,798 check-ins\n• Instagram: @zmdcafe · TikTok: @zmdcafe\n• Wongnai: 5.0/5 (4 reviews) · #33 จาก 436 cafés สกลนคร\n\nSignature: Zignature (ส้ม + โซดา + Espresso Colombia) 95฿ — เป็น hero content\nCommunity: Soulrun x ZMd collab · Merch เสื้อ 444฿\nArtwork ซ่อนชั้น 2 — unique story content\n\nDelivery: LINE MAN ✅ (Wongnai x LINE MAN) · 07:30-17:30 · ค่าส่งเริ่ม 0฿\nFacebook ยืนยัน: 'มีเดลิเวอรี่ผ่าน LINE MAN หรือโทร 093-9166399'\n\nReviews: 'ร้านสวย เท่ มากกก' · 'พิถีพิถันในการทำทุกขั้นตอน' · 'บาริสต้า น่ารัก'\n\nช่องว่างสำหรับคู่แข่ง:\n• Google Maps ยังไม่ indexed → เสีย SEO search\n• Wongnai เพียง 4 reviews → credibility ต่ำ\n• Dark aesthetic ไม่ appeal กลุ่ม family/casual → niche แคบ",
+        "pricing": {
+            "espresso":{"price":"","note":""},"americano":{"price":"75","note":""},
+            "latte":{"price":"85","note":""},"cappuccino":{"price":"85","note":""},
+            "cold_brew":{"price":"150","note":"Cold Brew Fusion พีช+ไวน์"},"frappe":{"price":"","note":""},
+            "matcha":{"price":"80","note":"Classic / 110฿ Premium"},"signature_drink":{"price":"95","note":"Zignature (กาแฟส้ม — hero menu)"},
+            "food":{"price":"85","note":"Shio Pan / Saint Etoile / Cranberry CC"},
+            "other": [{"name":"Dirty","price":"125"},{"name":"Drip Fusion สตรอว์เบอรี่","price":"130"},{"name":"เสื้อ Merch","price":"444"}]
+        },
+        "strengths": ["Dark aesthetic เป็น differentiator เดียวในสกลนคร", "Zignature signature ที่จดจำง่าย", "LINE MAN delivery ยืนยัน (07:30-17:30)", "Community Soulrun collab", "Wongnai 5.0/5 #33/436"],
+        "promotions": ["ค่าส่ง LINE MAN เริ่ม 0฿ ในพื้นที่"],
+        "weaknesses": ["Google Maps ไม่ indexed → เสีย SEO", "Wongnai 4 reviews credibility ต่ำ", "Dark niche ไม่ appeal กลุ่ม family", "วันหยุด (อังคาร?) ยังไม่ confirmed"],
+        "location": "1268/6 ถ.กำจัดภัย ธาตุเชิงชุม เมืองสกลนคร", "hours": "07:30-18:00 ทุกวัน (ยังไม่ confirmed วันอังคาร)",
+        "social_trend": {"primary_platform":"Facebook","posting_frequency":"สม่ำเสมอ","content_style":"Dark aesthetic + Signature drink reveals + Soulrun community collab","engagement_level":"low-medium"},
+        "delivery": {
+            "primary_app": "LINE MAN",
+            "apps": ["LINE MAN", "Wongnai Delivery"],
+            "peak_hours": "07:30-17:30 (ตามเวลาร้าน)",
+            "active_promos": ["ค่าส่งเริ่ม 0฿ ในพื้นที่บริการ"],
+            "notes": "LINE MAN verified ทั้งจาก Wongnai listing และ Facebook post · ครบเมนูทุกรายการ · link direct: lin.ee/2PPUiFB"
+        }
+    },
+    {
+        "id": "competitor-allofkk",
+        "category": "competitor",
+        "title": "All of KK สกลนคร (Limited Data — 22 May 2026)",
+        "summary": "Small local café · Facebook เท่านั้น (~700 likes) · Tagline 'You can taste the passion' · ไม่พบ delivery · ข้อมูลจำกัดมาก — ต้องการ field visit",
+        "updated": "22 May 2026",
+        "source_url": "https://www.facebook.com/allofkk", "thumbnail_url": "",
+        "tags": ["สกลนคร", "Local", "Independent", "LimitedData"],
+        "relevance": "medium",
+        "detail": "All of KK — Facebook: facebook.com/allofkk\nTagline: 'You can taste the passion'\n\n⚠️ ข้อมูลจำกัดมาก — Facebook blocking crawlers:\n• Facebook: ~700 likes / ~205 check-ins (เท่านั้นที่ยืนยันได้)\n• ไม่พบ Instagram, TikTok, Wongnai, Google Maps listing\n• ไม่ทราบ: ที่อยู่, เวลาเปิด, เมนู, ราคา\n\nภาพรวม: ร้านเล็ก low-profile ยังไม่ถูก 'ค้นพบ' โดย community นักรีวิว\nCheck-in 205 คน บ่งชี้มีลูกค้าจริง แต่ social presence ต่ำที่สุดในบรรดาคู่แข่งที่ track\n\n⚠️ แนะนำ: เข้าดู facebook.com/allofkk โดยตรง หรือ field visit เพื่อ update ข้อมูล",
+        "pricing": {
+            "espresso":{"price":"","note":"ไม่ทราบ"},"americano":{"price":"","note":"ไม่ทราบ"},
+            "latte":{"price":"","note":""},"cappuccino":{"price":"","note":""},
+            "cold_brew":{"price":"","note":""},"frappe":{"price":"","note":""},
+            "matcha":{"price":"","note":""},"signature_drink":{"price":"","note":"ไม่ทราบ"},
+            "food":{"price":"","note":""},
+            "other": []
+        },
+        "strengths": ["มีลูกค้าจริง (205 check-ins)", "Tagline passion-driven"],
+        "promotions": [],
+        "weaknesses": ["Facebook เท่านั้น (ไม่มี IG/TikTok)", "ไม่มี delivery platform", "ไม่มี Wongnai listing", "ข้อมูลสาธารณะน้อยมาก"],
+        "location": "สกลนคร (ไม่ทราบที่อยู่ชัดเจน)", "hours": "ไม่ทราบ",
+        "social_trend": {"primary_platform":"Facebook","posting_frequency":"ไม่ทราบ","content_style":"ไม่ทราบ — ต้องการ field visit","engagement_level":"low"},
+        "delivery": {
+            "primary_app": "ไม่มี",
+            "apps": [],
+            "peak_hours": "N/A",
+            "active_promos": [],
+            "notes": "ไม่พบบน LINE MAN, GrabFood, Wongnai Delivery — dine-in เท่านั้น (สันนิษฐาน)"
+        }
+    },
+    {
         "id": "competitor-meesuk",
         "category": "competitor",
         "title": "มีสุขสโลว์บาร์หน้าบ้านแม่ สกลนคร (Verified 22 May 2026)",
