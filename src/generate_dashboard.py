@@ -600,6 +600,70 @@ INTEL_DATA_FALLBACK = [
         }
     },
     {
+        "id": "competitor-panacomehome",
+        "category": "competitor",
+        "title": "ป่านาคำหอม (Pa Na Come Home)",
+        "summary": "Forest sanctuary 43 ไร่กลางเมืองสกลนคร · คาเฟ่เปิดเฉพาะเสาร์-อาทิตย์ 10:00-16:00 · กาแฟ Thai beans 20-40฿ (ราคาต่ำสุดในกลุ่ม) · ที่พัก 7 ห้อง 1,800-3,500฿/คืน · ไม่มี delivery เลย",
+        "updated": "23 May 2026",
+        "source_url": "https://panacomehome.com",
+        "thumbnail_url": "",
+        "tags": ["eco", "forest", "retreat", "organic", "ที่พัก", "slow-life", "สกลนคร"],
+        "relevance": "high",
+        "detail": "ป่านาคำหอม (Pa Na Come Home) — Forest sanctuary กลางเมืองสกลนคร\n\nเปิดกิจการ: 2013 · เจ้าของ: รัฐิกร ทองศิริ (นักอนุรักษ์ป่า/ผู้ประกอบการ)\n\nพื้นที่ 43 ไร่:\n• ป่าดิบแล้ง 20 ไร่ (walking trail ไม่แตะต้อง)\n• นาข้าวอินทรีย์ + สวนผลไม้ + บ่อน้ำ\n• บ้านพัก 7 ห้อง (Phon Samed 1-6 + Phon Makok 7)\n• Phon Samoa Cafe (เสาร์-อาทิตย์ 10:00-16:00)\n• Phon Khoi Activity Hall (Workshop/Event)\n\nBrand concept: 'Space of Allowing' — ชะลอจังหวะชีวิต สูดอากาศดี ท่ามวิวร่มรื่น\nPhilosophy: Eco conservation + slow living + ธรรมชาติกลางเมือง\n\nCafe Menu (Phon Samoa):\n• กาแฟ Thai beans 20-40฿ — ราคาต่ำสุดในกลุ่มทั้งหมด\n• ช็อกโกแลตไทย award-winning Thai origin\n• Matcha latte (non-dairy)\n• Latte + lemongrass mocktail (seasonal organic)\n• โซดาโฮมเมดจากพืชที่ปลูกเอง\n• อาหาร: ข้าวอินทรีย์ + ผักสวนสด\n• ไม่ใช้นมข้นหวาน ไม่ใช้สารปรุงแต่ง ความหวานจากน้ำตาลมะพร้าว\n• Keto-friendly · Vegan-friendly\n\nActivity Space (Phon Khoi): Day-use 8,000฿ / Overnight 12,000฿\nEvent: Workshop mindfulness, sustainability, film screening, ประชุม\n\nUnique experiences:\n• หิ่งห้อยในคืนฟ้าใส = ไม่มีร้านอื่นในสกลนครมี\n• สุนัขขาวฟู = mascot ธรรมชาติ\n• ข้าวอินทรีย์จากนาตัวเอง = farm-to-table จริง\n\nSocial: Facebook panacomehome (active) + UGC TikTok #ป่านาคำหอม 'คาเฟ่ลับสกลนคร นึกว่าอยู่บนภูพาน'\nDelivery: ไม่มีเลย — ธุรกิจหลักคือที่พัก ไม่ใช่คาเฟ่",
+        "pricing": {
+            "espresso": {"price": "", "note": ""},
+            "americano": {"price": "", "note": ""},
+            "latte": {"price": "", "note": ""},
+            "cappuccino": {"price": "", "note": ""},
+            "cold_brew": {"price": "", "note": ""},
+            "frappe": {"price": "", "note": ""},
+            "matcha": {"price": "ไม่ทราบ", "note": "non-dairy"},
+            "signature_drink": {"price": "ไม่ทราบ", "note": "lemongrass mocktail"},
+            "food": {"price": "ไม่ทราบ", "note": "ข้าวอินทรีย์ + ผักสวนสด"},
+            "other": [
+                {"name": "กาแฟ Thai beans", "price": "20-40฿"},
+                {"name": "ช็อกโกแลตไทย award-winning", "price": "ไม่ทราบ"},
+                {"name": "โซดาโฮมเมด", "price": "ไม่ทราบ"},
+                {"name": "ที่พัก Phon Samed (38 ตร.ม.)", "price": "1,800-3,500฿/คืน"},
+                {"name": "ที่พัก Phon Makok (28 ตร.ม.)", "price": "1,800-2,500฿/คืน"},
+                {"name": "Phon Khoi Day-use", "price": "8,000฿"},
+                {"name": "Phon Khoi Overnight", "price": "12,000฿"}
+            ]
+        },
+        "strengths": [
+            "ป่า 43 ไร่กลางเมือง = absolute uniqueness ในสกลนคร",
+            "กาแฟ 20-40฿ = ราคาต่ำสุดในกลุ่มทั้งหมด",
+            "Farm-to-table จริง (ข้าวอินทรีย์ + ผักสวน + น้ำตาลมะพร้าว)",
+            "หิ่งห้อย + ดาว = ประสบการณ์ที่จำไม่ลืม",
+            "Activity space Phon Khoi = B2B revenue stream",
+            "เว็บไซต์ panacomehome.com ที่ดีมาก",
+            "UGC organic แรง TikTok 'คาเฟ่ลับ นึกว่าอยู่บนภูพาน'"
+        ],
+        "promotions": [],
+        "weaknesses": [
+            "เปิดเฉพาะเสาร์-อาทิตย์ = ตลาด จ-ศ ว่างสนิท",
+            "ไม่มี delivery เลย",
+            "ไม่มี Wongnai listing = ไม่ปรากฏใน food discovery apps",
+            "ไม่มี official Instagram/TikTok = UGC-dependent ทั้งหมด",
+            "Target audience แคบ (eco-traveler/wellness) ไม่ใช่ daily coffee crowd"
+        ],
+        "location": "240/7 ชุมชนหนองแดง ซอยท่านขุน 1 ถ.รัฐบำรุง ต.ธาตุเชิงชุม เมืองสกลนคร",
+        "hours": "คาเฟ่: เสาร์-อาทิตย์ 10:00-16:00 เท่านั้น · ที่พัก: ทุกวัน (จองล่วงหน้า 1 วัน)",
+        "social_trend": {
+            "primary_platform": "Facebook",
+            "posting_frequency": "ไม่สม่ำเสมอ",
+            "content_style": "Eco/nature documentary · forest preservation · slow life aesthetic",
+            "engagement_level": "medium (UGC organic สูง บน TikTok/Lemon8)"
+        },
+        "delivery": {
+            "primary_app": "ไม่มี",
+            "apps": [],
+            "peak_hours": "ไม่มี",
+            "active_promos": [],
+            "notes": "ไม่อยู่บน delivery apps เลย — คาเฟ่เปิดเฉพาะเสาร์-อาทิตย์ ธุรกิจหลักคือที่พักไม่ใช่คาเฟ่ ไม่พบ Wongnai/LINE MAN/GrabFood"
+        }
+    },
+    {
         "id": "delivery-apps-overview",
         "category": "delivery",
         "title": "Delivery Apps ร้านกาแฟ สกลนคร — ภาพรวม 2026",
@@ -618,9 +682,9 @@ INTEL_DATA_FALLBACK = [
     {
         "id": "delivery-local-cafes",
         "category": "delivery",
-        "title": "ร้านกาแฟท้องถิ่นสกลนคร — สถานะ Delivery (Updated 22 May 2026)",
-        "summary": "CHANN (LINE MAN ✅) · SNIFF (LINE MAN ✅) · จุมพฏ (LINE MAN ✅ 2 สาขา) · Elemental Haus (LINE MAN ✅) · Rok 'n Road (LINE MAN ✅) · Alice (LINE MAN ✅) · FIKA (LINE MAN ✅) · ZMd (LINE MAN ✅) · RAINTREE (Wongnai direct) · มีสุข (❌) · All of KK (❌) · Chains: Amazon/Wawee/Inthanin (GrabFood ✅)",
-        "updated": "22 May 2026",
+        "title": "ร้านกาแฟท้องถิ่นสกลนคร — สถานะ Delivery (Updated 23 May 2026)",
+        "summary": "CHANN (LINE MAN ✅) · SNIFF (LINE MAN ✅) · จุมพฏ (LINE MAN ✅ 2 สาขา) · Elemental Haus (LINE MAN ✅) · Rok 'n Road (LINE MAN ✅) · Alice (LINE MAN ✅) · FIKA (LINE MAN ✅) · ZMd (LINE MAN ✅) · BOONNAR (LINE MAN ✅) · A Cup of Joy (LINE MAN ✅) · RAINTREE (Wongnai direct) · ป่านาคำหอม (❌) · มีสุข (❌) · All of KK (❌) · Chains: Amazon/Wawee/Inthanin (GrabFood ✅)",
+        "updated": "23 May 2026",
         "source_url": "https://www.wongnai.com/listings/sakonnakhon-coffee-cafe", "thumbnail_url": "",
         "tags": ["specialty", "local", "delivery", "สกลนคร", "Wongnai", "LINE MAN"],
         "relevance": "high",
