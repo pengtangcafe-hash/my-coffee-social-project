@@ -341,6 +341,43 @@ INTEL_DATA_FALLBACK = [
         }
     },
     {
+        "id": "competitor-jumpot",
+        "category": "competitor",
+        "title": "จุมพฏ-kuckhang / กินกาแฟหรือยังครับ สกลนคร (Verified 22 May 2026)",
+        "summary": "\"คาเฟ่ลับ\" + Art Toy collector's café · 2 สาขา (ต้นกำเนิด + บายพาส) · Latte 65฿ (ถูกสุดกลุ่ม) · TikTok @jumpotcoffee active · LINE MAN ✅ สั่ง LINE โดยตรงได้ · Wongnai credibility ต่ำมาก (1 review) · ปิด 16:00",
+        "updated": "22 May 2026",
+        "source_url": "https://www.facebook.com/profile?id=61555411775637",
+        "thumbnail_url": "",
+        "tags": ["สกลนคร", "Local", "Independent", "Hidden café", "Art Toy", "Nostalgia", "Specialty"],
+        "relevance": "high",
+        "detail": "จุมพฏ-kuckhang / กินกาแฟหรือยังครับ / คักแฮง\n\nสาขาต้นกำเนิด: 609 ถ.กำจัดภัย ธาตุเชิงชุม เมืองสกลนคร (ซอยข้างร้านเสริมสวยดุสิตา)\nโทร: 080-939-8210 · เปิด: ทุกวัน 07:30-16:00\n\nสาขาบายพาส: 116/11 ถ.บ้านโคกสว่าง ธาตุเชิงชุม เมืองสกลนคร\nโทร: 084-286-6471 · เปิด: ทุกวัน 08:30-16:00\n\nConcept: \"คาเฟ่ลับ\" + Art Toy Collectors' Café — ความ hidden/secret ใช้เป็น marketing tool หลัก\n\nบรรยากาศ (ต้นกำเนิด):\n• บ้านไม้วินเทจ ป้ายสีฟ้าเฟด เลข 609\n• ผนังอิฐ + โปสเตอร์หนัง vintage (Back to the Future, My Neighbor Totoro)\n• ของเล่น collector เยอะมาก: Peppa Pig, Toy Story (Lotso), Ted, Mazinger Z, N64, Hot Wheels, Transformer\n• ตู้โชว์เมล็ดกาแฟ + QR code สั่ง\n• เหมาะถ่ายรูป art/nostalgic style\n\nSocial Media:\n• Facebook: กินกาแฟหรือยังครับ (followers ไม่ทราบ)\n• TikTok: @jumpotcoffee — official active account\n• LINE: @jumpot — รับ order โดยตรง\n• Wongnai: Listed ทั้ง 2 สาขา (0-1 review — credibility ต่ำมาก)\n• Lemon8: organic viral — visitors review เยอะ\n\nPromotion: บัตรสมาชิกฟรี จำนวนจำกัด (LINE @jumpot)\nSpecial: ใช้นม mmilk (lactose-free) · ขาย retail beans\n\nช่องว่างสำหรับคู่แข่ง:\n• ปิด 16:00 — ตลาดช่วง 16:00-22:00 ว่างทั้งหมด\n• Wongnai credibility ต่ำมาก (1 review)\n• \"ลับ\" มากจนหาไม่เจอ = barrier สำหรับลูกค้าใหม่",
+        "pricing": {
+            "espresso": {"price": "", "note": ""},
+            "americano": {"price": "", "note": ""},
+            "latte": {"price": "65", "note": "ถูกสุดในกลุ่ม"},
+            "cappuccino": {"price": "", "note": ""},
+            "cold_brew": {"price": "", "note": ""},
+            "frappe": {"price": "", "note": ""},
+            "matcha": {"price": "", "note": ""},
+            "signature_drink": {"price": "", "note": "Thai Tea (หอมมาก)"},
+            "food": {"price": "", "note": "ขนมปังโทสต์ (\"อร่อยมาก\")"},
+            "other": [{"name": "Retail beans", "price": "ไม่ทราบ"}, {"name": "บัตรสมาชิก", "price": "ฟรี (จำกัด)"}]
+        },
+        "strengths": ["\"คาเฟ่ลับ\" positioning สร้าง organic curiosity", "Art Toy aesthetic ไม่มีร้านใดในสกลนครทำ", "Latte 65฿ ถูกสุดในกลุ่ม", "TikTok @jumpotcoffee official active", "LINE order + LINE MAN ง่ายต่อ conversion", "Lactose-free milk option = thoughtful niche", "2 สาขา = brand กำลังเติบโต"],
+        "promotions": ["บัตรสมาชิกฟรี จำนวนจำกัด (ลงทะเบียน LINE @jumpot)"],
+        "weaknesses": ["ปิด 16:00 — ตลาดช่วงบ่ายเย็น-ค่ำว่างทั้งหมด", "Wongnai credibility ต่ำ (0-1 review)", "ความ 'ลับ' = barrier ลูกค้าใหม่หาไม่เจอ", "Facebook followers ไม่ทราบ"],
+        "location": "ต้นกำเนิด: 609 ถ.กำจัดภัย ธาตุเชิงชุม | บายพาส: 116/11 ถ.บ้านโคกสว่าง ธาตุเชิงชุม",
+        "hours": "ต้นกำเนิด: ทุกวัน 07:30-16:00 | บายพาส: ทุกวัน 08:30-16:00",
+        "social_trend": {"primary_platform": "TikTok+LINE", "posting_frequency": "ปานกลาง", "content_style": "Hidden café discovery · Art Toy showcase · nostalgic aesthetic", "engagement_level": "medium (organic UGC สูง)"},
+        "delivery": {
+            "primary_app": "LINE MAN",
+            "apps": ["LINE MAN", "Wongnai Delivery", "LINE @jumpot"],
+            "peak_hours": "07:30-15:30 (ตามเวลาร้าน ปิด 16:00)",
+            "active_promos": ["ค่าส่งเริ่ม 0฿ ในพื้นที่บริการ"],
+            "notes": "LINE MAN verified via Wongnai (ทั้ง 2 สาขา) · สั่งได้ผ่าน LINE @jumpot โดยตรง · ไม่พบบน GrabFood/ShopeeFood"
+        }
+    },
+    {
         "id": "competitor-sniff",
         "category": "competitor",
         "title": "SNIFF specialty coffee สกลนคร (Verified 22 May 2026)",
