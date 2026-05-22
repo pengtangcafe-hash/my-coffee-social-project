@@ -764,6 +764,18 @@ def load_intel_json() -> list:
     return INTEL_DATA_FALLBACK
 
 
+def load_tracker_json() -> dict:
+    """Load competitor tracking data from data/competitor-tracking-latest.json."""
+    tracking_file = PROJECT_ROOT / "data" / "competitor-tracking-latest.json"
+    if tracking_file.exists():
+        try:
+            with open(tracking_file, encoding="utf-8") as f:
+                return json.load(f)
+        except Exception:
+            pass
+    return {}  # empty — tracker view will show "ยังไม่มีข้อมูล"
+
+
 # ─────────────────────────────────────────────────────────────
 # Step 1: Run normalize.py for each detected platform path
 # ─────────────────────────────────────────────────────────────
@@ -1451,6 +1463,16 @@ HTML_TEMPLATE = """\
         เชิงลึก
       </button>
 
+      <button onclick="showView('view-tracker')" id="nav-tracker"
+        class="nav-btn w-full text-left px-4 py-2.5 rounded-xl flex items-center gap-3
+               text-slate-600 hover:bg-slate-50 transition-colors text-sm">
+        <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+        </svg>
+        ติดตามคู่แข่ง
+      </button>
+
       <div class="pt-2 pb-1">
         <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest px-4">Tools</p>
       </div>
@@ -1629,6 +1651,25 @@ HTML_TEMPLATE = """\
       <div id="deep-content-timeline" style="display:none"></div>
     </div>
 
+    <!-- ── Tracker View ── -->
+    <div id="view-tracker" class="view">
+
+      <div class="flex items-center justify-between mb-6">
+        <div>
+          <h1 class="text-3xl font-black mb-1" style="color:var(--text)">ติดตามคู่แข่ง</h1>
+          <p class="text-sm" style="color:var(--text-muted)">เปรียบเทียบกิจกรรมคู่แข่งแต่ละช่วงเวลา</p>
+        </div>
+        <div class="flex gap-2" id="tracker-period-tabs">
+          <button onclick="setTrackerPeriod('week')"  id="trk-week"  class="trk-tab px-4 py-2 rounded-xl text-sm font-semibold transition-all">สัปดาห์</button>
+          <button onclick="setTrackerPeriod('month')" id="trk-month" class="trk-tab px-4 py-2 rounded-xl text-sm font-semibold transition-all">เดือน</button>
+          <button onclick="setTrackerPeriod('year')"  id="trk-year"  class="trk-tab px-4 py-2 rounded-xl text-sm font-semibold transition-all">ปี</button>
+        </div>
+      </div>
+
+      <div id="tracker-content"></div>
+
+    </div>
+
     <!-- ── Import View ── -->
     <div id="view-import" class="view">
 
@@ -1694,6 +1735,7 @@ const DATA = {DATA_JSON};
 const COMP = {COMP_JSON};
 const PLATFORMS = {PLATFORMS_JSON};
 const INTEL = {INTEL_JSON};
+const TRACKER = {TRACKER_JSON};
 
 // ── Chart instances cache ──
 const chartInstances = {{}};
@@ -1765,6 +1807,7 @@ function initCharts(viewId) {{
   if (viewId === 'view-intel')   {{ try {{ renderIntelCards(); }} catch(e) {{ console.error('renderIntelCards', e); }} return; }}
   if (viewId === 'view-pricing') {{ try {{ renderPricingView(); }} catch(e) {{ console.error('renderPricingView', e); }} return; }}
   if (viewId === 'view-competitor-deep') {{ try {{ renderDeepTab(); }} catch(e) {{ console.error('renderDeepTab', e); }} return; }}
+  if (viewId === 'view-tracker') {{ try {{ renderTrackerView(); }} catch(e) {{ console.error('renderTrackerView', e); }} return; }}
   const platform = viewId.replace('view-', '');
   if (!DATA[platform]) return;
   try {{ initLineChart(platform); }} catch(e) {{ console.error('initLineChart', e); }}
@@ -2536,6 +2579,177 @@ function renderDeepTimeline() {{
   + '</div>';
 }}
 
+// ── Tracker ──────────────────────────────────────────────────
+let currentTrackerPeriod = 'week';
+
+function setTrackerPeriod(period) {{
+  currentTrackerPeriod = period;
+  ['week','month','year'].forEach(p => {{
+    const btn = document.getElementById('trk-' + p);
+    if (!btn) return;
+    if (p === period) {{
+      btn.style.background = 'var(--nav-active)';
+      btn.style.color = 'var(--text)';
+      btn.style.border = '1.5px solid var(--card-border)';
+    }} else {{
+      btn.style.background = 'transparent';
+      btn.style.color = 'var(--text-muted)';
+      btn.style.border = '1.5px solid transparent';
+    }}
+  }});
+  renderTrackerContent(period);
+}}
+
+function renderTrackerView() {{
+  setTrackerPeriod(currentTrackerPeriod);
+}}
+
+function renderTrackerContent(period) {{
+  const el = document.getElementById('tracker-content');
+  if (!el) return;
+
+  // ยังไม่มีข้อมูล
+  if (!TRACKER || !TRACKER.period) {{
+    el.innerHTML = `
+      <div class="rounded-2xl p-10 text-center" style="background:var(--card);border:1px solid var(--card-border)">
+        <div class="text-4xl mb-4">📊</div>
+        <div class="text-lg font-bold mb-2" style="color:var(--text)">ยังไม่มีข้อมูลการติดตาม</div>
+        <div class="text-sm" style="color:var(--text-muted)">รัน <code class="px-2 py-0.5 rounded" style="background:var(--nav-active)">/track-competitors</code> เพื่อเริ่มวิเคราะห์</div>
+        <div class="mt-3 text-xs" style="color:var(--text-muted)">
+          /track-competitors &nbsp;·&nbsp; /track-competitors --month &nbsp;·&nbsp; /track-competitors --year
+        </div>
+      </div>`;
+    return;
+  }}
+
+  const data = TRACKER;
+  const periodLabel = data.period_label || period;
+  const fromDate = data.from_date || '';
+  const toDate = data.to_date || '';
+  const mkt = data.market_summary || {{}};
+  const competitors = data.competitors || [];
+
+  // Alert level colors
+  const alertColor = {{ high: '#ef4444', medium: '#f59e0b', low: '#22c55e' }};
+  const alertLabel = {{ high: '🔴 น่าจับตา', medium: '🟡 น่าสังเกต', low: '🟢 ปกติ' }};
+  const activityColor = {{ high: '#ef4444', medium: '#f59e0b', low: '#64748b' }};
+
+  // Summary KPI bar
+  const kpiHtml = `
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+      ${{[
+        ['🏆 Active สูงสุด', mkt.most_active || '—'],
+        ['📢 โปรโมชันใหม่', (mkt.new_promotions_count || 0) + ' รายการ'],
+        ['🛵 Delivery เปลี่ยน', (mkt.delivery_changes_count || 0) + ' ร้าน'],
+        ['🔴 น่าจับตา', (mkt.alert_high || []).length + ' ร้าน'],
+      ].map(([label, val]) => `
+        <div class="rounded-2xl p-4" style="background:var(--card);border:1px solid var(--card-border)">
+          <div class="text-xs mb-1" style="color:var(--text-muted)">${{label}}</div>
+          <div class="font-bold text-base" style="color:var(--text)">${{val}}</div>
+        </div>`).join('')}}
+    </div>`;
+
+  // Key insight
+  const insightHtml = mkt.key_insight ? `
+    <div class="rounded-2xl p-4 mb-6 flex items-start gap-3"
+         style="background:var(--card);border:1.5px solid var(--card-border)">
+      <span class="text-xl">💡</span>
+      <div>
+        <div class="text-xs font-bold mb-1" style="color:var(--text-muted)">KEY INSIGHT — ${{periodLabel}}</div>
+        <div class="text-sm font-medium" style="color:var(--text)">${{mkt.key_insight}}</div>
+      </div>
+    </div>` : '';
+
+  // Competitor cards
+  const cardsHtml = competitors.map(comp => {{
+    const al = comp.alert_level || 'low';
+    const promos = comp.promotions || {{}};
+    const content = comp.content || {{}};
+    const delivery = comp.delivery || {{}};
+    const pricing = comp.pricing_changes || [];
+
+    const promosNew = (promos.new_this_period || []).map(p =>
+      `<span class="inline-block text-xs px-2 py-0.5 rounded-full bg-orange-100 text-orange-700 mr-1 mb-1">${{p}}</span>`
+    ).join('');
+    const promosActive = (promos.active || []).filter(p => !(promos.new_this_period || []).includes(p)).map(p =>
+      `<span class="inline-block text-xs px-2 py-0.5 rounded-full mr-1 mb-1" style="background:var(--nav-active);color:var(--text-muted)">${{p}}</span>`
+    ).join('');
+    const platformBadges = (content.platforms || []).map(p =>
+      `<span class="inline-block text-xs px-2 py-0.5 rounded-full mr-1" style="background:var(--nav-active);color:var(--text)">${{p}}</span>`
+    ).join('');
+    const topics = (content.topics || []).map(t =>
+      `<span class="inline-block text-xs px-2 py-0.5 rounded-full mr-1 mb-1 bg-blue-100 text-blue-700">${{t}}</span>`
+    ).join('');
+
+    return `
+      <div class="rounded-2xl p-5 mb-4" style="background:var(--card);border:2px solid ${{alertColor[al] || 'var(--card-border)'}}20">
+        <!-- Header -->
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center gap-2">
+            <div class="font-bold text-base" style="color:var(--text)">${{comp.name}}</div>
+            <span class="text-xs px-2 py-0.5 rounded-full font-semibold"
+                  style="background:${{alertColor[al] || '#64748b'}}20;color:${{alertColor[al] || '#64748b'}}">${{alertLabel[al] || al}}</span>
+          </div>
+          <div class="text-xs px-3 py-1 rounded-full font-semibold"
+               style="background:${{activityColor[comp.activity_level || 'low']}}15;color:${{activityColor[comp.activity_level || 'low']}}">
+            Activity: ${{comp.activity_level || '—'}}
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Promotions -->
+          <div class="rounded-xl p-3" style="background:var(--nav-active);border:1px solid var(--card-border)">
+            <div class="text-xs font-bold mb-2" style="color:var(--text-muted)">📢 โปรโมชัน</div>
+            ${{promosNew ? `<div class="mb-1"><span class="text-xs" style="color:var(--text-muted)">ใหม่:</span> ${{promosNew}}</div>` : ''}}
+            ${{promosActive ? `<div><span class="text-xs" style="color:var(--text-muted)">active:</span> ${{promosActive}}</div>` : ''}}
+            ${{!promosNew && !promosActive ? `<div class="text-xs" style="color:var(--text-muted)">ไม่มีโปรโมชัน</div>` : ''}}
+          </div>
+
+          <!-- Content -->
+          <div class="rounded-xl p-3" style="background:var(--nav-active);border:1px solid var(--card-border)">
+            <div class="text-xs font-bold mb-2" style="color:var(--text-muted)">🎬 Content</div>
+            ${{platformBadges ? `<div class="mb-1">${{platformBadges}}</div>` : ''}}
+            ${{topics ? `<div class="mb-1">${{topics}}</div>` : ''}}
+            ${{content.estimated_posts ? `<div class="text-xs" style="color:var(--text-muted)">~${{content.estimated_posts}} โพสต์ช่วงนี้</div>` : ''}}
+            ${{content.notable_content ? `<div class="text-xs mt-1" style="color:var(--text)">✨ ${{content.notable_content}}</div>` : ''}}
+          </div>
+
+          <!-- Delivery -->
+          <div class="rounded-xl p-3" style="background:var(--nav-active);border:1px solid var(--card-border)">
+            <div class="text-xs font-bold mb-2" style="color:var(--text-muted)">🛵 Delivery</div>
+            ${{delivery.changed
+              ? `<span class="text-xs px-2 py-0.5 rounded-full bg-orange-100 text-orange-700">เปลี่ยนแปลง</span>
+                 <div class="text-xs mt-1" style="color:var(--text)">${{delivery.note || ''}}</div>`
+              : `<div class="text-xs" style="color:var(--text-muted)">ไม่มีการเปลี่ยนแปลง</div>`}}
+          </div>
+
+          <!-- Pricing -->
+          <div class="rounded-xl p-3" style="background:var(--nav-active);border:1px solid var(--card-border)">
+            <div class="text-xs font-bold mb-2" style="color:var(--text-muted)">💰 ราคา</div>
+            ${{pricing.length > 0
+              ? pricing.map(p => `<div class="text-xs" style="color:var(--text)">${{p}}</div>`).join('')
+              : `<div class="text-xs" style="color:var(--text-muted)">ไม่มีการเปลี่ยนแปลง</div>`}}
+          </div>
+        </div>
+
+        <!-- Summary -->
+        ${{comp.summary ? `
+        <div class="mt-3 pt-3 text-sm" style="border-top:1px solid var(--card-border);color:var(--text)">
+          💬 ${{comp.summary}}
+        </div>` : ''}}
+      </div>`;
+  }}).join('');
+
+  const headerInfo = fromDate && toDate
+    ? `<div class="text-xs mb-4" style="color:var(--text-muted)">${{fromDate}} — ${{toDate}} · ${{data.snapshot_compared ? 'เปรียบเทียบกับ snapshot ก่อนหน้า' : 'ข้อมูลจาก web search'}}</div>`
+    : '';
+
+  el.innerHTML = headerInfo + kpiHtml + insightHtml
+    + (competitors.length === 0
+        ? `<div class="text-center py-10 text-sm" style="color:var(--text-muted)">ไม่มีข้อมูลคู่แข่งใน period นี้</div>`
+        : `<div class="text-sm font-bold mb-3" style="color:var(--text-muted)">รายละเอียดแต่ละร้าน (${{competitors.length}} ร้าน)</div>` + cardsHtml);
+}}
+
 // ── Boot ──
 applyStoredTheme();
 showView('view-home');
@@ -2554,6 +2768,7 @@ def build_html(all_history: dict[str, dict], generated_at: str) -> str:
     data_json, comp_json = build_data_json(all_history)
     platforms_json = json.dumps(list(all_history.keys()), ensure_ascii=False)
     intel_json = json.dumps(load_intel_json(), ensure_ascii=False)
+    tracker_json = json.dumps(load_tracker_json(), ensure_ascii=False)
 
     sidebar_nav = build_sidebar_nav(all_history)
     home_cards = build_home_cards(all_history)
@@ -2569,6 +2784,7 @@ def build_html(all_history: dict[str, dict], generated_at: str) -> str:
         COMP_JSON=comp_json,
         PLATFORMS_JSON=platforms_json,
         INTEL_JSON=intel_json,
+        TRACKER_JSON=tracker_json,
         GENERATED_AT=generated_at,
         SIDEBAR_NAV_ITEMS=sidebar_nav,
         HOME_CARDS=home_cards,

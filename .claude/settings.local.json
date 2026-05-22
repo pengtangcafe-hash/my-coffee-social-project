@@ -2,7 +2,16 @@
   "permissions": {
     "allow": [
       "Bash(python src/generate_dashboard.py sample-data/)",
-      "Bash(python -c ' *)"
+      "Bash(python -c ' *)",
+      "Skill(update-config)",
+      "WebSearch",
+      "WebFetch",
+      "Bash(python -c \"import sys; [print\\(line.encode\\('ascii','replace'\\).decode\\(\\)\\) for line in sys.stdin]\")",
+      "Bash(copy dashboard\\\\index.html docs\\\\index.html)",
+      "PowerShell(Copy-Item *)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)"
     ]
   }
 }
