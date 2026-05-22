@@ -526,6 +526,43 @@ INTEL_DATA_FALLBACK = [
         }
     },
     {
+        "id": "competitor-boonnar",
+        "category": "competitor",
+        "title": "BOONNAR ART SPACE (บุญหนา อาร์ต สเปซ)",
+        "summary": "Art Gallery + Café + Art School ร้านเดียวในสกลนคร · Blue Bica Coffee ชั้น 1 · Gallery ชั้น 3 · Art class 390฿ · Mascot ก่ำบอย · ตั้งชื่อตามหลวงปู่บุญหนา · เปิด ก.ย. 2023",
+        "updated": "23 May 2026",
+        "source_url": "https://www.wongnai.com/restaurants/2681276cf-boonnar-art-space",
+        "thumbnail_url": "",
+        "tags": ["art-gallery", "art-space", "community", "cultural", "specialty", "creative"],
+        "relevance": "high",
+        "detail": "BOONNAR ART SPACE ที่ 1751/1 ถ.รอบเมือง ใกล้ รพ.รักษ์สกล · 3 floors: ชั้น 1 Blue Bica Coffee, ชั้น 2 Art class เด็ก, ชั้น 3 Gallery · ก่อตั้งโดยครูเตย (ไอรัตน์ดา มหาชัย) จิตรกร-ครูสอนศิลปะ · ตั้งชื่อตามหลวงปู่บุญหนา ธมฺมทินฺโน พระดังสกลนคร · Mascot 'ก่ำบอย' เด็กใส่ชุดปลาอีก่ำ (ปลาประจำจังหวัด) = street art ทั่วเมือง · NEA CRU exhibitions หมุนเวียน = เหตุผลกลับมาซ้ำ · Art class เด็ก 390฿/ครั้ง = revenue เพิ่ม · ร้านเดียวในสกลนครที่รวม gallery + café + school",
+        "pricing": {
+            "espresso": {"price": "", "note": "฿ category (<100 บาท)"},
+            "americano": {"price": "", "note": ""},
+            "latte": {"price": "", "note": "Blue Bica Coffee brand"},
+            "cappuccino": {"price": "", "note": ""},
+            "cold_brew": {"price": "", "note": ""},
+            "frappe": {"price": "", "note": ""},
+            "matcha": {"price": "", "note": "เมนูแนะนำ"},
+            "signature_drink": {"price": "", "note": "Italian Soda: พีช, สตรอว์เบอร์รี, ลิ้นจี่"},
+            "food": {"price": "", "note": ""},
+            "other": [{"name": "Art class เด็ก (กับครูเตย)", "price": "390฿/ครั้ง"}]
+        },
+        "strengths": ["ร้านเดียวในสกลนครที่เป็น Art Gallery + Café + Art School = zero competition", "'ก่ำบอย' mascot + ปลาอีก่ำ = brand tie-in กับอัตลักษณ์สกลนครลึกมาก", "ตั้งชื่อตามหลวงปู่บุญหนา = cultural credibility สูงในชุมชน", "Art class 390฿ = revenue stream อิสระจากยอดกาแฟ", "NEA CRU rotating exhibitions = reason to return ทุก season", "เปิดเสาร์-อาทิตย์ถึง 19:00 · Wi-Fi · Parking · Pet-friendly"],
+        "promotions": [],
+        "weaknesses": ["Wongnai 0 reviews — credibility delivery ต่ำ", "Art class 390฿ = barrier สูงสำหรับ walk-in casual", "ที่ตั้ง ถ.รอบเมือง (ไม่ใช่ main street) — accessibility ต่ำกว่า CHANN", "Social followers ไม่ทราบ — ไม่รู้ actual reach", "Delivery ปิด 17:00 ทุกวัน แม้ร้านเปิดถึง 19:00 เสาร์-อาทิตย์"],
+        "location": "1751/1 ถ.รอบเมือง ต.ธาตุเชิงชุม อ.เมืองสกลนคร (~50 ม. จาก รพ.รักษ์สกล)",
+        "hours": "อ.–ศ. 07:00–17:00 · เสาร์–อาทิตย์ 07:00–19:00",
+        "social_trend": {"primary_platform": "Facebook + Instagram + TikTok", "posting_frequency": "ปานกลาง (art content + exhibition updates)", "content_style": "Art gallery · ก่ำบอย mascot · NEA CRU exhibition · art class · local culture", "engagement_level": "medium (unknown followers)"},
+        "delivery": {
+            "primary_app": "LINE MAN",
+            "apps": ["LINE MAN", "Wongnai Delivery"],
+            "peak_hours": "07:00-17:00 (ทุกวัน)",
+            "active_promos": ["ค่าส่งเริ่ม 0฿ ในพื้นที่บริการ"],
+            "notes": "LINE MAN via Wongnai · delivery ปิด 17:00 แม้ร้านเปิด 19:00 เสาร์-อาทิตย์ · ไม่พบ GrabFood/ShopeeFood"
+        }
+    },
+    {
         "id": "delivery-apps-overview",
         "category": "delivery",
         "title": "Delivery Apps ร้านกาแฟ สกลนคร — ภาพรวม 2026",
