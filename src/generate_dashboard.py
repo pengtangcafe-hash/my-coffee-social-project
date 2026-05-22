@@ -563,6 +563,43 @@ INTEL_DATA_FALLBACK = [
         }
     },
     {
+        "id": "competitor-acupofjoycoffee",
+        "category": "competitor",
+        "title": "A Cup Of Joy Coffee",
+        "summary": "Specialty coffee สำหรับคนพิเศษ · ถ.สุขเกษม ใกล้ Imperial Hotel · ต่ำกว่า 10 ที่นั่ง · เมล็ดกาแฟหลากหลาย (Americano Yellow Columbia) · ฿ category · LINE MAN ✅ · ไม่มี IG/TikTok",
+        "updated": "23 May 2026",
+        "source_url": "https://www.wongnai.com/restaurants/1226140rF-a-cup-of-joy-coffee",
+        "thumbnail_url": "",
+        "tags": ["specialty", "small-cafe", "coffee-bean", "affordable", "delivery"],
+        "relevance": "high",
+        "detail": "A Cup Of Joy Coffee ที่ 1305/40 ถ.สุขเกษม ดงมะไฟ เมืองสกลนคร (ทางเข้า Imperial Hotel) · specialty coffee ราคาเข้าถึงได้ (<100฿) · tagline 'กาแฟพิเศษ สำหรับคนพิเศษ' · เมล็ดกาแฟหลากหลาย เช่น Americano Yellow Columbia · ต่ำกว่า 10 ที่นั่ง · ปิด 16:00 · Facebook active แต่ไม่มี IG/TikTok · Wongnai 1-2 reviews (2021-2022) เท่านั้น · LINE MAN ✅ via Wongnai",
+        "pricing": {
+            "espresso": {"price": "", "note": ""},
+            "americano": {"price": "", "note": "Americano Yellow Columbia — เมนูแนะนำ"},
+            "latte": {"price": "", "note": "<100฿"},
+            "cappuccino": {"price": "", "note": ""},
+            "cold_brew": {"price": "", "note": ""},
+            "frappe": {"price": "", "note": ""},
+            "matcha": {"price": "", "note": ""},
+            "signature_drink": {"price": "", "note": "Special Coffee (multiple bean selections)"},
+            "food": {"price": "", "note": ""},
+            "other": []
+        },
+        "strengths": ["'กาแฟพิเศษ สำหรับคนพิเศษ' = positioning ชัดสำหรับ specialty niche", "เมล็ดกาแฟหลากหลาย = differentiator สำหรับคนรู้กาแฟ", "ราคา <100฿ = accessible specialty", "LINE MAN ✅ + pre-order pickup", "Amenities ครบ: Wi-Fi, Parking, Pet-friendly"],
+        "promotions": [],
+        "weaknesses": ["ต่ำกว่า 10 ที่นั่ง — capacity จำกัดมาก", "ไม่มี Instagram/TikTok — visual marketing ศูนย์", "ปิด 16:00 — ไม่มี afternoon-evening market เลย", "Wongnai reviews น้อยมากและเก่า (2021-2022) — แทบไม่มี social proof", "ทำเล ถ.สุขเกษม — ไม่ใช่ main café street"],
+        "location": "1305/40 ถ.สุขเกษม ดงมะไฟ เมืองสกลนคร (ทางเข้า Imperial Hotel)",
+        "hours": "จ.–ศ. 08:00–16:00 · เสาร์–อาทิตย์ 09:00–16:00",
+        "social_trend": {"primary_platform": "Facebook", "posting_frequency": "ต่ำ (ไม่สม่ำเสมอ)", "content_style": "Specialty coffee showcase · bean education · simple", "engagement_level": "low"},
+        "delivery": {
+            "primary_app": "LINE MAN",
+            "apps": ["LINE MAN", "Wongnai Delivery"],
+            "peak_hours": "08:00-16:00 (window แคบมาก)",
+            "active_promos": ["ค่าส่งเริ่ม 0฿ ในพื้นที่บริการ"],
+            "notes": "LINE MAN verified via Wongnai · ปิด 16:00 ทุกวัน · ไม่พบ GrabFood/ShopeeFood"
+        }
+    },
+    {
         "id": "delivery-apps-overview",
         "category": "delivery",
         "title": "Delivery Apps ร้านกาแฟ สกลนคร — ภาพรวม 2026",
