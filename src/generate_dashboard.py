@@ -489,6 +489,43 @@ INTEL_DATA_FALLBACK = [
         }
     },
     {
+        "id": "competitor-chann",
+        "category": "competitor",
+        "title": "CHANN CAFE : ชานคาเฟ่",
+        "summary": "บ้านเรือนไทยจากไม้เก่า 10+ ปี · Pet-friendly · ทำเลดี ถ.เสรีไทยใจกลางเมือง · ที่จอดรถ ~30 คัน · Instagram @chann.cafe 112 posts · UGC TikTok 8,414 likes · เปิด พ.ย. 2024",
+        "updated": "22 May 2026",
+        "source_url": "https://www.wongnai.com/restaurants/3633744Aj-chann-cafe",
+        "thumbnail_url": "",
+        "tags": ["thai-house", "pet-friendly", "aesthetic", "merchandise", "new-cafe", "fusion"],
+        "relevance": "high",
+        "detail": "CHANN CAFE ที่ 146/4 ถ.เสรีไทย ใจกลางเมือง · สร้างจากบ้านเรือนไทยเก่า ไม้สะสม 10+ ปีจากทั่วสกลนคร โดยช่างไม้เชื้อสายเวียดนาม · concept 'ชานบ้าน' = ความอบอุ่น เรือนไทย + modern · Pet-friendly (น้องหมาเข้าแอร์ได้) = differentiator ที่ไม่มีร้านไหนในกลุ่มทำ · ที่จอดรถ ~30 คัน ใหญ่ที่สุดในกลุ่ม · Instagram @chann.cafe 112 posts (brand investment สูง) · TikTok UGC viral 8,414+ likes · Merchandise line (แก้ว, กระเป๋า, หมวก, เสื้อ) · บิงซูชาไทยเกล็ดหิมะ = new menu · Wongnai 0 reviews แต่ OFFICIAL status · เปิด Soft Opening พ.ย. 2024",
+        "pricing": {
+            "espresso": {"price": "", "note": "เริ่ม 75฿"},
+            "americano": {"price": "", "note": ""},
+            "latte": {"price": "", "note": "~100฿"},
+            "cappuccino": {"price": "", "note": ""},
+            "cold_brew": {"price": "", "note": ""},
+            "frappe": {"price": "", "note": ""},
+            "matcha": {"price": "", "note": "Matcha latte available"},
+            "signature_drink": {"price": "", "note": "ชาไทยคาราเมล · บิงซูชาไทย (new)"},
+            "food": {"price": "", "note": "ครัวซอง 70฿ · Green tea cake · Chocolate cake · Tiramisu · Banoffee"},
+            "other": [{"name": "ชาเขียว", "price": "50฿"}, {"name": "Merchandise (แก้ว/กระเป๋า/หมวก/เสื้อ)", "price": "ไม่ทราบ"}]
+        },
+        "strengths": ["Pet-friendly (น้องหมาเข้าแอร์) = differentiator ที่ไม่มีร้านอื่นในกลุ่ม", "ทำเลดี ถ.เสรีไทย ใจกลางเมือง + ที่จอดรถ ~30 คัน", "Brand story ทรงพลัง — ไม้เก่า 10+ ปี ช่างฝีมือเชื้อสายเวียดนาม", "Instagram 112 posts (6 เดือน) = brand commitment สูง", "TikTok UGC viral 8,414+ likes single video", "Merchandise line = brand loyalty + passive income"],
+        "promotions": [],
+        "weaknesses": ["Instagram 464 followers ยังต่ำ (112 posts แต่ follower น้อย = low conversion)", "Wongnai 0 reviews — credibility delivery ต่ำ", "ยังใหม่ (เปิด พ.ย. 2024) — brand recognition อยู่ระหว่างสร้าง", "ปิด 17:00/18:00 — ไม่มี evening crowd"],
+        "location": "146/4 ถ.เสรีไทย ธาตุนาเวง เมืองสกลนคร (ติดร้านข้าวมันไก่แดงดำ)",
+        "hours": "จ.–ศ. 08:00–17:00 · เสาร์–อาทิตย์ 08:00–18:00",
+        "social_trend": {"primary_platform": "Instagram + TikTok", "posting_frequency": "สม่ำเสมอ (112 posts/6 เดือน IG)", "content_style": "Thai house aesthetic · ชานบ้าน warmth · pet-friendly · photo spots · merchandise", "engagement_level": "medium (growing rapidly)"},
+        "delivery": {
+            "primary_app": "LINE MAN",
+            "apps": ["LINE MAN", "Wongnai Delivery"],
+            "peak_hours": "08:00-17:00 จ-ศ · 08:00-18:00 เสาร์-อาทิตย์",
+            "active_promos": ["ค่าส่งเริ่ม 0฿ ในพื้นที่บริการ"],
+            "notes": "LINE MAN verified via Wongnai OFFICIAL · ไม่พบ GrabFood/ShopeeFood · เสาร์-อาทิตย์ window กว้างกว่า"
+        }
+    },
+    {
         "id": "delivery-apps-overview",
         "category": "delivery",
         "title": "Delivery Apps ร้านกาแฟ สกลนคร — ภาพรวม 2026",
@@ -508,7 +545,7 @@ INTEL_DATA_FALLBACK = [
         "id": "delivery-local-cafes",
         "category": "delivery",
         "title": "ร้านกาแฟท้องถิ่นสกลนคร — สถานะ Delivery (Updated 22 May 2026)",
-        "summary": "SNIFF (LINE MAN ✅) · จุมพฏ (LINE MAN ✅ 2 สาขา) · Elemental Haus (LINE MAN ✅) · Rok 'n Road (LINE MAN ✅) · Alice Cafe (LINE MAN ✅) · FIKA (LINE MAN ✅) · ZMd (LINE MAN ✅) · RAINTREE (Wongnai direct) · มีสุข (❌) · All of KK (❌) · Chains: Café Amazon/Wawee/Inthanin (GrabFood ✅)",
+        "summary": "CHANN (LINE MAN ✅) · SNIFF (LINE MAN ✅) · จุมพฏ (LINE MAN ✅ 2 สาขา) · Elemental Haus (LINE MAN ✅) · Rok 'n Road (LINE MAN ✅) · Alice (LINE MAN ✅) · FIKA (LINE MAN ✅) · ZMd (LINE MAN ✅) · RAINTREE (Wongnai direct) · มีสุข (❌) · All of KK (❌) · Chains: Amazon/Wawee/Inthanin (GrabFood ✅)",
         "updated": "22 May 2026",
         "source_url": "https://www.wongnai.com/listings/sakonnakhon-coffee-cafe", "thumbnail_url": "",
         "tags": ["specialty", "local", "delivery", "สกลนคร", "Wongnai", "LINE MAN"],
