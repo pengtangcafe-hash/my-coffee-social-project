@@ -452,6 +452,43 @@ INTEL_DATA_FALLBACK = [
         }
     },
     {
+        "id": "competitor-roknroad",
+        "category": "competitor",
+        "title": "Rok 'n Road Coffee",
+        "summary": "Vintage eclectic hidden gem · Hand-ground Arabica จากเชียงใหม่ · Beer + BBQ evenings · Google 4.6/5 · Facebook 4.8/5 · ต่ำกว่า 10 ที่นั่ง · ไม่มี official social",
+        "updated": "22 May 2026",
+        "source_url": "https://www.wongnai.com/restaurants/951527qf-rok-n-road-coffee",
+        "thumbnail_url": "",
+        "tags": ["specialty", "vintage", "hidden-gem", "bar", "hand-ground", "arabica"],
+        "relevance": "high",
+        "detail": "Vintage eclectic café ใน 291 ซอยมหาวงษ์ ใกล้ Robinson's · บรรยากาศ American flag + bowling pin sign + typewriter + bamboo beach bar + cat mascots · Hand-ground Arabica จากเชียงใหม่ (slow-drip) · Beer + BBQ Ribs + Cheeseburger ช่วงเย็น = Café & Bar hybrid ที่ unique ที่สุดในกลุ่ม · Google 4.6/5 (37 reviews) + Facebook 4.8/5 (74 reviews) = rating ดีที่สุดในกลุ่ม · ต่ำกว่า 10 ที่นั่ง = capacity limit สุดๆ · ไม่มี official social media แม้แต่แพลตฟอร์มเดียว",
+        "pricing": {
+            "espresso": {"price": "", "note": "฿ category (<100 บาท)"},
+            "americano": {"price": "", "note": ""},
+            "latte": {"price": "", "note": ""},
+            "cappuccino": {"price": "", "note": ""},
+            "cold_brew": {"price": "", "note": "Hand-ground Arabica จากเชียงใหม่"},
+            "frappe": {"price": "", "note": ""},
+            "matcha": {"price": "", "note": ""},
+            "signature_drink": {"price": "", "note": "Hand-ground Arabica slow-drip"},
+            "food": {"price": "", "note": "BBQ Ribs + Cheeseburger (evenings)"},
+            "other": [{"name": "Beer", "price": "ไม่ทราบ"}]
+        },
+        "strengths": ["Google 4.6/5 (37 reviews) + Facebook 4.8/5 (74 reviews) = rating ดีที่สุดในกลุ่ม", "Hand-ground Arabica จากเชียงใหม่ + slow-drip = quality signal ชัด", "Beer + BBQ evenings = unique revenue stream ที่ไม่มีร้านไหนทำ", "Vintage eclectic aesthetic หายากมากในสกลนคร", "LINE MAN ✅"],
+        "promotions": [],
+        "weaknesses": ["ต่ำกว่า 10 ที่นั่ง — capacity limit ใหญ่ที่สุดในกลุ่ม", "ไม่มี official social media แม้แต่บัญชีเดียว — 0% proactive marketing", "ปิดวันอังคาร + เปิดเฉพาะ 10:00–17:00 — ไม่มี morning rush และ evening crowd", "GPS ยาก — barrier สูงสำหรับลูกค้าใหม่", "Wongnai 0 reviews — credibility delivery ต่ำมาก"],
+        "location": "291 ซอยมหาวงษ์ ธาตุนาแวง เมืองสกลนคร (ใกล้ Robinson's, ซอยเดียวกับ O2 Hotel)",
+        "hours": "จ. 10:30-16:30 · อ. ปิด · พ.-เสาร์ 10:00-17:00 · อาทิตย์ 11:00-17:00",
+        "social_trend": {"primary_platform": "Facebook (personal)", "posting_frequency": "ไม่มี official content", "content_style": "Vintage eclectic · American flag · cat mascots · hidden gem · UGC-driven", "engagement_level": "low (no official account)"},
+        "delivery": {
+            "primary_app": "LINE MAN",
+            "apps": ["LINE MAN", "Wongnai Delivery"],
+            "peak_hours": "10:00-17:00 (window แคบ — ไม่มี morning rush)",
+            "active_promos": ["ค่าส่งเริ่ม 0฿ ในพื้นที่บริการ"],
+            "notes": "LINE MAN verified via Wongnai · ไม่พบ GrabFood/ShopeeFood · ปิดวันอังคาร"
+        }
+    },
+    {
         "id": "delivery-apps-overview",
         "category": "delivery",
         "title": "Delivery Apps ร้านกาแฟ สกลนคร — ภาพรวม 2026",
@@ -470,8 +507,8 @@ INTEL_DATA_FALLBACK = [
     {
         "id": "delivery-local-cafes",
         "category": "delivery",
-        "title": "ร้านกาแฟท้องถิ่นสกลนคร — สถานะ Delivery (Updated 21 May 2026)",
-        "summary": "SNIFF specialty (LINE MAN ✅) · Alice Cafe (LINE MAN ✅) · FIKA Cafè (LINE MAN ✅) · ZMd Specialty (LINE MAN ✅) · RAINTREE (ไม่ verified) · Café Amazon (GrabFood ✅) · มีสุขสโลว์บาร์ (❌) · All of KK (❌)",
+        "title": "ร้านกาแฟท้องถิ่นสกลนคร — สถานะ Delivery (Updated 22 May 2026)",
+        "summary": "SNIFF (LINE MAN ✅) · จุมพฏ (LINE MAN ✅ 2 สาขา) · Elemental Haus (LINE MAN ✅) · Rok 'n Road (LINE MAN ✅) · Alice Cafe (LINE MAN ✅) · FIKA (LINE MAN ✅) · ZMd (LINE MAN ✅) · RAINTREE (Wongnai direct) · มีสุข (❌) · All of KK (❌) · Chains: Café Amazon/Wawee/Inthanin (GrabFood ✅)",
         "updated": "22 May 2026",
         "source_url": "https://www.wongnai.com/listings/sakonnakhon-coffee-cafe", "thumbnail_url": "",
         "tags": ["specialty", "local", "delivery", "สกลนคร", "Wongnai", "LINE MAN"],
