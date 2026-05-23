@@ -664,6 +664,64 @@ INTEL_DATA_FALLBACK = [
         }
     },
     {
+        "id": "competitor-mokafox",
+        "category": "competitor",
+        "title": "MOKA FOX",
+        "summary": "Homey wooden garden cafe · Wongnai 4.6/5 อันดับ #19/443 ในจังหวัด · เปิดทุกวัน จ-ศ 09:00-16:00 เสาร์-อาทิตย์ 09:00-17:00 · LINE MAN ✅ · Family-friendly ที่สมบูรณ์ที่สุดในกลุ่ม",
+        "updated": "23 May 2026",
+        "source_url": "https://www.wongnai.com/restaurants/1053109Bs-moka-fox",
+        "thumbnail_url": "",
+        "tags": ["homey", "family-friendly", "garden", "wooden", "delivery", "Wongnai", "สกลนคร"],
+        "relevance": "high",
+        "detail": "MOKA FOX — Homey wooden garden cafe กลางเมืองสกลนคร\n\nที่ตั้ง: 691 ถ.รัฐบำรุง ธาตุนาเวง เมืองสกลนคร (ตรงข้ามร้านเหล้าเล็ก ก่อนถึงปั๊ม PTT แสงโฮม)\nRanking: #19 จาก 443 ร้านกาแฟ/ชา ในจังหวัดสกลนคร (Wongnai)\nFacebook: 3,762 likes · 3,922 visits\n\nConcept: Scandinavian + Thai homey aesthetic — บ้านไม้ 2 ชั้น + เฉลียง + สนามหญ้า\n\nZones:\n• ห้องปรับอากาศ (AC zone)\n• Semi-outdoor เฉลียง/ระเบียง\n• สนามหญ้า camping chairs\n• มุมถ่ายรูปหลายมุม\n• สนามเด็กเล่น\n\nAmenities: Wi-Fi, Parking, Pet-friendly, Credit card, LINE MAN Delivery ✅\nFamily-friendly สมบูรณ์ที่สุดในกลุ่ม = สนามเด็กเล่น + หลายโซน + pet-friendly\n\nMenu highlights:\n• Americano 85฿ / Latte 90฿ / Cappuccino 90฿ / Espresso 80฿\n• Iced Mocha 100฿ (เมนูแนะนำ)\n• Matcha Latte ice 150฿ / Hot Matcha 130฿\n• Signature Wake Up (กาแฟดำ + น้ำผลไม้ + syrup) 150฿\n• Hot Chocolate 90฿ / Milk drinks 70-95฿\n• Bakery & เค้ก\n\nSocial: Facebook 3,762 likes · UGC TikTok/Lemon8/Trip.com active · ไม่มี official IG/TikTok\nDelivery: LINE MAN via Wongnai · จ-ศ 09:00-15:30 / เสาร์-อาทิตย์ 09:00-16:30",
+        "pricing": {
+            "espresso": {"price": "80฿", "note": "hot"},
+            "americano": {"price": "85฿", "note": "hot/ice"},
+            "latte": {"price": "90฿", "note": "hot/ice"},
+            "cappuccino": {"price": "90฿", "note": "hot"},
+            "cold_brew": {"price": "", "note": ""},
+            "frappe": {"price": "", "note": ""},
+            "matcha": {"price": "130-150฿", "note": "Hot Matcha 130฿ / Matcha Latte ice 150฿"},
+            "signature_drink": {"price": "150฿", "note": "Wake Up — กาแฟดำ + น้ำผลไม้ + syrup"},
+            "food": {"price": "ไม่ทราบ", "note": "Bakery & เค้ก"},
+            "other": [
+                {"name": "Iced Mocha", "price": "100฿"},
+                {"name": "Hot Chocolate", "price": "90฿"},
+                {"name": "Milk drinks", "price": "70-95฿"},
+                {"name": "Pure Matcha", "price": "120฿"}
+            ]
+        },
+        "strengths": [
+            "Wongnai 4.6/5 — Ranked #19/443 ในจังหวัด = Top 5% social proof สูงสุดในกลุ่ม",
+            "Family-friendly สมบูรณ์ที่สุดในกลุ่ม (สนามเด็กเล่น, pet-friendly, หลายโซน)",
+            "Delivery LINE MAN ✅ ทุกวัน — delivery hours กว้าง",
+            "เปิดทุกวัน (เสาร์-อาทิตย์ ถึง 17:00) = เวลาบริการครอบคลุม",
+            "หลายโซน (AC + semi-outdoor + สนามหญ้า) = รองรับลูกค้าหลากกลุ่ม"
+        ],
+        "promotions": [],
+        "weaknesses": [
+            "ไม่มี official Instagram/TikTok = visual marketing พึ่ง UGC ทั้งหมด",
+            "ราคา 85-150฿ สูงกว่า จุมพฏ/A Cup of Joy — ไม่ใช่ daily coffee",
+            "Wongnai เพียง 2 reviews = social proof ยังน้อย",
+            "ปิด 16:00 (จ-ศ) = ไม่มี after-work market วันธรรมดา"
+        ],
+        "location": "691 ถ.รัฐบำรุง ธาตุนาเวง เมืองสกลนคร สกลนคร (ตรงข้ามร้านเหล้าเล็ก ก่อนปั๊ม PTT แสงโฮม)",
+        "hours": "จ.–ศ. 09:00–16:00 · เสาร์–อาทิตย์ 09:00–17:00",
+        "social_trend": {
+            "primary_platform": "Facebook",
+            "posting_frequency": "ไม่สม่ำเสมอ",
+            "content_style": "Homey/garden aesthetic · family moments · seasonal themes (Christmas)",
+            "engagement_level": "medium (Facebook 3,762 likes · UGC organic)"
+        },
+        "delivery": {
+            "primary_app": "LINE MAN",
+            "apps": ["LINE MAN", "Wongnai Delivery"],
+            "peak_hours": "09:00-15:30 (จ-ศ) / 09:00-16:30 (เสาร์-อาทิตย์)",
+            "active_promos": [],
+            "notes": "LINE MAN verified via Wongnai · Delivery ทุกวัน · GrabFood/ShopeeFood ไม่พบ · LINE Pay รับ"
+        }
+    },
+    {
         "id": "delivery-apps-overview",
         "category": "delivery",
         "title": "Delivery Apps ร้านกาแฟ สกลนคร — ภาพรวม 2026",
@@ -683,7 +741,7 @@ INTEL_DATA_FALLBACK = [
         "id": "delivery-local-cafes",
         "category": "delivery",
         "title": "ร้านกาแฟท้องถิ่นสกลนคร — สถานะ Delivery (Updated 23 May 2026)",
-        "summary": "CHANN (LINE MAN ✅) · SNIFF (LINE MAN ✅) · จุมพฏ (LINE MAN ✅ 2 สาขา) · Elemental Haus (LINE MAN ✅) · Rok 'n Road (LINE MAN ✅) · Alice (LINE MAN ✅) · FIKA (LINE MAN ✅) · ZMd (LINE MAN ✅) · BOONNAR (LINE MAN ✅) · A Cup of Joy (LINE MAN ✅) · RAINTREE (Wongnai direct) · ป่านาคำหอม (❌) · มีสุข (❌) · All of KK (❌) · Chains: Amazon/Wawee/Inthanin (GrabFood ✅)",
+        "summary": "CHANN (LINE MAN ✅) · SNIFF (LINE MAN ✅) · จุมพฏ (LINE MAN ✅ 2 สาขา) · Elemental Haus (LINE MAN ✅) · Rok 'n Road (LINE MAN ✅) · Alice (LINE MAN ✅) · FIKA (LINE MAN ✅) · ZMd (LINE MAN ✅) · BOONNAR (LINE MAN ✅) · A Cup of Joy (LINE MAN ✅) · MOKA FOX (LINE MAN ✅) · RAINTREE (Wongnai direct) · ป่านาคำหอม (❌) · มีสุข (❌) · All of KK (❌) · Chains: Amazon/Wawee/Inthanin (GrabFood ✅)",
         "updated": "23 May 2026",
         "source_url": "https://www.wongnai.com/listings/sakonnakhon-coffee-cafe", "thumbnail_url": "",
         "tags": ["specialty", "local", "delivery", "สกลนคร", "Wongnai", "LINE MAN"],
