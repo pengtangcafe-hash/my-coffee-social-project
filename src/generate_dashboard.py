@@ -764,6 +764,69 @@ INTEL_DATA_FALLBACK = [
         }
     },
     {
+        "id": "competitor-wehugcafe",
+        "category": "competitor",
+        "title": "WE HUG CAFE (Wehug cafe) สกลนคร",
+        "summary": "Minimalist cafe ถนนเส้น บขส.ใหม่ · Facebook 1,888 likes · Instagram @wehugcafe_sakon · เปิด 08:00-19:00 ทุกวัน · Wongnai delivery ✅ · ราคา <100฿ · Loyalty stamp 10 แก้ว = 1 ฟรี",
+        "updated": "24 May 2026",
+        "source_url": "https://www.wongnai.com/restaurants/1298418Tu-wehug-cafe",
+        "thumbnail_url": "",
+        "tags": ["minimalist", "สกลนคร", "delivery", "Wongnai", "loyalty", "brunch", "bakery"],
+        "relevance": "high",
+        "detail": "WE HUG CAFE (Wehug cafe) สกลนคร — Minimalist coffee comfort zone\n\nที่ตั้ง: 272/17-18 ถ.นิตโย ธาตุเชิงชุม เมืองสกลนคร (ถนนเส้น บขส.ใหม่)\nโทร: 061-517-9957\nเวลาเปิด: ทุกวัน 08:00–19:00\nWongnai: 5/5 (1 review) · Delivery ✅ ส่งฟรีระยะหนึ่ง\n\nConcept: \"The coffee comfort zone\" — minimalist white-black tone, multiple seating zones, หลายมุมถ่ายรูป\n\nHighlights:\n• โซฟาสีดำสลับเบจ · โต๊ะกลมสีดำ/ขาว · ตุ๊กตาหมีตัวใหญ่\n• หลายโซน (window zone, chill zone, work zone)\n• Pet-friendly, family-friendly\n• Credit card ✅ · Delivery ✅\n\nMenu highlights:\n• Americano — เมนูยอดนิยม (featured บน Facebook)\n• Wehug Special (signature drink)\n• Matcha, Tea, Cocoa, Smoothies, Fresh Soda\n• Hokkaido Milk Cake 85฿\n• Choux cream + Blueberry, Crepe cake, Bakery\n\nSocial:\n• Facebook: @wehugcafe (1,888 likes) — Active, โพสต์เมนูแนะนำ\n• Instagram: @wehugcafe_sakon (95 followers, 447 posts)\n• TikTok: UGC #wehugcafe · ไม่มี official account\n• Lemon8: UGC หลายบทความ\n• Trip.com: UGC reviews\n\nPromotion:\n• Loyalty stamp: ซื้อครบ 10 แก้ว = แก้วฟรี 1 ใบ\n• วันพุธ: ส่วนลด 10%\n• วันเสาร์: ส่วนลด 5%\n• เค้กลด 20%\n• ใช้แก้วส่วนตัว: ลด 5 บาท",
+        "pricing": {
+            "espresso": {"price": "ไม่ทราบ", "note": ""},
+            "americano": {"price": "ต่ำกว่า 100฿", "note": "เมนูยอดนิยม"},
+            "latte": {"price": "ต่ำกว่า 100฿", "note": "price range <100฿"},
+            "cappuccino": {"price": "ต่ำกว่า 100฿", "note": ""},
+            "cold_brew": {"price": "ไม่ทราบ", "note": ""},
+            "frappe": {"price": "ไม่ทราบ", "note": ""},
+            "matcha": {"price": "ต่ำกว่า 100฿", "note": ""},
+            "signature_drink": {"price": "ต่ำกว่า 100฿", "note": "Wehug Special"},
+            "food": {"price": "85-100฿", "note": "Hokkaido Milk Cake 85฿ · Bakery เริ่ม ~100฿"},
+            "other": [
+                {"name": "Hokkaido Milk Cake", "price": "85฿"},
+                {"name": "Choux cream + Blueberry", "price": "ไม่ทราบ"},
+                {"name": "Crepe cake", "price": "ไม่ทราบ"}
+            ]
+        },
+        "strengths": [
+            "เปิดถึง 19:00 ทุกวัน = After-work + evening market ครอบคลุมที่สุดในกลุ่ม",
+            "Loyalty stamp 10 แก้วฟรี 1 = retention program ชัดเจน",
+            "ราคาต่ำกว่า 100฿ = accessible daily coffee destination",
+            "Delivery Wongnai ✅ ส่งฟรี = ช่องทาง order เพิ่มเติม",
+            "Instagram 447 posts = content volume สูง visual assets เยอะ",
+            "Promotions หลากหลาย (วันพุธ/วันเสาร์/แก้วตัวเอง/เค้ก)"
+        ],
+        "promotions": [
+            "Loyalty stamp ครบ 10 แก้ว = ฟรี 1 แก้ว",
+            "วันพุธ ลด 10%",
+            "วันเสาร์ ลด 5%",
+            "ใช้แก้วส่วนตัวลด 5 บาท",
+            "เค้กลด 20%"
+        ],
+        "weaknesses": [
+            "Instagram followers เพียง 95 คน แม้จะโพสต์ 447 ครั้ง = engagement/follower ratio ต่ำ",
+            "ไม่มี official TikTok = ขาด reach กลุ่ม Gen Z",
+            "ข้อมูลราคาไม่ชัดเจน ต้องยืนยันเพิ่มเติม"
+        ],
+        "location": "272/17-18 ถ.นิตโย ธาตุเชิงชุม เมืองสกลนคร (ถนนเส้น บขส.ใหม่)",
+        "hours": "ทุกวัน 08:00–19:00",
+        "social_trend": {
+            "primary_platform": "Facebook",
+            "posting_frequency": "สม่ำเสมอ (Facebook + Instagram active)",
+            "content_style": "Minimalist aesthetic · เมนูแนะนำ · บรรยากาศร้าน · สไตล์ขาว-ดำ-เบจ",
+            "engagement_level": "medium (Facebook 1,888 likes · IG 447 posts/95 followers)"
+        },
+        "delivery": {
+            "primary_app": "LINE MAN",
+            "apps": ["LINE MAN", "Wongnai Delivery", "FoodPanda"],
+            "peak_hours": "08:00-11:00 (เช้า) / 14:00-17:00 (บ่าย)",
+            "active_promos": [],
+            "notes": "Wongnai delivery ✅ ส่งฟรีระยะใกล้ · Facebook ระบุ LINE MAN และ FoodPanda · เปิด 08:00-19:00 ทุกวัน = delivery hours กว้างสุดในกลุ่ม"
+        }
+    },
+    {
         "id": "delivery-apps-overview",
         "category": "delivery",
         "title": "Delivery Apps ร้านกาแฟ สกลนคร — ภาพรวม 2026",
