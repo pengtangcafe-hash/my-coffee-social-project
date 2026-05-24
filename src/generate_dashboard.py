@@ -722,6 +722,48 @@ INTEL_DATA_FALLBACK = [
         }
     },
     {
+        "id": "competitor-cantocafe",
+        "category": "competitor",
+        "title": "CANTO CAFE สกลนคร",
+        "summary": "ยังไม่มีข้อมูลออนไลน์ — ไม่พบบน Google, Facebook, TikTok, Wongnai, Lemon8 (ค้นหา 24 พ.ค. 2026) · คู่แข่งใหม่ที่ต้องติดตาม",
+        "updated": "24 May 2026",
+        "source_url": "",
+        "thumbnail_url": "",
+        "tags": ["สกลนคร", "ใหม่", "ติดตาม", "ไม่มีข้อมูลออนไลน์"],
+        "relevance": "medium",
+        "detail": "CANTO CAFE สกลนคร — คู่แข่งใหม่ที่เพิ่มเข้าระบบ 24 พ.ค. 2026\n\n⚠️ ข้อมูลจำกัด: ค้นหาออนไลน์แล้วไม่พบ (Google/Facebook/TikTok/Wongnai/Lemon8) อาจเป็นร้านใหม่มากที่ยังไม่มี digital footprint หรือชื่อออนไลน์อาจต่างจากชื่อที่รู้จักในท้องถิ่น\n\nสถานะ: ต้องการการยืนยันข้อมูลเพิ่มเติม (Facebook page URL, ที่ตั้ง, เมนู, เวลาเปิด)",
+        "pricing": {
+            "espresso": {"price": "ไม่ทราบ", "note": ""},
+            "americano": {"price": "ไม่ทราบ", "note": ""},
+            "latte": {"price": "ไม่ทราบ", "note": ""},
+            "cappuccino": {"price": "ไม่ทราบ", "note": ""},
+            "cold_brew": {"price": "ไม่ทราบ", "note": ""},
+            "frappe": {"price": "ไม่ทราบ", "note": ""},
+            "matcha": {"price": "ไม่ทราบ", "note": ""},
+            "signature_drink": {"price": "ไม่ทราบ", "note": ""},
+            "food": {"price": "ไม่ทราบ", "note": ""},
+            "other": []
+        },
+        "strengths": ["ยังไม่ทราบ — ต้องการข้อมูลเพิ่มเติม"],
+        "promotions": [],
+        "weaknesses": ["ไม่มี online presence ที่พบได้ = ยากต่อการติดตาม"],
+        "location": "ยังไม่ทราบ",
+        "hours": "ยังไม่ทราบ",
+        "social_trend": {
+            "primary_platform": "ไม่ทราบ",
+            "posting_frequency": "ไม่ทราบ",
+            "content_style": "ไม่ทราบ",
+            "engagement_level": "ไม่ทราบ"
+        },
+        "delivery": {
+            "primary_app": "LINE MAN",
+            "apps": ["LINE MAN"],
+            "peak_hours": "ยังไม่มีข้อมูล",
+            "active_promos": [],
+            "notes": "ยังไม่มีข้อมูลเพียงพอ — ไม่พบบน Wongnai/LINE MAN/GrabFood/ShopeeFood"
+        }
+    },
+    {
         "id": "delivery-apps-overview",
         "category": "delivery",
         "title": "Delivery Apps ร้านกาแฟ สกลนคร — ภาพรวม 2026",
