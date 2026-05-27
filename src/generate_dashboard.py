@@ -827,6 +827,69 @@ INTEL_DATA_FALLBACK = [
         }
     },
     {
+        "id": "competitor-yepcafe",
+        "category": "competitor",
+        "title": "YEP Cafe & Bar สกลนคร (เย๊ปที่แปลว่าใช่)",
+        "summary": "Day cafe + Night bar dual concept · ถ.คูเมือง กลางเมืองสกลนคร · เปิดทุกวัน 08:30-00:00 · Facebook 2,818 likes · TikTok @yep.cafeandbar 1,751 followers · LINE MAN ✅ · Signature: Tiramisu + ครัวซองต์กรอบ · DJ มุมถ่ายรูปเยอะ ดึง Gen Z",
+        "updated": "28 May 2026",
+        "source_url": "https://www.facebook.com/p/YEP-100095353186854/",
+        "thumbnail_url": "",
+        "tags": ["cafe-and-bar", "day-night", "Gen-Z", "TikTok", "DJ", "สกลนคร", "delivery"],
+        "relevance": "high",
+        "detail": "YEP Cafe & Bar สกลนคร — Dual concept Day Cafe + Night Bar\n\nที่ตั้ง: 287/3 ถ.คูเมือง ต.ธาตุเชิงชุม เมืองสกลนคร\nโทร: 082-295-6455\nเวลาเปิด: ทุกวัน\n• Cafe: 08:30-18:00 (เปิดเช้า เครื่องดื่ม/ขนม/อาหาร)\n• Bar: 18:00-00:00 (DJ + atmosphere + cocktail)\n• Alcohol service: 11:00-14:00 / 17:00-00:00 (ตามกฎหมาย)\n\nConcept: 'เย๊ปที่แปลว่าใช่' — Day cafe & Night bar กลางใจเมืองสกลนคร\nDifferentiator: 15.5 ชั่วโมง/วัน = longest operating window ในกลุ่มคู่แข่ง คาเฟ่กลางวัน + บาร์กลางคืน รวมในร้านเดียว\n\nZones:\n• ชั้น 1: indoor + outdoor seating\n• ชั้น 2: มุมถ่ายรูปสีสันสดใส (Gen Z friendly)\n• Decoration เปลี่ยนตามฤดู/trend\n• แมว mascot\n\nMenu highlights:\n• Tiramisu (signature ขายเร็วหมด)\n• ครัวซองต์กรอบ (signature)\n• กาแฟ + เครื่องดื่ม\n• ขนมและอาหารถึงเที่ยงคืน (ยกเว้นเมนูกาแฟ)\n• Cocktail / Beer (ช่วงค่ำ)\n• รับจัดเบรค น้ำ ขนม อาหาร (B2B catering)\n\nSocial Presence:\n• Facebook: YEP สกลนคร — 2,818 likes · 2,008 visits (Active)\n• TikTok: @yep.cafeandbar — 1,751 followers (Active video content)\n• Instagram: presence via tagged location (UGC strong)\n• Lemon8: UGC reviews หลายบทความ (preawmini88, mbbu236, nxmmkhingg)\n• Trip.com: UGC reviews 3+ บทความ\n• ไม่มี official IG account ของร้าน\n\nReviews:\n• Wongnai: ยังไม่มีรีวิว/ดาว (listing exists แต่ 0 reviews)\n• UGC tone บวก: 'คาเฟ่ลับ สุดชิค', 'มุมถ่ายรูปเยอะ', 'น่ารัก สีสันสดใส'\n• กลุ่มเป้าหมาย: Gen Z / วัยรุ่นสกลนคร / นักท่องเที่ยว\n\nDelivery: LINE MAN ✅ (via Wongnai integration) · ไม่พบ GrabFood/ShopeeFood",
+        "pricing": {
+            "espresso": {"price": "ไม่ทราบ", "note": ""},
+            "americano": {"price": "ไม่ทราบ", "note": ""},
+            "latte": {"price": "ไม่ทราบ", "note": ""},
+            "cappuccino": {"price": "ไม่ทราบ", "note": ""},
+            "cold_brew": {"price": "ไม่ทราบ", "note": ""},
+            "frappe": {"price": "ไม่ทราบ", "note": ""},
+            "matcha": {"price": "ไม่ทราบ", "note": ""},
+            "signature_drink": {"price": "ไม่ทราบ", "note": "Tiramisu · ครัวซองต์กรอบ"},
+            "food": {"price": "ไม่ทราบ", "note": "ขนม+อาหารถึงเที่ยงคืน"},
+            "other": [
+                {"name": "Tiramisu (signature)", "price": "ไม่ทราบ"},
+                {"name": "ครัวซองต์กรอบ (signature)", "price": "ไม่ทราบ"},
+                {"name": "Cocktail/Beer (ช่วง bar)", "price": "ไม่ทราบ"}
+            ]
+        },
+        "strengths": [
+            "Dual concept Day Cafe + Night Bar = unique ในตลาดสกลนคร",
+            "เปิด 08:30-00:00 = 15.5 ชม. ครอบคลุม day + evening + night market",
+            "TikTok @yep.cafeandbar 1,751 followers = official account active (>50% คู่แข่งไม่มี)",
+            "Facebook 2,818 likes = social proof ระดับสูงในกลุ่ม",
+            "DJ + atmosphere = entertainment value ดึง Gen Z วัยรุ่น",
+            "มุมถ่ายรูปเยอะ + decoration ตามฤดู = UGC engine (Lemon8/Trip.com UGC แรง)",
+            "Signature Tiramisu + ครัวซองต์กรอบ = brand recall ชัด",
+            "B2B catering (รับจัดเบรค น้ำ ขนม อาหาร) = revenue stream เพิ่ม",
+            "LINE MAN delivery ✅",
+            "มี alcohol license = cross-sell daytime customer ไป evening"
+        ],
+        "promotions": [],
+        "weaknesses": [
+            "Wongnai 0 reviews/ratings = social proof ใน food discovery apps แทบไม่มี",
+            "ราคาเมนูไม่ประกาศสาธารณะ — ลูกค้าตัดสินใจสั่งล่วงหน้าได้ยาก",
+            "ไม่มี GrabFood/ShopeeFood = พลาดกลุ่มลูกค้านอก LINE MAN",
+            "ไม่มี official Instagram = visual platform หลักของ café niche ขาด",
+            "เน้น Bar concept ตอนค่ำ — อาจไม่ตรงกับกลุ่ม specialty coffee enthusiast"
+        ],
+        "location": "287/3 ถ.คูเมือง ต.ธาตุเชิงชุม เมืองสกลนคร",
+        "hours": "ทุกวัน · Cafe 08:30-18:00 · Bar 18:00-00:00 (Alcohol 11:00-14:00 / 17:00-00:00)",
+        "social_trend": {
+            "primary_platform": "Facebook",
+            "posting_frequency": "สม่ำเสมอ (Facebook + TikTok active)",
+            "content_style": "Cafe-by-day & bar-by-night · มุมถ่ายรูปสีสันสดใส · DJ night vibe · seasonal decor",
+            "engagement_level": "medium-high (FB 2,818 likes · TikTok 1,751 followers · UGC แรง)"
+        },
+        "delivery": {
+            "primary_app": "LINE MAN",
+            "apps": ["LINE MAN"],
+            "peak_hours": "10:00-12:00 (สาย) / 14:00-17:00 (บ่าย) — window กาแฟก่อน bar เปิด",
+            "active_promos": [],
+            "notes": "LINE MAN ผ่าน Wongnai integration · ไม่พบ GrabFood/ShopeeFood · หลัง 18:00 เน้น dine-in bar service ไม่ใช่ delivery · B2B catering รับจัดเบรคโทรสั่งตรง 082-295-6455"
+        }
+    },
+    {
         "id": "delivery-apps-overview",
         "category": "delivery",
         "title": "Delivery Apps ร้านกาแฟ สกลนคร — ภาพรวม 2026",
