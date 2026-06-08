@@ -11,15 +11,15 @@
   <style>
     /* ── Theme variables ── */
     :root {
-      --bg:           #f1f5f9;
+      --bg:           #f4f2ed;
       --sidebar:      #ffffff;
       --card:         #ffffff;
-      --card-border:  #e2e8f0;
-      --text:         #0f172a;
-      --text-muted:   #64748b;
-      --grid:         #f1f5f9;
-      --nav-active:   #f1f5f9;
-      --nav-text:     #0f172a;
+      --card-border:  #e8e2d8;
+      --text:         #1c160f;
+      --text-muted:   #6b6256;
+      --grid:         #ece6dc;
+      --nav-active:   #f1ebe2;
+      --nav-text:     #1c160f;
       --fancy-body:   none;
     }
     [data-theme="dark"] {
@@ -191,6 +191,123 @@
     }
     .bullet-list li:last-child { margin-bottom: 0; }
     .bullet-list li .bl-mark { flex-shrink: 0; }
+
+    /* ════════ Overview (หน้าภาพรวม) — premium cafe bento ════════ */
+    :root {
+      --ov-espresso-1: #241307;
+      --ov-espresso-2: #4a2c17;
+      --ov-caramel:    #e0a256;
+      --ov-crema:      #f6ecda;
+    }
+    .ov-h1 { font-size: clamp(1.7rem, 1.2rem + 1.6vw, 2.4rem); font-weight: 900;
+      letter-spacing: -0.02em; color: var(--text); line-height: 1.05; }
+    .ov-sub-h { color: var(--text-muted); font-size: .9rem; margin-top: 4px; }
+
+    .ov-grid { display: grid; grid-template-columns: 1.65fr 1fr; gap: 16px; }
+    .ov-plats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    @media (max-width: 1024px) { .ov-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 760px)  { .ov-plats { grid-template-columns: 1fr; } }
+
+    .ov-tile {
+      background: var(--card); border: 1px solid var(--card-border);
+      border-radius: 22px; padding: 24px; position: relative; overflow: hidden;
+      transition: transform .35s cubic-bezier(.22,1,.36,1), box-shadow .35s cubic-bezier(.22,1,.36,1);
+    }
+    .ov-tile-h { font-size: .82rem; font-weight: 700; color: var(--text-muted);
+      margin-bottom: 16px; display: flex; align-items: center; gap: 7px; }
+
+    /* Hero — espresso drenched, ทำหน้าที่เป็น warmth anchor ทุกธีม */
+    .ov-hero {
+      grid-row: span 1; border: none; color: var(--ov-crema);
+      min-height: 248px; display: flex; flex-direction: column; gap: 18px;
+      background:
+        radial-gradient(130% 120% at 88% -10%, rgba(224,162,86,.34) 0%, rgba(224,162,86,0) 45%),
+        linear-gradient(152deg, var(--ov-espresso-2) 0%, var(--ov-espresso-1) 72%);
+      box-shadow: 0 18px 40px -18px rgba(36,19,7,.7);
+    }
+    .ov-hero::after {
+      content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .5;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+      mix-blend-mode: overlay;
+    }
+    .ov-hero > * { position: relative; z-index: 1; }
+    .ov-hero-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .ov-hero-label { font-size: .82rem; font-weight: 600; color: var(--ov-caramel);
+      letter-spacing: .01em; }
+    .ov-hero-chip { display: inline-flex; align-items: center; gap: 6px; text-decoration: none;
+      font-size: .72rem; font-weight: 600; color: var(--ov-crema);
+      background: rgba(246,236,218,.12); border: 1px solid rgba(246,236,218,.2);
+      padding: 4px 11px; border-radius: 999px; transition: background .2s; }
+    .ov-hero-chip:hover { background: rgba(246,236,218,.22); }
+    .ov-hero-num { font-size: clamp(2.8rem, 2rem + 4vw, 4.4rem); font-weight: 900;
+      line-height: .95; letter-spacing: -0.03em; font-variant-numeric: tabular-nums;
+      color: var(--ov-crema); }
+    .ov-hero-sub { font-size: .9rem; color: rgba(246,236,218,.72); margin-top: 6px; }
+    .ov-contrib { display: flex; height: 12px; border-radius: 999px; overflow: hidden;
+      background: rgba(246,236,218,.1); margin-top: auto; }
+    .ov-contrib-seg { height: 100%; width: 0; transition: width 1.1s cubic-bezier(.22,1,.36,1); }
+    .ov-contrib-legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: .76rem;
+      color: rgba(246,236,218,.82); }
+    .ov-contrib-legend .lg { display: inline-flex; align-items: center; gap: 6px; }
+    .ov-contrib-legend .dot { width: 9px; height: 9px; border-radius: 999px; }
+
+    /* Share donut tile */
+    .ov-share-wrap { position: relative; height: 168px; }
+    .ov-share-center { position: absolute; inset: 0; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; pointer-events: none; }
+    .ov-share-center .v { font-size: 1.5rem; font-weight: 900; color: var(--text); line-height: 1; }
+    .ov-share-center .l { font-size: .68rem; color: var(--text-muted); margin-top: 2px; }
+    .ov-share-legend { display: flex; flex-direction: column; gap: 8px; margin-top: 14px; }
+    .ov-share-legend .row { display: flex; align-items: center; justify-content: space-between;
+      gap: 8px; font-size: .8rem; }
+    .ov-share-legend .row .nm { display: inline-flex; align-items: center; gap: 7px; color: var(--text-muted); }
+    .ov-share-legend .row .pc { font-weight: 800; font-variant-numeric: tabular-nums; }
+
+    /* Platform tiles */
+    .ov-plat { cursor: pointer; }
+    .ov-plat:hover { transform: translateY(-4px); box-shadow: 0 20px 36px -22px rgba(0,0,0,.45); }
+    .ov-plat-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 14px; }
+    .ov-plat-name { display: inline-flex; align-items: center; gap: 9px; font-weight: 700;
+      font-size: .95rem; color: var(--text); }
+    .ov-plat-dot { width: 11px; height: 11px; border-radius: 999px; flex-shrink: 0; }
+    .ov-plat-er { font-size: .72rem; font-weight: 700; padding: 3px 9px; border-radius: 999px;
+      font-variant-numeric: tabular-nums; }
+    .ov-plat-num { font-size: 2rem; font-weight: 900; letter-spacing: -0.02em; line-height: 1;
+      color: var(--text); font-variant-numeric: tabular-nums; }
+    .ov-plat-numl { font-size: .72rem; color: var(--text-muted); margin-top: 3px; }
+    .ov-spark { width: 100%; height: 42px; margin-top: 14px; display: block; }
+    .ov-spark path.line { fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* Showdown */
+    .ov-showdown-tabs { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 18px; }
+    .ov-mtab { cursor: pointer; padding: 5px 13px; border-radius: 999px; font-size: .76rem;
+      font-weight: 600; border: 1px solid var(--card-border); background: transparent;
+      color: var(--text-muted); transition: all .18s; }
+    .ov-mtab.active { background: var(--ov-espresso-2); border-color: var(--ov-espresso-2); color: var(--ov-crema); }
+    .ov-mtab:hover:not(.active) { background: var(--nav-active); }
+    .ov-bars { display: flex; flex-direction: column; gap: 16px; }
+    .ov-bar-row { display: grid; grid-template-columns: 96px 1fr auto; align-items: center; gap: 14px; }
+    .ov-bar-name { display: inline-flex; align-items: center; gap: 8px; font-weight: 600;
+      font-size: .85rem; color: var(--text); }
+    .ov-bar-track { height: 30px; border-radius: 9px; background: var(--nav-active); overflow: hidden; }
+    .ov-bar-fill { height: 100%; width: 0; border-radius: 9px;
+      transition: width 1s cubic-bezier(.22,1,.36,1); }
+    .ov-bar-val { font-weight: 800; font-size: .9rem; font-variant-numeric: tabular-nums;
+      color: var(--text); min-width: 72px; text-align: right; }
+    .ov-rank { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px;
+      border-radius: 999px; font-size: .68rem; font-weight: 800; flex-shrink: 0; }
+
+    /* Entrance — เล่นครั้งเดียวตอนโหลด (ผ่านคลาส .ov-play) */
+    .ov-anim { opacity: 1; }
+    #view-home.ov-play .ov-anim { animation: ovUp .62s cubic-bezier(.22,1,.36,1) both;
+      animation-delay: calc(var(--d, 0) * 75ms); }
+    @keyframes ovUp { from { opacity: 0; transform: translateY(16px) scale(.99); }
+      to { opacity: 1; transform: none; } }
+    @keyframes ovDraw { to { stroke-dashoffset: 0; } }
+    @media (prefers-reduced-motion: reduce) {
+      #view-home.ov-play .ov-anim { animation: none; }
+      .ov-tile, .ov-contrib-seg, .ov-bar-fill { transition: none; }
+    }
 
     /* ── History / update-log timeline ── */
     .log-summary-grid {
@@ -372,60 +489,47 @@
     <!-- ── Home View ── -->
     <div id="view-home" class="view">
 
-      <h1 class="text-3xl font-black text-slate-800 mb-6">ภาพรวม Social Media</h1>
-
-      <!-- Platform reach cards -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6"><div class="text-xs uppercase tracking-widest text-slate-400 mb-2">TikTok</div><div class="text-4xl font-black" style="color:#EE1D52">12</div><div class="text-xs text-slate-400 mt-1">ยอดดูรวม</div></div>
-<div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6"><div class="text-xs uppercase tracking-widest text-slate-400 mb-2">Facebook</div><div class="text-4xl font-black" style="color:#1877f2">207</div><div class="text-xs text-slate-400 mt-1">ยอดดูรวม</div></div>
-<div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6"><div class="text-xs uppercase tracking-widest text-slate-400 mb-2">Instagram</div><div class="text-4xl font-black" style="color:#e1306c">0</div><div class="text-xs text-slate-400 mt-1">ยอดดูรวม</div></div>
+      <div class="mb-6">
+        <h1 class="ov-h1">ภาพรวม Social Media</h1>
+        <p class="ov-sub-h">ร้านกาแฟ สกลนคร · ภาพรวมผลงานทั้ง 3 แพลตฟอร์มในที่เดียว</p>
       </div>
 
-      <!-- Comparison table -->
-      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-6">
-        <h2 class="text-sm font-bold text-slate-700 mb-4">Platform Comparison</h2>
-        <div class="overflow-x-auto">
-          <table class="w-full text-sm">
-            <thead>
-              <tr class="border-b-2 border-slate-200">
-                <th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap">Platform</th>
-                <th class="px-4 py-3 text-right text-xs font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap">ยอดดูรวม</th>
-                <th class="px-4 py-3 text-right text-xs font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap">ยอดดูเฉลี่ย/วัน</th>
-                <th class="px-4 py-3 text-right text-xs font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap">อัตราการมีส่วนร่วม</th>
-                <th class="px-4 py-3 text-right text-xs font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap">การมีส่วนร่วมรวม</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="hover:bg-slate-50 transition-colors"><td class="px-4 py-3 font-semibold flex items-center gap-2"><span class="inline-block w-2.5 h-2.5 rounded-full flex-shrink-0" style="background:#EE1D52"></span>TikTok</td><td class="px-4 py-3 text-right tabular-nums">12</td><td class="px-4 py-3 text-right tabular-nums">0.0</td><td class="px-4 py-3 text-right tabular-nums">0.00%</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr>
-<tr class="hover:bg-slate-50 transition-colors"><td class="px-4 py-3 font-semibold flex items-center gap-2"><span class="inline-block w-2.5 h-2.5 rounded-full flex-shrink-0" style="background:#1877f2"></span>Facebook</td><td class="px-4 py-3 text-right tabular-nums">207</td><td class="px-4 py-3 text-right tabular-nums">1.5</td><td class="px-4 py-3 text-right tabular-nums">0.21%</td><td class="px-4 py-3 text-right tabular-nums">4</td></tr>
-<tr class="hover:bg-slate-50 transition-colors"><td class="px-4 py-3 font-semibold flex items-center gap-2"><span class="inline-block w-2.5 h-2.5 rounded-full flex-shrink-0" style="background:#e1306c"></span>Instagram</td><td class="px-4 py-3 text-right tabular-nums">0</td><td class="px-4 py-3 text-right tabular-nums">0.0</td><td class="px-4 py-3 text-right tabular-nums">0.00%</td><td class="px-4 py-3 text-right tabular-nums">0</td></tr>
-            </tbody>
-          </table>
+      <!-- Row 1: Hero + Share donut -->
+      <div class="ov-grid mb-4">
+        <div class="ov-tile ov-hero ov-anim" style="--d:0">
+          <div class="ov-hero-top">
+            <span class="ov-hero-label">ยอดดูรวมทุกแพลตฟอร์ม</span>
+            <a class="ov-hero-chip" href="#" onclick="showView('view-updatelog');return false;">🕐 <span id="ov-hero-upd">บันทึกอัปเดต</span></a>
+          </div>
+          <div>
+            <div class="ov-hero-num"><span id="ov-total">0</span></div>
+            <div class="ov-hero-sub" id="ov-hero-sub">ครั้งที่คนเห็นคอนเทนต์ของคุณ</div>
+          </div>
+          <div class="ov-contrib" id="ov-contrib"></div>
+          <div class="ov-contrib-legend" id="ov-contrib-legend"></div>
+        </div>
+
+        <div class="ov-tile ov-anim" style="--d:1">
+          <div class="ov-tile-h">🍩 สัดส่วนยอดดูแต่ละแพลตฟอร์ม</div>
+          <div class="ov-share-wrap">
+            <canvas id="ov-share-canvas"></canvas>
+            <div class="ov-share-center">
+              <span class="v" id="ov-share-top-v">—</span>
+              <span class="l" id="ov-share-top-l">แพลตฟอร์มนำ</span>
+            </div>
+          </div>
+          <div class="ov-share-legend" id="ov-share-legend"></div>
         </div>
       </div>
 
-      <!-- 4 doughnut charts: Platform Comparison -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
-        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 flex flex-col">
-          <h2 class="text-sm font-semibold text-slate-700 mb-3">ยอดดูรวม</h2>
-          <div class="relative compare-chart-wrap" style="height:140px"><canvas id="chart-compare-reach"></canvas></div>
-          <div class="mt-3 space-y-1.5" id="legend-compare-reach"></div>
-        </div>
-        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 flex flex-col">
-          <h2 class="text-sm font-semibold text-slate-700 mb-3">ยอดดูเฉลี่ย/วัน</h2>
-          <div class="relative compare-chart-wrap" style="height:140px"><canvas id="chart-compare-daily"></canvas></div>
-          <div class="mt-3 space-y-1.5" id="legend-compare-daily"></div>
-        </div>
-        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 flex flex-col">
-          <h2 class="text-sm font-semibold text-slate-700 mb-3">อัตราการมีส่วนร่วม (%)</h2>
-          <div class="relative compare-chart-wrap" style="height:140px"><canvas id="chart-compare-engagement-rate"></canvas></div>
-          <div class="mt-3 space-y-1.5" id="legend-compare-engagement-rate"></div>
-        </div>
-        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 flex flex-col">
-          <h2 class="text-sm font-semibold text-slate-700 mb-3">การมีส่วนร่วมรวม</h2>
-          <div class="relative compare-chart-wrap" style="height:140px"><canvas id="chart-compare-engagement-total"></canvas></div>
-          <div class="mt-3 space-y-1.5" id="legend-compare-engagement-total"></div>
-        </div>
+      <!-- Row 2: per-platform tiles (JS) -->
+      <div class="ov-plats mb-4" id="ov-plats"></div>
+
+      <!-- Row 3: head-to-head comparison -->
+      <div class="ov-tile ov-anim" style="--d:5">
+        <div class="ov-tile-h">⚔️ เทียบหมัดต่อหมัด · จัดอันดับ 3 แพลตฟอร์ม</div>
+        <div class="ov-showdown-tabs" id="ov-showdown-tabs"></div>
+        <div class="ov-bars" id="ov-showdown-bars"></div>
       </div>
 
     </div>
@@ -701,7 +805,7 @@ function showView(id) {
 
 // ── Chart initializer ──
 function initCharts(viewId) {
-  if (viewId === 'view-home')    { try { initHomeBar(); } catch(e) { console.error('initHomeBar', e); } return; }
+  if (viewId === 'view-home')    { try { initHomeOverview(); } catch(e) { console.error('initHomeOverview', e); } return; }
   if (viewId === 'view-intel')   { try { renderIntelCards(); renderIntelUpdateBadge(); } catch(e) { console.error('renderIntelCards', e); } return; }
   if (viewId === 'view-updatelog') { try { renderUpdateLog(); } catch(e) { console.error('renderUpdateLog', e); } return; }
   if (viewId === 'view-pricing') { try { renderPricingView(); } catch(e) { console.error('renderPricingView', e); } return; }
@@ -713,48 +817,187 @@ function initCharts(viewId) {
   try { initDoughnutChart(platform); } catch(e) { console.error('initDoughnutChart', e); }
 }
 
-function initHomeBar() {
-  const PCOLORS = ['#EE1D52', '#3b82f6', '#ec4899'];
-  const labels  = COMP.labels;
-  const tc      = getThemeChartCfg();
-  const metrics = [
-    { id:'chart-compare-reach',            legId:'legend-compare-reach',            data:COMP.total_reach,      fmt:v=>Number(v).toLocaleString('th-TH') },
-    { id:'chart-compare-daily',            legId:'legend-compare-daily',            data:COMP.avg_reach,        fmt:v=>Number(v).toLocaleString('th-TH',{minimumFractionDigits:1,maximumFractionDigits:1}) },
-    { id:'chart-compare-engagement-rate',  legId:'legend-compare-engagement-rate',  data:COMP.avg_er,           fmt:v=>v+'%' },
-    { id:'chart-compare-engagement-total', legId:'legend-compare-engagement-total', data:COMP.total_engagement, fmt:v=>Number(v).toLocaleString('th-TH') },
-  ];
-  metrics.forEach(({id,legId,data,fmt}) => {
-    if (chartInstances[id]) { chartInstances[id].destroy(); delete chartInstances[id]; }
-    const el = document.getElementById(id);
-    if (!el) return;
-    const total = data.reduce((a,b)=>a+b,0);
-    chartInstances[id] = new Chart(el.getContext('2d'), {
-      type: 'doughnut',
-      data: { labels, datasets: [{ data, backgroundColor:PCOLORS.map(c=>c+'cc'), borderColor:PCOLORS, borderWidth:2, hoverOffset:5 }] },
-      options: {
-        responsive:true, maintainAspectRatio:false, cutout:'68%',
-        plugins: {
-          legend: { display:false },
-          tooltip: {
-            backgroundColor:tc.tooltipBg, titleColor:tc.tooltipText, bodyColor:tc.tooltipText,
-            callbacks: { label: ctx => ' '+ctx.label+': '+fmt(data[ctx.dataIndex])+'  ('+(total>0?((ctx.parsed/total)*100).toFixed(1):'0.0')+'%)' }
-          }
-        }
-      }
-    });
-    const legEl = document.getElementById(legId);
-    if (legEl) {
-      legEl.innerHTML = labels.map((lbl,i)=>
-        `<div class="flex items-center justify-between gap-2 text-xs">
-          <span class="flex items-center gap-1.5 min-w-0">
-            <span class="inline-block w-2.5 h-2.5 rounded-full flex-shrink-0" style="background:${PCOLORS[i]}"></span>
-            <span class="text-slate-600 truncate">${lbl}</span>
-          </span>
-          <span class="font-semibold tabular-nums flex-shrink-0" style="color:${PCOLORS[i]}">${fmt(data[i])}</span>
-        </div>`
-      ).join('');
+let homeIntroPlayed = false;
+let ovShowdownMetric = 'reach';
+
+function ovFmtInt(v) { return Number(Math.round(v)).toLocaleString('th-TH'); }
+function ovFmt1(v) { return Number(v).toLocaleString('th-TH', {minimumFractionDigits:1, maximumFractionDigits:1}); }
+
+function ovAnimateCount(el, to, dur, fmt) {
+  if (!el) return;
+  fmt = fmt || ovFmtInt;
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce || !dur) { el.textContent = fmt(to); return; }
+  const start = performance.now();
+  function step(now) {
+    const p = Math.min(1, (now - start) / dur);
+    const eased = 1 - Math.pow(1 - p, 3);
+    el.textContent = fmt(to * eased);
+    if (p < 1) requestAnimationFrame(step); else el.textContent = fmt(to);
+  }
+  requestAnimationFrame(step);
+}
+
+function ovSparkline(values, color, animate) {
+  const w = 240, h = 42, pad = 4;
+  const vals = (values && values.length) ? values : [0, 0];
+  const max = Math.max.apply(null, vals), min = Math.min.apply(null, vals);
+  const span = (max - min) || 1;
+  const n = vals.length;
+  const pts = vals.map(function(v, i) {
+    const x = n > 1 ? pad + (i / (n - 1)) * (w - pad * 2) : w / 2;
+    const y = h - pad - ((v - min) / span) * (h - pad * 2);
+    return [x, y];
+  });
+  const d = pts.map(function(p, i) { return (i === 0 ? 'M' : 'L') + p[0].toFixed(1) + ' ' + p[1].toFixed(1); }).join(' ');
+  const areaD = d + ' L ' + pts[n-1][0].toFixed(1) + ' ' + h + ' L ' + pts[0][0].toFixed(1) + ' ' + h + ' Z';
+  const gid = 'ovsg-' + Math.random().toString(36).slice(2, 8);
+  const drawCls = animate ? ' style="stroke-dasharray:1;stroke-dashoffset:1;animation:ovDraw 1.1s cubic-bezier(.22,1,.36,1) forwards"' : '';
+  return '<svg class="ov-spark" viewBox="0 0 ' + w + ' ' + h + '" preserveAspectRatio="none">'
+    + '<defs><linearGradient id="' + gid + '" x1="0" y1="0" x2="0" y2="1">'
+    + '<stop offset="0%" stop-color="' + color + '" stop-opacity="0.26"/>'
+    + '<stop offset="100%" stop-color="' + color + '" stop-opacity="0"/></linearGradient></defs>'
+    + '<path d="' + areaD + '" fill="url(#' + gid + ')" stroke="none"/>'
+    + '<path class="line" pathLength="1" d="' + d + '" stroke="' + color + '"' + drawCls + '/>'
+    + '</svg>';
+}
+
+const OV_METRICS = [
+  { key:'reach', label:'ยอดดูรวม',        get:function(){ return COMP.total_reach || []; },     fmt:ovFmtInt },
+  { key:'er',    label:'Engagement Rate', get:function(){ return COMP.avg_er || []; },          fmt:function(v){ return ovFmt1(v) + '%'; } },
+  { key:'eng',   label:'การมีส่วนร่วมรวม', get:function(){ return COMP.total_engagement || []; }, fmt:ovFmtInt },
+  { key:'avg',   label:'ยอดดูเฉลี่ย/วัน',   get:function(){ return COMP.avg_reach || []; },        fmt:ovFmt1 },
+];
+
+function ovRenderShareDonut(animate) {
+  const el = document.getElementById('ov-share-canvas');
+  if (!el || typeof Chart === 'undefined') return;
+  if (chartInstances['ov-share']) { chartInstances['ov-share'].destroy(); delete chartInstances['ov-share']; }
+  const tc = getThemeChartCfg();
+  const labels = COMP.labels || [], data = COMP.total_reach || [], colors = COMP.colors || [];
+  const total = data.reduce(function(a, b) { return a + b; }, 0);
+  chartInstances['ov-share'] = new Chart(el.getContext('2d'), {
+    type: 'doughnut',
+    data: { labels: labels, datasets: [{ data: data, backgroundColor: colors.map(function(c){ return c + 'e6'; }), borderColor: 'transparent', borderWidth: 0, hoverOffset: 7, spacing: 2 }] },
+    options: {
+      responsive: true, maintainAspectRatio: false, cutout: '70%',
+      animation: animate ? { animateRotate: true, duration: 1100 } : false,
+      plugins: { legend: { display: false }, tooltip: { backgroundColor: tc.tooltipBg, titleColor: tc.tooltipText, bodyColor: tc.tooltipText,
+        callbacks: { label: function(ctx) { return ' ' + ctx.label + ': ' + Number(data[ctx.dataIndex]).toLocaleString('th-TH') + ' (' + (total > 0 ? (ctx.parsed / total * 100).toFixed(1) : '0.0') + '%)'; } } } }
     }
   });
+  let topI = 0; data.forEach(function(v, i) { if (v > data[topI]) topI = i; });
+  const vEl = document.getElementById('ov-share-top-v'), lEl = document.getElementById('ov-share-top-l');
+  if (vEl) vEl.textContent = total > 0 ? (data[topI] / total * 100).toFixed(0) + '%' : '—';
+  if (lEl) lEl.textContent = (labels[topI] || '') + ' นำ';
+  const lg = document.getElementById('ov-share-legend');
+  if (lg) lg.innerHTML = labels.map(function(lbl, i) {
+    const pc = total > 0 ? (data[i] / total * 100) : 0;
+    return '<div class="row"><span class="nm"><span class="ov-plat-dot" style="background:' + colors[i] + '"></span>' + lbl + '</span><span class="pc" style="color:' + colors[i] + '">' + pc.toFixed(1) + '%</span></div>';
+  }).join('');
+}
+
+function ovRenderShowdownTabs() {
+  const el = document.getElementById('ov-showdown-tabs');
+  if (!el) return;
+  el.innerHTML = OV_METRICS.map(function(m) {
+    return '<button class="ov-mtab' + (m.key === ovShowdownMetric ? ' active' : '') + '" onclick="ovSetShowdown(\'' + m.key + '\')">' + m.label + '</button>';
+  }).join('');
+}
+function ovSetShowdown(key) { ovShowdownMetric = key; ovRenderShowdownTabs(); ovRenderShowdown(true); }
+
+function ovRenderShowdown(animate) {
+  const el = document.getElementById('ov-showdown-bars');
+  if (!el) return;
+  const m = OV_METRICS.filter(function(x) { return x.key === ovShowdownMetric; })[0] || OV_METRICS[0];
+  const labels = COMP.labels || [], colors = COMP.colors || [], vals = m.get();
+  const maxV = Math.max.apply(null, vals.length ? vals : [0]) || 1;
+  const order = vals.map(function(v, i) { return i; }).sort(function(a, b) { return vals[b] - vals[a]; });
+  const rankColors = ['#d4a24a', '#9aa3ad', '#c08457'];
+  el.innerHTML = order.map(function(idx, pos) {
+    const w = (vals[idx] / maxV * 100);
+    return '<div class="ov-bar-row">'
+      + '<span class="ov-bar-name"><span class="ov-rank" style="background:' + (rankColors[pos] || '#999') + '26;color:' + (rankColors[pos] || 'var(--text-muted)') + '">' + (pos + 1) + '</span>' + labels[idx] + '</span>'
+      + '<div class="ov-bar-track"><div class="ov-bar-fill" data-w="' + w.toFixed(2) + '" style="background:' + colors[idx] + '"></div></div>'
+      + '<span class="ov-bar-val">' + m.fmt(vals[idx]) + '</span>'
+    + '</div>';
+  }).join('');
+  const fills = el.querySelectorAll('.ov-bar-fill');
+  requestAnimationFrame(function() {
+    fills.forEach(function(f) {
+      const w = f.getAttribute('data-w') + '%';
+      if (animate) { f.style.width = '0%'; requestAnimationFrame(function() { f.style.width = w; }); }
+      else f.style.width = w;
+    });
+  });
+}
+
+function initHomeOverview() {
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const intro = !homeIntroPlayed && !reduce;
+  const platforms = COMP.platforms || [];
+  const colors = COMP.colors || [], labels = COMP.labels || [];
+  const totals = COMP.total_reach || [], ers = COMP.avg_er || [], engs = COMP.total_engagement || [];
+  const grandReach = totals.reduce(function(a, b) { return a + b; }, 0);
+
+  const homeView = document.getElementById('view-home');
+  if (homeView && intro) {
+    homeView.classList.add('ov-play');
+    setTimeout(function() { homeView.classList.remove('ov-play'); }, 1500);
+  }
+
+  ovAnimateCount(document.getElementById('ov-total'), grandReach, intro ? 1100 : 0);
+
+  let maxDays = 0;
+  platforms.forEach(function(p) { const d = (DATA[p] && DATA[p].metrics && DATA[p].metrics.days) || 0; if (d > maxDays) maxDays = d; });
+  const subEl = document.getElementById('ov-hero-sub');
+  if (subEl) subEl.textContent = 'ครั้งที่คนเห็นคอนเทนต์ของคุณ' + (maxDays ? (' · ' + maxDays + ' วันล่าสุด') : '');
+  const updEl = document.getElementById('ov-hero-upd');
+  if (updEl) updEl.textContent = (typeof UPDATE_SUMMARY !== 'undefined' && UPDATE_SUMMARY.all && UPDATE_SUMMARY.all.last_date_th) ? ('อัปเดต ' + UPDATE_SUMMARY.all.last_date_th) : 'บันทึกอัปเดต';
+
+  const contrib = document.getElementById('ov-contrib');
+  if (contrib) {
+    contrib.innerHTML = platforms.map(function(p, i) {
+      return '<div class="ov-contrib-seg" data-w="' + (grandReach > 0 ? (totals[i] / grandReach * 100) : 0).toFixed(2) + '" style="background:' + colors[i] + '"></div>';
+    }).join('');
+    const segs = contrib.querySelectorAll('.ov-contrib-seg');
+    requestAnimationFrame(function() {
+      segs.forEach(function(s) {
+        const w = s.getAttribute('data-w') + '%';
+        if (intro) { s.style.width = '0%'; requestAnimationFrame(function() { s.style.width = w; }); } else s.style.width = w;
+      });
+    });
+  }
+  const clg = document.getElementById('ov-contrib-legend');
+  if (clg) clg.innerHTML = platforms.map(function(p, i) {
+    const pc = grandReach > 0 ? (totals[i] / grandReach * 100) : 0;
+    return '<span class="lg"><span class="dot" style="background:' + colors[i] + '"></span>' + labels[i] + ' ' + pc.toFixed(0) + '%</span>';
+  }).join('');
+
+  const plats = document.getElementById('ov-plats');
+  if (plats) {
+    plats.innerHTML = platforms.map(function(p, i) {
+      const spark = ovSparkline((DATA[p] && DATA[p].reach) || [], colors[i], intro);
+      return '<div class="ov-tile ov-plat ' + (intro ? 'ov-anim' : '') + '" style="--d:' + (i + 2) + '" onclick="showView(\'view-' + p + '\')">'
+        + '<div class="ov-plat-top">'
+          + '<span class="ov-plat-name"><span class="ov-plat-dot" style="background:' + colors[i] + '"></span>' + labels[i] + '</span>'
+          + '<span class="ov-plat-er" style="background:' + colors[i] + '1f;color:' + colors[i] + '">ER ' + ovFmt1(ers[i]) + '%</span>'
+        + '</div>'
+        + '<div class="ov-plat-num" data-count="' + totals[i] + '">0</div>'
+        + '<div class="ov-plat-numl">ยอดดูรวม · ' + ovFmtInt(engs[i]) + ' การมีส่วนร่วม</div>'
+        + spark
+      + '</div>';
+    }).join('');
+    plats.querySelectorAll('.ov-plat-num').forEach(function(el) {
+      ovAnimateCount(el, Number(el.getAttribute('data-count')), intro ? 1100 : 0);
+    });
+  }
+
+  ovRenderShareDonut(intro);
+  ovRenderShowdownTabs();
+  ovRenderShowdown(intro);
+
+  homeIntroPlayed = true;
 }
 
 function initLineChart(platform) {
