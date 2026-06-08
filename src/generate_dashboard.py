@@ -1197,6 +1197,67 @@ INTEL_DATA_FALLBACK = [
         }
     },
     {
+        "id": "competitor-themountain",
+        "category": "competitor",
+        "title": "The Mountain Coffee and Beverage สกลนคร",
+        "summary": "Coffee + Food + Event Venue · ซอยธรรมอักษร ถ.รัฐบำรุง ใกล้ บขส.ใหม่ · จ-อ 08:00-20:30 (ปิดพุธ) · Wongnai 5/5 #16/481 (Top 3%) · Delivery ✅ · ไวน์หมากเม่า + กาแฟน้ำช่อดอกมะพร้าว + Event venue = 3-in-1",
+        "updated": "9 Jun 2026",
+        "source_url": "https://www.facebook.com/p/The-Mountain-Coffee-and-Beverage-100091151026132/",
+        "thumbnail_url": "",
+        "tags": ["สกลนคร", "coffee-restaurant", "event-venue", "local-ingredients", "delivery", "family", "b2b"],
+        "relevance": "high",
+        "detail": "The Mountain Coffee and Beverage สกลนคร — Coffee + Food + Event Venue\n\nที่ตั้ง: ซอยธรรมอักษร ถ.รัฐบำรุง ธาตุนาเวง เมืองสกลนคร (800 เมตรจากปั๊ม PTT ถ.ก๊อมสงฆ์ ใกล้ บขส.ใหม่ → เข้าซอยธรรมอักษร 100 เมตร)\nโทร: 092-621-1148, 094-997-9689\nEmail: themountain888999@gmail.com\nเวลาเปิด: จ-อ 08:00-20:30 (ปิดพุธ) / บางแหล่งระบุ 10:00-21:00\n\nConcept: Coffee + Full Restaurant + Event Venue กว้างโปร่ง มุมถ่ายรูป + ห้องจัดเลี้ยง\nRanking: **Wongnai #16 จาก 481 ร้านกาแฟ/ชาในจังหวัดสกลนคร = Top 3%!**\n\nSocial Presence:\n• Facebook: @The-Mountain-Coffee-and-Beverage (100091151026132) — active videos + photos\n• ไม่พบ Instagram / TikTok official\n• Lemon8: UGC review (gogoaround99) active\n• Trip.com: UGC reviews\n• Email: themountain888999@gmail.com\n• Hashtags: #สกลนคร #รีวิวสกลนคร #ร้านเด็ดสกลนคร #คาเฟ่สกลนคร #themountaincoffee\n\n**Unique Differentiators:**\n• **Event Venue** — สัมมนา, ประชุม, งานเลี้ยง, งานแต่ง, ทัวร์กลุ่ม (B2B revenue stream ที่ไม่มีคู่แข่งในกลุ่ม!)\n• **ไวน์หมากเม่า แบรนด์บ้านเอง** — local fruit wine สกลนคร\n• **กาแฟน้ำช่อดอกมะพร้าว** — specialty local ingredient coffee\n• **Budz Ice cream roll** — brand เฉพาะของร้าน\n• **Full food menu** — เสือย่างกระทะร้อน, ก๋วยเตี๋ยวหมูตุ๋น, ต้มยำทะเลรวม\n\nMenu highlights:\n• กาแฟน้ำช่อดอกมะพร้าว (หวานละมุน ฟิน)\n• Americano (เมนูแนะนำ)\n• เสือย่างกระทะร้อน + จิ้มแจ่ว\n• ก๋วยเตี๋ยวหมูตุ๋น\n• ต้มยำทะเลรวม\n• ไอศครีมโรล Budz\n• ไวน์หมากเม่า\n\nReviews:\n• Wongnai 5/5 (1 review): 'ร้านสวย กาแฟดีครับ'\n• Lemon8: 'เมนูอาหารเพียยบ แวะที่เดียวครบ จบ ปิ๊ง'\n\nDelivery: Wongnai delivery ✅ (0฿) → LINE MAN likely",
+        "pricing": {
+            "espresso": {"price": "ไม่ทราบ", "note": ""},
+            "americano": {"price": "ไม่ทราบ", "note": "เมนูแนะนำ"},
+            "latte": {"price": "ไม่ทราบ", "note": ""},
+            "cappuccino": {"price": "ไม่ทราบ", "note": ""},
+            "cold_brew": {"price": "ไม่ทราบ", "note": ""},
+            "frappe": {"price": "ไม่ทราบ", "note": ""},
+            "matcha": {"price": "ไม่ทราบ", "note": ""},
+            "signature_drink": {"price": "ไม่ทราบ", "note": "กาแฟน้ำช่อดอกมะพร้าว + ไวน์หมากเม่า"},
+            "food": {"price": "ไม่ทราบ", "note": "เสือย่าง, ก๋วยเตี๋ยวหมูตุ๋น, ต้มยำทะเล"},
+            "other": [
+                {"name": "กาแฟน้ำช่อดอกมะพร้าว", "price": "ไม่ทราบ", "note": "local signature"},
+                {"name": "ไวน์หมากเม่า (แบรนด์บ้านเอง)", "price": "ไม่ทราบ", "note": "local fruit wine"},
+                {"name": "ไอศครีมโรล Budz", "price": "ไม่ทราบ", "note": "brand เฉพาะ"},
+                {"name": "Event Venue (B2B)", "price": "ไม่ทราบ", "note": "สัมมนา/งานแต่ง"}
+            ]
+        },
+        "strengths": [
+            "**Wongnai #16/481 = Top 3% ในจังหวัด** — สูงกว่า MOKA FOX (#19) = social proof แข็งสุดในกลุ่ม",
+            "**Event Venue B2B** — สัมมนา/งานแต่ง = revenue stream ที่ไม่มีคู่แข่ง local cafe ทำ",
+            "**Full food menu** (กาแฟ + อาหาร + ขนม) = dwell time สูง + ยอดบิลเฉลี่ยสูงกว่า",
+            "**Local ingredients signature** — ไวน์หมากเม่า + กาแฟน้ำช่อดอกมะพร้าว = cultural branding ชัด",
+            "เปิดถึง 20:30-21:00 = capture dinner + evening market ได้",
+            "Delivery Wongnai ✅",
+            "Facebook video content active"
+        ],
+        "promotions": [],
+        "weaknesses": [
+            "ปิดวันพุธ = พลาด 1 วัน/สัปดาห์",
+            "Wongnai 1 review เท่านั้น — ranking สูงแต่ review count ต่ำ",
+            "ราคาไม่เปิดเผยสาธารณะ",
+            "ไม่พบ Instagram/TikTok official = visual platform gap",
+            "ทำเลอาจเข้าถึงยากกว่าร้านริมถนนใหญ่ (เข้าซอย 100 เมตร)"
+        ],
+        "location": "ซอยธรรมอักษร ถ.รัฐบำรุง ธาตุนาเวง เมืองสกลนคร (800 เมตรจาก PTT ถ.ก๊อมสงฆ์ ใกล้ บขส.ใหม่)",
+        "hours": "จ-อ 08:00-20:30 (ปิดพุธ) / บางแหล่งระบุ 10:00-21:00",
+        "social_trend": {
+            "primary_platform": "Facebook",
+            "posting_frequency": "moderate (Facebook videos active)",
+            "content_style": "Coffee + food showcase · event venue promo · local ingredients story",
+            "engagement_level": "medium (Facebook active · Wongnai Top 3% · Lemon8/Trip.com UGC)"
+        },
+        "delivery": {
+            "primary_app": "LINE MAN",
+            "apps": ["LINE MAN"],
+            "peak_hours": "ยังไม่มีข้อมูล",
+            "active_promos": [],
+            "notes": "Wongnai delivery ✅ 0฿ starting fee → LINE MAN likely via Wongnai integration · ไม่พบ GrabFood/ShopeeFood/FoodPanda · delivery window น่าจะตามเวลาร้าน (08:00-20:30)"
+        }
+    },
+    {
         "id": "delivery-apps-overview",
         "category": "delivery",
         "title": "Delivery Apps ร้านกาแฟ สกลนคร — ภาพรวม 2026",
