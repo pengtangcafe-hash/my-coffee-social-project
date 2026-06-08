@@ -250,9 +250,9 @@ INTEL_DATA_FALLBACK = [
     {
         "id": "competitor-allofkk",
         "category": "competitor",
-        "title": "All of KK สกลนคร (Limited Data — 22 May 2026)",
-        "summary": "Small local café · Facebook เท่านั้น (~700 likes) · Tagline 'You can taste the passion' · ไม่พบ delivery · ข้อมูลจำกัดมาก — ต้องการ field visit",
-        "updated": "22 May 2026",
+        "title": "All of KK สกลนคร (Limited Data — Re-verified 9 Jun 2026)",
+        "summary": "Small local café · Facebook เท่านั้น (~700 likes) · Tagline 'You can taste the passion' · ไม่พบ delivery · ข้อมูลจำกัดมาก — re-verified 9 Jun 2026 ยังไม่ได้ข้อมูลเพิ่ม · ต้องการ field visit",
+        "updated": "9 Jun 2026",
         "source_url": "https://www.facebook.com/allofkk", "thumbnail_url": "",
         "tags": ["สกลนคร", "Local", "Independent", "LimitedData"],
         "relevance": "medium",
