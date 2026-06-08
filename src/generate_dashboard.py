@@ -1610,55 +1610,6 @@ def build_sidebar_nav(all_history: dict[str, dict]) -> str:
     return "\n".join(items)
 
 
-def build_home_cards(all_history: dict[str, dict]) -> str:
-    cards = []
-    for platform, raw in all_history.items():
-        df = pd.DataFrame(raw["data"])
-        total_reach = _safe_int(df["reach"].sum()) if "reach" in df.columns else 0
-        color = PLATFORM_COLORS.get(platform, "#888")
-        label = PLATFORM_LABELS.get(platform, platform)
-        cards.append(
-            '<div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">'
-            '<div class="text-xs uppercase tracking-widest text-slate-400 mb-2">{label}</div>'
-            '<div class="text-4xl font-black" style="color:{color}">{reach}</div>'
-            '<div class="text-xs text-slate-400 mt-1">ยอดดูรวม</div>'
-            '</div>'.format(
-                label=label,
-                color=color,
-                reach=_fmt(total_reach),
-            )
-        )
-    return "\n".join(cards)
-
-
-def build_home_comparison_rows(all_history: dict[str, dict]) -> str:
-    rows = []
-    for platform, raw in all_history.items():
-        df = pd.DataFrame(raw["data"])
-        metrics = compute_metrics(df, platform)
-        color = PLATFORM_COLORS.get(platform, "#888")
-        label = PLATFORM_LABELS.get(platform, platform)
-        rows.append(
-            '<tr class="hover:bg-slate-50 transition-colors">'
-            '<td class="px-4 py-3 font-semibold flex items-center gap-2">'
-            '<span class="inline-block w-2.5 h-2.5 rounded-full flex-shrink-0" style="background:{color}"></span>'
-            '{label}</td>'
-            '<td class="px-4 py-3 text-right tabular-nums">{total_reach}</td>'
-            '<td class="px-4 py-3 text-right tabular-nums">{avg_reach}</td>'
-            '<td class="px-4 py-3 text-right tabular-nums">{avg_er}%</td>'
-            '<td class="px-4 py-3 text-right tabular-nums">{total_eng}</td>'
-            '</tr>'.format(
-                color=color,
-                label=label,
-                total_reach=_fmt(metrics["total_reach"]),
-                avg_reach=_fmt(metrics["avg_reach"], 1),
-                avg_er=_fmt(metrics["avg_er"], 2),
-                total_eng=_fmt(metrics["total_engagement"]),
-            )
-        )
-    return "\n".join(rows)
-
-
 def build_platform_view(platform: str, raw: dict) -> str:
     df = pd.DataFrame(raw["data"])
     df["date"] = pd.to_datetime(df["date"])
@@ -2105,7 +2056,21 @@ HTML_TEMPLATE = """\
     @keyframes ovDraw {{ to {{ stroke-dashoffset: 0; }} }}
     @media (prefers-reduced-motion: reduce) {{
       #view-home.ov-play .ov-anim {{ animation: none; }}
-      .ov-tile, .ov-contrib-seg, .ov-bar-fill {{ transition: none; }}
+      .ov-tile, .ov-contrib-seg, .ov-bar-fill, .ov-plat {{ transition: none; }}
+    }}
+    .ov-plat:active {{ transform: translateY(-1px); }}
+
+    /* ── Focus visibility (a11y) — ใช้ทั้งแอป ── */
+    :focus-visible {{ outline: 2px solid var(--ov-caramel); outline-offset: 2px; }}
+    .ov-hero :focus-visible {{ outline-color: var(--ov-crema); }}
+    .ov-plat:focus-visible {{ outline: 2px solid var(--ov-caramel); outline-offset: 3px; }}
+
+    /* ── Touch targets ขั้นต่ำ 44px บนอุปกรณ์สัมผัส ── */
+    @media (pointer: coarse) {{
+      .ov-mtab, .intel-tab, .pricing-tab {{
+        min-height: 44px; display: inline-flex; align-items: center; justify-content: center;
+      }}
+      .ov-hero-chip {{ min-height: 38px; }}
     }}
 
     /* ── History / update-log timeline ── */
@@ -2613,6 +2578,8 @@ function initCharts(viewId) {{
 let homeIntroPlayed = false;
 let ovShowdownMetric = 'reach';
 
+function ovTileKey(e, p) {{ if (e.key === 'Enter' || e.key === ' ') {{ e.preventDefault(); showView('view-' + p); }} }}
+
 function ovFmtInt(v) {{ return Number(Math.round(v)).toLocaleString('th-TH'); }}
 function ovFmt1(v) {{ return Number(v).toLocaleString('th-TH', {{minimumFractionDigits:1, maximumFractionDigits:1}}); }}
 
@@ -2771,7 +2738,9 @@ function initHomeOverview() {{
   if (plats) {{
     plats.innerHTML = platforms.map(function(p, i) {{
       const spark = ovSparkline((DATA[p] && DATA[p].reach) || [], colors[i], intro);
-      return '<div class="ov-tile ov-plat ' + (intro ? 'ov-anim' : '') + '" style="--d:' + (i + 2) + '" onclick="showView(\\'view-' + p + '\\')">'
+      return '<div class="ov-tile ov-plat ' + (intro ? 'ov-anim' : '') + '" style="--d:' + (i + 2) + '"'
+        + ' role="button" tabindex="0" aria-label="ดูรายละเอียด ' + labels[i] + '"'
+        + ' onclick="showView(\\'view-' + p + '\\')" onkeydown="ovTileKey(event,\\'' + p + '\\')">'
         + '<div class="ov-plat-top">'
           + '<span class="ov-plat-name"><span class="ov-plat-dot" style="background:' + colors[i] + '"></span>' + labels[i] + '</span>'
           + '<span class="ov-plat-er" style="background:' + colors[i] + '1f;color:' + colors[i] + '">ER ' + ovFmt1(ers[i]) + '%</span>'
@@ -2930,9 +2899,11 @@ function setIntelTab(tab) {{
 function toggleIntelAccord(id) {{
   const body = document.getElementById('accord-body-' + id);
   if (!body) return;
-  body.classList.toggle('open');
+  const open = body.classList.toggle('open');
   const chev = document.getElementById('accord-chev-' + id);
-  if (chev) chev.style.transform = body.classList.contains('open') ? 'rotate(180deg)' : '';
+  if (chev) chev.style.transform = open ? 'rotate(180deg)' : '';
+  const hdr = document.getElementById('accord-hdr-' + id);
+  if (hdr) hdr.setAttribute('aria-expanded', open ? 'true' : 'false');
 }}
 
 function renderPricingRows(pricing) {{
@@ -3100,7 +3071,10 @@ function renderIntelCards() {{
     const isComp  = item.category === 'competitor';
     const stTrend = item.social_trend || {{}};
     return `<div class="intel-accord">
-      <div class="intel-accord-hdr" onclick="toggleIntelAccord('${{item.id}}')">
+      <div class="intel-accord-hdr" id="accord-hdr-${{item.id}}" role="button" tabindex="0"
+           aria-expanded="false" aria-controls="accord-body-${{item.id}}"
+           onclick="toggleIntelAccord('${{item.id}}')"
+           onkeydown="if(event.key==='Enter'||event.key===' '){{event.preventDefault();toggleIntelAccord('${{item.id}}');}}">
         <div class="flex items-center gap-3 min-w-0">
           <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold ${{badge.cls}} flex-shrink-0">${{badge.label}}</span>
           <span class="font-semibold text-sm truncate" style="color:var(--text)">${{item.title}}</span>
@@ -3836,8 +3810,6 @@ def build_html(all_history: dict[str, dict], generated_at: str) -> str:
     update_summary_json = json.dumps(update_log.summarize(log), ensure_ascii=False)
 
     sidebar_nav = build_sidebar_nav(all_history)
-    home_cards = build_home_cards(all_history)
-    home_rows = build_home_comparison_rows(all_history)
 
     platform_views_parts = []
     for platform, raw in all_history.items():
@@ -3854,8 +3826,6 @@ def build_html(all_history: dict[str, dict], generated_at: str) -> str:
         UPDATE_SUMMARY_JSON=update_summary_json,
         GENERATED_AT=generated_at,
         SIDEBAR_NAV_ITEMS=sidebar_nav,
-        HOME_CARDS=home_cards,
-        HOME_COMPARISON_ROWS=home_rows,
         PLATFORM_VIEWS=platform_views,
     )
 

@@ -306,7 +306,21 @@
     @keyframes ovDraw { to { stroke-dashoffset: 0; } }
     @media (prefers-reduced-motion: reduce) {
       #view-home.ov-play .ov-anim { animation: none; }
-      .ov-tile, .ov-contrib-seg, .ov-bar-fill { transition: none; }
+      .ov-tile, .ov-contrib-seg, .ov-bar-fill, .ov-plat { transition: none; }
+    }
+    .ov-plat:active { transform: translateY(-1px); }
+
+    /* ── Focus visibility (a11y) — ใช้ทั้งแอป ── */
+    :focus-visible { outline: 2px solid var(--ov-caramel); outline-offset: 2px; }
+    .ov-hero :focus-visible { outline-color: var(--ov-crema); }
+    .ov-plat:focus-visible { outline: 2px solid var(--ov-caramel); outline-offset: 3px; }
+
+    /* ── Touch targets ขั้นต่ำ 44px บนอุปกรณ์สัมผัส ── */
+    @media (pointer: coarse) {
+      .ov-mtab, .intel-tab, .pricing-tab {
+        min-height: 44px; display: inline-flex; align-items: center; justify-content: center;
+      }
+      .ov-hero-chip { min-height: 38px; }
     }
 
     /* ── History / update-log timeline ── */
@@ -820,6 +834,8 @@ function initCharts(viewId) {
 let homeIntroPlayed = false;
 let ovShowdownMetric = 'reach';
 
+function ovTileKey(e, p) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); showView('view-' + p); } }
+
 function ovFmtInt(v) { return Number(Math.round(v)).toLocaleString('th-TH'); }
 function ovFmt1(v) { return Number(v).toLocaleString('th-TH', {minimumFractionDigits:1, maximumFractionDigits:1}); }
 
@@ -978,7 +994,9 @@ function initHomeOverview() {
   if (plats) {
     plats.innerHTML = platforms.map(function(p, i) {
       const spark = ovSparkline((DATA[p] && DATA[p].reach) || [], colors[i], intro);
-      return '<div class="ov-tile ov-plat ' + (intro ? 'ov-anim' : '') + '" style="--d:' + (i + 2) + '" onclick="showView(\'view-' + p + '\')">'
+      return '<div class="ov-tile ov-plat ' + (intro ? 'ov-anim' : '') + '" style="--d:' + (i + 2) + '"'
+        + ' role="button" tabindex="0" aria-label="ดูรายละเอียด ' + labels[i] + '"'
+        + ' onclick="showView(\'view-' + p + '\')" onkeydown="ovTileKey(event,\'' + p + '\')">'
         + '<div class="ov-plat-top">'
           + '<span class="ov-plat-name"><span class="ov-plat-dot" style="background:' + colors[i] + '"></span>' + labels[i] + '</span>'
           + '<span class="ov-plat-er" style="background:' + colors[i] + '1f;color:' + colors[i] + '">ER ' + ovFmt1(ers[i]) + '%</span>'
@@ -1137,9 +1155,11 @@ function setIntelTab(tab) {
 function toggleIntelAccord(id) {
   const body = document.getElementById('accord-body-' + id);
   if (!body) return;
-  body.classList.toggle('open');
+  const open = body.classList.toggle('open');
   const chev = document.getElementById('accord-chev-' + id);
-  if (chev) chev.style.transform = body.classList.contains('open') ? 'rotate(180deg)' : '';
+  if (chev) chev.style.transform = open ? 'rotate(180deg)' : '';
+  const hdr = document.getElementById('accord-hdr-' + id);
+  if (hdr) hdr.setAttribute('aria-expanded', open ? 'true' : 'false');
 }
 
 function renderPricingRows(pricing) {
@@ -1307,7 +1327,10 @@ function renderIntelCards() {
     const isComp  = item.category === 'competitor';
     const stTrend = item.social_trend || {};
     return `<div class="intel-accord">
-      <div class="intel-accord-hdr" onclick="toggleIntelAccord('${item.id}')">
+      <div class="intel-accord-hdr" id="accord-hdr-${item.id}" role="button" tabindex="0"
+           aria-expanded="false" aria-controls="accord-body-${item.id}"
+           onclick="toggleIntelAccord('${item.id}')"
+           onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleIntelAccord('${item.id}');}">
         <div class="flex items-center gap-3 min-w-0">
           <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold ${badge.cls} flex-shrink-0">${badge.label}</span>
           <span class="font-semibold text-sm truncate" style="color:var(--text)">${item.title}</span>
