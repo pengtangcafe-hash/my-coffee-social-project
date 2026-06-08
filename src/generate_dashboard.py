@@ -343,14 +343,14 @@ INTEL_DATA_FALLBACK = [
     {
         "id": "competitor-elemental",
         "category": "competitor",
-        "title": "Elemental Haus สกลนคร (Verified 22 May 2026)",
-        "summary": "Specialty Coffee + In-house Roastery \"Blanka\" · เล็กๆแต่เด็ด · ทำเลใกล้ มรภ.สกลนคร · LINE MAN ✅ เปิดถึง 19:00 · Facebook เพียง 101 likes (ต่ำสุดกลุ่ม) · Wongnai 0 reviews · ไม่มี Instagram · TikTok @elemental.haus active",
-        "updated": "22 May 2026",
+        "title": "Elemental Haus สกลนคร (Updated 9 Jun 2026)",
+        "summary": "Specialty Coffee + In-house Roastery \"Blanka\" · เล็กๆแต่เด็ด · ทำเลใกล้ มรภ.สกลนคร · LINE MAN ✅ เปิดถึง 19:00 · Facebook 101 likes (ต่ำสุดกลุ่ม) · Wongnai 0 reviews · TikTok @elemental.haus active (วาดแก้วเองไวรัล) · Instagram UGC พบแล้ว",
+        "updated": "9 Jun 2026",
         "source_url": "https://www.facebook.com/elementalhaus/",
         "thumbnail_url": "",
         "tags": ["สกลนคร", "Local", "Independent", "Specialty", "Roastery", "Artisanal", "University"],
         "relevance": "high",
-        "detail": "Elemental Haus (Specialty Coffee + Blanka roastery coffee)\n29/31 ถ.นิตโย พังขว้าง เมืองสกลนคร (บ้านเด่นธานี ใกล้โรงแรม Livable ตรงข้ามวิทยาลัยเทคนิคสกลนคร / หน้า มรภ.สกลนคร)\nโทร: 080-420-0088 · เปิด: ทุกวัน 08:00-19:00 · เปิดกิจการ: กุมภาพันธ์ 2024\n\nConcept: Specialty Coffee + In-house Roastery (Blanka roastery) — \"เล็กๆแต่เด็ด\"\nUSP: ทั้ง specialty coffee และ bar concept · wall art วาดเองทั้งร้าน (รวมห้องน้ำ) · handwritten labels บนแก้ว\n\nSocial Media (verified):\n• Facebook: elementalhaus · ~101 likes (อ่อนที่สุดในกลุ่ม)\n• TikTok: @elemental.haus · official active account\n• Instagram: ไม่มี official account\n• Wongnai: Listed (0 reviews, 0 ratings)\n\nเมนู: กาแฟส้มคั่ว (หวานน้อย เปรี้ยวนิดๆ), Hojicha Latte iced · ฿ category (ต่ำกว่า 100 บาท)\nPromo: Own cup ลด 5 บาท · Loyalty: ระบบ points redeem\nAmenities: Wi-Fi · Pet-friendly · Credit card · Parking · 11-40 ที่นั่ง\n\nทำเลใกล้มหาวิทยาลัย: student/academic crowd เป็น core audience\n\nช่องว่างสำหรับคู่แข่ง:\n• Facebook 101 likes ต่ำสุดกลุ่ม — social awareness แทบไม่มี\n• Wongnai 0 reviews — credibility ต่ำที่สุด\n• ไม่มี Instagram official — visual platform ว่างเปล่า\n• ยังไม่มี signature drink ที่โดดเด่น",
+        "detail": "Elemental Haus (Specialty Coffee + Blanka roastery coffee)\n29/31 ถ.นิตโย พังขว้าง เมืองสกลนคร (บ้านเด่นธานี ใกล้โรงแรม Livable ตรงข้ามวิทยาลัยเทคนิคสกลนคร / หน้า มรภ.สกลนคร)\nโทร: 080-420-0088 · เปิด: ทุกวัน 08:00-19:00 · เปิดกิจการ: กุมภาพันธ์ 2024\n\nConcept: Specialty Coffee + In-house Roastery (Blanka roastery) — \"เล็กๆแต่เด็ด\"\nUSP: ทั้ง specialty coffee และ bar concept · wall art วาดเองทั้งร้าน (รวมห้องน้ำ) · handwritten labels บนแก้ว\n\nSocial Media (verified 9 Jun 2026):\n• Facebook: elementalhaus · ~101 likes (อ่อนที่สุดในกลุ่ม — ไม่เปลี่ยน)\n• TikTok: @elemental.haus · official active account · พบ creative content ใหม่: 'ร้านกาแฟที่เวลาแก้วสกรีนหมด ก็ต้องนั่งวาดเองไปก่อน' = personality-driven viral potential\n• Instagram: ไม่มี official account · แต่พบ UGC post 'มาสกลต้องมาชิม Elemental Haus คาเฟ่เล็กๆแต่เด็ดด้วย' (มิ.ย. 2026)\n• Wongnai: Listed (0 reviews, 0 ratings — ไม่เปลี่ยน)\n\nเมนู: กาแฟส้มคั่ว (หวานน้อย เปรี้ยวนิดๆ), Hojicha Latte iced · ฿ category (ต่ำกว่า 100 บาท)\nPromo: Own cup ลด 5 บาท · Loyalty: ระบบ points redeem\nAmenities: Wi-Fi · Pet-friendly · Credit card · Parking · 11-40 ที่นั่ง\n\nทำเลใกล้มหาวิทยาลัย: student/academic crowd เป็น core audience\n\nช่องว่างสำหรับคู่แข่ง:\n• Facebook 101 likes ต่ำสุดกลุ่ม — social awareness แทบไม่มี\n• Wongnai 0 reviews — credibility ต่ำที่สุด\n• ไม่มี Instagram official — visual platform ว่างเปล่า\n• ยังไม่มี signature drink ที่โดดเด่น\n• TikTok creative content กำลังพัฒนา — อาจ viral ถ้าลูกค้าแชร์",
         "pricing": {
             "espresso": {"price": "", "note": ""},
             "americano": {"price": "", "note": ""},
@@ -368,13 +368,13 @@ INTEL_DATA_FALLBACK = [
         "weaknesses": ["Facebook 101 likes ต่ำที่สุดในกลุ่ม", "Wongnai 0 reviews credibility ต่ำสุด", "ไม่มี Instagram official", "ทำเลชานเมือง เข้าถึงยากจากใจกลาง", "ยังไม่มี signature drink ที่โดดเด่น"],
         "location": "29/31 ถ.นิตโย พังขว้าง เมืองสกลนคร (บ้านเด่นธานี หน้า มรภ.สกลนคร)",
         "hours": "ทุกวัน 08:00-19:00",
-        "social_trend": {"primary_platform": "TikTok", "posting_frequency": "ปานกลาง", "content_style": "Artisanal craft · handmade aesthetic · specialty roastery story", "engagement_level": "low (social presence อ่อนมาก)"},
+        "social_trend": {"primary_platform": "TikTok", "posting_frequency": "ปานกลาง", "content_style": "Artisanal craft · handmade aesthetic · specialty roastery story · personality-driven (วาดแก้วเอง)", "engagement_level": "low-medium (social presence ยังอ่อน แต่ TikTok content เริ่มมี personality)"},
         "delivery": {
             "primary_app": "LINE MAN",
             "apps": ["LINE MAN", "Wongnai Delivery"],
-            "peak_hours": "08:00-19:00",
+            "peak_hours": "08:00-19:00 (ตามเวลาร้าน)",
             "active_promos": ["ค่าส่งเริ่ม 0฿ ในพื้นที่บริการ"],
-            "notes": "LINE MAN verified via Wongnai · ไม่พบบน GrabFood/ShopeeFood"
+            "notes": "LINE MAN ✅ ยืนยัน (9 Jun 2026) via Wongnai · ไม่พบบน GrabFood/ShopeeFood/FoodPanda"
         }
     },
     {
