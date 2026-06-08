@@ -1075,6 +1075,66 @@ INTEL_DATA_FALLBACK = [
         }
     },
     {
+        "id": "competitor-homeup",
+        "category": "competitor",
+        "title": "HOME UP Cafe สกลนคร",
+        "summary": "Nature café + Activity · ถ.ชลประทาน ใกล้ มรภ.สกลนคร · ทุกวัน 10:00-19:00 · Facebook @homeupcafe active (294 shares/โพสต์) · ราคา <100฿ · Wongnai delivery ✅ · เรือพายฟรี + เรือก๋วยเตี๋ยว + ขายต้นไม้ = unique 3-in-1",
+        "updated": "9 Jun 2026",
+        "source_url": "https://www.facebook.com/homeupcafe/",
+        "thumbnail_url": "",
+        "tags": ["สกลนคร", "nature-cafe", "activity", "boat", "plants", "university", "delivery", "ราคาถูก"],
+        "relevance": "high",
+        "detail": "HOME UP Cafe สกลนคร — Nature Café + Paddleboat + Plant Shop\n\nที่ตั้ง: ซอยตรงข้ามโรงเรียนธาตุนารายณ์วิทยา ถ.ชลประทาน (Chaloem Phrakiat Canal Road) / ถ.นิตโย ตำบลพังขว้าง เมืองสกลนคร (ใกล้ มรภ.สกลนคร)\nโทร: 062-893-5288\nเวลาเปิด: ทุกวัน 10:00-19:00\n\nBranding / Positioning: Nature café ติดคลอง/บึง · บรรยากาศร่มรื่น ธรรมชาติ · แอร์เย็น หลายมุมถ่ายรูป\nกลุ่มเป้าหมาย: นักศึกษา มรภ.สกลนคร, ครอบครัว, นักท่องเที่ยวสายธรรมชาติ, สายถ่ายรูป, สายต้นไม้\n\n**Unique Differentiators (ไม่มีร้านไหนในสกลนครทำ):**\n• เรือพาย (Paddleboat) ฟรีสำหรับลูกค้า!\n• เรือก๋วยเตี๋ยว (Boat Noodles) — เมนูอาหาร authentic\n• ขายต้นไม้ประดับ — additional revenue stream\n\nสิ่งอำนวยความสะดวก: Wi-Fi ✅ · ที่จอดรถ ✅ · Pet-friendly ✅ · บัตรเครดิต ✅ · 11-40 ที่นั่ง · Bar counter + ที่ชาร์จโทรศัพท์\n\nSocial Presence:\n• Facebook: @homeupcafe — active · โพสต์ Dec 2021: 162 reactions, 61 comments, **294 shares** (viral สำหรับ local café)\n• Instagram: location page exists (ไม่ทราบ official account)\n• Wongnai: 0 รีวิว (ลงทะเบียนแล้ว)\n• ไม่พบ TikTok official\n• Hashtags: #สกลนคร #คาเฟ่สกลนคร #มุมถ่ายรูป #HOME_UP_Cafe\n\nMenu highlights:\n• กาแฟ, ชา, เครื่องดื่ม\n• ของหวาน/เบเกอรี่\n• **เรือก๋วยเตี๋ยว** (unique!)\n• ต้นไม้ประดับ (ขาย)\n• ราคา <100฿ ทุกรายการ\n\nDelivery: Wongnai delivery ✅ (ระบุใน Wongnai listing) → LINE MAN likely · ไม่พบ GrabFood/ShopeeFood",
+        "pricing": {
+            "espresso": {"price": "ไม่ทราบ", "note": ""},
+            "americano": {"price": "ไม่ทราบ", "note": ""},
+            "latte": {"price": "ไม่ทราบ", "note": "<100฿"},
+            "cappuccino": {"price": "ไม่ทราบ", "note": ""},
+            "cold_brew": {"price": "ไม่ทราบ", "note": ""},
+            "frappe": {"price": "ไม่ทราบ", "note": ""},
+            "matcha": {"price": "ไม่ทราบ", "note": ""},
+            "signature_drink": {"price": "ไม่ทราบ", "note": "กาแฟ/ชา <100฿"},
+            "food": {"price": "ไม่ทราบ", "note": "เรือก๋วยเตี๋ยว + ของหวาน"},
+            "other": [
+                {"name": "เรือก๋วยเตี๋ยว (Boat Noodles)", "price": "ไม่ทราบ", "note": "unique signature food"},
+                {"name": "เรือพาย (Paddleboat)", "price": "ฟรี (สำหรับลูกค้า)", "note": "unique activity"},
+                {"name": "ต้นไม้ประดับ", "price": "ไม่ทราบ", "note": "ขาย retail"}
+            ]
+        },
+        "strengths": [
+            "**เรือพายฟรี** — activity ที่ไม่มีคาเฟ่ไหนในสกลนครทำ = strong UGC trigger",
+            "**เรือก๋วยเตี๋ยว** — differentiator ทั้งเมนูอาหาร unique",
+            "**ขายต้นไม้** — revenue stream เพิ่ม + ดึงกลุ่ม plant lovers",
+            "บรรยากาศธรรมชาติ ติดคลอง = Instagram-worthy สูง",
+            "Facebook viral สูง (294 shares/โพสต์) = organic reach ดีมาก",
+            "ทำเลใกล้ มรภ.สกลนคร = student customer base",
+            "ราคา <100฿ = accessible ทุกกลุ่ม",
+            "Wongnai delivery ✅ + แอร์เย็น ที่ชาร์จ = work-friendly"
+        ],
+        "promotions": [],
+        "weaknesses": [
+            "Wongnai 0 รีวิว = credibility ต่ำสุดกลุ่ม",
+            "ไม่พบ TikTok official = ขาด Gen Z reach",
+            "ข้อมูลราคาไม่เปิดเผยสาธารณะ",
+            "ไม่พบ GrabFood/ShopeeFood"
+        ],
+        "location": "ซอยตรงข้ามโรงเรียนธาตุนารายณ์วิทยา ถ.ชลประทาน / ถ.นิตโย พังขว้าง เมืองสกลนคร",
+        "hours": "ทุกวัน 10:00-19:00",
+        "social_trend": {
+            "primary_platform": "Facebook",
+            "posting_frequency": "moderate (Facebook active)",
+            "content_style": "Nature café · บรรยากาศริมคลอง · เรือพาย · มุมถ่ายรูป · ต้นไม้",
+            "engagement_level": "medium-high (Facebook viral shares สูง 294/โพสต์)"
+        },
+        "delivery": {
+            "primary_app": "LINE MAN",
+            "apps": ["LINE MAN"],
+            "peak_hours": "ยังไม่มีข้อมูล",
+            "active_promos": [],
+            "notes": "Wongnai delivery ✅ (ระบุใน listing) → LINE MAN likely via Wongnai integration · ไม่พบ GrabFood/ShopeeFood/FoodPanda · ต้องยืนยันด้วยการเปิดแอปในพื้นที่"
+        }
+    },
+    {
         "id": "delivery-apps-overview",
         "category": "delivery",
         "title": "Delivery Apps ร้านกาแฟ สกลนคร — ภาพรวม 2026",
