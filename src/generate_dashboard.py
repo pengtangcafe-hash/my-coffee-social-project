@@ -2093,6 +2093,20 @@ HTML_TEMPLATE = """\
     [data-theme="fancy"]  {{ --ov-accent-ink: #f0b878; }}
     [data-theme="coffee"] {{ --ov-accent-ink: #e8b06a; }}
 
+    /* ── Coming soon (Backbar) ── */
+    .ov-soon {{ display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; padding: 64px 24px; min-height: 340px; }}
+    .ov-soon-emoji {{ font-size: 3.2rem; margin-bottom: 16px; line-height: 1; }}
+    .ov-soon-title {{ font-size: 1.55rem; font-weight: 900; color: var(--text); letter-spacing: -.02em; }}
+    .ov-soon-sub {{ font-size: .9rem; color: var(--text-muted); margin-top: 8px; max-width: 38ch; }}
+    .ov-soon-badge {{ display: inline-flex; align-items: center; gap: 8px; margin-top: 22px;
+      padding: 7px 16px; border-radius: 999px; background: var(--ov-espresso-2); color: var(--ov-crema);
+      font-size: .78rem; font-weight: 700; }}
+    .ov-soon-dot {{ width: 8px; height: 8px; border-radius: 999px; background: var(--ov-caramel);
+      animation: ovPulse 1.6s ease-in-out infinite; }}
+    @keyframes ovPulse {{ 0%,100% {{ opacity: 1; transform: scale(1); }} 50% {{ opacity: .35; transform: scale(.75); }} }}
+    @media (prefers-reduced-motion: reduce) {{ .ov-soon-dot {{ animation: none; }} }}
+
     /* ── KPI tiles (Pricing) — โทนเดียวกัน ไม่ใช่สีรุ้ง ── */
     .ov-kpi {{ padding: 18px 20px; }}
     .ov-kpi-top {{ display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }}
@@ -2206,16 +2220,6 @@ HTML_TEMPLATE = """\
         ข่าวกรอง
       </button>
 
-      <button onclick="showView('view-pricing')" id="nav-pricing"
-        class="nav-btn w-full text-left px-4 py-2.5 rounded-xl flex items-center gap-3
-               text-slate-600 hover:bg-slate-50 transition-colors text-sm">
-        <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-        </svg>
-        ราคากลางร้านกาแฟ
-      </button>
-
       <button onclick="showView('view-competitor-deep')" id="nav-competitor-deep"
         class="nav-btn w-full text-left px-4 py-2.5 rounded-xl flex items-center gap-3
                text-slate-600 hover:bg-slate-50 transition-colors text-sm">
@@ -2234,6 +2238,40 @@ HTML_TEMPLATE = """\
             d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
         </svg>
         ติดตามคู่แข่ง
+      </button>
+
+      <button onclick="showView('view-pricing')" id="nav-pricing"
+        class="nav-btn w-full text-left px-4 py-2.5 rounded-xl flex items-center gap-3
+               text-slate-600 hover:bg-slate-50 transition-colors text-sm">
+        <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+        ราคากลางร้านกาแฟ
+      </button>
+
+      <div class="pt-2 pb-1">
+        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest px-4">Backbar</p>
+      </div>
+
+      <button onclick="showView('view-cost-drinks')" id="nav-cost-drinks"
+        class="nav-btn w-full text-left px-4 py-2.5 rounded-xl flex items-center gap-3
+               text-slate-600 hover:bg-slate-50 transition-colors text-sm">
+        <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M5 8h14M7 8l1 10a2 2 0 002 2h4a2 2 0 002-2l1-10M9 8V6a3 3 0 016 0v2"/>
+        </svg>
+        ต้นทุนเครื่องดื่ม
+      </button>
+
+      <button onclick="showView('view-pos-cost')" id="nav-pos-cost"
+        class="nav-btn w-full text-left px-4 py-2.5 rounded-xl flex items-center gap-3
+               text-slate-600 hover:bg-slate-50 transition-colors text-sm">
+        <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M9 7h6m-6 4h6m-6 4h4M5 4h14a1 1 0 011 1v15l-3-2-2 2-2-2-2 2-2-2-3 2V5a1 1 0 011-1z"/>
+        </svg>
+        POS check COST
       </button>
 
       <div class="pt-2 pb-1">
@@ -2513,6 +2551,34 @@ HTML_TEMPLATE = """\
       <!-- Timeline -->
       <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6" style="background:var(--card);border-color:var(--card-border)">
         <div id="log-timeline"></div>
+      </div>
+    </div>
+
+    <!-- ── Backbar: ต้นทุนเครื่องดื่ม (Launching soon) ── -->
+    <div id="view-cost-drinks" class="view">
+      <div class="mb-6">
+        <h1 class="ov-h1">ต้นทุนเครื่องดื่ม</h1>
+        <p class="ov-sub-h">คำนวณต้นทุนต่อแก้ว วัตถุดิบ และกำไรของแต่ละเมนู</p>
+      </div>
+      <div class="ov-tile ov-soon">
+        <div class="ov-soon-emoji">🧮</div>
+        <div class="ov-soon-title">Launching soon..</div>
+        <div class="ov-soon-sub">เครื่องมือคำนวณต้นทุนเครื่องดื่มกำลังพัฒนา เร็ว ๆ นี้</div>
+        <span class="ov-soon-badge"><span class="ov-soon-dot"></span>อยู่ระหว่างพัฒนา</span>
+      </div>
+    </div>
+
+    <!-- ── Backbar: POS check COST (Launching soon) ── -->
+    <div id="view-pos-cost" class="view">
+      <div class="mb-6">
+        <h1 class="ov-h1">POS check COST</h1>
+        <p class="ov-sub-h">ตรวจสอบต้นทุนจากข้อมูลการขายในระบบ POS</p>
+      </div>
+      <div class="ov-tile ov-soon">
+        <div class="ov-soon-emoji">🧾</div>
+        <div class="ov-soon-title">Launching soon..</div>
+        <div class="ov-soon-sub">ระบบเชื่อมต่อ POS เพื่อตรวจต้นทุนกำลังพัฒนา เร็ว ๆ นี้</div>
+        <span class="ov-soon-badge"><span class="ov-soon-dot"></span>อยู่ระหว่างพัฒนา</span>
       </div>
     </div>
 
