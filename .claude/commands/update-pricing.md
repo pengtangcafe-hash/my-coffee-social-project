@@ -27,14 +27,22 @@
    copy dashboard\index.html docs\index.html
    ```
 
-4. **Push ขึ้น GitHub**
+4. **บันทึก log การอัปเดต** (สำคัญ — ทำทุกครั้ง):
    ```
-   git add docs/ src/generate_dashboard.py
+   python src/update_log.py add --category intel --action research \
+     --scope "ราคากลางร้านกาแฟ" \
+     --summary "อัปเดตราคาเมนูคู่แข่ง [จำนวน] ร้าน" --count [จำนวนร้าน] \
+     --detail "ร้านที่ราคาเปลี่ยน: ..."
+   ```
+
+5. **Push ขึ้น GitHub**
+   ```
+   git add docs/ src/generate_dashboard.py data/update-log.json
    git commit -m "Pricing update — [YYYY-MM-DD]"
    git push
    ```
 
-5. **สรุปใน chat:**
+6. **สรุปใน chat:**
    - ร้านที่ราคาเปลี่ยนแปลง (ถ้ามี)
    - ราคาเมนูหลักของแต่ละร้านสรุปสั้นๆ
    - GitHub Pages URL: `https://pengtangcafe-hash.github.io/my-coffee-social-project/`

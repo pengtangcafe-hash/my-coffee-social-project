@@ -37,7 +37,15 @@
    reports/intel-[YYYYMMDD].md
    (ถ้ามีไฟล์ชื่อเดิมอยู่แล้วให้ใช้ reports/intel-[YYYYMMDD]-[topic].md)
 
-6. สรุปสั้นๆ ใน chat:
+6. **บันทึก log การอัปเดต** (สำคัญ — ทำทุกครั้งที่ค้นข้อมูลใหม่สำเร็จ):
+   ```
+   python src/update_log.py add --category intel --action research \
+     --scope "[topic] [city]" --summary "ค้นข้อมูลตลาด/คู่แข่ง: [topic] ที่ [city]" \
+     --detail "highlight 1" --detail "highlight 2"
+   ```
+   แล้วรัน `python src/generate_dashboard.py --rebuild` เพื่อให้ badge "อัปเดตล่าสุด" และหน้า "บันทึกอัปเดต" อัปเดตตาม
+
+7. สรุปสั้นๆ ใน chat:
    - topic และ city ที่ค้นหา
    - highlights 3 จุดที่น่าสนใจที่สุดจาก report
    - **Delivery highlights**: แอปหลัก + โปรโมชันที่น่าสนใจ

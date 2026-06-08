@@ -96,14 +96,23 @@
    copy dashboard\index.html docs\index.html
    ```
 
-8. Git:
+8. **บันทึก log การอัปเดต** (สำคัญ — ทำทุกครั้ง):
    ```
-   git add docs/ reports/competitor-changes-*.md data/competitor-history/ src/generate_dashboard.py
+   python src/update_log.py add --category intel --action research \
+     --scope "วิเคราะห์เชิงลึก 6 มิติ" \
+     --summary "วิเคราะห์คู่แข่งเชิงลึก [จำนวน] ร้าน (6 มิติ)" \
+     --count [จำนวนคู่แข่ง] \
+     --detail "คู่แข่งเปลี่ยนแปลงมากสุด: ..." --detail "delivery: ..."
+   ```
+
+9. Git:
+   ```
+   git add docs/ reports/competitor-changes-*.md data/competitor-history/ src/generate_dashboard.py data/update-log.json
    git commit -m "Competitor deep analysis + delivery update [DATE]"
    git push
    ```
 
-9. สรุปใน chat:
+10. สรุปใน chat:
    - จำนวนคู่แข่งที่วิเคราะห์ (พร้อม 6 มิติ)
    - คู่แข่งที่มีการเปลี่ยนแปลงมากที่สุด (พร้อม badge)
    - **Delivery highlights**: ร้านไหนอยู่บนแอปไหน, โปรโมชันใหม่ที่พบ

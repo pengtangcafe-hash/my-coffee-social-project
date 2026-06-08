@@ -62,7 +62,15 @@
    <ระบุว่าแต่ละข้อมาจาก data หรือ intel หรือทั้งคู่>
    ```
 
-6. สรุปผลใน chat:
+6. **บันทึก log การอัปเดต** — ฝั่ง platform import จะถูก log อัตโนมัติโดย `generate_dashboard.py` แล้ว
+   ส่วนฝั่ง intelligence ถ้า intel-agent ค้นข้อมูลใหม่ ให้บันทึกเพิ่ม:
+   ```
+   python src/update_log.py add --category intel --action analyze \
+     --scope "ร้านกาแฟ สกลนคร" --summary "วิเคราะห์ + ข่าวกรองตลาด [YYYYMMDD]" \
+     --detail "intel highlight 1" --detail "intel highlight 2"
+   ```
+
+7. สรุปผลใน chat:
    - platforms ที่ detect ได้และ snapshot path
    - "Full Report: reports/full-report-<YYYYMMDD>.md"
    - "Dashboard: C:\Users\...\dashboard\index.html" (full path)

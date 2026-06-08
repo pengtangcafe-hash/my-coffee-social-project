@@ -19,6 +19,8 @@ from pathlib import Path
 
 import pandas as pd
 
+import update_log  # ระบบบันทึก audit log (อยู่ใน src/ เดียวกัน)
+
 PROJECT_ROOT = Path(__file__).parent.parent
 
 PLATFORM_LABELS = {
@@ -1963,6 +1965,52 @@ HTML_TEMPLATE = """\
     .intel-accord-hdr:hover {{ background: var(--nav-active); }}
     .intel-accord-body {{ display: none; padding: 0 18px 16px; }}
     .intel-accord-body.open {{ display: block; }}
+
+    /* ── Update / last-updated badge ── */
+    .update-badge {{
+      display: flex; align-items: center; flex-wrap: wrap; gap: 10px;
+      padding: 10px 16px; border-radius: 14px;
+      background: var(--card); border: 1px solid var(--card-border);
+      font-size: .8rem; color: var(--text-muted);
+    }}
+    .update-badge .ub-pill {{
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 3px 11px; border-radius: 9999px; font-weight: 700;
+      background: #10b98122; color: #059669;
+    }}
+    .update-badge .ub-date {{ color: var(--text); font-weight: 600; }}
+    .update-badge a {{ color: #059669; font-weight: 600; text-decoration: none; }}
+    .update-badge a:hover {{ text-decoration: underline; }}
+
+    /* ── History / update-log timeline ── */
+    .log-summary-grid {{
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px; margin-bottom: 24px;
+    }}
+    .log-card {{
+      background: var(--card); border: 1px solid var(--card-border);
+      border-radius: 16px; padding: 18px 20px;
+    }}
+    .log-card .lc-label {{ font-size: .72rem; text-transform: uppercase;
+      letter-spacing: .08em; color: var(--text-muted); margin-bottom: 6px; }}
+    .log-card .lc-count {{ font-size: 2rem; font-weight: 900; color: var(--text); line-height: 1; }}
+    .log-card .lc-sub {{ font-size: .75rem; color: var(--text-muted); margin-top: 6px; }}
+    .log-item {{
+      display: flex; gap: 14px; padding: 14px 0;
+      border-bottom: 1px solid var(--card-border);
+    }}
+    .log-item:last-child {{ border-bottom: none; }}
+    .log-dot {{ flex-shrink: 0; width: 10px; height: 10px; border-radius: 9999px; margin-top: 6px; }}
+    .log-dot.platform {{ background: #3b82f6; }}
+    .log-dot.intel {{ background: #f59e0b; }}
+    .log-cat {{
+      display: inline-block; font-size: .68rem; font-weight: 700;
+      padding: 2px 9px; border-radius: 9999px; margin-right: 8px;
+    }}
+    .log-cat.platform {{ background: #3b82f622; color: #2563eb; }}
+    .log-cat.intel {{ background: #f59e0b22; color: #d97706; }}
+    .log-detail {{ font-size: .78rem; color: var(--text-muted); margin-top: 3px; padding-left: 12px;
+      border-left: 2px solid var(--card-border); }}
   </style>
 </head>
 <body style="font-family: 'Prompt', system-ui, sans-serif" class="text-slate-800">
@@ -2081,6 +2129,16 @@ HTML_TEMPLATE = """\
         นำเข้าข้อมูล
       </button>
 
+      <button onclick="showView('view-updatelog')" id="nav-updatelog"
+        class="nav-btn w-full text-left px-4 py-2.5 rounded-xl flex items-center gap-3
+               text-slate-600 hover:bg-slate-50 transition-colors text-sm">
+        <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+        บันทึกอัปเดต
+      </button>
+
     </nav>
 
     <!-- Footer: theme toggle + date -->
@@ -2161,7 +2219,10 @@ HTML_TEMPLATE = """\
 
     <!-- ── Intel View ── -->
     <div id="view-intel" class="view">
-      <h1 class="text-3xl font-black text-slate-800 mb-6">ข่าวกรองตลาด</h1>
+      <h1 class="text-3xl font-black text-slate-800 mb-4">ข่าวกรองตลาด</h1>
+
+      <!-- Last-updated badge (Intelligence) -->
+      <div id="intel-update-badge" class="update-badge mb-5"></div>
 
       <!-- Filter tabs -->
       <div class="flex flex-wrap gap-2 mb-5">
@@ -2317,6 +2378,27 @@ HTML_TEMPLATE = """\
 
     </div>
 
+    <!-- ── Update Log / History View ── -->
+    <div id="view-updatelog" class="view">
+      <h1 class="text-3xl font-black text-slate-800 mb-1">บันทึกอัปเดต</h1>
+      <p class="text-sm text-slate-500 mb-6">ประวัติการอัปเดตข้อมูลทั้งหมด — เมื่อไหร่ · กี่ครั้ง · อัปเดตอะไรไปบ้าง</p>
+
+      <!-- Summary cards -->
+      <div class="log-summary-grid" id="log-summary-cards"></div>
+
+      <!-- Filter tabs -->
+      <div class="flex flex-wrap gap-2 mb-5">
+        <button class="intel-tab active" id="log-tab-all"      onclick="setLogTab('all')">ทั้งหมด</button>
+        <button class="intel-tab"        id="log-tab-platform" onclick="setLogTab('platform')">📊 Platforms</button>
+        <button class="intel-tab"        id="log-tab-intel"    onclick="setLogTab('intel')">🔍 Intelligence</button>
+      </div>
+
+      <!-- Timeline -->
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6" style="background:var(--card);border-color:var(--card-border)">
+        <div id="log-timeline"></div>
+      </div>
+    </div>
+
   </main>
 </div>
 
@@ -2330,6 +2412,8 @@ const COMP = {COMP_JSON};
 const PLATFORMS = {PLATFORMS_JSON};
 const INTEL = {INTEL_JSON};
 const TRACKER = {TRACKER_JSON};
+const UPDATE_LOG = {UPDATE_LOG_JSON};
+const UPDATE_SUMMARY = {UPDATE_SUMMARY_JSON};
 
 // ── Chart instances cache ──
 const chartInstances = {{}};
@@ -2398,7 +2482,8 @@ function showView(id) {{
 // ── Chart initializer ──
 function initCharts(viewId) {{
   if (viewId === 'view-home')    {{ try {{ initHomeBar(); }} catch(e) {{ console.error('initHomeBar', e); }} return; }}
-  if (viewId === 'view-intel')   {{ try {{ renderIntelCards(); }} catch(e) {{ console.error('renderIntelCards', e); }} return; }}
+  if (viewId === 'view-intel')   {{ try {{ renderIntelCards(); renderIntelUpdateBadge(); }} catch(e) {{ console.error('renderIntelCards', e); }} return; }}
+  if (viewId === 'view-updatelog') {{ try {{ renderUpdateLog(); }} catch(e) {{ console.error('renderUpdateLog', e); }} return; }}
   if (viewId === 'view-pricing') {{ try {{ renderPricingView(); }} catch(e) {{ console.error('renderPricingView', e); }} return; }}
   if (viewId === 'view-competitor-deep') {{ try {{ renderDeepTab(); }} catch(e) {{ console.error('renderDeepTab', e); }} return; }}
   if (viewId === 'view-tracker') {{ try {{ renderTrackerView(); }} catch(e) {{ console.error('renderTrackerView', e); }} return; }}
@@ -3344,6 +3429,93 @@ function renderTrackerContent(period) {{
         : `<div class="text-sm font-bold mb-3" style="color:var(--text-muted)">รายละเอียดแต่ละร้าน (${{competitors.length}} ร้าน)</div>` + cardsHtml);
 }}
 
+// ── Update log / History ──
+const LOG_CAT_LABEL = {{ platform: '📊 Platforms', intel: '🔍 Intelligence' }};
+let currentLogTab = 'all';
+
+function escapeHtml(s) {{
+  return String(s == null ? '' : s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}}
+
+function renderIntelUpdateBadge() {{
+  const el = document.getElementById('intel-update-badge');
+  if (!el) return;
+  const s = (UPDATE_SUMMARY && UPDATE_SUMMARY.intel) || {{ count: 0 }};
+  if (!s.count) {{
+    el.innerHTML = '<span style="color:var(--text-muted)">🕐 ยังไม่มีประวัติการอัปเดต Intelligence</span>'
+      + ' <a href="#" onclick="showView(\\'view-updatelog\\');return false;">ดูบันทึกอัปเดต →</a>';
+    return;
+  }}
+  el.innerHTML =
+    '<span>🕐 อัปเดตล่าสุด:</span>'
+    + '<span class="ub-date">' + escapeHtml(s.last_date_th) + ' ' + escapeHtml(s.last_time_th || '') + '</span>'
+    + '<span class="ub-pill">🔄 ' + s.count + ' ครั้ง</span>'
+    + '<a href="#" onclick="showView(\\'view-updatelog\\');return false;">ดูประวัติทั้งหมด →</a>';
+}}
+
+function setLogTab(tab) {{
+  currentLogTab = tab;
+  document.querySelectorAll('[id^=log-tab-]').forEach(b => b.classList.remove('active'));
+  const btn = document.getElementById('log-tab-' + tab);
+  if (btn) btn.classList.add('active');
+  renderLogTimeline();
+}}
+
+function renderLogSummaryCards() {{
+  const el = document.getElementById('log-summary-cards');
+  if (!el) return;
+  const mk = (label, s, accent) => {{
+    s = s || {{ count: 0 }};
+    const sub = s.count
+      ? ('ล่าสุด ' + escapeHtml(s.last_date_th) + ' ' + escapeHtml(s.last_time_th || ''))
+      : 'ยังไม่มีการอัปเดต';
+    return '<div class="log-card">'
+      + '<div class="lc-label">' + label + '</div>'
+      + '<div class="lc-count" style="color:' + accent + '">' + (s.count || 0)
+      + ' <span style="font-size:1rem;font-weight:700;color:var(--text-muted)">ครั้ง</span></div>'
+      + '<div class="lc-sub">' + sub + '</div></div>';
+  }};
+  el.innerHTML =
+      mk('📊 Platforms', UPDATE_SUMMARY.platform, '#3b82f6')
+    + mk('🔍 Intelligence', UPDATE_SUMMARY.intel, '#f59e0b')
+    + mk('📈 รวมทั้งหมด', UPDATE_SUMMARY.all, '#10b981');
+}}
+
+function renderLogTimeline() {{
+  const el = document.getElementById('log-timeline');
+  if (!el) return;
+  let items = UPDATE_LOG || [];
+  if (currentLogTab !== 'all') items = items.filter(e => e.category === currentLogTab);
+  if (!items.length) {{
+    el.innerHTML = '<div class="text-center py-10" style="color:var(--text-muted)">ยังไม่มีรายการในหมวดนี้</div>';
+    return;
+  }}
+  el.innerHTML = items.map(e => {{
+    const cat = e.category === 'platform' ? 'platform' : 'intel';
+    const cnt = (e.count != null) ? (' · ' + e.count) : '';
+    const scope = e.scope ? (' <span style="color:var(--text-muted)">(' + escapeHtml(e.scope) + ')</span>') : '';
+    const details = (e.details || []).map(d =>
+      '<div class="log-detail">' + escapeHtml(d) + '</div>').join('');
+    return '<div class="log-item">'
+      + '<div class="log-dot ' + cat + '"></div>'
+      + '<div style="flex:1;min-width:0">'
+        + '<div style="font-size:.72rem;color:var(--text-muted);margin-bottom:3px">'
+          + escapeHtml(e.date_th) + ' · ' + escapeHtml(e.time_th || '') + '</div>'
+        + '<div style="font-size:.9rem;color:var(--text)">'
+          + '<span class="log-cat ' + cat + '">' + (LOG_CAT_LABEL[cat] || cat) + '</span>'
+          + '<span style="font-weight:600">' + escapeHtml(e.summary) + '</span>'
+          + scope + cnt + '</div>'
+        + details
+      + '</div></div>';
+  }}).join('');
+}}
+
+function renderUpdateLog() {{
+  renderLogSummaryCards();
+  renderLogTimeline();
+}}
+
 // ── Boot ──
 applyStoredTheme();
 showView('view-home');
@@ -3364,6 +3536,12 @@ def build_html(all_history: dict[str, dict], generated_at: str) -> str:
     intel_json = json.dumps(load_intel_json(), ensure_ascii=False)
     tracker_json = json.dumps(load_tracker_json(), ensure_ascii=False)
 
+    # ── Update log / history (Platforms + Intelligence) ──
+    log = update_log.load_log()
+    log_entries = sorted(log.get("entries", []), key=lambda e: e.get("ts", ""), reverse=True)
+    update_log_json = json.dumps(log_entries, ensure_ascii=False)
+    update_summary_json = json.dumps(update_log.summarize(log), ensure_ascii=False)
+
     sidebar_nav = build_sidebar_nav(all_history)
     home_cards = build_home_cards(all_history)
     home_rows = build_home_comparison_rows(all_history)
@@ -3379,6 +3557,8 @@ def build_html(all_history: dict[str, dict], generated_at: str) -> str:
         PLATFORMS_JSON=platforms_json,
         INTEL_JSON=intel_json,
         TRACKER_JSON=tracker_json,
+        UPDATE_LOG_JSON=update_log_json,
+        UPDATE_SUMMARY_JSON=update_summary_json,
         GENERATED_AT=generated_at,
         SIDEBAR_NAV_ITEMS=sidebar_nav,
         HOME_CARDS=home_cards,
@@ -3404,6 +3584,18 @@ def generate_dashboard(input_path: str) -> Path:
 
     # Load all available history for today
     all_history = load_all_history(today)
+
+    # ── บันทึก update log: 1 รายการต่อ platform ที่นำเข้าจริงในรอบนี้ ──
+    for platform, json_path in normalize_results:
+        rows = all_history.get(platform, {}).get("row_count")
+        rows_txt = f" ({rows} แถว)" if rows else ""
+        update_log.log_update(
+            category="platform",
+            action="import",
+            scope=platform,
+            summary=f"นำเข้าข้อมูล {PLATFORM_LABELS.get(platform, platform)}{rows_txt}",
+            count=rows,
+        )
 
     if not all_history:
         raise RuntimeError(
@@ -3435,9 +3627,44 @@ def generate_dashboard(input_path: str) -> Path:
     return index_path
 
 
+def rebuild_dashboard() -> Path:
+    """
+    สร้าง index.html ใหม่จาก history ล่าสุดที่มีอยู่ — ไม่ normalize ใหม่ ไม่บันทึก log
+    ใช้ refresh dashboard หลังอัปเดต Intelligence/log โดยไม่ต้อง import ข้อมูล platform ซ้ำ
+    """
+    history_dir = PROJECT_ROOT / "data" / "history"
+    dates = set()
+    for p in history_dir.glob("*_*.json"):
+        stem = p.stem.rsplit("_", 1)
+        if len(stem) == 2 and stem[1].isdigit():
+            dates.add(stem[1])
+    if not dates:
+        raise RuntimeError("ไม่พบไฟล์ history ใน data/history/ — ยังไม่มีข้อมูลให้ rebuild")
+
+    latest = max(dates)
+    print(f"[rebuild] ใช้ข้อมูล history วันที่ {latest}")
+    all_history = load_all_history(latest)
+    if not all_history:
+        raise RuntimeError(f"โหลด history วันที่ {latest} ไม่ได้")
+
+    generated_at = datetime.now().strftime("%d %B %Y")
+    html = build_html(all_history, generated_at)
+
+    dashboard_dir = PROJECT_ROOT / "dashboard"
+    dashboard_dir.mkdir(exist_ok=True)
+    index_path = dashboard_dir / "index.html"
+    index_path.write_text(html, encoding="utf-8")
+    print(f"[ok] index.html อัปเดตแล้ว : {index_path}")
+    return index_path
+
+
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print("Usage: python src/generate_dashboard.py <path>")
-        print("  <path> = ไฟล์ CSV / folder platform / root sample-data folder")
+        print("Usage: python src/generate_dashboard.py <path|--rebuild>")
+        print("  <path>     = ไฟล์ CSV / folder platform / root sample-data folder (นำเข้า + log)")
+        print("  --rebuild  = สร้าง dashboard ใหม่จาก history ล่าสุด (ไม่ import, ไม่ log)")
         sys.exit(1)
-    generate_dashboard(sys.argv[1])
+    if sys.argv[1] in ("--rebuild", "-r"):
+        rebuild_dashboard()
+    else:
+        generate_dashboard(sys.argv[1])

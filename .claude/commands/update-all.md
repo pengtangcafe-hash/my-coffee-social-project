@@ -22,6 +22,8 @@
    - ค้นหาราคาเมนูล่าสุดของคู่แข่งแต่ละร้านด้วย WebSearch
    - อัพเดท `PRICING_DATA` ใน `src/generate_dashboard.py` ถ้าพบราคาใหม่
    - บันทึก field `"last_updated"` เป็นวันที่วันนี้
+   - **บันทึก log**: `python src/update_log.py add --category intel --action research --scope "ราคากลางร้านกาแฟ" --summary "อัปเดตราคาเมนูคู่แข่ง"`
+   (ขั้นตอน 2-3 บันทึก log โดย `/analyze`, `/intel`, `/intel-deep` เองอยู่แล้ว — ฝั่ง platform import ก็ log อัตโนมัติ)
 
 5. **เปรียบเทียบ Platforms** (ถ้ามีข้อมูลใน data/history/ อย่างน้อย 2 snapshots)
    - รัน `/compare`

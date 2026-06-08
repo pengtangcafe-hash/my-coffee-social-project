@@ -96,10 +96,21 @@ python src/generate_dashboard.py sample-data/
 copy dashboard\index.html docs\index.html
 ```
 
+### 6.5 บันทึก log การอัปเดต (สำคัญ — ทำทุกครั้ง)
+
+```
+python src/update_log.py add --category intel --action track \
+  --scope "ติดตามคู่แข่ง ([period])" \
+  --summary "ติดตามคู่แข่ง [period_label] — [จำนวน] ร้าน" \
+  --count [จำนวนคู่แข่งที่ติดตาม] \
+  --detail "โปรโมชันใหม่: ..." --detail "ร้านน่าจับตา: ..."
+```
+(รัน `python src/generate_dashboard.py --rebuild` ใน step 6 อยู่แล้ว badge/ประวัติจะอัปเดตตาม)
+
 ### 7. Push GitHub
 
 ```
-git add docs/ data/competitor-tracking-*.json reports/competitor-tracking-*.md
+git add docs/ data/competitor-tracking-*.json reports/competitor-tracking-*.md data/update-log.json
 git commit -m "Competitor tracking update ([period]) — [DATE]"
 git push
 ```

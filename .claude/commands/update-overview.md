@@ -18,9 +18,9 @@
    copy dashboard\index.html docs\index.html
    ```
 
-4. **Push ขึ้น GitHub**
+4. **Push ขึ้น GitHub** (การ import platform ถูกบันทึก log อัตโนมัติโดย generate_dashboard.py แล้ว)
    ```
-   git add docs/ data/history/ reports/
+   git add docs/ data/history/ data/update-log.json reports/
    git commit -m "Social overview update — [YYYY-MM-DD]"
    git push
    ```

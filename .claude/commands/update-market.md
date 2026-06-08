@@ -10,6 +10,8 @@
    - ค้นหาราคาเมนูล่าสุดของคู่แข่งแต่ละร้านด้วย WebSearch
    - อัพเดท `PRICING_DATA` ใน `src/generate_dashboard.py` ถ้าพบราคาใหม่
    - บันทึก field `"last_updated"` เป็นวันที่วันนี้
+   - **บันทึก log**: `python src/update_log.py add --category intel --action research --scope "ราคากลางร้านกาแฟ" --summary "อัปเดตราคาเมนูคู่แข่ง"`
+   (ขั้นตอน 1 และ 3 จะบันทึก log โดย `/intel` และ `/intel-deep` เองอยู่แล้ว)
 
 3. **อัพเดทเชิงลึกคู่แข่ง**
    - รัน `/intel-deep` เพื่อวิเคราะห์คู่แข่ง 6 มิติ รวม delivery

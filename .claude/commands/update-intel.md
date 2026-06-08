@@ -11,9 +11,9 @@
    copy dashboard\index.html docs\index.html
    ```
 
-3. **Push ขึ้น GitHub**
+3. **Push ขึ้น GitHub** (log อัปเดตถูกบันทึกโดย `/intel` ในขั้นตอน 1 แล้ว)
    ```
-   git add docs/ src/generate_dashboard.py reports/intel-*.md
+   git add docs/ src/generate_dashboard.py reports/intel-*.md data/update-log.json
    git commit -m "Intel update — [YYYY-MM-DD]"
    git push
    ```

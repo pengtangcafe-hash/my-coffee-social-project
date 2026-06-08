@@ -26,6 +26,17 @@
 - data/imports/ — ไฟล์ CSV/XLS ที่นำเข้าจริง
 - data/history/ — ข้อมูล normalized เก็บย้อนหลัง
 - data/schema.json — mapping ชื่อ column จากแต่ละ platform
+- data/update-log.json — บันทึก audit log การอัปเดตทั้งหมด (Platforms + Intelligence)
+
+## Update Log / History (ระบบบันทึกการอัปเดต)
+ทุกครั้งที่ "หาข้อมูลใหม่" ต้องบันทึกลง log เสมอ — แสดงผลใน dashboard หน้า "บันทึกอัปเดต"
+และ badge "อัปเดตล่าสุด · N ครั้ง" บนหน้าข่าวกรอง
+- โมดูล: `src/update_log.py` (เก็บ `data/update-log.json`)
+- ฝั่ง **Platforms**: `generate_dashboard.py` บันทึก log อัตโนมัติทุกครั้งที่ import CSV สำเร็จ
+- ฝั่ง **Intelligence**: slash-command (/intel, /intel-deep, /track-competitors ฯลฯ) ต้องเรียก
+  `python src/update_log.py add --category intel --action <action> --scope "..." --summary "..." [--count N] [--detail "..."]`
+- รีเฟรช dashboard โดยไม่ import ใหม่: `python src/generate_dashboard.py --rebuild`
+- ดู log: `python src/update_log.py show` · สรุป: `python src/update_log.py summary`
 
 ## Report Format
 ทุก report ที่ /analyze สร้างต้องมี sections เหล่านี้เสมอ:
@@ -40,6 +51,7 @@
 - /intel [topic] [city] — ค้นหาข้อมูลตลาด คู่แข่ง hashtags สำหรับธุรกิจกาแฟ
 - /intel-deep — วิเคราะห์คู่แข่งเชิงลึก 5 มิติ
 - /compare — เปรียบเทียบ performance ระหว่าง platforms
+- python src/update_log.py [add|show|summary|backfill] — จัดการ audit log การอัปเดต
 
 ## Tech Stack
 - Python 3 + pandas สำหรับ data processing
