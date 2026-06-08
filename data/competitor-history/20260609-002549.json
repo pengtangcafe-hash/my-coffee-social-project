@@ -1,0 +1,2676 @@
+{
+  "date": "2026-06-09T00:25:49.256865",
+  "source": "intel-deep-command",
+  "competitors": [
+    {
+      "id": "competitor-amazon-coffee",
+      "category": "competitor",
+      "title": "Amazon Coffee สกลนคร (PTT)",
+      "summary": "Chain ใหญ่สุดในไทย มีหลายสาขาในสกลนคร Facebook page active ราคาเข้าถึงได้ เมนูครบ",
+      "source_url": "",
+      "thumbnail_url": "",
+      "tags": [
+        "สกลนคร",
+        "Chain",
+        "Amazon",
+        "PTT"
+      ],
+      "relevance": "high",
+      "detail": "Amazon Coffee จาก PTT เป็น chain กาแฟใหญ่สุดในไทย มีสาขาในสกลนครหลายจุด (ปั๊มน้ำมัน PTT และ standalone) Facebook page มีผู้ติดตามระดับชาติ ราคาเข้าถึงได้ latte เริ่มต้น 45-55 บาท cold brew 50-65 บาท มีเมนูประจำฤดูกาล loyalty app สะสมแต้มได้",
+      "pricing": {
+        "espresso": {
+          "price": "35",
+          "note": "single shot"
+        },
+        "americano": {
+          "price": "45",
+          "note": "hot/iced"
+        },
+        "latte": {
+          "price": "55",
+          "note": "hot/iced"
+        },
+        "cappuccino": {
+          "price": "55",
+          "note": ""
+        },
+        "cold_brew": {
+          "price": "65",
+          "note": ""
+        },
+        "frappe": {
+          "price": "65",
+          "note": ""
+        },
+        "matcha": {
+          "price": "60",
+          "note": ""
+        },
+        "signature_drink": {
+          "price": "65",
+          "note": "seasonal"
+        },
+        "food": {
+          "price": "35",
+          "note": "เบเกอรี่"
+        },
+        "other": [
+          {
+            "name": "ช็อคโกแลต",
+            "price": "55",
+            "note": "hot/iced"
+          }
+        ]
+      },
+      "strengths": [
+        "Brand awareness สูงมาก",
+        "Loyalty app สะสมแต้ม",
+        "สาขาเยอะ ใกล้ปั๊มน้ำมัน",
+        "ราคาเข้าถึงได้",
+        "เมนูประจำฤดูกาล"
+      ],
+      "promotions": [
+        "สะสมแต้ม A Card",
+        "ซื้อ 10 แก้ว ฟรี 1 แก้ว"
+      ],
+      "weaknesses": [
+        "Chain — ไม่มีความเป็น local",
+        "บรรยากาศเหมือนกันทุกสาขา",
+        "TikTok เป็น account กลาง ไม่ใช่ local"
+      ],
+      "location": "หลายสาขา สกลนคร",
+      "hours": "ตามสาขา 06:00-22:00",
+      "social_trend": {
+        "primary_platform": "Facebook",
+        "posting_frequency": "สม่ำเสมอ",
+        "content_style": "promotional",
+        "engagement_level": "medium"
+      },
+      "delivery": {
+        "primary_app": "GrabFood",
+        "apps": [
+          "GrabFood",
+          "LINE MAN"
+        ],
+        "peak_hours": "07:00-09:00 (เช้าก่อนทำงาน), 14:00-16:00 (Coffee Break)",
+        "active_promos": [
+          "GrabUnlimited ส่งฟรีไม่จำกัด",
+          "GrabRewards สะสมคะแนน",
+          "Grab Flash Deal เป็นครั้งคราว"
+        ],
+        "notes": "สาขาในปั๊ม PTT เชื่อมต่อ GrabFood ได้ดีมาก ลูกค้า GrabUnlimited นิยมสั่งช่วงเช้าก่อนถึงออฟฟิศ ยอดสั่งสูงสุดวันทำงาน"
+      }
+    },
+    {
+      "id": "competitor-inthanin",
+      "category": "competitor",
+      "title": "Inthanin Coffee สกลนคร",
+      "summary": "Premium chain จาก PTT เน้น specialty beans Thai origin ราคาสูงกว่า Amazon บรรยากาศดี",
+      "source_url": "",
+      "thumbnail_url": "",
+      "tags": [
+        "สกลนคร",
+        "Chain",
+        "Specialty",
+        "Premium"
+      ],
+      "relevance": "high",
+      "detail": "Inthanin Coffee เน้น Thai specialty beans จากดอยต่างๆ ราคา premium กว่า Amazon (latte 65-80 บาท) มีสาขาในห้างและปั๊ม PTT บรรยากาศดีกว่า Facebook page ระดับชาติ มีเมนู signature เช่น Doi Chaang Single Origin",
+      "pricing": {
+        "espresso": {
+          "price": "50",
+          "note": ""
+        },
+        "americano": {
+          "price": "60",
+          "note": "hot/iced"
+        },
+        "latte": {
+          "price": "75",
+          "note": "hot/iced"
+        },
+        "cappuccino": {
+          "price": "75",
+          "note": ""
+        },
+        "cold_brew": {
+          "price": "85",
+          "note": ""
+        },
+        "frappe": {
+          "price": "80",
+          "note": ""
+        },
+        "matcha": {
+          "price": "80",
+          "note": ""
+        },
+        "signature_drink": {
+          "price": "85",
+          "note": "Thai origin beans"
+        },
+        "food": {
+          "price": "45",
+          "note": "เบเกอรี่ premium"
+        },
+        "other": []
+      },
+      "strengths": [
+        "Specialty Thai beans",
+        "บรรยากาศดี",
+        "Brand premium",
+        "มีเมนู Single Origin"
+      ],
+      "promotions": [
+        "สะสมแต้ม PTT Blue Card"
+      ],
+      "weaknesses": [
+        "ราคาสูงกว่า Amazon",
+        "Chain ไม่มีความ local",
+        "TikTok content น้อย"
+      ],
+      "location": "สาขาในห้างและปั๊ม PTT สกลนคร",
+      "hours": "ตามสาขา 07:00-21:00",
+      "social_trend": {
+        "primary_platform": "Facebook",
+        "posting_frequency": "ปานกลาง",
+        "content_style": "promotional",
+        "engagement_level": "medium"
+      },
+      "delivery": {
+        "primary_app": "GrabFood",
+        "apps": [
+          "GrabFood",
+          "LINE MAN"
+        ],
+        "peak_hours": "10:00-12:00 (ช่วงสาย), 14:00-16:00 (Coffee Break บ่าย)",
+        "active_promos": [
+          "GrabUnlimited ส่งฟรี",
+          "PTT Blue Card campaign ตามเทศกาล"
+        ],
+        "notes": "กลุ่มลูกค้า premium นิยม GrabFood เพราะบริการเสถียร รวดเร็ว ตรงกับ positioning ของร้าน ยอดสูงช่วงสาย-บ่ายวันทำงาน"
+      }
+    },
+    {
+      "id": "competitor-local-cafe",
+      "category": "competitor",
+      "title": "ร้านกาแฟ Local สกลนคร (Independent)",
+      "summary": "ร้านกาแฟ local independent ในสกลนคร เน้นบรรยากาศ ราคากลาง มี Instagram/TikTok content น่าสนใจ",
+      "source_url": "",
+      "thumbnail_url": "",
+      "tags": [
+        "สกลนคร",
+        "Local",
+        "Independent",
+        "Aesthetic"
+      ],
+      "relevance": "high",
+      "detail": "กลุ่มร้านกาแฟ independent ในสกลนคร เน้น aesthetic บรรยากาศ latte art content บน Instagram และ TikTok ราคา mid-range (latte 60-80 บาท) หลายร้านใช้ beans local จากภาคอีสาน มีเมนู signature เป็น USP",
+      "pricing": {
+        "espresso": {
+          "price": "40",
+          "note": ""
+        },
+        "americano": {
+          "price": "55",
+          "note": ""
+        },
+        "latte": {
+          "price": "70",
+          "note": "hot/iced"
+        },
+        "cappuccino": {
+          "price": "70",
+          "note": ""
+        },
+        "cold_brew": {
+          "price": "75",
+          "note": ""
+        },
+        "frappe": {
+          "price": "70",
+          "note": ""
+        },
+        "matcha": {
+          "price": "70",
+          "note": ""
+        },
+        "signature_drink": {
+          "price": "80",
+          "note": "แตกต่างตามร้าน"
+        },
+        "food": {
+          "price": "50",
+          "note": "เค้ก/ขนม homemade"
+        },
+        "other": []
+      },
+      "strengths": [
+        "บรรยากาศน่านั่ง",
+        "Instagram-worthy",
+        "Local vibe",
+        "เมนู signature unique",
+        "Latte art"
+      ],
+      "promotions": [
+        "บัตรสะสมแต้ม",
+        "โปรนักศึกษา"
+      ],
+      "weaknesses": [
+        "ไม่มี brand awareness ระดับชาติ",
+        "เปิดวันหยุดไม่สม่ำเสมอ",
+        "TikTok ยังไม่ viral"
+      ],
+      "location": "ย่านใจกลางเมืองสกลนคร",
+      "hours": "08:00-20:00 (บางร้านปิดจันทร์)",
+      "social_trend": {
+        "primary_platform": "Instagram",
+        "posting_frequency": "สม่ำเสมอ",
+        "content_style": "latte art",
+        "engagement_level": "medium"
+      },
+      "delivery": {
+        "primary_app": "LINE MAN",
+        "apps": [
+          "LINE MAN",
+          "ShopeeFood"
+        ],
+        "peak_hours": "10:00-15:00 (Specialty peak วันหยุด), 14:00-16:00 (Coffee Break วันทำงาน)",
+        "active_promos": [
+          "ShopeeFood Flash Sale 30-50% off ช่วง Payday/ต้นเดือน",
+          "LINE MAN ส่งฟรีเมื่อสั่งครบ 150 บาท"
+        ],
+        "notes": "LINE MAN ครอบคลุม local cafe ดีที่สุด เชื่อมกับ Wongnai นักล่าโปรหลั่งไหลเข้า ShopeeFood ช่วงแคมเปญ — โอกาสดึงลูกค้าใหม่ที่ยังไม่รู้จักร้าน"
+      }
+    },
+    {
+      "id": "competitor-wawee",
+      "category": "competitor",
+      "title": "Wawee Coffee สกลนคร",
+      "summary": "Chain จากเชียงใหม่ขยายทั่วไทย เน้น beans คุณภาพดี ราคา mid-premium มี TikTok ระดับชาติ",
+      "source_url": "",
+      "thumbnail_url": "",
+      "tags": [
+        "สกลนคร",
+        "Chain",
+        "Wawee",
+        "เชียงใหม่"
+      ],
+      "relevance": "medium",
+      "detail": "Wawee Coffee chain จากเชียงใหม่ เน้น Northern Thai beans ราคา mid-premium latte 65-80 บาท มีสาขาในหลายจังหวัด รวมถึงสกลนคร TikTok มีผู้ติดตามระดับชาติ content เน้น barista process และ beans story",
+      "pricing": {
+        "espresso": {
+          "price": "45",
+          "note": ""
+        },
+        "americano": {
+          "price": "55",
+          "note": ""
+        },
+        "latte": {
+          "price": "75",
+          "note": ""
+        },
+        "cappuccino": {
+          "price": "75",
+          "note": ""
+        },
+        "cold_brew": {
+          "price": "80",
+          "note": ""
+        },
+        "frappe": {
+          "price": "75",
+          "note": ""
+        },
+        "matcha": {
+          "price": "75",
+          "note": ""
+        },
+        "signature_drink": {
+          "price": "80",
+          "note": "Northern Thai beans"
+        },
+        "food": {
+          "price": "40",
+          "note": "เบเกอรี่"
+        },
+        "other": []
+      },
+      "strengths": [
+        "Beans quality story ดี",
+        "TikTok following ระดับชาติ",
+        "Northern Thailand branding ชัด"
+      ],
+      "promotions": [
+        "สมาชิก 10% off",
+        "นักศึกษา 15% off"
+      ],
+      "weaknesses": [
+        "Chain — local connection น้อย",
+        "ราคากลาง-สูง"
+      ],
+      "location": "สาขาสกลนคร",
+      "hours": "07:00-21:00",
+      "social_trend": {
+        "primary_platform": "TikTok",
+        "posting_frequency": "สม่ำเสมอ",
+        "content_style": "barista process",
+        "engagement_level": "medium"
+      },
+      "delivery": {
+        "primary_app": "LINE MAN",
+        "apps": [
+          "LINE MAN",
+          "GrabFood"
+        ],
+        "peak_hours": "07:00-09:00 (เช้า), 14:00-16:00 (Coffee Break)",
+        "active_promos": [
+          "LINE MAN แคมเปญตามเทศกาล",
+          "ส่วนลดสมาชิกเมื่อสั่งผ่านแอป"
+        ],
+        "notes": "Wawee ขยายสาขาต่างจังหวัดทั่วไทย LINE MAN ครอบคลุมได้ดี ยอดสั่งช่วงเช้าวันทำงานและบ่ายสูงใกล้เคียงกัน"
+      }
+    },
+    {
+      "id": "competitor-raintree",
+      "category": "competitor",
+      "title": "RAINTREE CAFE สกลนคร (Updated 24 May 2026)",
+      "summary": "Destination cafe ระดับกลาง-บน Concept 'เขาใหญ่กลางเมือง' · Facebook 77K · Google 4.7/5 · Day cafe + Night cocktail bar · เปิดถึงเที่ยงคืน · ราคาเริ่ม 70฿ · Pet-friendly",
+      "updated": "24 May 2026",
+      "source_url": "https://www.facebook.com/p/Raintreecafe-61552983815422/",
+      "thumbnail_url": "",
+      "tags": [
+        "สกลนคร",
+        "Local",
+        "Independent",
+        "Destination",
+        "Pet-friendly",
+        "Cocktail"
+      ],
+      "relevance": "high",
+      "detail": "RAINTREE CAFE — 391 ถนนสกลนคร-กาฬสินธุ์ ต.ดงมะไฟ อ.เมือง จ.สกลนคร (ตรงข้าม ปตท.ศูนย์ราชการ)\nโทร: 065-391-4662 / 081-345-4643\n\nSocial Media (verified):\n• Facebook: ~77,000 followers — ใหญ่มากสำหรับ local cafe · crosspost TikTok content\n• Instagram: @raintree_sakon · 11,000 followers · 293 posts · Aesthetic nature photography\n• TikTok: @raintree91 · Comedy/personality-driven · 1 viral video 152,900 likes confirmed\n\nTikTok Content Strategy (verified):\n• Tone: Comedy + personality-driven ไม่ใช่ polished brand content\n• เจ้าของออกกล้องเอง · พนักงานเป็น recurring characters\n• Themes: staff humor ('เจ้านายอยู่ vs ไม่อยู่'), barista spotlight, customer comedy, photo tips\n• เนื้อหา night/bar segment: 'กาแฟดึกที่ Raintree' — promote evening visits\n\nHashtag Strategy:\n• Always-on: #raintreecafe #เรนทรีคาเฟ่ #คาเฟ่สกลนคร #สกลนคร\n• Branded UGC: #raintreemoments — เก็บ fan content\n• Secondary: #sakonnakhon #ร้านกาแฟสกลนคร\n\nReviews:\n• Google Maps: 4.7/5 จาก 246 รีวิว · #14 จาก 246 คาเฟ่สกลนคร\n• Wongnai: 4.1/5 · #3 จาก 181 คาเฟ่\n• Sentiment: 'ฟิลเขาใหญ่กลางเมือง' พูดถึงซ้ำทุก review\n\nจุดแข็ง:\n• Concept 'เขาใหญ่กลางเมือง' ชัดเจน ลูกค้าจำได้\n• พื้นที่ใหญ่มาก 81-150 ที่นั่ง Indoor+Outdoor (สนามหญ้า/สระน้ำ/ต้นจามจุรี)\n• Double segment: Day cafe (กาแฟ/ชา) + Night bar (Cocktail)\n• Pet-friendly — niche หายากในสกลนคร\n• เมนูดัง: มัทฉะน้ำส้มสด 'อร่อยที่สุดในเมือง'\n\nช่องว่างสำหรับคู่แข่ง:\n• Wongnai presence น้อย (3 รีวิว) — โอกาสสำหรับร้านที่ทำ Wongnai marketing\n• เวลาเปิดไม่สม่ำเสมอ (บางรีวิวระบุปิดก่อนเวลา)\n• Delivery Wongnai-direct เท่านั้น ไม่พบ LINE MAN/GrabFood\n• เน้น aesthetic + comedy มากกว่า specialty/origin beans story",
+      "pricing": {
+        "espresso": {
+          "price": "",
+          "note": ""
+        },
+        "americano": {
+          "price": "80",
+          "note": "dark/medium roast ~80฿"
+        },
+        "latte": {
+          "price": "",
+          "note": "ราคาเริ่มต้น 70฿"
+        },
+        "cappuccino": {
+          "price": "",
+          "note": ""
+        },
+        "cold_brew": {
+          "price": "",
+          "note": ""
+        },
+        "frappe": {
+          "price": "",
+          "note": ""
+        },
+        "matcha": {
+          "price": "120",
+          "note": "น้ำส้มสด (ขายดี) / coconut matcha / orange matcha"
+        },
+        "signature_drink": {
+          "price": "130",
+          "note": "มัทฉะมะพร้าว"
+        },
+        "food": {
+          "price": "90",
+          "note": "Cheese pie, Carrot cake, Chocolate cake"
+        },
+        "other": [
+          {
+            "name": "คาราเมล มัคคิอาโต้",
+            "price": "110"
+          },
+          {
+            "name": "เฉลี่ย/คน",
+            "price": "70-250"
+          },
+          {
+            "name": "Caramel Macchiato",
+            "price": "110"
+          }
+        ]
+      },
+      "strengths": [
+        "Facebook 77K reach ใหญ่มาก",
+        "TikTok viral (152K likes) comedy content",
+        "Branded hashtag #raintreemoments สร้าง UGC",
+        "Concept 'เขาใหญ่กลางเมือง' จำง่าย",
+        "Google 4.7/5 Top of Mind",
+        "Pet-friendly niche",
+        "Day + Night double segment"
+      ],
+      "promotions": [],
+      "weaknesses": [
+        "Wongnai ยังน้อยมาก (3 รีวิว)",
+        "Delivery Wongnai-direct เท่านั้น ไม่อยู่บน LINE MAN/GrabFood",
+        "เวลาเปิดบางครั้งไม่สม่ำเสมอ",
+        "ไม่มี specialty/origin beans story"
+      ],
+      "location": "391 ถนนสกลนคร-กาฬสินธุ์ ต.ดงมะไฟ อ.เมือง จ.สกลนคร",
+      "hours": "จ-ศ 08:00-23:00 / ส-อา 08:00-00:00",
+      "social_trend": {
+        "primary_platform": "TikTok+Facebook",
+        "posting_frequency": "สม่ำเสมอ",
+        "content_style": "Comedy/personality-driven · staff humor · เจ้าของออกกล้อง · #raintreemoments UGC",
+        "engagement_level": "very high"
+      },
+      "delivery": {
+        "primary_app": "Wongnai",
+        "apps": [
+          "Wongnai delivery (08:00-17:00)"
+        ],
+        "peak_hours": "ไม่ทราบ — delivery เป็น secondary จาก dine-in",
+        "active_promos": [],
+        "notes": "Wongnai-direct delivery เท่านั้น (08:00-17:00) — LINE MAN และ GrabFood ไม่ verified ณ พ.ค. 2026 ร้านเน้น dine-in experience เป็นหลัก"
+      }
+    },
+    {
+      "id": "competitor-zmd",
+      "category": "competitor",
+      "title": "Z M d cafe' Specialty Coffee สกลนคร (Verified 22 May 2026)",
+      "summary": "Dark aesthetic specialty café · Zignature (กาแฟส้ม) signature drink · LINE MAN delivery ✅ · Wongnai 5.0/5 #33/436 · ราคากลาง-ล่าง 75-150฿ · Community collab Soulrun",
+      "updated": "22 May 2026",
+      "source_url": "https://www.facebook.com/p/Z-M-d-cafe-Specialty-Coffee-100083302782620/",
+      "thumbnail_url": "",
+      "tags": [
+        "สกลนคร",
+        "Local",
+        "Independent",
+        "DarkAesthetic",
+        "Specialty",
+        "SlowBar",
+        "SpeedBar"
+      ],
+      "relevance": "high",
+      "detail": "Z M d cafe' Specialty Coffee — 1268/6 ถ.กำจัดภัย ธาตุเชิงชุม เมืองสกลนคร (ใกล้โรงแรมสมเกียรติ แยกอารยา)\nโทร: 093-916-6399 | เปิด 07:30-18:00 ทุกวัน\n\nConcept: Dark aesthetic / specialty — 'มืด, แหลมคม, อินดี้'\nบริการ: Specialty // Speedbar // Slowbar\n\nSocial (verified):\n• Facebook: ~3,243 likes / ~1,798 check-ins\n• Instagram: @zmdcafe · TikTok: @zmdcafe\n• Wongnai: 5.0/5 (4 reviews) · #33 จาก 436 cafés สกลนคร\n\nSignature: Zignature (ส้ม + โซดา + Espresso Colombia) 95฿ — เป็น hero content\nCommunity: Soulrun x ZMd collab · Merch เสื้อ 444฿\nArtwork ซ่อนชั้น 2 — unique story content\n\nDelivery: LINE MAN ✅ (Wongnai x LINE MAN) · 07:30-17:30 · ค่าส่งเริ่ม 0฿\nFacebook ยืนยัน: 'มีเดลิเวอรี่ผ่าน LINE MAN หรือโทร 093-9166399'\n\nReviews: 'ร้านสวย เท่ มากกก' · 'พิถีพิถันในการทำทุกขั้นตอน' · 'บาริสต้า น่ารัก'\n\nช่องว่างสำหรับคู่แข่ง:\n• Google Maps ยังไม่ indexed → เสีย SEO search\n• Wongnai เพียง 4 reviews → credibility ต่ำ\n• Dark aesthetic ไม่ appeal กลุ่ม family/casual → niche แคบ",
+      "pricing": {
+        "espresso": {
+          "price": "",
+          "note": ""
+        },
+        "americano": {
+          "price": "75",
+          "note": ""
+        },
+        "latte": {
+          "price": "85",
+          "note": ""
+        },
+        "cappuccino": {
+          "price": "85",
+          "note": ""
+        },
+        "cold_brew": {
+          "price": "150",
+          "note": "Cold Brew Fusion พีช+ไวน์"
+        },
+        "frappe": {
+          "price": "",
+          "note": ""
+        },
+        "matcha": {
+          "price": "80",
+          "note": "Classic / 110฿ Premium"
+        },
+        "signature_drink": {
+          "price": "95",
+          "note": "Zignature (กาแฟส้ม — hero menu)"
+        },
+        "food": {
+          "price": "85",
+          "note": "Shio Pan / Saint Etoile / Cranberry CC"
+        },
+        "other": [
+          {
+            "name": "Dirty",
+            "price": "125"
+          },
+          {
+            "name": "Drip Fusion สตรอว์เบอรี่",
+            "price": "130"
+          },
+          {
+            "name": "เสื้อ Merch",
+            "price": "444"
+          }
+        ]
+      },
+      "strengths": [
+        "Dark aesthetic เป็น differentiator เดียวในสกลนคร",
+        "Zignature signature ที่จดจำง่าย",
+        "LINE MAN delivery ยืนยัน (07:30-17:30)",
+        "Community Soulrun collab",
+        "Wongnai 5.0/5 #33/436"
+      ],
+      "promotions": [
+        "ค่าส่ง LINE MAN เริ่ม 0฿ ในพื้นที่"
+      ],
+      "weaknesses": [
+        "Google Maps ไม่ indexed → เสีย SEO",
+        "Wongnai 4 reviews credibility ต่ำ",
+        "Dark niche ไม่ appeal กลุ่ม family",
+        "วันหยุด (อังคาร?) ยังไม่ confirmed"
+      ],
+      "location": "1268/6 ถ.กำจัดภัย ธาตุเชิงชุม เมืองสกลนคร",
+      "hours": "07:30-18:00 ทุกวัน (ยังไม่ confirmed วันอังคาร)",
+      "social_trend": {
+        "primary_platform": "Facebook",
+        "posting_frequency": "สม่ำเสมอ",
+        "content_style": "Dark aesthetic + Signature drink reveals + Soulrun community collab",
+        "engagement_level": "low-medium"
+      },
+      "delivery": {
+        "primary_app": "LINE MAN",
+        "apps": [
+          "LINE MAN",
+          "Wongnai Delivery"
+        ],
+        "peak_hours": "07:30-17:30 (ตามเวลาร้าน)",
+        "active_promos": [
+          "ค่าส่งเริ่ม 0฿ ในพื้นที่บริการ"
+        ],
+        "notes": "LINE MAN verified ทั้งจาก Wongnai listing และ Facebook post · ครบเมนูทุกรายการ · link direct: lin.ee/2PPUiFB"
+      }
+    },
+    {
+      "id": "competitor-allofkk",
+      "category": "competitor",
+      "title": "All of KK สกลนคร (Limited Data — 22 May 2026)",
+      "summary": "Small local café · Facebook เท่านั้น (~700 likes) · Tagline 'You can taste the passion' · ไม่พบ delivery · ข้อมูลจำกัดมาก — ต้องการ field visit",
+      "updated": "22 May 2026",
+      "source_url": "https://www.facebook.com/allofkk",
+      "thumbnail_url": "",
+      "tags": [
+        "สกลนคร",
+        "Local",
+        "Independent",
+        "LimitedData"
+      ],
+      "relevance": "medium",
+      "detail": "All of KK — Facebook: facebook.com/allofkk\nTagline: 'You can taste the passion'\n\n⚠️ ข้อมูลจำกัดมาก — Facebook blocking crawlers:\n• Facebook: ~700 likes / ~205 check-ins (เท่านั้นที่ยืนยันได้)\n• ไม่พบ Instagram, TikTok, Wongnai, Google Maps listing\n• ไม่ทราบ: ที่อยู่, เวลาเปิด, เมนู, ราคา\n\nภาพรวม: ร้านเล็ก low-profile ยังไม่ถูก 'ค้นพบ' โดย community นักรีวิว\nCheck-in 205 คน บ่งชี้มีลูกค้าจริง แต่ social presence ต่ำที่สุดในบรรดาคู่แข่งที่ track\n\n⚠️ แนะนำ: เข้าดู facebook.com/allofkk โดยตรง หรือ field visit เพื่อ update ข้อมูล",
+      "pricing": {
+        "espresso": {
+          "price": "",
+          "note": "ไม่ทราบ"
+        },
+        "americano": {
+          "price": "",
+          "note": "ไม่ทราบ"
+        },
+        "latte": {
+          "price": "",
+          "note": ""
+        },
+        "cappuccino": {
+          "price": "",
+          "note": ""
+        },
+        "cold_brew": {
+          "price": "",
+          "note": ""
+        },
+        "frappe": {
+          "price": "",
+          "note": ""
+        },
+        "matcha": {
+          "price": "",
+          "note": ""
+        },
+        "signature_drink": {
+          "price": "",
+          "note": "ไม่ทราบ"
+        },
+        "food": {
+          "price": "",
+          "note": ""
+        },
+        "other": []
+      },
+      "strengths": [
+        "มีลูกค้าจริง (205 check-ins)",
+        "Tagline passion-driven"
+      ],
+      "promotions": [],
+      "weaknesses": [
+        "Facebook เท่านั้น (ไม่มี IG/TikTok)",
+        "ไม่มี delivery platform",
+        "ไม่มี Wongnai listing",
+        "ข้อมูลสาธารณะน้อยมาก"
+      ],
+      "location": "สกลนคร (ไม่ทราบที่อยู่ชัดเจน)",
+      "hours": "ไม่ทราบ",
+      "social_trend": {
+        "primary_platform": "Facebook",
+        "posting_frequency": "ไม่ทราบ",
+        "content_style": "ไม่ทราบ — ต้องการ field visit",
+        "engagement_level": "low"
+      },
+      "delivery": {
+        "primary_app": "ไม่มี",
+        "apps": [],
+        "peak_hours": "N/A",
+        "active_promos": [],
+        "notes": "ไม่พบบน LINE MAN, GrabFood, Wongnai Delivery — dine-in เท่านั้น (สันนิษฐาน)"
+      }
+    },
+    {
+      "id": "competitor-meesuk",
+      "category": "competitor",
+      "title": "มีสุขสโลว์บาร์หน้าบ้านแม่ สกลนคร (Verified 22 May 2026)",
+      "summary": "Slow Bar + Uji Matcha authentic · Concept 'หน้าบ้านแม่' brand story แข็ง · Workshop ปั้นดิน differentiator · ปิด 15:00 · ไม่มี delivery แอปเลย",
+      "updated": "22 May 2026",
+      "source_url": "https://www.facebook.com/meesookslowbar/",
+      "thumbnail_url": "",
+      "tags": [
+        "สกลนคร",
+        "Local",
+        "Independent",
+        "SlowBar",
+        "Matcha",
+        "Workshop",
+        "Minimalist"
+      ],
+      "relevance": "high",
+      "detail": "มีสุขสโลว์บาร์หน้าบ้านแม่ — ซอยเปิ้ลส้มตำ อ.เมือง จ.สกลนคร\nโทร: 090-343-8562\n\nConcept: 'หน้าบ้านแม่' — ตั้งอยู่หน้าบ้านแม่จริงๆ · Slow Bar · Homey minimalist + loft\nSlogan: 'มีสุขในทุกๆวัน' — emotional wellness + slow life positioning\n\nSocial (platforms verified, followers ไม่ทราบ — login required):\n• Facebook: meesookslowbar — active · videos + photos\n• Instagram: @meesuk_slowbar · active\n• TikTok: @meesuk_slowbar · active\n• Lemon8: organic viral (visitor reviews หลายชิ้น)\n\nSignature:\n• Matcha Latte ใช้ Uji matcha แท้จากญี่ปุ่น — differentiator ชัดที่สุด\n• MINOZ Es-yen (iced espresso signature)\n• Workshop ปั้นดิน ทุก พฤหัส + เสาร์ + อาทิตย์ (30฿/กรัม)\n• Banoffee, Shio Pan, Garlic bread with cream cheese อบสด\n\nReviews (Lemon8 organic):\n• 'มัทฉะลาเต้ หอมกลิ่นมัจฉะ ละมุนครีมมี่มาก'\n• 'คาเฟ่ลับๆ ที่ควรแวะ'\n• 'บรรยากาศสุดผ่อนคลาย ความอบอุ่นของบ้าน'\n\nช่องว่างสำหรับคู่แข่ง:\n• ปิด 15:00 — เสียตลาดบ่าย-เย็นทั้งหมด\n• ไม่มี delivery แอปใดเลย\n• ไม่มี LINE OA / loyalty program\n• Follower count ไม่ชัดเจน — reach อาจยังเล็ก",
+      "pricing": {
+        "espresso": {
+          "price": "",
+          "note": "MINOZ Es-yen signature"
+        },
+        "americano": {
+          "price": "",
+          "note": ""
+        },
+        "latte": {
+          "price": "",
+          "note": ""
+        },
+        "cappuccino": {
+          "price": "",
+          "note": ""
+        },
+        "cold_brew": {
+          "price": "",
+          "note": ""
+        },
+        "frappe": {
+          "price": "",
+          "note": ""
+        },
+        "matcha": {
+          "price": "",
+          "note": "Uji matcha แท้ญี่ปุ่น (signature)"
+        },
+        "signature_drink": {
+          "price": "75",
+          "note": "เริ่มต้น ~75฿"
+        },
+        "food": {
+          "price": "",
+          "note": "Banoffee / Shio Pan / Garlic bread อบสด"
+        },
+        "other": [
+          {
+            "name": "Workshop ปั้นดิน",
+            "price": "30/กรัม"
+          }
+        ]
+      },
+      "strengths": [
+        "Brand story 'หน้าบ้านแม่' authentic",
+        "Uji matcha แท้จากญี่ปุ่น",
+        "Workshop ปั้นดิน = experience differentiator",
+        "Organic Lemon8 viral",
+        "3 platforms active (FB/IG/TikTok)"
+      ],
+      "promotions": [],
+      "weaknesses": [
+        "ปิด 15:00 เสียตลาดบ่าย-เย็น",
+        "ไม่มี delivery แอปใดเลย",
+        "ไม่มี LINE OA/loyalty",
+        "Followers ไม่ทราบ อาจยังเล็ก",
+        "ราคา workshop ไม่โปร่งใสออนไลน์"
+      ],
+      "location": "ซอยเปิ้ลส้มตำ อ.เมือง จ.สกลนคร",
+      "hours": "จ-ศ 08:00-15:00 / เสาร์-อาทิตย์ 09:00-15:00",
+      "social_trend": {
+        "primary_platform": "Facebook",
+        "posting_frequency": "สม่ำเสมอ",
+        "content_style": "Minimalist aesthetic + slow life · #มีสุขในทุกๆวัน",
+        "engagement_level": "low-medium"
+      },
+      "delivery": {
+        "primary_app": "ไม่มี",
+        "apps": [],
+        "peak_hours": "N/A — ไม่มี delivery",
+        "active_promos": [],
+        "notes": "ไม่พบบน LINE MAN, GrabFood, Wongnai Delivery เลย — dine-in + takeaway เท่านั้น ปิด 15:00 ทำให้ delivery window แคบมาก"
+      }
+    },
+    {
+      "id": "competitor-alice",
+      "category": "competitor",
+      "title": "Alice Coffee and Bread สกลนคร (Verified 21 May 2026)",
+      "summary": "Minimalist White + Rabbit Theme · ราคาเข้าถึงได้ (เริ่ม ~45฿) · ทำเลดีใกล้ศาลากลาง · LINE MAN delivery ยืนยัน · Instagram อ่อนมาก (29 followers) · ไม่มี TikTok official",
+      "updated": "21 May 2026",
+      "source_url": "https://www.facebook.com/p/Alice-Cafe-Sakonnakhon-61550985398170/",
+      "thumbnail_url": "",
+      "tags": [
+        "สกลนคร",
+        "Local",
+        "Independent",
+        "Minimalist",
+        "Bakery",
+        "Instagrammable"
+      ],
+      "relevance": "high",
+      "detail": "Alice Coffee and Bread Sakonnakhon — 1894/89 ถ.สุขสวัสดิ์ แขวงธาตุเชิงชุม เมืองสกลนคร (ใกล้ศาลากลางจังหวัด)\nเปิด: ม.ค. 2024 | โทร: 094-274-5558\n\nConcept: Minimalist White + Rabbit Theme — โทนขาวอบอุ่น Instagram-worthy\nสวนเล็กสไตล์ญี่ปุ่น (outdoor) + แอร์ (indoor) · Wi-Fi · Pet-friendly\n\nSocial Media (verified):\n• Facebook: ~2,629 likes / 3,378 check-ins — มี 2 หน้า (แยก follower)\n• Instagram: @alicecoffee.sakon · 29 followers · 16 posts (อ่อนมาก)\n• TikTok: ไม่มี official account — แต่ creator รีวิวเยอะ (@woranitbell ฯลฯ)\n• Wongnai: 5.0/5.0 (1 review เท่านั้น)\n\nDelivery: LINE MAN ยืนยัน, Wongnai x LINE MAN · จ-ศ 08:30-16:30 / เสาร์ 09:00-17:30\nเมนู delivery ยอดนิยม: Thai Tea Special Blend 65฿, Coco Dirty 95฿, Chocolate Hazelnut 90฿\n\nช่องว่างสำหรับคู่แข่ง:\n• TikTok official — Alice ยังไม่มีเลย ทั้งที่ organic viral มีแล้ว\n• Wongnai reviews — มีแค่ 1 review\n• GrabFood/ShopeeFood — ยังไม่อยู่บนแพลตฟอร์ม\n• ราคาเมนูโปร่งใสออนไลน์ — ระบุชัดแค่ 3 เมนู",
+      "pricing": {
+        "espresso": {
+          "price": "",
+          "note": ""
+        },
+        "americano": {
+          "price": "",
+          "note": ""
+        },
+        "latte": {
+          "price": "",
+          "note": ""
+        },
+        "cappuccino": {
+          "price": "",
+          "note": ""
+        },
+        "cold_brew": {
+          "price": "",
+          "note": ""
+        },
+        "frappe": {
+          "price": "",
+          "note": ""
+        },
+        "matcha": {
+          "price": "",
+          "note": "Matcha Margarita"
+        },
+        "signature_drink": {
+          "price": "95",
+          "note": "Coco Dirty (ขายดี)"
+        },
+        "food": {
+          "price": "",
+          "note": "Chiffon/Tiramisu/Dirty Cake อบสด"
+        },
+        "other": [
+          {
+            "name": "Thai Tea Special Blend",
+            "price": "65"
+          },
+          {
+            "name": "Chocolate Hazelnut",
+            "price": "90"
+          },
+          {
+            "name": "ราคาเริ่มต้น",
+            "price": "~45"
+          }
+        ]
+      },
+      "strengths": [
+        "ราคาเข้าถึงได้ เริ่ม ~45฿",
+        "Concept ชัด Rabbit+Minimalist",
+        "Organic TikTok viral ไม่ต้องซื้อ ads",
+        "ทำเลดีใกล้ศาลากลาง",
+        "LINE MAN delivery ยืนยัน",
+        "เบเกอรีอบสดหลากหลาย"
+      ],
+      "promotions": [],
+      "weaknesses": [
+        "Instagram 29 followers (16 posts) อ่อนมาก",
+        "ไม่มี TikTok official",
+        "Wongnai 1 review credibility ต่ำ",
+        "Facebook 2 หน้า — follower กระจัดกระจาย",
+        "GrabFood/ShopeeFood ยังไม่มี"
+      ],
+      "location": "1894/89 ถ.สุขสวัสดิ์ แขวงธาตุเชิงชุม เมืองสกลนคร",
+      "hours": "จ-ศ 08:00-17:00 / พุธ,เสาร์-อาทิตย์ 09:00-18:00",
+      "social_trend": {
+        "primary_platform": "Facebook",
+        "posting_frequency": "ปานกลาง",
+        "content_style": "Minimalist aesthetic + เบเกอรี",
+        "engagement_level": "low"
+      },
+      "delivery": {
+        "primary_app": "LINE MAN",
+        "apps": [
+          "LINE MAN",
+          "Wongnai Delivery"
+        ],
+        "peak_hours": "08:30-16:30 (ตามเวลาร้าน)",
+        "active_promos": [],
+        "notes": "LINE MAN verified, Wongnai x LINE MAN ยืนยัน · ไม่พบบน GrabFood/ShopeeFood · ค่าส่งเริ่ม 0 บาทในพื้นที่บริการ"
+      }
+    },
+    {
+      "id": "competitor-elemental",
+      "category": "competitor",
+      "title": "Elemental Haus สกลนคร (Updated 9 Jun 2026)",
+      "summary": "Specialty Coffee + In-house Roastery \"Blanka\" · เล็กๆแต่เด็ด · ทำเลใกล้ มรภ.สกลนคร · LINE MAN ✅ เปิดถึง 19:00 · Facebook 101 likes (ต่ำสุดกลุ่ม) · Wongnai 0 reviews · TikTok @elemental.haus active (วาดแก้วเองไวรัล) · Instagram UGC พบแล้ว",
+      "updated": "9 Jun 2026",
+      "source_url": "https://www.facebook.com/elementalhaus/",
+      "thumbnail_url": "",
+      "tags": [
+        "สกลนคร",
+        "Local",
+        "Independent",
+        "Specialty",
+        "Roastery",
+        "Artisanal",
+        "University"
+      ],
+      "relevance": "high",
+      "detail": "Elemental Haus (Specialty Coffee + Blanka roastery coffee)\n29/31 ถ.นิตโย พังขว้าง เมืองสกลนคร (บ้านเด่นธานี ใกล้โรงแรม Livable ตรงข้ามวิทยาลัยเทคนิคสกลนคร / หน้า มรภ.สกลนคร)\nโทร: 080-420-0088 · เปิด: ทุกวัน 08:00-19:00 · เปิดกิจการ: กุมภาพันธ์ 2024\n\nConcept: Specialty Coffee + In-house Roastery (Blanka roastery) — \"เล็กๆแต่เด็ด\"\nUSP: ทั้ง specialty coffee และ bar concept · wall art วาดเองทั้งร้าน (รวมห้องน้ำ) · handwritten labels บนแก้ว\n\nSocial Media (verified 9 Jun 2026):\n• Facebook: elementalhaus · ~101 likes (อ่อนที่สุดในกลุ่ม — ไม่เปลี่ยน)\n• TikTok: @elemental.haus · official active account · พบ creative content ใหม่: 'ร้านกาแฟที่เวลาแก้วสกรีนหมด ก็ต้องนั่งวาดเองไปก่อน' = personality-driven viral potential\n• Instagram: ไม่มี official account · แต่พบ UGC post 'มาสกลต้องมาชิม Elemental Haus คาเฟ่เล็กๆแต่เด็ดด้วย' (มิ.ย. 2026)\n• Wongnai: Listed (0 reviews, 0 ratings — ไม่เปลี่ยน)\n\nเมนู: กาแฟส้มคั่ว (หวานน้อย เปรี้ยวนิดๆ), Hojicha Latte iced · ฿ category (ต่ำกว่า 100 บาท)\nPromo: Own cup ลด 5 บาท · Loyalty: ระบบ points redeem\nAmenities: Wi-Fi · Pet-friendly · Credit card · Parking · 11-40 ที่นั่ง\n\nทำเลใกล้มหาวิทยาลัย: student/academic crowd เป็น core audience\n\nช่องว่างสำหรับคู่แข่ง:\n• Facebook 101 likes ต่ำสุดกลุ่ม — social awareness แทบไม่มี\n• Wongnai 0 reviews — credibility ต่ำที่สุด\n• ไม่มี Instagram official — visual platform ว่างเปล่า\n• ยังไม่มี signature drink ที่โดดเด่น\n• TikTok creative content กำลังพัฒนา — อาจ viral ถ้าลูกค้าแชร์",
+      "pricing": {
+        "espresso": {
+          "price": "",
+          "note": ""
+        },
+        "americano": {
+          "price": "",
+          "note": ""
+        },
+        "latte": {
+          "price": "",
+          "note": "฿ category (<100฿)"
+        },
+        "cappuccino": {
+          "price": "",
+          "note": ""
+        },
+        "cold_brew": {
+          "price": "",
+          "note": ""
+        },
+        "frappe": {
+          "price": "",
+          "note": ""
+        },
+        "matcha": {
+          "price": "",
+          "note": ""
+        },
+        "signature_drink": {
+          "price": "",
+          "note": "กาแฟส้มคั่ว (หวานน้อย เปรี้ยวนิดๆ)"
+        },
+        "food": {
+          "price": "",
+          "note": ""
+        },
+        "other": [
+          {
+            "name": "Hojicha Latte iced",
+            "price": ""
+          },
+          {
+            "name": "Own cup discount",
+            "price": "-5฿"
+          }
+        ]
+      },
+      "strengths": [
+        "Blanka in-house roastery = quality signal",
+        "Artisanal identity ชัด (wall art + handwritten labels)",
+        "ทำเลใกล้ มรภ.สกลนคร = student loyalty สูง",
+        "LINE MAN ✅ เปิดถึง 19:00",
+        "Loyalty points system",
+        "Eco-friendly own-cup discount",
+        "TikTok official active"
+      ],
+      "promotions": [
+        "Own cup ลด 5 บาท (Coffee + Non-Coffee)",
+        "ระบบ points redeem (10 points)"
+      ],
+      "weaknesses": [
+        "Facebook 101 likes ต่ำที่สุดในกลุ่ม",
+        "Wongnai 0 reviews credibility ต่ำสุด",
+        "ไม่มี Instagram official",
+        "ทำเลชานเมือง เข้าถึงยากจากใจกลาง",
+        "ยังไม่มี signature drink ที่โดดเด่น"
+      ],
+      "location": "29/31 ถ.นิตโย พังขว้าง เมืองสกลนคร (บ้านเด่นธานี หน้า มรภ.สกลนคร)",
+      "hours": "ทุกวัน 08:00-19:00",
+      "social_trend": {
+        "primary_platform": "TikTok",
+        "posting_frequency": "ปานกลาง",
+        "content_style": "Artisanal craft · handmade aesthetic · specialty roastery story · personality-driven (วาดแก้วเอง)",
+        "engagement_level": "low-medium (social presence ยังอ่อน แต่ TikTok content เริ่มมี personality)"
+      },
+      "delivery": {
+        "primary_app": "LINE MAN",
+        "apps": [
+          "LINE MAN",
+          "Wongnai Delivery"
+        ],
+        "peak_hours": "08:00-19:00 (ตามเวลาร้าน)",
+        "active_promos": [
+          "ค่าส่งเริ่ม 0฿ ในพื้นที่บริการ"
+        ],
+        "notes": "LINE MAN ✅ ยืนยัน (9 Jun 2026) via Wongnai · ไม่พบบน GrabFood/ShopeeFood/FoodPanda"
+      }
+    },
+    {
+      "id": "competitor-jumpot",
+      "category": "competitor",
+      "title": "จุมพฏ-kuckhang / กินกาแฟหรือยังครับ สกลนคร (Verified 22 May 2026)",
+      "summary": "\"คาเฟ่ลับ\" + Art Toy collector's café · 2 สาขา (ต้นกำเนิด + บายพาส) · Latte 65฿ (ถูกสุดกลุ่ม) · TikTok @jumpotcoffee active · LINE MAN ✅ สั่ง LINE โดยตรงได้ · Wongnai credibility ต่ำมาก (1 review) · ปิด 16:00",
+      "updated": "22 May 2026",
+      "source_url": "https://www.facebook.com/profile?id=61555411775637",
+      "thumbnail_url": "",
+      "tags": [
+        "สกลนคร",
+        "Local",
+        "Independent",
+        "Hidden café",
+        "Art Toy",
+        "Nostalgia",
+        "Specialty"
+      ],
+      "relevance": "high",
+      "detail": "จุมพฏ-kuckhang / กินกาแฟหรือยังครับ / คักแฮง\n\nสาขาต้นกำเนิด: 609 ถ.กำจัดภัย ธาตุเชิงชุม เมืองสกลนคร (ซอยข้างร้านเสริมสวยดุสิตา)\nโทร: 080-939-8210 · เปิด: ทุกวัน 07:30-16:00\n\nสาขาบายพาส: 116/11 ถ.บ้านโคกสว่าง ธาตุเชิงชุม เมืองสกลนคร\nโทร: 084-286-6471 · เปิด: ทุกวัน 08:30-16:00\n\nConcept: \"คาเฟ่ลับ\" + Art Toy Collectors' Café — ความ hidden/secret ใช้เป็น marketing tool หลัก\n\nบรรยากาศ (ต้นกำเนิด):\n• บ้านไม้วินเทจ ป้ายสีฟ้าเฟด เลข 609\n• ผนังอิฐ + โปสเตอร์หนัง vintage (Back to the Future, My Neighbor Totoro)\n• ของเล่น collector เยอะมาก: Peppa Pig, Toy Story (Lotso), Ted, Mazinger Z, N64, Hot Wheels, Transformer\n• ตู้โชว์เมล็ดกาแฟ + QR code สั่ง\n• เหมาะถ่ายรูป art/nostalgic style\n\nSocial Media:\n• Facebook: กินกาแฟหรือยังครับ (followers ไม่ทราบ)\n• TikTok: @jumpotcoffee — official active account\n• LINE: @jumpot — รับ order โดยตรง\n• Wongnai: Listed ทั้ง 2 สาขา (0-1 review — credibility ต่ำมาก)\n• Lemon8: organic viral — visitors review เยอะ\n\nPromotion: บัตรสมาชิกฟรี จำนวนจำกัด (LINE @jumpot)\nSpecial: ใช้นม mmilk (lactose-free) · ขาย retail beans\n\nช่องว่างสำหรับคู่แข่ง:\n• ปิด 16:00 — ตลาดช่วง 16:00-22:00 ว่างทั้งหมด\n• Wongnai credibility ต่ำมาก (1 review)\n• \"ลับ\" มากจนหาไม่เจอ = barrier สำหรับลูกค้าใหม่",
+      "pricing": {
+        "espresso": {
+          "price": "",
+          "note": ""
+        },
+        "americano": {
+          "price": "",
+          "note": ""
+        },
+        "latte": {
+          "price": "65",
+          "note": "ถูกสุดในกลุ่ม"
+        },
+        "cappuccino": {
+          "price": "",
+          "note": ""
+        },
+        "cold_brew": {
+          "price": "",
+          "note": ""
+        },
+        "frappe": {
+          "price": "",
+          "note": ""
+        },
+        "matcha": {
+          "price": "",
+          "note": ""
+        },
+        "signature_drink": {
+          "price": "",
+          "note": "Thai Tea (หอมมาก)"
+        },
+        "food": {
+          "price": "",
+          "note": "ขนมปังโทสต์ (\"อร่อยมาก\")"
+        },
+        "other": [
+          {
+            "name": "Retail beans",
+            "price": "ไม่ทราบ"
+          },
+          {
+            "name": "บัตรสมาชิก",
+            "price": "ฟรี (จำกัด)"
+          }
+        ]
+      },
+      "strengths": [
+        "\"คาเฟ่ลับ\" positioning สร้าง organic curiosity",
+        "Art Toy aesthetic ไม่มีร้านใดในสกลนครทำ",
+        "Latte 65฿ ถูกสุดในกลุ่ม",
+        "TikTok @jumpotcoffee official active",
+        "LINE order + LINE MAN ง่ายต่อ conversion",
+        "Lactose-free milk option = thoughtful niche",
+        "2 สาขา = brand กำลังเติบโต"
+      ],
+      "promotions": [
+        "บัตรสมาชิกฟรี จำนวนจำกัด (ลงทะเบียน LINE @jumpot)"
+      ],
+      "weaknesses": [
+        "ปิด 16:00 — ตลาดช่วงบ่ายเย็น-ค่ำว่างทั้งหมด",
+        "Wongnai credibility ต่ำ (0-1 review)",
+        "ความ 'ลับ' = barrier ลูกค้าใหม่หาไม่เจอ",
+        "Facebook followers ไม่ทราบ"
+      ],
+      "location": "ต้นกำเนิด: 609 ถ.กำจัดภัย ธาตุเชิงชุม | บายพาส: 116/11 ถ.บ้านโคกสว่าง ธาตุเชิงชุม",
+      "hours": "ต้นกำเนิด: ทุกวัน 07:30-16:00 | บายพาส: ทุกวัน 08:30-16:00",
+      "social_trend": {
+        "primary_platform": "TikTok+LINE",
+        "posting_frequency": "ปานกลาง",
+        "content_style": "Hidden café discovery · Art Toy showcase · nostalgic aesthetic",
+        "engagement_level": "medium (organic UGC สูง)"
+      },
+      "delivery": {
+        "primary_app": "LINE MAN",
+        "apps": [
+          "LINE MAN",
+          "Wongnai Delivery",
+          "LINE @jumpot"
+        ],
+        "peak_hours": "07:30-15:30 (ตามเวลาร้าน ปิด 16:00)",
+        "active_promos": [
+          "ค่าส่งเริ่ม 0฿ ในพื้นที่บริการ"
+        ],
+        "notes": "LINE MAN verified via Wongnai (ทั้ง 2 สาขา) · สั่งได้ผ่าน LINE @jumpot โดยตรง · ไม่พบบน GrabFood/ShopeeFood"
+      }
+    },
+    {
+      "id": "competitor-sniff",
+      "category": "competitor",
+      "title": "SNIFF specialty coffee สกลนคร (Verified 22 May 2026)",
+      "summary": "ใหญ่ที่สุดใน local specialty สกลนคร · FB 6,800 followers · 2 สาขา (สาขาหลัก + SNIFF Roastery บายพาส) · In-house roasting · LINE MAN delivery ✅ · Wongnai 4.1/5 (28 reviews) สูงสุดกลุ่ม · Instagram อ่อน (448 followers) · TikTok official ยังไม่มี",
+      "updated": "22 May 2026",
+      "source_url": "https://www.facebook.com/SNIFFspecialtycoffee",
+      "thumbnail_url": "",
+      "tags": [
+        "สกลนคร",
+        "Local",
+        "Independent",
+        "Specialty",
+        "Roastery",
+        "Multi-branch",
+        "Blue-aesthetic"
+      ],
+      "relevance": "high",
+      "detail": "SNIFF specialty coffee (สนิฟ สเปเชียลตี้ คอฟฟี่)\nสาขาหลัก: 1748/25-26 ถ.ต.พัฒนา ต.ธาตุเชิงชุม อ.เมืองสกลนคร (ใกล้โรงเรียนเปลี่ยนชัย แยก 4 นาฬิกา)\nSNIFF Roastery: 985 ตำบลดงมะไฟ อ.เมืองสกลนคร (บายพาส — สาขาใหม่ ใหญ่กว่า)\nโทร: 096-946-4792 / 088-736-8446\nเวลา: สาขาหลัก ทุกวัน 07:30-19:00 | Roastery จ-ศ 07:30-19:00, เสาร์-อาทิตย์ 10:00-19:00\n\nConcept: In-house Roastery + Specialty Coffee — ย่างเมล็ดเอง, single-origin หลากหลาย (light-dark roast)\nSpecialty bean surcharge: +10฿ — signal คุณภาพที่ชัดเจน\n\nSocial Media (verified):\n• Facebook: SNIFFspecialtycoffee · 6,800 followers · 100% recommend (50 reviews) — ใหญ่ที่สุดใน local specialty สกลนคร\n• Instagram: @sniffspecialtycoffee · 448 followers (อ่อนมาก ไม่สัมพันธ์กับขนาดร้าน)\n• TikTok: ไม่มี official account — แต่ visitor content มีอยู่\n• Wongnai: 4.1/5 (35 ratings, 28 reviews) · WongnaiSpecialist + CoffeeSpecialist badge\n• TripAdvisor: Listed, 0 reviews\n\nบรรยากาศ: ผนังสีน้ำเงิน + ivy plants + pendant lights + artwork · Counter bar ชมบาริสต้าได้ · Indoor + Outdoor · 11-40 ที่นั่ง\nRoastery สาขาใหม่: ใหญ่กว่า มีสไตล์ บรรยากาศดี ถ่ายรูปสวย\n\nExtra: ขายเมล็ดกาแฟ retail · Pet-friendly · Wi-Fi · Credit card · Parking\n\nช่องว่างสำหรับคู่แข่ง:\n• TikTok official ยังไม่มี — blind spot ใหญ่ reach คนรุ่นใหม่\n• Instagram อ่อน (448 followers) ทั้งที่ร้านใหญ่ที่สุดในกลุ่ม\n• TripAdvisor 0 reviews — เสีย SEO นักท่องเที่ยวต่างชาติ",
+      "pricing": {
+        "espresso": {
+          "price": "75",
+          "note": ""
+        },
+        "americano": {
+          "price": "75",
+          "note": "+10฿ specialty bean surcharge"
+        },
+        "latte": {
+          "price": "85",
+          "note": "Ice Latte Special Blend"
+        },
+        "cappuccino": {
+          "price": "",
+          "note": ""
+        },
+        "cold_brew": {
+          "price": "",
+          "note": ""
+        },
+        "frappe": {
+          "price": "",
+          "note": ""
+        },
+        "matcha": {
+          "price": "",
+          "note": ""
+        },
+        "signature_drink": {
+          "price": "99",
+          "note": "Hojicha Latte"
+        },
+        "food": {
+          "price": "",
+          "note": "Croissant, Brownie"
+        },
+        "other": [
+          {
+            "name": "Hot Honey Latte",
+            "price": "~95"
+          },
+          {
+            "name": "Americano Brazil",
+            "price": "85"
+          },
+          {
+            "name": "Malagasy",
+            "price": ""
+          }
+        ]
+      },
+      "strengths": [
+        "FB 6,800 followers ใหญ่สุดใน local specialty สกลนคร",
+        "Wongnai 28 reviews credibility สูงสุดกลุ่ม",
+        "2 สาขา = brand กำลังเติบโต",
+        "In-house roastery = brand story ทรงพลัง",
+        "Retail beans = รายได้เพิ่ม + loyalty",
+        "LINE MAN ยืนยัน เปิด 07:30 (morning rush)"
+      ],
+      "promotions": [],
+      "weaknesses": [
+        "Instagram 448 followers — อ่อนมากไม่สัมพันธ์ขนาดร้าน",
+        "TikTok official ยังไม่มีเลย",
+        "TripAdvisor 0 reviews เสีย SEO ท่องเที่ยว",
+        "ราคาเมนูไม่ระบุครบออนไลน์"
+      ],
+      "location": "สาขาหลัก: 1748/25-26 ถ.ต.พัฒนา ต.ธาตุเชิงชุม อ.เมืองสกลนคร | Roastery: 985 ตำบลดงมะไฟ อ.เมืองสกลนคร",
+      "hours": "สาขาหลัก: ทุกวัน 07:30-19:00 | Roastery: จ-ศ 07:30-19:00 / เสาร์-อาทิตย์ 10:00-19:00",
+      "social_trend": {
+        "primary_platform": "Facebook",
+        "posting_frequency": "ปานกลาง",
+        "content_style": "Specialty coffee culture · Blue-tone aesthetic · barista content · multi-location expansion",
+        "engagement_level": "medium-high"
+      },
+      "delivery": {
+        "primary_app": "LINE MAN",
+        "apps": [
+          "LINE MAN",
+          "Wongnai Delivery"
+        ],
+        "peak_hours": "07:30-18:30",
+        "active_promos": [
+          "ค่าส่งเริ่ม 0฿ ในพื้นที่บริการ"
+        ],
+        "notes": "LINE MAN verified via Wongnai · WongnaiSpecialist + CoffeeSpecialist badge · ไม่พบบน GrabFood/ShopeeFood"
+      }
+    },
+    {
+      "id": "competitor-roknroad",
+      "category": "competitor",
+      "title": "Rok 'n Road Coffee",
+      "summary": "Vintage eclectic hidden gem · Hand-ground Arabica จากเชียงใหม่ · Beer + BBQ evenings · Google 4.6/5 · Facebook 4.8/5 · ต่ำกว่า 10 ที่นั่ง · ไม่มี official social",
+      "updated": "22 May 2026",
+      "source_url": "https://www.wongnai.com/restaurants/951527qf-rok-n-road-coffee",
+      "thumbnail_url": "",
+      "tags": [
+        "specialty",
+        "vintage",
+        "hidden-gem",
+        "bar",
+        "hand-ground",
+        "arabica"
+      ],
+      "relevance": "high",
+      "detail": "Vintage eclectic café ใน 291 ซอยมหาวงษ์ ใกล้ Robinson's · บรรยากาศ American flag + bowling pin sign + typewriter + bamboo beach bar + cat mascots · Hand-ground Arabica จากเชียงใหม่ (slow-drip) · Beer + BBQ Ribs + Cheeseburger ช่วงเย็น = Café & Bar hybrid ที่ unique ที่สุดในกลุ่ม · Google 4.6/5 (37 reviews) + Facebook 4.8/5 (74 reviews) = rating ดีที่สุดในกลุ่ม · ต่ำกว่า 10 ที่นั่ง = capacity limit สุดๆ · ไม่มี official social media แม้แต่แพลตฟอร์มเดียว",
+      "pricing": {
+        "espresso": {
+          "price": "",
+          "note": "฿ category (<100 บาท)"
+        },
+        "americano": {
+          "price": "",
+          "note": ""
+        },
+        "latte": {
+          "price": "",
+          "note": ""
+        },
+        "cappuccino": {
+          "price": "",
+          "note": ""
+        },
+        "cold_brew": {
+          "price": "",
+          "note": "Hand-ground Arabica จากเชียงใหม่"
+        },
+        "frappe": {
+          "price": "",
+          "note": ""
+        },
+        "matcha": {
+          "price": "",
+          "note": ""
+        },
+        "signature_drink": {
+          "price": "",
+          "note": "Hand-ground Arabica slow-drip"
+        },
+        "food": {
+          "price": "",
+          "note": "BBQ Ribs + Cheeseburger (evenings)"
+        },
+        "other": [
+          {
+            "name": "Beer",
+            "price": "ไม่ทราบ"
+          }
+        ]
+      },
+      "strengths": [
+        "Google 4.6/5 (37 reviews) + Facebook 4.8/5 (74 reviews) = rating ดีที่สุดในกลุ่ม",
+        "Hand-ground Arabica จากเชียงใหม่ + slow-drip = quality signal ชัด",
+        "Beer + BBQ evenings = unique revenue stream ที่ไม่มีร้านไหนทำ",
+        "Vintage eclectic aesthetic หายากมากในสกลนคร",
+        "LINE MAN ✅"
+      ],
+      "promotions": [],
+      "weaknesses": [
+        "ต่ำกว่า 10 ที่นั่ง — capacity limit ใหญ่ที่สุดในกลุ่ม",
+        "ไม่มี official social media แม้แต่บัญชีเดียว — 0% proactive marketing",
+        "ปิดวันอังคาร + เปิดเฉพาะ 10:00–17:00 — ไม่มี morning rush และ evening crowd",
+        "GPS ยาก — barrier สูงสำหรับลูกค้าใหม่",
+        "Wongnai 0 reviews — credibility delivery ต่ำมาก"
+      ],
+      "location": "291 ซอยมหาวงษ์ ธาตุนาแวง เมืองสกลนคร (ใกล้ Robinson's, ซอยเดียวกับ O2 Hotel)",
+      "hours": "จ. 10:30-16:30 · อ. ปิด · พ.-เสาร์ 10:00-17:00 · อาทิตย์ 11:00-17:00",
+      "social_trend": {
+        "primary_platform": "Facebook (personal)",
+        "posting_frequency": "ไม่มี official content",
+        "content_style": "Vintage eclectic · American flag · cat mascots · hidden gem · UGC-driven",
+        "engagement_level": "low (no official account)"
+      },
+      "delivery": {
+        "primary_app": "LINE MAN",
+        "apps": [
+          "LINE MAN",
+          "Wongnai Delivery"
+        ],
+        "peak_hours": "10:00-17:00 (window แคบ — ไม่มี morning rush)",
+        "active_promos": [
+          "ค่าส่งเริ่ม 0฿ ในพื้นที่บริการ"
+        ],
+        "notes": "LINE MAN verified via Wongnai · ไม่พบ GrabFood/ShopeeFood · ปิดวันอังคาร"
+      }
+    },
+    {
+      "id": "competitor-chann",
+      "category": "competitor",
+      "title": "CHANN CAFE : ชานคาเฟ่",
+      "summary": "บ้านเรือนไทยจากไม้เก่า 10+ ปี · Pet-friendly · ทำเลดี ถ.เสรีไทยใจกลางเมือง · ที่จอดรถ ~30 คัน · Instagram @chann.cafe 112 posts · UGC TikTok 8,414 likes · เปิด พ.ย. 2024",
+      "updated": "22 May 2026",
+      "source_url": "https://www.wongnai.com/restaurants/3633744Aj-chann-cafe",
+      "thumbnail_url": "",
+      "tags": [
+        "thai-house",
+        "pet-friendly",
+        "aesthetic",
+        "merchandise",
+        "new-cafe",
+        "fusion"
+      ],
+      "relevance": "high",
+      "detail": "CHANN CAFE ที่ 146/4 ถ.เสรีไทย ใจกลางเมือง · สร้างจากบ้านเรือนไทยเก่า ไม้สะสม 10+ ปีจากทั่วสกลนคร โดยช่างไม้เชื้อสายเวียดนาม · concept 'ชานบ้าน' = ความอบอุ่น เรือนไทย + modern · Pet-friendly (น้องหมาเข้าแอร์ได้) = differentiator ที่ไม่มีร้านไหนในกลุ่มทำ · ที่จอดรถ ~30 คัน ใหญ่ที่สุดในกลุ่ม · Instagram @chann.cafe 112 posts (brand investment สูง) · TikTok UGC viral 8,414+ likes · Merchandise line (แก้ว, กระเป๋า, หมวก, เสื้อ) · บิงซูชาไทยเกล็ดหิมะ = new menu · Wongnai 0 reviews แต่ OFFICIAL status · เปิด Soft Opening พ.ย. 2024",
+      "pricing": {
+        "espresso": {
+          "price": "",
+          "note": "เริ่ม 75฿"
+        },
+        "americano": {
+          "price": "",
+          "note": ""
+        },
+        "latte": {
+          "price": "",
+          "note": "~100฿"
+        },
+        "cappuccino": {
+          "price": "",
+          "note": ""
+        },
+        "cold_brew": {
+          "price": "",
+          "note": ""
+        },
+        "frappe": {
+          "price": "",
+          "note": ""
+        },
+        "matcha": {
+          "price": "",
+          "note": "Matcha latte available"
+        },
+        "signature_drink": {
+          "price": "",
+          "note": "ชาไทยคาราเมล · บิงซูชาไทย (new)"
+        },
+        "food": {
+          "price": "",
+          "note": "ครัวซอง 70฿ · Green tea cake · Chocolate cake · Tiramisu · Banoffee"
+        },
+        "other": [
+          {
+            "name": "ชาเขียว",
+            "price": "50฿"
+          },
+          {
+            "name": "Merchandise (แก้ว/กระเป๋า/หมวก/เสื้อ)",
+            "price": "ไม่ทราบ"
+          }
+        ]
+      },
+      "strengths": [
+        "Pet-friendly (น้องหมาเข้าแอร์) = differentiator ที่ไม่มีร้านอื่นในกลุ่ม",
+        "ทำเลดี ถ.เสรีไทย ใจกลางเมือง + ที่จอดรถ ~30 คัน",
+        "Brand story ทรงพลัง — ไม้เก่า 10+ ปี ช่างฝีมือเชื้อสายเวียดนาม",
+        "Instagram 112 posts (6 เดือน) = brand commitment สูง",
+        "TikTok UGC viral 8,414+ likes single video",
+        "Merchandise line = brand loyalty + passive income"
+      ],
+      "promotions": [],
+      "weaknesses": [
+        "Instagram 464 followers ยังต่ำ (112 posts แต่ follower น้อย = low conversion)",
+        "Wongnai 0 reviews — credibility delivery ต่ำ",
+        "ยังใหม่ (เปิด พ.ย. 2024) — brand recognition อยู่ระหว่างสร้าง",
+        "ปิด 17:00/18:00 — ไม่มี evening crowd"
+      ],
+      "location": "146/4 ถ.เสรีไทย ธาตุนาเวง เมืองสกลนคร (ติดร้านข้าวมันไก่แดงดำ)",
+      "hours": "จ.–ศ. 08:00–17:00 · เสาร์–อาทิตย์ 08:00–18:00",
+      "social_trend": {
+        "primary_platform": "Instagram + TikTok",
+        "posting_frequency": "สม่ำเสมอ (112 posts/6 เดือน IG)",
+        "content_style": "Thai house aesthetic · ชานบ้าน warmth · pet-friendly · photo spots · merchandise",
+        "engagement_level": "medium (growing rapidly)"
+      },
+      "delivery": {
+        "primary_app": "LINE MAN",
+        "apps": [
+          "LINE MAN",
+          "Wongnai Delivery"
+        ],
+        "peak_hours": "08:00-17:00 จ-ศ · 08:00-18:00 เสาร์-อาทิตย์",
+        "active_promos": [
+          "ค่าส่งเริ่ม 0฿ ในพื้นที่บริการ"
+        ],
+        "notes": "LINE MAN verified via Wongnai OFFICIAL · ไม่พบ GrabFood/ShopeeFood · เสาร์-อาทิตย์ window กว้างกว่า"
+      }
+    },
+    {
+      "id": "competitor-boonnar",
+      "category": "competitor",
+      "title": "BOONNAR ART SPACE (บุญหนา อาร์ต สเปซ)",
+      "summary": "Art Gallery + Café + Art School ร้านเดียวในสกลนคร · Blue Bica Coffee ชั้น 1 · Gallery ชั้น 3 · Art class 390฿ · Mascot ก่ำบอย · ตั้งชื่อตามหลวงปู่บุญหนา · เปิด ก.ย. 2023",
+      "updated": "23 May 2026",
+      "source_url": "https://www.wongnai.com/restaurants/2681276cf-boonnar-art-space",
+      "thumbnail_url": "",
+      "tags": [
+        "art-gallery",
+        "art-space",
+        "community",
+        "cultural",
+        "specialty",
+        "creative"
+      ],
+      "relevance": "high",
+      "detail": "BOONNAR ART SPACE ที่ 1751/1 ถ.รอบเมือง ใกล้ รพ.รักษ์สกล · 3 floors: ชั้น 1 Blue Bica Coffee, ชั้น 2 Art class เด็ก, ชั้น 3 Gallery · ก่อตั้งโดยครูเตย (ไอรัตน์ดา มหาชัย) จิตรกร-ครูสอนศิลปะ · ตั้งชื่อตามหลวงปู่บุญหนา ธมฺมทินฺโน พระดังสกลนคร · Mascot 'ก่ำบอย' เด็กใส่ชุดปลาอีก่ำ (ปลาประจำจังหวัด) = street art ทั่วเมือง · NEA CRU exhibitions หมุนเวียน = เหตุผลกลับมาซ้ำ · Art class เด็ก 390฿/ครั้ง = revenue เพิ่ม · ร้านเดียวในสกลนครที่รวม gallery + café + school",
+      "pricing": {
+        "espresso": {
+          "price": "",
+          "note": "฿ category (<100 บาท)"
+        },
+        "americano": {
+          "price": "",
+          "note": ""
+        },
+        "latte": {
+          "price": "",
+          "note": "Blue Bica Coffee brand"
+        },
+        "cappuccino": {
+          "price": "",
+          "note": ""
+        },
+        "cold_brew": {
+          "price": "",
+          "note": ""
+        },
+        "frappe": {
+          "price": "",
+          "note": ""
+        },
+        "matcha": {
+          "price": "",
+          "note": "เมนูแนะนำ"
+        },
+        "signature_drink": {
+          "price": "",
+          "note": "Italian Soda: พีช, สตรอว์เบอร์รี, ลิ้นจี่"
+        },
+        "food": {
+          "price": "",
+          "note": ""
+        },
+        "other": [
+          {
+            "name": "Art class เด็ก (กับครูเตย)",
+            "price": "390฿/ครั้ง"
+          }
+        ]
+      },
+      "strengths": [
+        "ร้านเดียวในสกลนครที่เป็น Art Gallery + Café + Art School = zero competition",
+        "'ก่ำบอย' mascot + ปลาอีก่ำ = brand tie-in กับอัตลักษณ์สกลนครลึกมาก",
+        "ตั้งชื่อตามหลวงปู่บุญหนา = cultural credibility สูงในชุมชน",
+        "Art class 390฿ = revenue stream อิสระจากยอดกาแฟ",
+        "NEA CRU rotating exhibitions = reason to return ทุก season",
+        "เปิดเสาร์-อาทิตย์ถึง 19:00 · Wi-Fi · Parking · Pet-friendly"
+      ],
+      "promotions": [],
+      "weaknesses": [
+        "Wongnai 0 reviews — credibility delivery ต่ำ",
+        "Art class 390฿ = barrier สูงสำหรับ walk-in casual",
+        "ที่ตั้ง ถ.รอบเมือง (ไม่ใช่ main street) — accessibility ต่ำกว่า CHANN",
+        "Social followers ไม่ทราบ — ไม่รู้ actual reach",
+        "Delivery ปิด 17:00 ทุกวัน แม้ร้านเปิดถึง 19:00 เสาร์-อาทิตย์"
+      ],
+      "location": "1751/1 ถ.รอบเมือง ต.ธาตุเชิงชุม อ.เมืองสกลนคร (~50 ม. จาก รพ.รักษ์สกล)",
+      "hours": "อ.–ศ. 07:00–17:00 · เสาร์–อาทิตย์ 07:00–19:00",
+      "social_trend": {
+        "primary_platform": "Facebook + Instagram + TikTok",
+        "posting_frequency": "ปานกลาง (art content + exhibition updates)",
+        "content_style": "Art gallery · ก่ำบอย mascot · NEA CRU exhibition · art class · local culture",
+        "engagement_level": "medium (unknown followers)"
+      },
+      "delivery": {
+        "primary_app": "LINE MAN",
+        "apps": [
+          "LINE MAN",
+          "Wongnai Delivery"
+        ],
+        "peak_hours": "07:00-17:00 (ทุกวัน)",
+        "active_promos": [
+          "ค่าส่งเริ่ม 0฿ ในพื้นที่บริการ"
+        ],
+        "notes": "LINE MAN via Wongnai · delivery ปิด 17:00 แม้ร้านเปิด 19:00 เสาร์-อาทิตย์ · ไม่พบ GrabFood/ShopeeFood"
+      }
+    },
+    {
+      "id": "competitor-acupofjoycoffee",
+      "category": "competitor",
+      "title": "A Cup Of Joy Coffee",
+      "summary": "Specialty coffee สำหรับคนพิเศษ · ถ.สุขเกษม ใกล้ Imperial Hotel · ต่ำกว่า 10 ที่นั่ง · เมล็ดกาแฟหลากหลาย (Americano Yellow Columbia) · ฿ category · LINE MAN ✅ · ไม่มี IG/TikTok",
+      "updated": "23 May 2026",
+      "source_url": "https://www.wongnai.com/restaurants/1226140rF-a-cup-of-joy-coffee",
+      "thumbnail_url": "",
+      "tags": [
+        "specialty",
+        "small-cafe",
+        "coffee-bean",
+        "affordable",
+        "delivery"
+      ],
+      "relevance": "high",
+      "detail": "A Cup Of Joy Coffee ที่ 1305/40 ถ.สุขเกษม ดงมะไฟ เมืองสกลนคร (ทางเข้า Imperial Hotel) · specialty coffee ราคาเข้าถึงได้ (<100฿) · tagline 'กาแฟพิเศษ สำหรับคนพิเศษ' · เมล็ดกาแฟหลากหลาย เช่น Americano Yellow Columbia · ต่ำกว่า 10 ที่นั่ง · ปิด 16:00 · Facebook active แต่ไม่มี IG/TikTok · Wongnai 1-2 reviews (2021-2022) เท่านั้น · LINE MAN ✅ via Wongnai",
+      "pricing": {
+        "espresso": {
+          "price": "",
+          "note": ""
+        },
+        "americano": {
+          "price": "",
+          "note": "Americano Yellow Columbia — เมนูแนะนำ"
+        },
+        "latte": {
+          "price": "",
+          "note": "<100฿"
+        },
+        "cappuccino": {
+          "price": "",
+          "note": ""
+        },
+        "cold_brew": {
+          "price": "",
+          "note": ""
+        },
+        "frappe": {
+          "price": "",
+          "note": ""
+        },
+        "matcha": {
+          "price": "",
+          "note": ""
+        },
+        "signature_drink": {
+          "price": "",
+          "note": "Special Coffee (multiple bean selections)"
+        },
+        "food": {
+          "price": "",
+          "note": ""
+        },
+        "other": []
+      },
+      "strengths": [
+        "'กาแฟพิเศษ สำหรับคนพิเศษ' = positioning ชัดสำหรับ specialty niche",
+        "เมล็ดกาแฟหลากหลาย = differentiator สำหรับคนรู้กาแฟ",
+        "ราคา <100฿ = accessible specialty",
+        "LINE MAN ✅ + pre-order pickup",
+        "Amenities ครบ: Wi-Fi, Parking, Pet-friendly"
+      ],
+      "promotions": [],
+      "weaknesses": [
+        "ต่ำกว่า 10 ที่นั่ง — capacity จำกัดมาก",
+        "ไม่มี Instagram/TikTok — visual marketing ศูนย์",
+        "ปิด 16:00 — ไม่มี afternoon-evening market เลย",
+        "Wongnai reviews น้อยมากและเก่า (2021-2022) — แทบไม่มี social proof",
+        "ทำเล ถ.สุขเกษม — ไม่ใช่ main café street"
+      ],
+      "location": "1305/40 ถ.สุขเกษม ดงมะไฟ เมืองสกลนคร (ทางเข้า Imperial Hotel)",
+      "hours": "จ.–ศ. 08:00–16:00 · เสาร์–อาทิตย์ 09:00–16:00",
+      "social_trend": {
+        "primary_platform": "Facebook",
+        "posting_frequency": "ต่ำ (ไม่สม่ำเสมอ)",
+        "content_style": "Specialty coffee showcase · bean education · simple",
+        "engagement_level": "low"
+      },
+      "delivery": {
+        "primary_app": "LINE MAN",
+        "apps": [
+          "LINE MAN",
+          "Wongnai Delivery"
+        ],
+        "peak_hours": "08:00-16:00 (window แคบมาก)",
+        "active_promos": [
+          "ค่าส่งเริ่ม 0฿ ในพื้นที่บริการ"
+        ],
+        "notes": "LINE MAN verified via Wongnai · ปิด 16:00 ทุกวัน · ไม่พบ GrabFood/ShopeeFood"
+      }
+    },
+    {
+      "id": "competitor-panacomehome",
+      "category": "competitor",
+      "title": "ป่านาคำหอม (Pa Na Come Home)",
+      "summary": "Forest sanctuary 43 ไร่กลางเมืองสกลนคร · คาเฟ่เปิดเฉพาะเสาร์-อาทิตย์ 10:00-16:00 · กาแฟ Thai beans 20-40฿ (ราคาต่ำสุดในกลุ่ม) · ที่พัก 7 ห้อง 1,800-3,500฿/คืน · ไม่มี delivery เลย",
+      "updated": "23 May 2026",
+      "source_url": "https://panacomehome.com",
+      "thumbnail_url": "",
+      "tags": [
+        "eco",
+        "forest",
+        "retreat",
+        "organic",
+        "ที่พัก",
+        "slow-life",
+        "สกลนคร"
+      ],
+      "relevance": "high",
+      "detail": "ป่านาคำหอม (Pa Na Come Home) — Forest sanctuary กลางเมืองสกลนคร\n\nเปิดกิจการ: 2013 · เจ้าของ: รัฐิกร ทองศิริ (นักอนุรักษ์ป่า/ผู้ประกอบการ)\n\nพื้นที่ 43 ไร่:\n• ป่าดิบแล้ง 20 ไร่ (walking trail ไม่แตะต้อง)\n• นาข้าวอินทรีย์ + สวนผลไม้ + บ่อน้ำ\n• บ้านพัก 7 ห้อง (Phon Samed 1-6 + Phon Makok 7)\n• Phon Samoa Cafe (เสาร์-อาทิตย์ 10:00-16:00)\n• Phon Khoi Activity Hall (Workshop/Event)\n\nBrand concept: 'Space of Allowing' — ชะลอจังหวะชีวิต สูดอากาศดี ท่ามวิวร่มรื่น\nPhilosophy: Eco conservation + slow living + ธรรมชาติกลางเมือง\n\nCafe Menu (Phon Samoa):\n• กาแฟ Thai beans 20-40฿ — ราคาต่ำสุดในกลุ่มทั้งหมด\n• ช็อกโกแลตไทย award-winning Thai origin\n• Matcha latte (non-dairy)\n• Latte + lemongrass mocktail (seasonal organic)\n• โซดาโฮมเมดจากพืชที่ปลูกเอง\n• อาหาร: ข้าวอินทรีย์ + ผักสวนสด\n• ไม่ใช้นมข้นหวาน ไม่ใช้สารปรุงแต่ง ความหวานจากน้ำตาลมะพร้าว\n• Keto-friendly · Vegan-friendly\n\nActivity Space (Phon Khoi): Day-use 8,000฿ / Overnight 12,000฿\nEvent: Workshop mindfulness, sustainability, film screening, ประชุม\n\nUnique experiences:\n• หิ่งห้อยในคืนฟ้าใส = ไม่มีร้านอื่นในสกลนครมี\n• สุนัขขาวฟู = mascot ธรรมชาติ\n• ข้าวอินทรีย์จากนาตัวเอง = farm-to-table จริง\n\nSocial: Facebook panacomehome (active) + UGC TikTok #ป่านาคำหอม 'คาเฟ่ลับสกลนคร นึกว่าอยู่บนภูพาน'\nDelivery: ไม่มีเลย — ธุรกิจหลักคือที่พัก ไม่ใช่คาเฟ่",
+      "pricing": {
+        "espresso": {
+          "price": "",
+          "note": ""
+        },
+        "americano": {
+          "price": "",
+          "note": ""
+        },
+        "latte": {
+          "price": "",
+          "note": ""
+        },
+        "cappuccino": {
+          "price": "",
+          "note": ""
+        },
+        "cold_brew": {
+          "price": "",
+          "note": ""
+        },
+        "frappe": {
+          "price": "",
+          "note": ""
+        },
+        "matcha": {
+          "price": "ไม่ทราบ",
+          "note": "non-dairy"
+        },
+        "signature_drink": {
+          "price": "ไม่ทราบ",
+          "note": "lemongrass mocktail"
+        },
+        "food": {
+          "price": "ไม่ทราบ",
+          "note": "ข้าวอินทรีย์ + ผักสวนสด"
+        },
+        "other": [
+          {
+            "name": "กาแฟ Thai beans",
+            "price": "20-40฿"
+          },
+          {
+            "name": "ช็อกโกแลตไทย award-winning",
+            "price": "ไม่ทราบ"
+          },
+          {
+            "name": "โซดาโฮมเมด",
+            "price": "ไม่ทราบ"
+          },
+          {
+            "name": "ที่พัก Phon Samed (38 ตร.ม.)",
+            "price": "1,800-3,500฿/คืน"
+          },
+          {
+            "name": "ที่พัก Phon Makok (28 ตร.ม.)",
+            "price": "1,800-2,500฿/คืน"
+          },
+          {
+            "name": "Phon Khoi Day-use",
+            "price": "8,000฿"
+          },
+          {
+            "name": "Phon Khoi Overnight",
+            "price": "12,000฿"
+          }
+        ]
+      },
+      "strengths": [
+        "ป่า 43 ไร่กลางเมือง = absolute uniqueness ในสกลนคร",
+        "กาแฟ 20-40฿ = ราคาต่ำสุดในกลุ่มทั้งหมด",
+        "Farm-to-table จริง (ข้าวอินทรีย์ + ผักสวน + น้ำตาลมะพร้าว)",
+        "หิ่งห้อย + ดาว = ประสบการณ์ที่จำไม่ลืม",
+        "Activity space Phon Khoi = B2B revenue stream",
+        "เว็บไซต์ panacomehome.com ที่ดีมาก",
+        "UGC organic แรง TikTok 'คาเฟ่ลับ นึกว่าอยู่บนภูพาน'"
+      ],
+      "promotions": [],
+      "weaknesses": [
+        "เปิดเฉพาะเสาร์-อาทิตย์ = ตลาด จ-ศ ว่างสนิท",
+        "ไม่มี delivery เลย",
+        "ไม่มี Wongnai listing = ไม่ปรากฏใน food discovery apps",
+        "ไม่มี official Instagram/TikTok = UGC-dependent ทั้งหมด",
+        "Target audience แคบ (eco-traveler/wellness) ไม่ใช่ daily coffee crowd"
+      ],
+      "location": "240/7 ชุมชนหนองแดง ซอยท่านขุน 1 ถ.รัฐบำรุง ต.ธาตุเชิงชุม เมืองสกลนคร",
+      "hours": "คาเฟ่: เสาร์-อาทิตย์ 10:00-16:00 เท่านั้น · ที่พัก: ทุกวัน (จองล่วงหน้า 1 วัน)",
+      "social_trend": {
+        "primary_platform": "Facebook",
+        "posting_frequency": "ไม่สม่ำเสมอ",
+        "content_style": "Eco/nature documentary · forest preservation · slow life aesthetic",
+        "engagement_level": "medium (UGC organic สูง บน TikTok/Lemon8)"
+      },
+      "delivery": {
+        "primary_app": "ไม่มี",
+        "apps": [],
+        "peak_hours": "ไม่มี",
+        "active_promos": [],
+        "notes": "ไม่อยู่บน delivery apps เลย — คาเฟ่เปิดเฉพาะเสาร์-อาทิตย์ ธุรกิจหลักคือที่พักไม่ใช่คาเฟ่ ไม่พบ Wongnai/LINE MAN/GrabFood"
+      }
+    },
+    {
+      "id": "competitor-mokafox",
+      "category": "competitor",
+      "title": "MOKA FOX",
+      "summary": "Homey wooden garden cafe · Wongnai 4.6/5 อันดับ #19/443 ในจังหวัด · เปิดทุกวัน จ-ศ 09:00-16:00 เสาร์-อาทิตย์ 09:00-17:00 · LINE MAN ✅ · Family-friendly ที่สมบูรณ์ที่สุดในกลุ่ม",
+      "updated": "23 May 2026",
+      "source_url": "https://www.wongnai.com/restaurants/1053109Bs-moka-fox",
+      "thumbnail_url": "",
+      "tags": [
+        "homey",
+        "family-friendly",
+        "garden",
+        "wooden",
+        "delivery",
+        "Wongnai",
+        "สกลนคร"
+      ],
+      "relevance": "high",
+      "detail": "MOKA FOX — Homey wooden garden cafe กลางเมืองสกลนคร\n\nที่ตั้ง: 691 ถ.รัฐบำรุง ธาตุนาเวง เมืองสกลนคร (ตรงข้ามร้านเหล้าเล็ก ก่อนถึงปั๊ม PTT แสงโฮม)\nRanking: #19 จาก 443 ร้านกาแฟ/ชา ในจังหวัดสกลนคร (Wongnai)\nFacebook: 3,762 likes · 3,922 visits\n\nConcept: Scandinavian + Thai homey aesthetic — บ้านไม้ 2 ชั้น + เฉลียง + สนามหญ้า\n\nZones:\n• ห้องปรับอากาศ (AC zone)\n• Semi-outdoor เฉลียง/ระเบียง\n• สนามหญ้า camping chairs\n• มุมถ่ายรูปหลายมุม\n• สนามเด็กเล่น\n\nAmenities: Wi-Fi, Parking, Pet-friendly, Credit card, LINE MAN Delivery ✅\nFamily-friendly สมบูรณ์ที่สุดในกลุ่ม = สนามเด็กเล่น + หลายโซน + pet-friendly\n\nMenu highlights:\n• Americano 85฿ / Latte 90฿ / Cappuccino 90฿ / Espresso 80฿\n• Iced Mocha 100฿ (เมนูแนะนำ)\n• Matcha Latte ice 150฿ / Hot Matcha 130฿\n• Signature Wake Up (กาแฟดำ + น้ำผลไม้ + syrup) 150฿\n• Hot Chocolate 90฿ / Milk drinks 70-95฿\n• Bakery & เค้ก\n\nSocial: Facebook 3,762 likes · UGC TikTok/Lemon8/Trip.com active · ไม่มี official IG/TikTok\nDelivery: LINE MAN via Wongnai · จ-ศ 09:00-15:30 / เสาร์-อาทิตย์ 09:00-16:30",
+      "pricing": {
+        "espresso": {
+          "price": "80฿",
+          "note": "hot"
+        },
+        "americano": {
+          "price": "85฿",
+          "note": "hot/ice"
+        },
+        "latte": {
+          "price": "90฿",
+          "note": "hot/ice"
+        },
+        "cappuccino": {
+          "price": "90฿",
+          "note": "hot"
+        },
+        "cold_brew": {
+          "price": "",
+          "note": ""
+        },
+        "frappe": {
+          "price": "",
+          "note": ""
+        },
+        "matcha": {
+          "price": "130-150฿",
+          "note": "Hot Matcha 130฿ / Matcha Latte ice 150฿"
+        },
+        "signature_drink": {
+          "price": "150฿",
+          "note": "Wake Up — กาแฟดำ + น้ำผลไม้ + syrup"
+        },
+        "food": {
+          "price": "ไม่ทราบ",
+          "note": "Bakery & เค้ก"
+        },
+        "other": [
+          {
+            "name": "Iced Mocha",
+            "price": "100฿"
+          },
+          {
+            "name": "Hot Chocolate",
+            "price": "90฿"
+          },
+          {
+            "name": "Milk drinks",
+            "price": "70-95฿"
+          },
+          {
+            "name": "Pure Matcha",
+            "price": "120฿"
+          }
+        ]
+      },
+      "strengths": [
+        "Wongnai 4.6/5 — Ranked #19/443 ในจังหวัด = Top 5% social proof สูงสุดในกลุ่ม",
+        "Family-friendly สมบูรณ์ที่สุดในกลุ่ม (สนามเด็กเล่น, pet-friendly, หลายโซน)",
+        "Delivery LINE MAN ✅ ทุกวัน — delivery hours กว้าง",
+        "เปิดทุกวัน (เสาร์-อาทิตย์ ถึง 17:00) = เวลาบริการครอบคลุม",
+        "หลายโซน (AC + semi-outdoor + สนามหญ้า) = รองรับลูกค้าหลากกลุ่ม"
+      ],
+      "promotions": [],
+      "weaknesses": [
+        "ไม่มี official Instagram/TikTok = visual marketing พึ่ง UGC ทั้งหมด",
+        "ราคา 85-150฿ สูงกว่า จุมพฏ/A Cup of Joy — ไม่ใช่ daily coffee",
+        "Wongnai เพียง 2 reviews = social proof ยังน้อย",
+        "ปิด 16:00 (จ-ศ) = ไม่มี after-work market วันธรรมดา"
+      ],
+      "location": "691 ถ.รัฐบำรุง ธาตุนาเวง เมืองสกลนคร สกลนคร (ตรงข้ามร้านเหล้าเล็ก ก่อนปั๊ม PTT แสงโฮม)",
+      "hours": "จ.–ศ. 09:00–16:00 · เสาร์–อาทิตย์ 09:00–17:00",
+      "social_trend": {
+        "primary_platform": "Facebook",
+        "posting_frequency": "ไม่สม่ำเสมอ",
+        "content_style": "Homey/garden aesthetic · family moments · seasonal themes (Christmas)",
+        "engagement_level": "medium (Facebook 3,762 likes · UGC organic)"
+      },
+      "delivery": {
+        "primary_app": "LINE MAN",
+        "apps": [
+          "LINE MAN",
+          "Wongnai Delivery"
+        ],
+        "peak_hours": "09:00-15:30 (จ-ศ) / 09:00-16:30 (เสาร์-อาทิตย์)",
+        "active_promos": [],
+        "notes": "LINE MAN verified via Wongnai · Delivery ทุกวัน · GrabFood/ShopeeFood ไม่พบ · LINE Pay รับ"
+      }
+    },
+    {
+      "id": "competitor-cantocafe",
+      "category": "competitor",
+      "title": "CANTO CAFE สกลนคร",
+      "summary": "ยังไม่มีข้อมูลออนไลน์ — ไม่พบบน Google, Facebook, TikTok, Wongnai, Lemon8 (ค้นหา 24 พ.ค. 2026) · คู่แข่งใหม่ที่ต้องติดตาม",
+      "updated": "24 May 2026",
+      "source_url": "",
+      "thumbnail_url": "",
+      "tags": [
+        "สกลนคร",
+        "ใหม่",
+        "ติดตาม",
+        "ไม่มีข้อมูลออนไลน์"
+      ],
+      "relevance": "medium",
+      "detail": "CANTO CAFE สกลนคร — คู่แข่งใหม่ที่เพิ่มเข้าระบบ 24 พ.ค. 2026\n\n⚠️ ข้อมูลจำกัด: ค้นหาออนไลน์แล้วไม่พบ (Google/Facebook/TikTok/Wongnai/Lemon8) อาจเป็นร้านใหม่มากที่ยังไม่มี digital footprint หรือชื่อออนไลน์อาจต่างจากชื่อที่รู้จักในท้องถิ่น\n\nสถานะ: ต้องการการยืนยันข้อมูลเพิ่มเติม (Facebook page URL, ที่ตั้ง, เมนู, เวลาเปิด)",
+      "pricing": {
+        "espresso": {
+          "price": "ไม่ทราบ",
+          "note": ""
+        },
+        "americano": {
+          "price": "ไม่ทราบ",
+          "note": ""
+        },
+        "latte": {
+          "price": "ไม่ทราบ",
+          "note": ""
+        },
+        "cappuccino": {
+          "price": "ไม่ทราบ",
+          "note": ""
+        },
+        "cold_brew": {
+          "price": "ไม่ทราบ",
+          "note": ""
+        },
+        "frappe": {
+          "price": "ไม่ทราบ",
+          "note": ""
+        },
+        "matcha": {
+          "price": "ไม่ทราบ",
+          "note": ""
+        },
+        "signature_drink": {
+          "price": "ไม่ทราบ",
+          "note": ""
+        },
+        "food": {
+          "price": "ไม่ทราบ",
+          "note": ""
+        },
+        "other": []
+      },
+      "strengths": [
+        "ยังไม่ทราบ — ต้องการข้อมูลเพิ่มเติม"
+      ],
+      "promotions": [],
+      "weaknesses": [
+        "ไม่มี online presence ที่พบได้ = ยากต่อการติดตาม"
+      ],
+      "location": "ยังไม่ทราบ",
+      "hours": "ยังไม่ทราบ",
+      "social_trend": {
+        "primary_platform": "ไม่ทราบ",
+        "posting_frequency": "ไม่ทราบ",
+        "content_style": "ไม่ทราบ",
+        "engagement_level": "ไม่ทราบ"
+      },
+      "delivery": {
+        "primary_app": "LINE MAN",
+        "apps": [
+          "LINE MAN"
+        ],
+        "peak_hours": "ยังไม่มีข้อมูล",
+        "active_promos": [],
+        "notes": "ยังไม่มีข้อมูลเพียงพอ — ไม่พบบน Wongnai/LINE MAN/GrabFood/ShopeeFood"
+      }
+    },
+    {
+      "id": "competitor-wehugcafe",
+      "category": "competitor",
+      "title": "WE HUG CAFE (Wehug cafe) สกลนคร",
+      "summary": "Minimalist cafe ถนนเส้น บขส.ใหม่ · Facebook 1,888 likes · Instagram @wehugcafe_sakon 95 followers · เปิด 08:00-19:00 ทุกวัน · LINE MAN + FoodPanda ✅ · ราคา <100฿ · Loyalty stamp 10 แก้ว = 1 ฟรี · TikTok UGC active Jun 2026",
+      "updated": "9 Jun 2026",
+      "source_url": "https://www.wongnai.com/restaurants/1298418Tu-wehug-cafe",
+      "thumbnail_url": "",
+      "tags": [
+        "minimalist",
+        "สกลนคร",
+        "delivery",
+        "Wongnai",
+        "loyalty",
+        "brunch",
+        "bakery"
+      ],
+      "relevance": "high",
+      "detail": "WE HUG CAFE (Wehug cafe) สกลนคร — Minimalist coffee comfort zone\n\nที่ตั้ง: 272/17-18 ถ.นิตโย ธาตุเชิงชุม เมืองสกลนคร (ถนนเส้น บขส.ใหม่)\nโทร: 061-517-9957\nเวลาเปิด: ทุกวัน 08:00–19:00\nWongnai: 5/5 (1 review) · Delivery ✅ ส่งฟรีระยะหนึ่ง\n\nConcept: \"The coffee comfort zone\" — minimalist white-black tone, multiple seating zones, หลายมุมถ่ายรูป\n\nHighlights:\n• โซฟาสีดำสลับเบจ · โต๊ะกลมสีดำ/ขาว · ตุ๊กตาหมีตัวใหญ่\n• หลายโซน (window zone, chill zone, work zone)\n• Pet-friendly, family-friendly\n• Credit card ✅ · Delivery ✅\n\nMenu highlights:\n• Americano — เมนูยอดนิยม (featured บน Facebook)\n• Wehug Special (signature drink)\n• Matcha, Tea, Cocoa, Smoothies, Fresh Soda\n• Hokkaido Milk Cake 85฿\n• Choux cream + Blueberry, Crepe cake, Bakery\n\nSocial:\n• Facebook: @wehugcafe (1,888 likes) — Active, โพสต์เมนูแนะนำ\n• Instagram: @wehugcafe_sakon (95 followers, 447 posts)\n• TikTok: UGC #wehugcafe · ไม่มี official account\n• Lemon8: UGC หลายบทความ\n• Trip.com: UGC reviews\n\nPromotion:\n• Loyalty stamp: ซื้อครบ 10 แก้ว = แก้วฟรี 1 ใบ\n• วันพุธ: ส่วนลด 10%\n• วันเสาร์: ส่วนลด 5%\n• เค้กลด 20%\n• ใช้แก้วส่วนตัว: ลด 5 บาท",
+      "pricing": {
+        "espresso": {
+          "price": "ไม่ทราบ",
+          "note": ""
+        },
+        "americano": {
+          "price": "ต่ำกว่า 100฿",
+          "note": "เมนูยอดนิยม"
+        },
+        "latte": {
+          "price": "ต่ำกว่า 100฿",
+          "note": "price range <100฿"
+        },
+        "cappuccino": {
+          "price": "ต่ำกว่า 100฿",
+          "note": ""
+        },
+        "cold_brew": {
+          "price": "ไม่ทราบ",
+          "note": ""
+        },
+        "frappe": {
+          "price": "ไม่ทราบ",
+          "note": ""
+        },
+        "matcha": {
+          "price": "ต่ำกว่า 100฿",
+          "note": ""
+        },
+        "signature_drink": {
+          "price": "ต่ำกว่า 100฿",
+          "note": "Wehug Special"
+        },
+        "food": {
+          "price": "85-100฿",
+          "note": "Hokkaido Milk Cake 85฿ · Bakery เริ่ม ~100฿"
+        },
+        "other": [
+          {
+            "name": "Hokkaido Milk Cake",
+            "price": "85฿"
+          },
+          {
+            "name": "Choux cream + Blueberry",
+            "price": "ไม่ทราบ"
+          },
+          {
+            "name": "Crepe cake",
+            "price": "ไม่ทราบ"
+          }
+        ]
+      },
+      "strengths": [
+        "เปิดถึง 19:00 ทุกวัน = After-work + evening market ครอบคลุมที่สุดในกลุ่ม",
+        "Loyalty stamp 10 แก้วฟรี 1 = retention program ชัดเจน",
+        "ราคาต่ำกว่า 100฿ = accessible daily coffee destination",
+        "Delivery Wongnai ✅ ส่งฟรี = ช่องทาง order เพิ่มเติม",
+        "Instagram 447 posts = content volume สูง visual assets เยอะ",
+        "Promotions หลากหลาย (วันพุธ/วันเสาร์/แก้วตัวเอง/เค้ก)"
+      ],
+      "promotions": [
+        "Loyalty stamp ครบ 10 แก้ว = ฟรี 1 แก้ว",
+        "วันพุธ ลด 10%",
+        "วันเสาร์ ลด 5%",
+        "ใช้แก้วส่วนตัวลด 5 บาท",
+        "เค้กลด 20%",
+        "โปรวันแม่ (Mother's Day) ลด 15% — seasonal promo พิสูจน์ว่าทำ occasion-based promotion"
+      ],
+      "weaknesses": [
+        "Instagram followers เพียง 95 คน แม้จะโพสต์ 447 ครั้ง = engagement/follower ratio ต่ำ",
+        "ไม่มี official TikTok = ขาด reach กลุ่ม Gen Z (แม้มี UGC หลายคลิป)",
+        "ข้อมูลราคาจำเพาะยังไม่ชัดเจน"
+      ],
+      "location": "272/17-18 ถ.นิตโย ธาตุเชิงชุม เมืองสกลนคร (ถนนเส้น บขส.ใหม่)",
+      "hours": "ทุกวัน 08:00–19:00",
+      "social_trend": {
+        "primary_platform": "Facebook",
+        "posting_frequency": "สม่ำเสมอ (Facebook + Instagram active)",
+        "content_style": "Minimalist aesthetic · เมนูแนะนำ · บรรยากาศร้าน · สไตล์ขาว-ดำ-เบจ",
+        "engagement_level": "medium (Facebook 1,888 likes · IG 447 posts/95 followers)"
+      },
+      "delivery": {
+        "primary_app": "LINE MAN",
+        "apps": [
+          "LINE MAN",
+          "Wongnai Delivery",
+          "FoodPanda"
+        ],
+        "peak_hours": "08:00-11:00 (เช้า) / 14:00-17:00 (บ่าย)",
+        "active_promos": [],
+        "notes": "LINE MAN ✅ + FoodPanda ✅ ยืนยัน (9 Jun 2026) · Wongnai delivery ✅ ส่งฟรีระยะใกล้ · เปิด 08:00-19:00 ทุกวัน = delivery hours กว้างสุดในกลุ่ม · TikTok UGC ยังมีคลิปใหม่ มิ.ย. 2026 (@arissp_7)"
+      }
+    },
+    {
+      "id": "competitor-yepcafe",
+      "category": "competitor",
+      "title": "YEP Cafe & Bar สกลนคร (เย๊ปที่แปลว่าใช่)",
+      "summary": "Day cafe + Night bar dual concept · ถ.คูเมือง กลางเมืองสกลนคร · เปิดทุกวัน 08:30-00:00 · Facebook 2,818 likes · TikTok @yep.cafeandbar 1,751 followers · LINE MAN ✅ · Signature: Tiramisu + ครัวซองต์กรอบ · DJ มุมถ่ายรูปเยอะ ดึง Gen Z",
+      "updated": "28 May 2026",
+      "source_url": "https://www.facebook.com/p/YEP-100095353186854/",
+      "thumbnail_url": "",
+      "tags": [
+        "cafe-and-bar",
+        "day-night",
+        "Gen-Z",
+        "TikTok",
+        "DJ",
+        "สกลนคร",
+        "delivery"
+      ],
+      "relevance": "high",
+      "detail": "YEP Cafe & Bar สกลนคร — Dual concept Day Cafe + Night Bar\n\nที่ตั้ง: 287/3 ถ.คูเมือง ต.ธาตุเชิงชุม เมืองสกลนคร\nโทร: 082-295-6455\nเวลาเปิด: ทุกวัน\n• Cafe: 08:30-18:00 (เปิดเช้า เครื่องดื่ม/ขนม/อาหาร)\n• Bar: 18:00-00:00 (DJ + atmosphere + cocktail)\n• Alcohol service: 11:00-14:00 / 17:00-00:00 (ตามกฎหมาย)\n\nConcept: 'เย๊ปที่แปลว่าใช่' — Day cafe & Night bar กลางใจเมืองสกลนคร\nDifferentiator: 15.5 ชั่วโมง/วัน = longest operating window ในกลุ่มคู่แข่ง คาเฟ่กลางวัน + บาร์กลางคืน รวมในร้านเดียว\n\nZones:\n• ชั้น 1: indoor + outdoor seating\n• ชั้น 2: มุมถ่ายรูปสีสันสดใส (Gen Z friendly)\n• Decoration เปลี่ยนตามฤดู/trend\n• แมว mascot\n\nMenu highlights:\n• Tiramisu (signature ขายเร็วหมด)\n• ครัวซองต์กรอบ (signature)\n• กาแฟ + เครื่องดื่ม\n• ขนมและอาหารถึงเที่ยงคืน (ยกเว้นเมนูกาแฟ)\n• Cocktail / Beer (ช่วงค่ำ)\n• รับจัดเบรค น้ำ ขนม อาหาร (B2B catering)\n\nSocial Presence:\n• Facebook: YEP สกลนคร — 2,818 likes · 2,008 visits (Active)\n• TikTok: @yep.cafeandbar — 1,751 followers (Active video content)\n• Instagram: presence via tagged location (UGC strong)\n• Lemon8: UGC reviews หลายบทความ (preawmini88, mbbu236, nxmmkhingg)\n• Trip.com: UGC reviews 3+ บทความ\n• ไม่มี official IG account ของร้าน\n\nReviews:\n• Wongnai: ยังไม่มีรีวิว/ดาว (listing exists แต่ 0 reviews)\n• UGC tone บวก: 'คาเฟ่ลับ สุดชิค', 'มุมถ่ายรูปเยอะ', 'น่ารัก สีสันสดใส'\n• กลุ่มเป้าหมาย: Gen Z / วัยรุ่นสกลนคร / นักท่องเที่ยว\n\nDelivery: LINE MAN ✅ (via Wongnai integration) · ไม่พบ GrabFood/ShopeeFood",
+      "pricing": {
+        "espresso": {
+          "price": "ไม่ทราบ",
+          "note": ""
+        },
+        "americano": {
+          "price": "ไม่ทราบ",
+          "note": ""
+        },
+        "latte": {
+          "price": "ไม่ทราบ",
+          "note": ""
+        },
+        "cappuccino": {
+          "price": "ไม่ทราบ",
+          "note": ""
+        },
+        "cold_brew": {
+          "price": "ไม่ทราบ",
+          "note": ""
+        },
+        "frappe": {
+          "price": "ไม่ทราบ",
+          "note": ""
+        },
+        "matcha": {
+          "price": "ไม่ทราบ",
+          "note": ""
+        },
+        "signature_drink": {
+          "price": "ไม่ทราบ",
+          "note": "Tiramisu · ครัวซองต์กรอบ"
+        },
+        "food": {
+          "price": "ไม่ทราบ",
+          "note": "ขนม+อาหารถึงเที่ยงคืน"
+        },
+        "other": [
+          {
+            "name": "Tiramisu (signature)",
+            "price": "ไม่ทราบ"
+          },
+          {
+            "name": "ครัวซองต์กรอบ (signature)",
+            "price": "ไม่ทราบ"
+          },
+          {
+            "name": "Cocktail/Beer (ช่วง bar)",
+            "price": "ไม่ทราบ"
+          }
+        ]
+      },
+      "strengths": [
+        "Dual concept Day Cafe + Night Bar = unique ในตลาดสกลนคร",
+        "เปิด 08:30-00:00 = 15.5 ชม. ครอบคลุม day + evening + night market",
+        "TikTok @yep.cafeandbar 1,751 followers = official account active (>50% คู่แข่งไม่มี)",
+        "Facebook 2,818 likes = social proof ระดับสูงในกลุ่ม",
+        "DJ + atmosphere = entertainment value ดึง Gen Z วัยรุ่น",
+        "มุมถ่ายรูปเยอะ + decoration ตามฤดู = UGC engine (Lemon8/Trip.com UGC แรง)",
+        "Signature Tiramisu + ครัวซองต์กรอบ = brand recall ชัด",
+        "B2B catering (รับจัดเบรค น้ำ ขนม อาหาร) = revenue stream เพิ่ม",
+        "LINE MAN delivery ✅",
+        "มี alcohol license = cross-sell daytime customer ไป evening"
+      ],
+      "promotions": [],
+      "weaknesses": [
+        "Wongnai 0 reviews/ratings = social proof ใน food discovery apps แทบไม่มี",
+        "ราคาเมนูไม่ประกาศสาธารณะ — ลูกค้าตัดสินใจสั่งล่วงหน้าได้ยาก",
+        "ไม่มี GrabFood/ShopeeFood = พลาดกลุ่มลูกค้านอก LINE MAN",
+        "ไม่มี official Instagram = visual platform หลักของ café niche ขาด",
+        "เน้น Bar concept ตอนค่ำ — อาจไม่ตรงกับกลุ่ม specialty coffee enthusiast"
+      ],
+      "location": "287/3 ถ.คูเมือง ต.ธาตุเชิงชุม เมืองสกลนคร",
+      "hours": "ทุกวัน · Cafe 08:30-18:00 · Bar 18:00-00:00 (Alcohol 11:00-14:00 / 17:00-00:00)",
+      "social_trend": {
+        "primary_platform": "Facebook",
+        "posting_frequency": "สม่ำเสมอ (Facebook + TikTok active)",
+        "content_style": "Cafe-by-day & bar-by-night · มุมถ่ายรูปสีสันสดใส · DJ night vibe · seasonal decor",
+        "engagement_level": "medium-high (FB 2,818 likes · TikTok 1,751 followers · UGC แรง)"
+      },
+      "delivery": {
+        "primary_app": "LINE MAN",
+        "apps": [
+          "LINE MAN"
+        ],
+        "peak_hours": "10:00-12:00 (สาย) / 14:00-17:00 (บ่าย) — window กาแฟก่อน bar เปิด",
+        "active_promos": [],
+        "notes": "LINE MAN ผ่าน Wongnai integration · ไม่พบ GrabFood/ShopeeFood · หลัง 18:00 เน้น dine-in bar service ไม่ใช่ delivery · B2B catering รับจัดเบรคโทรสั่งตรง 082-295-6455"
+      }
+    },
+    {
+      "id": "competitor-cafejackies",
+      "category": "competitor",
+      "title": "Café Jackies สกลนคร",
+      "summary": "คาเฟ่เปิดใหม่ปี 2025 · สี่แยกโฮมพลัส ทางไปราชภัฏ · จ-ศ 08:30-17:30 / เสาร์-อาทิตย์ 10:30-19:30 · Facebook @jackiescafe · TikTok+IG @cafejackies · ราคาต่ำกว่า 100฿ · Delivery via Wongnai (LINE MAN) · มุมถ่ายรูปเยอะ สไตล์ Scandi",
+      "updated": "8 Jun 2026",
+      "source_url": "https://www.facebook.com/jackiescafe/",
+      "thumbnail_url": "",
+      "tags": [
+        "สกลนคร",
+        "local",
+        "new-opening",
+        "aesthetic",
+        "photo-spot",
+        "Instagram",
+        "TikTok",
+        "delivery"
+      ],
+      "relevance": "high",
+      "detail": "Café Jackies สกลนคร — คาเฟ่เปิดใหม่ปี 2025 (เดิมเป็นร้านเน็ต)\n\nที่ตั้ง: 333/11 ธาตุนาเวง เมืองสกลนคร (สี่แยกโฮมพลัส ทางไปราชภัฏสกลนคร)\nโทร: 094-656-8787\nเวลาเปิด:\n• จ-ศ: 08:30-17:30\n• เสาร์-อาทิตย์: 10:30-19:30\nDelivery hours: 09:30-19:30 (vary by day)\n\nBranding / Positioning: มุมถ่ายรูปเยอะมาก · บรรยากาศ Scandi ไม้+กระจก · ฟีลร่มรื่น · โซนใน+โซน Open Air · ราคาเข้าถึงได้ (<100 บาท)\nกลุ่มเป้าหมาย: นักศึกษา ม.ราชภัฏสกลนคร, คนทำงาน, สายถ่ายรูป, ท่องเที่ยว\n\nสิ่งอำนวยความสะดวก: Wi-Fi ✅ · ที่จอดรถ ✅ · Pet-friendly ✅ · บัตรเครดิต ✅ · 41-80 ที่นั่ง\n\nSocial Presence:\n• Facebook: @jackiescafe — active (UGC แรง, โพสต์รีวิวหลายบทความ)\n• TikTok: @cafejackies — active content (Reels บรรยากาศ + vibes)\n• Instagram: @cafejackies — active Reels\n• UGC review: TikTok หลายคลิป (supkadoukmoo, callmepxxch) · Facebook reviews/shares (43 reactions, 15 shares ต่อโพสต์)\n• Hashtags ที่พบ: #คาเฟ่สกลนคร #สกลนคร #ที่เที่ยวสกลนคร #เลาะไปโลดสกลนคร\n\nMenu highlights:\n• Matcha Latte (75฿) · Espresso Cold (70฿) · Americano Cold (65฿)\n• Café Latte (70฿) · Cappuccino Cold (70฿)\n• Orange Cake (เค้กส้ม — พบในรีวิว)\n• หมวด: กาแฟ, มัทฉะ, ชานมญี่ปุ่น, กาแฟดริป, โซดา, สมูทตี้, ของหวาน\n\nReviews:\n• Wongnai: ลงทะเบียนแล้ว แต่ 0 รีวิว (ใหม่)\n• Facebook UGC: 'mood ดีมาก กาแฟอร่อย บรรยากาศน่านั่งทำงาน'\n• TikTok UGC: 'Vibes ดีมากกกก แนะนำให้มา'\n\nDelivery: Wongnai ✅ delivery (ส่งฟรี 0฿ ในรัศมีใกล้) → LINE MAN likely · ไม่พบ GrabFood/ShopeeFood",
+      "pricing": {
+        "espresso": {
+          "price": "70",
+          "note": "cold"
+        },
+        "americano": {
+          "price": "65",
+          "note": "cold"
+        },
+        "latte": {
+          "price": "70",
+          "note": "hot/iced"
+        },
+        "cappuccino": {
+          "price": "70",
+          "note": "cold"
+        },
+        "cold_brew": {
+          "price": "ไม่ทราบ",
+          "note": ""
+        },
+        "frappe": {
+          "price": "ไม่ทราบ",
+          "note": ""
+        },
+        "matcha": {
+          "price": "75",
+          "note": "Matcha Latte"
+        },
+        "signature_drink": {
+          "price": "ไม่ทราบ",
+          "note": "ชานมญี่ปุ่น, สมูทตี้"
+        },
+        "food": {
+          "price": "ไม่ทราบ",
+          "note": "เค้กส้ม + ขนม"
+        },
+        "other": [
+          {
+            "name": "Orange Cake (เค้กส้ม)",
+            "price": "ไม่ทราบ",
+            "note": "พบในรีวิว"
+          },
+          {
+            "name": "ชานมญี่ปุ่น",
+            "price": "ไม่ทราบ",
+            "note": ""
+          },
+          {
+            "name": "โซดา / สมูทตี้",
+            "price": "ไม่ทราบ",
+            "note": ""
+          }
+        ]
+      },
+      "strengths": [
+        "ทำเลดี — สี่แยกโฮมพลัส ทางไปราชภัฏ ใกล้กลุ่มนักศึกษา",
+        "ราคาเข้าถึงได้สูงมาก (<100฿) เทียบกับคู่แข่ง",
+        "Multi-platform social: Facebook + TikTok + Instagram ทำงานพร้อมกัน",
+        "UGC แรง — visitors รีวิว/แชร์เอง ทั้ง TikTok และ Facebook",
+        "มุมถ่ายรูปเยอะ = content engine ฟรีจากลูกค้า",
+        "บรรยากาศ Scandi aesthetic น่านั่งทำงาน = dwell time สูง",
+        "Delivery via Wongnai ✅ ส่งฟรีในรัศมีใกล้"
+      ],
+      "promotions": [],
+      "weaknesses": [
+        "เพิ่งเปิด ยังไม่มี reviews บน Wongnai (0 ดาว)",
+        "ชั่วโมงเปิด weekday สั้น (08:30-17:30) พลาดลูกค้าตอนเย็น",
+        "ราคาบางรายการยังไม่ชัดเจนในสาธารณะ",
+        "ยังไม่มี GrabFood/ShopeeFood = พลาดกลุ่ม delivery นอก Wongnai",
+        "ไม่มี loyalty program / บัตรสะสมแต้ม (ยังไม่พบ)"
+      ],
+      "location": "333/11 ธาตุนาเวง เมืองสกลนคร (สี่แยกโฮมพลัส ทางไปราชภัฏ)",
+      "hours": "จ-ศ 08:30-17:30 · เสาร์-อาทิตย์ 10:30-19:30",
+      "social_trend": {
+        "primary_platform": "TikTok/Instagram",
+        "posting_frequency": "active (UGC + official)",
+        "content_style": "aesthetic vibes · photo spots · new cafe announcement · บรรยากาศ Scandi",
+        "engagement_level": "medium (UGC แรง — visitors share เอง)"
+      },
+      "delivery": {
+        "primary_app": "LINE MAN",
+        "apps": [
+          "LINE MAN"
+        ],
+        "peak_hours": "ยังไม่มีข้อมูล",
+        "active_promos": [],
+        "notes": "Wongnai delivery ✅ ส่งฟรีในรัศมีใกล้ (0฿ starting fee) · delivery hours 09:30-19:30 · LINE MAN likely via Wongnai integration · ไม่พบ GrabFood/ShopeeFood"
+      }
+    },
+    {
+      "id": "competitor-hokkaido-craft",
+      "category": "competitor",
+      "title": "Hokkaido Craft Cafe' & Studio สาขา ปตท.มะขามป้อม สกลนคร",
+      "summary": "Japanese ice cream & specialty beverages · สาขา ปตท.มะขามป้อม สกลนคร · ทุกวัน 10:00-19:30 · Facebook active · Instagram @hokkaido_craftcafe_studio · FoodPanda ✅ · Signature: TARA TORA + Hokkaido milk · Wongnai 3.8⭐ · ราคา 50-130฿",
+      "updated": "8 Jun 2026",
+      "source_url": "https://www.facebook.com/hokkaido.craftcafeandstudio.ptt.makhampom/",
+      "thumbnail_url": "",
+      "tags": [
+        "สกลนคร",
+        "Japanese",
+        "ice-cream",
+        "specialty-drinks",
+        "FoodPanda",
+        "delivery",
+        "ปตท"
+      ],
+      "relevance": "high",
+      "detail": "Hokkaido Craft Cafe' & Studio สาขา ปตท.มะขามป้อม สกลนคร — Japanese ice cream & craft beverages\n\nที่ตั้ง: ปตท.มะขามป้อม เมืองสกลนคร (สาขาที่ตั้งในปั๊มน้ำมัน PTT)\nโทร: 064-882-7455 / 091-865-5044\nเวลาเปิด: ทุกวัน 10:00-19:30\n\nสาขาหลัก (ถ.สุโขทัย ตรงข้ามศาลากลาง) — มีรายงานว่า permanently closed (restaurantguru/Google)\nสาขา ปตท.มะขามป้อม — active, Facebook page ยังมีการอัพเดท\n\nBranding / Positioning: Japanese-style ice cream café · ไอศกรีมญี่ปุ่น low-fat homemade · craft beverages · Japanese wood décor บรรยากาศชิล\nกลุ่มเป้าหมาย: สายหวาน, สายญี่ปุ่น, ครอบครัว, นักท่องเที่ยว\n\nสิ่งอำนวยความสะดวก: Wi-Fi ✅ · ที่จอดรถ ✅ · รับบัตรเครดิต ✅ · Pet-friendly ✅ · Takeaway ✅\n\nSocial Presence:\n• Facebook: @hokkaido.craftcafeandstudio.ptt.makhampom (PTT branch) + main page (@hokkaido.craftcafeandstudio) — Main FB: 291 reviews, 3.4/5\n• Instagram: @hokkaido_craftcafe_studio — active\n• TikTok: UGC หลายคลิป (#hokkaido #คาเฟ่สกลนคร)\n• YouTube: Hokkaido Craft cafe & Studio channel\n\nMenu highlights:\n• TARA TORA (Taro Tora) 75฿ — signature drink, ดังมาก\n• Hokkaido milk hot 50฿\n• Black cocoa 80฿\n• Yogurt ice cream with cantaloupe jelly 130฿+\n• ไอศกรีมโยเกิร์ต (vanilla/yogurt) — low-fat homemade\n• Taiwan bubble tea\n• Cheese bread / Cheese chicken\n• ช็อคโกแลต 5 แบบ\n\nReviews:\n• Wongnai: 3.8/5 · 13 ratings · 10 reviews (สาขาใจกลางเมือง)\n• Google (main): 4.4/5 · 83 reviews\n• Facebook: 3.4/5 · 291 reviews\n• Notable: 'TARA TORA อร่อยสมค่ำล่ำลือ' · 'ตกแต่งสวยมาก' · 'กาแฟช็อคโก้เข้มข้นกลมกล่อม'\n• Warning: สาขาถ.สุโขทัยอาจปิดแล้ว — ยืนยันเฉพาะสาขา ปตท.มะขามป้อม\n\nDelivery: FoodPanda ✅ (foodpanda.co.th/restaurant/j5ic) · ไม่พบ LINE MAN/GrabFood โดยตรง",
+      "pricing": {
+        "espresso": {
+          "price": "ไม่ทราบ",
+          "note": ""
+        },
+        "americano": {
+          "price": "ไม่ทราบ",
+          "note": ""
+        },
+        "latte": {
+          "price": "ไม่ทราบ",
+          "note": ""
+        },
+        "cappuccino": {
+          "price": "ไม่ทราบ",
+          "note": ""
+        },
+        "cold_brew": {
+          "price": "ไม่ทราบ",
+          "note": ""
+        },
+        "frappe": {
+          "price": "ไม่ทราบ",
+          "note": ""
+        },
+        "matcha": {
+          "price": "ไม่ทราบ",
+          "note": "Matcha drinks available"
+        },
+        "signature_drink": {
+          "price": "75",
+          "note": "TARA TORA (Taro Tora) — signature ดัง"
+        },
+        "food": {
+          "price": "ไม่ทราบ",
+          "note": "Cheese bread, Cheese chicken"
+        },
+        "other": [
+          {
+            "name": "Hokkaido milk (hot)",
+            "price": "50",
+            "note": ""
+          },
+          {
+            "name": "Black cocoa",
+            "price": "80",
+            "note": ""
+          },
+          {
+            "name": "Yogurt ice cream + cantaloupe jelly",
+            "price": "130",
+            "note": "low-fat homemade"
+          },
+          {
+            "name": "Taiwan bubble tea",
+            "price": "ไม่ทราบ",
+            "note": ""
+          },
+          {
+            "name": "ช็อคโกแลต (5 varieties)",
+            "price": "ไม่ทราบ",
+            "note": "เข้มข้นกลมกล่อม"
+          }
+        ]
+      },
+      "strengths": [
+        "Unique positioning — Japanese ice cream + craft beverages แตกต่างจาก local cafés ทั้งหมด",
+        "Signature TARA TORA viral — 'อร่อยสมค่ำล่ำลือ' ลูกค้าแนะนำต่อ",
+        "FoodPanda ✅ — delivery platform ที่คู่แข่ง local ส่วนใหญ่ไม่มี",
+        "ที่ตั้งในปั๊มน้ำมัน PTT = traffic สูงจากนักเดินทาง",
+        "Multi-platform social: Facebook + Instagram + TikTok UGC",
+        "Franchise brand recognition ระดับประเทศ (มีสาขาหลายจังหวัด)",
+        "Google 4.4/5 จาก 83 รีวิว = social proof แข็งแกร่ง"
+      ],
+      "promotions": [],
+      "weaknesses": [
+        "สาขาหลัก (ถ.สุโขทัย) อาจปิดถาวรแล้ว — brand awareness ในพื้นที่อาจลดลง",
+        "ราคาสูงกว่าคู่แข่ง (101-250฿/คน) — ไม่ใช่ทางเลือกสำหรับประหยัด",
+        "เน้น dessert/ice cream ไม่ใช่ specialty coffee — ฐานลูกค้าต่างกับ coffee enthusiasts",
+        "เวลาเปิดสั้น (10:00-19:30) ไม่ capture morning coffee market",
+        "ไม่พบ LINE MAN = พลาด majority ของ delivery traffic ในจังหวัด"
+      ],
+      "location": "ปตท.มะขามป้อม เมืองสกลนคร",
+      "hours": "ทุกวัน 10:00-19:30",
+      "social_trend": {
+        "primary_platform": "Facebook",
+        "posting_frequency": "moderate (Facebook + IG active)",
+        "content_style": "Japanese ice cream aesthetic · craft beverages · dessert showcase · บรรยากาศญี่ปุ่น",
+        "engagement_level": "medium (FB 291 reviews · Google 4.4/5 · TikTok UGC)"
+      },
+      "delivery": {
+        "primary_app": "FoodPanda",
+        "apps": [
+          "FoodPanda"
+        ],
+        "peak_hours": "ยังไม่มีข้อมูล",
+        "active_promos": [],
+        "notes": "FoodPanda ✅ ยืนยัน (foodpanda.co.th/restaurant/j5ic/hokkaido-craft-cafe-and-studio) · ไม่พบ LINE MAN/GrabFood · ในปั๊ม PTT ทำให้ FoodPanda เหมาะกว่า Wongnai/LINE MAN สำหรับ takeaway traffic"
+      }
+    },
+    {
+      "id": "competitor-ebuai",
+      "category": "competitor",
+      "title": "อีบ๊วย (E BUAI) สกลนคร",
+      "summary": "Home café + Workshop · ซอยตลาดบ้านธาตุ หน้าวัดพระธาตุนารายณ์เจงเวง · ทุกวัน 10:00-18:00 · Facebook + TikTok @ebuai120 · ราคา <100฿ · Wongnai delivery (LINE MAN) · มีแมว · Workshop สอนทำขนม+กาแฟ · E'BUAI V.2 (ขายข้าว) แยกต่างหาก",
+      "updated": "8 Jun 2026",
+      "source_url": "https://www.facebook.com/p/E-BUAI-100083137039984/",
+      "thumbnail_url": "",
+      "tags": [
+        "สกลนคร",
+        "home-cafe",
+        "vintage",
+        "workshop",
+        "cat-cafe",
+        "delivery",
+        "ราคาถูก"
+      ],
+      "relevance": "high",
+      "detail": "อีบ๊วย (E BUAI) สกลนคร — Home Café + Workshop\n\nที่ตั้ง: ซอยตลาดบ้านธาตุ ซ.หน้าวัดพระธาตุ ถ.นิตโย ธาตุนาเวง เมืองสกลนคร (หน้าวัดพระธาตุนารายณ์เจงเวง ใกล้ ม.ราชภัฏสกลนคร)\nโทร: 064-019-9210 / 098-983-9494\nLINE: yoki2626\nเวลาเปิด: ทุกวัน 10:00-18:00\nDelivery hours: 11:00-17:30\n\nBranding / Positioning: 'คาเฟ่ลับ แต่ไม่ลับ' · Home café vintage style · ผนังสีเขียว เพดานไม้ · Outdoor ร่มรื่นสงบ · มีแมวประจำร้าน · Workshop สอนทำขนมและกาแฟ\nกลุ่มเป้าหมาย: นักศึกษา ม.ราชภัฏ, สายคาเฟ่ลับ, นักท่องเที่ยวสายธาตุเจงเวง, workshop seekers\n\nสิ่งอำนวยความสะดวก: Wi-Fi ✅ · ที่จอดรถ ✅ · Pet-friendly ✅ · บัตรเครดิต ✅ · ที่นั่ง <10 ที่ (intimate)\n\nSocial Presence:\n• Facebook: @E-BUAI (facebook.com/p/E-BUAI-100083137039984) — active\n• TikTok: @ebuai120 (official) + UGC หลายคลิป (#อีบ๊วย #ebuai)\n• Lemon8: UGC reviews หลายบทความ (นน้ำแพง, เพียรณัฏฐิกา, คุณดามิน, แพรวว)\n• LINE: yoki2626\n• ไม่พบ Instagram official\n• Hashtags: #อีบ๊วย #ebuai #คาเฟ่สกลนคร #คาเฟ่บ้านธาตุ #สกลนคร #ร้านดีบอกต่อ #matcha #reviewsakonnakhon #ซอมเบิ่งหม่อง\n\nMenu highlights:\n• กาแฟ + matcha + เครื่องดื่มทั่วไป\n• เบเกอรี่ homemade\n• อาหาร homemade (มื้อหลักด้วย)\n• Workshop สอนทำขนมและกาแฟ (unique — revenue stream เพิ่ม)\n• ราคา <100฿ ทุกรายการ\n\nBranching:\n• E'BUAI (café หลัก) — เครื่องดื่ม+เบเกอรี่+อาหาร+workshop\n• E'BUAI V.2 (อีบ๊วยขายข้าว🍚) — Wongnai listing แยก เน้นข้าว/อาหาร\n\nReviews:\n• Wongnai: 0 รีวิว / 0 ดาว (ใหม่มาก — listing exists)\n• TikTok UGC: 'คาเฟ่ลับ แต่ไม่ลับ', 'เครื่องดื่มมี อาหารมี เวิร์คช็อปมี', 'บรรยากาศฮิลใจ', 'ระวังแมวสวบ'\n• Lemon8: 'บรรยากาศน่ารัก รสชาติเด็ด ราคาน่ารัก'\n\nDelivery: Wongnai delivery ✅ (0฿ starting fee) · delivery 11:00-17:30 · LINE MAN likely via Wongnai · ไม่พบ GrabFood/ShopeeFood/FoodPanda",
+      "pricing": {
+        "espresso": {
+          "price": "ไม่ทราบ",
+          "note": ""
+        },
+        "americano": {
+          "price": "ไม่ทราบ",
+          "note": ""
+        },
+        "latte": {
+          "price": "ไม่ทราบ",
+          "note": ""
+        },
+        "cappuccino": {
+          "price": "ไม่ทราบ",
+          "note": ""
+        },
+        "cold_brew": {
+          "price": "ไม่ทราบ",
+          "note": ""
+        },
+        "frappe": {
+          "price": "ไม่ทราบ",
+          "note": ""
+        },
+        "matcha": {
+          "price": "ไม่ทราบ",
+          "note": "matcha available"
+        },
+        "signature_drink": {
+          "price": "ไม่ทราบ",
+          "note": "ราคา <100฿ ทุกรายการ"
+        },
+        "food": {
+          "price": "ไม่ทราบ",
+          "note": "อาหาร homemade + เบเกอรี่"
+        },
+        "other": [
+          {
+            "name": "Workshop สอนทำขนม",
+            "price": "ไม่ทราบ",
+            "note": "unique service"
+          },
+          {
+            "name": "Workshop สอนทำกาแฟ",
+            "price": "ไม่ทราบ",
+            "note": "unique service"
+          },
+          {
+            "name": "อาหาร homemade (E'BUAI V.2)",
+            "price": "ไม่ทราบ",
+            "note": "spin-off ขายข้าว"
+          }
+        ]
+      },
+      "strengths": [
+        "ราคาต่ำมาก (<100฿) เทียบเท่า Café Jackies = budget-friendly สุดในตลาด",
+        "Workshop สอนทำขนม+กาแฟ = unique revenue stream และ viral content ที่คู่แข่งไม่มี",
+        "บรรยากาศ 'คาเฟ่ลับ' + มีแมว = strong photo content engine ดึง UGC",
+        "Multi-platform UGC: TikTok + Lemon8 + Facebook review organic",
+        "Wongnai delivery ✅ 0฿ starting fee · ส่งได้ช่วงกลางวัน 11:00-17:30",
+        "ทำเลดี — ใกล้วัดพระธาตุนารายณ์เจงเวง = tourist traffic",
+        "E'BUAI V.2 spin-off = expand revenue โดยไม่ต้องเพิ่ม seat",
+        "Lemon8 presence แรง = กลุ่ม lifestyle content ที่ TikTok+FB ยังครอบไม่ถึง"
+      ],
+      "promotions": [],
+      "weaknesses": [
+        "ที่นั่งน้อยมาก (<10 ที่) — scaling จำกัดมาก",
+        "Wongnai 0 รีวิว = ลูกค้าใหม่ตัดสินใจยาก",
+        "ไม่มี Instagram official = เสีย visual platform หลักของ cafe niche",
+        "ราคาต่ำมากอาจจำกัด margin",
+        "เวลาเปิดสั้น (10:00-18:00) พลาด morning + evening market",
+        "ไม่พบ GrabFood/ShopeeFood = พลาดกลุ่ม delivery นอก Wongnai"
+      ],
+      "location": "ซอยตลาดบ้านธาตุ หน้าวัดพระธาตุนารายณ์เจงเวง เมืองสกลนคร",
+      "hours": "ทุกวัน 10:00-18:00 · Delivery 11:00-17:30",
+      "social_trend": {
+        "primary_platform": "TikTok",
+        "posting_frequency": "active (TikTok @ebuai120 + Lemon8 UGC แรง)",
+        "content_style": "vintage home café · คาเฟ่ลับ · มีแมว · workshop · outdoor ร่มรื่น · ราคาน่ารัก",
+        "engagement_level": "medium (TikTok UGC หลายคลิป · Lemon8 หลายบทความ · FB active)"
+      },
+      "delivery": {
+        "primary_app": "LINE MAN",
+        "apps": [
+          "LINE MAN"
+        ],
+        "peak_hours": "11:00-17:30 (ตาม delivery window ของ Wongnai)",
+        "active_promos": [],
+        "notes": "Wongnai delivery ✅ 0฿ starting fee · delivery hours 11:00-17:30 · LINE MAN likely via Wongnai integration · ไม่พบ GrabFood/ShopeeFood/FoodPanda · window delivery แคบ (ไม่รวมเช้า)"
+      }
+    },
+    {
+      "id": "competitor-homeup",
+      "category": "competitor",
+      "title": "HOME UP Cafe สกลนคร",
+      "summary": "Nature café + Activity · ถ.ชลประทาน ใกล้ มรภ.สกลนคร · ทุกวัน 10:00-19:00 · Facebook @homeupcafe active (294 shares/โพสต์) · ราคา <100฿ · Wongnai delivery ✅ · เรือพายฟรี + เรือก๋วยเตี๋ยว + ขายต้นไม้ = unique 3-in-1",
+      "updated": "9 Jun 2026",
+      "source_url": "https://www.facebook.com/homeupcafe/",
+      "thumbnail_url": "",
+      "tags": [
+        "สกลนคร",
+        "nature-cafe",
+        "activity",
+        "boat",
+        "plants",
+        "university",
+        "delivery",
+        "ราคาถูก"
+      ],
+      "relevance": "high",
+      "detail": "HOME UP Cafe สกลนคร — Nature Café + Paddleboat + Plant Shop\n\nที่ตั้ง: ซอยตรงข้ามโรงเรียนธาตุนารายณ์วิทยา ถ.ชลประทาน (Chaloem Phrakiat Canal Road) / ถ.นิตโย ตำบลพังขว้าง เมืองสกลนคร (ใกล้ มรภ.สกลนคร)\nโทร: 062-893-5288\nเวลาเปิด: ทุกวัน 10:00-19:00\n\nBranding / Positioning: Nature café ติดคลอง/บึง · บรรยากาศร่มรื่น ธรรมชาติ · แอร์เย็น หลายมุมถ่ายรูป\nกลุ่มเป้าหมาย: นักศึกษา มรภ.สกลนคร, ครอบครัว, นักท่องเที่ยวสายธรรมชาติ, สายถ่ายรูป, สายต้นไม้\n\n**Unique Differentiators (ไม่มีร้านไหนในสกลนครทำ):**\n• เรือพาย (Paddleboat) ฟรีสำหรับลูกค้า!\n• เรือก๋วยเตี๋ยว (Boat Noodles) — เมนูอาหาร authentic\n• ขายต้นไม้ประดับ — additional revenue stream\n\nสิ่งอำนวยความสะดวก: Wi-Fi ✅ · ที่จอดรถ ✅ · Pet-friendly ✅ · บัตรเครดิต ✅ · 11-40 ที่นั่ง · Bar counter + ที่ชาร์จโทรศัพท์\n\nSocial Presence:\n• Facebook: @homeupcafe — active · โพสต์ Dec 2021: 162 reactions, 61 comments, **294 shares** (viral สำหรับ local café)\n• Instagram: location page exists (ไม่ทราบ official account)\n• Wongnai: 0 รีวิว (ลงทะเบียนแล้ว)\n• ไม่พบ TikTok official\n• Hashtags: #สกลนคร #คาเฟ่สกลนคร #มุมถ่ายรูป #HOME_UP_Cafe\n\nMenu highlights:\n• กาแฟ, ชา, เครื่องดื่ม\n• ของหวาน/เบเกอรี่\n• **เรือก๋วยเตี๋ยว** (unique!)\n• ต้นไม้ประดับ (ขาย)\n• ราคา <100฿ ทุกรายการ\n\nDelivery: Wongnai delivery ✅ (ระบุใน Wongnai listing) → LINE MAN likely · ไม่พบ GrabFood/ShopeeFood",
+      "pricing": {
+        "espresso": {
+          "price": "ไม่ทราบ",
+          "note": ""
+        },
+        "americano": {
+          "price": "ไม่ทราบ",
+          "note": ""
+        },
+        "latte": {
+          "price": "ไม่ทราบ",
+          "note": "<100฿"
+        },
+        "cappuccino": {
+          "price": "ไม่ทราบ",
+          "note": ""
+        },
+        "cold_brew": {
+          "price": "ไม่ทราบ",
+          "note": ""
+        },
+        "frappe": {
+          "price": "ไม่ทราบ",
+          "note": ""
+        },
+        "matcha": {
+          "price": "ไม่ทราบ",
+          "note": ""
+        },
+        "signature_drink": {
+          "price": "ไม่ทราบ",
+          "note": "กาแฟ/ชา <100฿"
+        },
+        "food": {
+          "price": "ไม่ทราบ",
+          "note": "เรือก๋วยเตี๋ยว + ของหวาน"
+        },
+        "other": [
+          {
+            "name": "เรือก๋วยเตี๋ยว (Boat Noodles)",
+            "price": "ไม่ทราบ",
+            "note": "unique signature food"
+          },
+          {
+            "name": "เรือพาย (Paddleboat)",
+            "price": "ฟรี (สำหรับลูกค้า)",
+            "note": "unique activity"
+          },
+          {
+            "name": "ต้นไม้ประดับ",
+            "price": "ไม่ทราบ",
+            "note": "ขาย retail"
+          }
+        ]
+      },
+      "strengths": [
+        "**เรือพายฟรี** — activity ที่ไม่มีคาเฟ่ไหนในสกลนครทำ = strong UGC trigger",
+        "**เรือก๋วยเตี๋ยว** — differentiator ทั้งเมนูอาหาร unique",
+        "**ขายต้นไม้** — revenue stream เพิ่ม + ดึงกลุ่ม plant lovers",
+        "บรรยากาศธรรมชาติ ติดคลอง = Instagram-worthy สูง",
+        "Facebook viral สูง (294 shares/โพสต์) = organic reach ดีมาก",
+        "ทำเลใกล้ มรภ.สกลนคร = student customer base",
+        "ราคา <100฿ = accessible ทุกกลุ่ม",
+        "Wongnai delivery ✅ + แอร์เย็น ที่ชาร์จ = work-friendly"
+      ],
+      "promotions": [],
+      "weaknesses": [
+        "Wongnai 0 รีวิว = credibility ต่ำสุดกลุ่ม",
+        "ไม่พบ TikTok official = ขาด Gen Z reach",
+        "ข้อมูลราคาไม่เปิดเผยสาธารณะ",
+        "ไม่พบ GrabFood/ShopeeFood"
+      ],
+      "location": "ซอยตรงข้ามโรงเรียนธาตุนารายณ์วิทยา ถ.ชลประทาน / ถ.นิตโย พังขว้าง เมืองสกลนคร",
+      "hours": "ทุกวัน 10:00-19:00",
+      "social_trend": {
+        "primary_platform": "Facebook",
+        "posting_frequency": "moderate (Facebook active)",
+        "content_style": "Nature café · บรรยากาศริมคลอง · เรือพาย · มุมถ่ายรูป · ต้นไม้",
+        "engagement_level": "medium-high (Facebook viral shares สูง 294/โพสต์)"
+      },
+      "delivery": {
+        "primary_app": "LINE MAN",
+        "apps": [
+          "LINE MAN"
+        ],
+        "peak_hours": "ยังไม่มีข้อมูล",
+        "active_promos": [],
+        "notes": "Wongnai delivery ✅ (ระบุใน listing) → LINE MAN likely via Wongnai integration · ไม่พบ GrabFood/ShopeeFood/FoodPanda · ต้องยืนยันด้วยการเปิดแอปในพื้นที่"
+      }
+    },
+    {
+      "id": "competitor-hookcafe",
+      "category": "competitor",
+      "title": "ฮูกคาเฟ่ (Hook cafe') สกลนคร",
+      "summary": "Coffee & Cactus Garden · ถ.สกลนคร-นครพนม ห้วยฮ้อ · จ-ส 7:30-18:00 / อาทิตย์ 9:00-18:00 · Facebook active · ราคา <100฿ · Wongnai delivery ✅ · น้ำหมากเม่าไนโตร + สวนแคสตัส + ขายต้นไม้ + กิจกรรมเด็ก",
+      "updated": "9 Jun 2026",
+      "source_url": "https://th-th.facebook.com/pages/category/Product-Service/%E0%B8%AE%E0%B8%B9%E0%B8%81%E0%B8%84%E0%B8%B2%E0%B9%80%E0%B8%9F%E0%B9%88-2159563274319141/",
+      "thumbnail_url": "",
+      "tags": [
+        "สกลนคร",
+        "nature-cafe",
+        "cactus",
+        "plant-nursery",
+        "activity",
+        "family",
+        "หมากเม่า",
+        "delivery"
+      ],
+      "relevance": "medium",
+      "detail": "ฮูกคาเฟ่ (Hook cafe') สกลนคร — Coffee & Cactus Garden\n\nที่ตั้ง: 172 ถ.สกลนคร-นครพนม (ทางหลวง 22) บ้านฮางโฮง ต.ฮางโฮง อ.เมืองสกลนคร (นอกเมือง ใกล้ มก.ฉกส. - ม.เกษตรศาสตร์วิทยาเขตสกลนคร)\nโทร: 098-569-6346\nเวลาเปิด:\n• จ-ส: 7:30-18:00 (เปิดเช้าที่สุดในกลุ่ม = 7:30!)\n• อาทิตย์: 9:00-18:00\nDelivery hours: 10:00-17:00\n\nConcept: Coffee & Cactus — ร้านกาแฟ + สวนแคสตัส + ขายต้นไม้ประดับ + กิจกรรมเด็ก\nUSP: 'ฮูก' (Hug/นกฮูก) branding · ริมทางหลวง 22 จับ traffic นักเดินทาง + นักศึกษา มก.\n\nสิ่งอำนวยความสะดวก: ที่จอดรถ ✅ · เด็กเล่นได้ ✅ · กลุ่ม ✅ · บัตรเครดิต ✅ · ที่นั่ง <10\n\nSocial Presence:\n• Facebook: ฮูกคาเฟ่ (Page ID 2159563274319141) — active\n• TikTok: #ฮูกคาเฟ่ (UGC hashtag มี)\n• Instagram: ไม่พบ official account\n• Facebook UGC (ปลาหลดใหนดี, Nov 2021): 121 reactions, 17 shares\n• Wongnai: 1 รีวิว / 5 ดาว (Dec 2019)\n\nMenu highlights:\n• กาแฟอังขาง (Angkhang coffee) — signature\n• **น้ำหมากเม่าไนโตร** — local fruit Nitro drink ที่ unique มาก\n• เค้กทุเรียน (ต้องจองล่วงหน้า 1-2 วัน)\n• เค้กผลไม้ตามฤดูกาล\n• Pink milk, Honey lemon mocktail\n• ราคา <100฿\n\nPlant nursery:\n• แคสตัสและไม้อวบน้ำหลายชนิด ราคาถูก\n• ดินปลูก + อุปกรณ์\n• กระถางน่ารัก\n\nกิจกรรม: สำหรับเด็ก · มุมถ่ายรูปในสวนแคสตัส\n\nReviews:\n• Wongnai 5/5 (1 รีวิว): 'ร้านกาแฟน่ารัก ในสวนเกษตร มีร้านอาหารภายในสวย จอดรถสะดวก มีน้ำหมากเม่าไนโตรและกิจกรรมให้เด็ก'\n• UGC Facebook: 'ฮูกคาเฟ่ Coffee & Cactus ตั้งอยู่บ้านฮางโฮง'\n\nDelivery: Wongnai delivery ✅ (0฿) · delivery 10:00-17:00 · LINE MAN likely · ไม่พบ GrabFood/ShopeeFood",
+      "pricing": {
+        "espresso": {
+          "price": "ไม่ทราบ",
+          "note": ""
+        },
+        "americano": {
+          "price": "ไม่ทราบ",
+          "note": ""
+        },
+        "latte": {
+          "price": "ไม่ทราบ",
+          "note": "<100฿"
+        },
+        "cappuccino": {
+          "price": "ไม่ทราบ",
+          "note": ""
+        },
+        "cold_brew": {
+          "price": "ไม่ทราบ",
+          "note": ""
+        },
+        "frappe": {
+          "price": "ไม่ทราบ",
+          "note": ""
+        },
+        "matcha": {
+          "price": "ไม่ทราบ",
+          "note": ""
+        },
+        "signature_drink": {
+          "price": "ไม่ทราบ",
+          "note": "น้ำหมากเม่าไนโตร + กาแฟอังขาง"
+        },
+        "food": {
+          "price": "ไม่ทราบ",
+          "note": "เค้กทุเรียน 200-400฿ (half/full pound)"
+        },
+        "other": [
+          {
+            "name": "กาแฟอังขาง (Angkhang)",
+            "price": "ไม่ทราบ",
+            "note": "signature coffee"
+          },
+          {
+            "name": "น้ำหมากเม่าไนโตร",
+            "price": "ไม่ทราบ",
+            "note": "local fruit Nitro — unique!"
+          },
+          {
+            "name": "เค้กทุเรียน",
+            "price": "200-400",
+            "note": "half/full pound, จองล่วงหน้า"
+          },
+          {
+            "name": "แคสตัส/ไม้อวบน้ำ",
+            "price": "ราคาถูก",
+            "note": "ขาย retail"
+          }
+        ]
+      },
+      "strengths": [
+        "เปิดเช้าที่สุดในกลุ่ม (7:30 น.) = ตลาด morning coffee นักเดินทาง",
+        "**น้ำหมากเม่าไนโตร** — local fruit + Nitro tech ที่ไม่มีร้านไหนทำในสกลนคร",
+        "**สวนแคสตัส** = unique attraction ไม่มีคู่แข่ง + photo content engine",
+        "ทำเลริมทางหลวง 22 จับ traffic นักเดินทาง สกลนคร-นครพนม",
+        "กิจกรรมเด็ก = ดึง family segment ที่คู่แข่งส่วนใหญ่ไม่มี",
+        "Wongnai delivery ✅ 0฿",
+        "เปิดทุกวัน = reliable destination"
+      ],
+      "promotions": [],
+      "weaknesses": [
+        "ทำเลนอกเมือง ถ.สกลนคร-นครพนม — เข้าถึงยากจากใจกลางเมือง",
+        "ที่นั่ง <10 ที่ — scaling จำกัด",
+        "Wongnai 1 รีวิว (2019) — outdated credibility",
+        "ไม่พบ TikTok/Instagram official = ขาด visual reach ใน 2026",
+        "ราคาจำเพาะไม่เปิดเผยสาธารณะ"
+      ],
+      "location": "172 ถ.สกลนคร-นครพนม (ทางหลวง 22) บ้านฮางโฮง เมืองสกลนคร (นอกเมือง ใกล้ มก.ฉกส.)",
+      "hours": "จ-ส 7:30-18:00 · อาทิตย์ 9:00-18:00 · Delivery 10:00-17:00",
+      "social_trend": {
+        "primary_platform": "Facebook",
+        "posting_frequency": "moderate (Facebook active)",
+        "content_style": "Coffee & Cactus garden · plant showcase · family activity · local fruit drinks",
+        "engagement_level": "low-medium (FB UGC มี · Wongnai credibility เก่า)"
+      },
+      "delivery": {
+        "primary_app": "LINE MAN",
+        "apps": [
+          "LINE MAN"
+        ],
+        "peak_hours": "10:00-17:00 (ตาม delivery window)",
+        "active_promos": [],
+        "notes": "Wongnai delivery ✅ 0฿ starting fee · delivery window 10:00-17:00 · LINE MAN likely via Wongnai · ไม่พบ GrabFood/ShopeeFood/FoodPanda"
+      }
+    }
+  ]
+}

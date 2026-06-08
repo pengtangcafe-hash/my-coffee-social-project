@@ -1135,6 +1135,67 @@ INTEL_DATA_FALLBACK = [
         }
     },
     {
+        "id": "competitor-hookcafe",
+        "category": "competitor",
+        "title": "ฮูกคาเฟ่ (Hook cafe') สกลนคร",
+        "summary": "Coffee & Cactus Garden · ถ.สกลนคร-นครพนม ห้วยฮ้อ · จ-ส 7:30-18:00 / อาทิตย์ 9:00-18:00 · Facebook active · ราคา <100฿ · Wongnai delivery ✅ · น้ำหมากเม่าไนโตร + สวนแคสตัส + ขายต้นไม้ + กิจกรรมเด็ก",
+        "updated": "9 Jun 2026",
+        "source_url": "https://th-th.facebook.com/pages/category/Product-Service/%E0%B8%AE%E0%B8%B9%E0%B8%81%E0%B8%84%E0%B8%B2%E0%B9%80%E0%B8%9F%E0%B9%88-2159563274319141/",
+        "thumbnail_url": "",
+        "tags": ["สกลนคร", "nature-cafe", "cactus", "plant-nursery", "activity", "family", "หมากเม่า", "delivery"],
+        "relevance": "medium",
+        "detail": "ฮูกคาเฟ่ (Hook cafe') สกลนคร — Coffee & Cactus Garden\n\nที่ตั้ง: 172 ถ.สกลนคร-นครพนม (ทางหลวง 22) บ้านฮางโฮง ต.ฮางโฮง อ.เมืองสกลนคร (นอกเมือง ใกล้ มก.ฉกส. - ม.เกษตรศาสตร์วิทยาเขตสกลนคร)\nโทร: 098-569-6346\nเวลาเปิด:\n• จ-ส: 7:30-18:00 (เปิดเช้าที่สุดในกลุ่ม = 7:30!)\n• อาทิตย์: 9:00-18:00\nDelivery hours: 10:00-17:00\n\nConcept: Coffee & Cactus — ร้านกาแฟ + สวนแคสตัส + ขายต้นไม้ประดับ + กิจกรรมเด็ก\nUSP: 'ฮูก' (Hug/นกฮูก) branding · ริมทางหลวง 22 จับ traffic นักเดินทาง + นักศึกษา มก.\n\nสิ่งอำนวยความสะดวก: ที่จอดรถ ✅ · เด็กเล่นได้ ✅ · กลุ่ม ✅ · บัตรเครดิต ✅ · ที่นั่ง <10\n\nSocial Presence:\n• Facebook: ฮูกคาเฟ่ (Page ID 2159563274319141) — active\n• TikTok: #ฮูกคาเฟ่ (UGC hashtag มี)\n• Instagram: ไม่พบ official account\n• Facebook UGC (ปลาหลดใหนดี, Nov 2021): 121 reactions, 17 shares\n• Wongnai: 1 รีวิว / 5 ดาว (Dec 2019)\n\nMenu highlights:\n• กาแฟอังขาง (Angkhang coffee) — signature\n• **น้ำหมากเม่าไนโตร** — local fruit Nitro drink ที่ unique มาก\n• เค้กทุเรียน (ต้องจองล่วงหน้า 1-2 วัน)\n• เค้กผลไม้ตามฤดูกาล\n• Pink milk, Honey lemon mocktail\n• ราคา <100฿\n\nPlant nursery:\n• แคสตัสและไม้อวบน้ำหลายชนิด ราคาถูก\n• ดินปลูก + อุปกรณ์\n• กระถางน่ารัก\n\nกิจกรรม: สำหรับเด็ก · มุมถ่ายรูปในสวนแคสตัส\n\nReviews:\n• Wongnai 5/5 (1 รีวิว): 'ร้านกาแฟน่ารัก ในสวนเกษตร มีร้านอาหารภายในสวย จอดรถสะดวก มีน้ำหมากเม่าไนโตรและกิจกรรมให้เด็ก'\n• UGC Facebook: 'ฮูกคาเฟ่ Coffee & Cactus ตั้งอยู่บ้านฮางโฮง'\n\nDelivery: Wongnai delivery ✅ (0฿) · delivery 10:00-17:00 · LINE MAN likely · ไม่พบ GrabFood/ShopeeFood",
+        "pricing": {
+            "espresso": {"price": "ไม่ทราบ", "note": ""},
+            "americano": {"price": "ไม่ทราบ", "note": ""},
+            "latte": {"price": "ไม่ทราบ", "note": "<100฿"},
+            "cappuccino": {"price": "ไม่ทราบ", "note": ""},
+            "cold_brew": {"price": "ไม่ทราบ", "note": ""},
+            "frappe": {"price": "ไม่ทราบ", "note": ""},
+            "matcha": {"price": "ไม่ทราบ", "note": ""},
+            "signature_drink": {"price": "ไม่ทราบ", "note": "น้ำหมากเม่าไนโตร + กาแฟอังขาง"},
+            "food": {"price": "ไม่ทราบ", "note": "เค้กทุเรียน 200-400฿ (half/full pound)"},
+            "other": [
+                {"name": "กาแฟอังขาง (Angkhang)", "price": "ไม่ทราบ", "note": "signature coffee"},
+                {"name": "น้ำหมากเม่าไนโตร", "price": "ไม่ทราบ", "note": "local fruit Nitro — unique!"},
+                {"name": "เค้กทุเรียน", "price": "200-400", "note": "half/full pound, จองล่วงหน้า"},
+                {"name": "แคสตัส/ไม้อวบน้ำ", "price": "ราคาถูก", "note": "ขาย retail"}
+            ]
+        },
+        "strengths": [
+            "เปิดเช้าที่สุดในกลุ่ม (7:30 น.) = ตลาด morning coffee นักเดินทาง",
+            "**น้ำหมากเม่าไนโตร** — local fruit + Nitro tech ที่ไม่มีร้านไหนทำในสกลนคร",
+            "**สวนแคสตัส** = unique attraction ไม่มีคู่แข่ง + photo content engine",
+            "ทำเลริมทางหลวง 22 จับ traffic นักเดินทาง สกลนคร-นครพนม",
+            "กิจกรรมเด็ก = ดึง family segment ที่คู่แข่งส่วนใหญ่ไม่มี",
+            "Wongnai delivery ✅ 0฿",
+            "เปิดทุกวัน = reliable destination"
+        ],
+        "promotions": [],
+        "weaknesses": [
+            "ทำเลนอกเมือง ถ.สกลนคร-นครพนม — เข้าถึงยากจากใจกลางเมือง",
+            "ที่นั่ง <10 ที่ — scaling จำกัด",
+            "Wongnai 1 รีวิว (2019) — outdated credibility",
+            "ไม่พบ TikTok/Instagram official = ขาด visual reach ใน 2026",
+            "ราคาจำเพาะไม่เปิดเผยสาธารณะ"
+        ],
+        "location": "172 ถ.สกลนคร-นครพนม (ทางหลวง 22) บ้านฮางโฮง เมืองสกลนคร (นอกเมือง ใกล้ มก.ฉกส.)",
+        "hours": "จ-ส 7:30-18:00 · อาทิตย์ 9:00-18:00 · Delivery 10:00-17:00",
+        "social_trend": {
+            "primary_platform": "Facebook",
+            "posting_frequency": "moderate (Facebook active)",
+            "content_style": "Coffee & Cactus garden · plant showcase · family activity · local fruit drinks",
+            "engagement_level": "low-medium (FB UGC มี · Wongnai credibility เก่า)"
+        },
+        "delivery": {
+            "primary_app": "LINE MAN",
+            "apps": ["LINE MAN"],
+            "peak_hours": "10:00-17:00 (ตาม delivery window)",
+            "active_promos": [],
+            "notes": "Wongnai delivery ✅ 0฿ starting fee · delivery window 10:00-17:00 · LINE MAN likely via Wongnai · ไม่พบ GrabFood/ShopeeFood/FoodPanda"
+        }
+    },
+    {
         "id": "delivery-apps-overview",
         "category": "delivery",
         "title": "Delivery Apps ร้านกาแฟ สกลนคร — ภาพรวม 2026",
