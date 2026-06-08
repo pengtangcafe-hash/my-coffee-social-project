@@ -1012,6 +1012,68 @@ INTEL_DATA_FALLBACK = [
         }
     },
     {
+        "id": "competitor-ebuai",
+        "category": "competitor",
+        "title": "อีบ๊วย (E BUAI) สกลนคร",
+        "summary": "Home café + Workshop · ซอยตลาดบ้านธาตุ หน้าวัดพระธาตุนารายณ์เจงเวง · ทุกวัน 10:00-18:00 · Facebook + TikTok @ebuai120 · ราคา <100฿ · Wongnai delivery (LINE MAN) · มีแมว · Workshop สอนทำขนม+กาแฟ · E'BUAI V.2 (ขายข้าว) แยกต่างหาก",
+        "updated": "8 Jun 2026",
+        "source_url": "https://www.facebook.com/p/E-BUAI-100083137039984/",
+        "thumbnail_url": "",
+        "tags": ["สกลนคร", "home-cafe", "vintage", "workshop", "cat-cafe", "delivery", "ราคาถูก"],
+        "relevance": "high",
+        "detail": "อีบ๊วย (E BUAI) สกลนคร — Home Café + Workshop\n\nที่ตั้ง: ซอยตลาดบ้านธาตุ ซ.หน้าวัดพระธาตุ ถ.นิตโย ธาตุนาเวง เมืองสกลนคร (หน้าวัดพระธาตุนารายณ์เจงเวง ใกล้ ม.ราชภัฏสกลนคร)\nโทร: 064-019-9210 / 098-983-9494\nLINE: yoki2626\nเวลาเปิด: ทุกวัน 10:00-18:00\nDelivery hours: 11:00-17:30\n\nBranding / Positioning: 'คาเฟ่ลับ แต่ไม่ลับ' · Home café vintage style · ผนังสีเขียว เพดานไม้ · Outdoor ร่มรื่นสงบ · มีแมวประจำร้าน · Workshop สอนทำขนมและกาแฟ\nกลุ่มเป้าหมาย: นักศึกษา ม.ราชภัฏ, สายคาเฟ่ลับ, นักท่องเที่ยวสายธาตุเจงเวง, workshop seekers\n\nสิ่งอำนวยความสะดวก: Wi-Fi ✅ · ที่จอดรถ ✅ · Pet-friendly ✅ · บัตรเครดิต ✅ · ที่นั่ง <10 ที่ (intimate)\n\nSocial Presence:\n• Facebook: @E-BUAI (facebook.com/p/E-BUAI-100083137039984) — active\n• TikTok: @ebuai120 (official) + UGC หลายคลิป (#อีบ๊วย #ebuai)\n• Lemon8: UGC reviews หลายบทความ (นน้ำแพง, เพียรณัฏฐิกา, คุณดามิน, แพรวว)\n• LINE: yoki2626\n• ไม่พบ Instagram official\n• Hashtags: #อีบ๊วย #ebuai #คาเฟ่สกลนคร #คาเฟ่บ้านธาตุ #สกลนคร #ร้านดีบอกต่อ #matcha #reviewsakonnakhon #ซอมเบิ่งหม่อง\n\nMenu highlights:\n• กาแฟ + matcha + เครื่องดื่มทั่วไป\n• เบเกอรี่ homemade\n• อาหาร homemade (มื้อหลักด้วย)\n• Workshop สอนทำขนมและกาแฟ (unique — revenue stream เพิ่ม)\n• ราคา <100฿ ทุกรายการ\n\nBranching:\n• E'BUAI (café หลัก) — เครื่องดื่ม+เบเกอรี่+อาหาร+workshop\n• E'BUAI V.2 (อีบ๊วยขายข้าว🍚) — Wongnai listing แยก เน้นข้าว/อาหาร\n\nReviews:\n• Wongnai: 0 รีวิว / 0 ดาว (ใหม่มาก — listing exists)\n• TikTok UGC: 'คาเฟ่ลับ แต่ไม่ลับ', 'เครื่องดื่มมี อาหารมี เวิร์คช็อปมี', 'บรรยากาศฮิลใจ', 'ระวังแมวสวบ'\n• Lemon8: 'บรรยากาศน่ารัก รสชาติเด็ด ราคาน่ารัก'\n\nDelivery: Wongnai delivery ✅ (0฿ starting fee) · delivery 11:00-17:30 · LINE MAN likely via Wongnai · ไม่พบ GrabFood/ShopeeFood/FoodPanda",
+        "pricing": {
+            "espresso": {"price": "ไม่ทราบ", "note": ""},
+            "americano": {"price": "ไม่ทราบ", "note": ""},
+            "latte": {"price": "ไม่ทราบ", "note": ""},
+            "cappuccino": {"price": "ไม่ทราบ", "note": ""},
+            "cold_brew": {"price": "ไม่ทราบ", "note": ""},
+            "frappe": {"price": "ไม่ทราบ", "note": ""},
+            "matcha": {"price": "ไม่ทราบ", "note": "matcha available"},
+            "signature_drink": {"price": "ไม่ทราบ", "note": "ราคา <100฿ ทุกรายการ"},
+            "food": {"price": "ไม่ทราบ", "note": "อาหาร homemade + เบเกอรี่"},
+            "other": [
+                {"name": "Workshop สอนทำขนม", "price": "ไม่ทราบ", "note": "unique service"},
+                {"name": "Workshop สอนทำกาแฟ", "price": "ไม่ทราบ", "note": "unique service"},
+                {"name": "อาหาร homemade (E'BUAI V.2)", "price": "ไม่ทราบ", "note": "spin-off ขายข้าว"}
+            ]
+        },
+        "strengths": [
+            "ราคาต่ำมาก (<100฿) เทียบเท่า Café Jackies = budget-friendly สุดในตลาด",
+            "Workshop สอนทำขนม+กาแฟ = unique revenue stream และ viral content ที่คู่แข่งไม่มี",
+            "บรรยากาศ 'คาเฟ่ลับ' + มีแมว = strong photo content engine ดึง UGC",
+            "Multi-platform UGC: TikTok + Lemon8 + Facebook review organic",
+            "Wongnai delivery ✅ 0฿ starting fee · ส่งได้ช่วงกลางวัน 11:00-17:30",
+            "ทำเลดี — ใกล้วัดพระธาตุนารายณ์เจงเวง = tourist traffic",
+            "E'BUAI V.2 spin-off = expand revenue โดยไม่ต้องเพิ่ม seat",
+            "Lemon8 presence แรง = กลุ่ม lifestyle content ที่ TikTok+FB ยังครอบไม่ถึง"
+        ],
+        "promotions": [],
+        "weaknesses": [
+            "ที่นั่งน้อยมาก (<10 ที่) — scaling จำกัดมาก",
+            "Wongnai 0 รีวิว = ลูกค้าใหม่ตัดสินใจยาก",
+            "ไม่มี Instagram official = เสีย visual platform หลักของ cafe niche",
+            "ราคาต่ำมากอาจจำกัด margin",
+            "เวลาเปิดสั้น (10:00-18:00) พลาด morning + evening market",
+            "ไม่พบ GrabFood/ShopeeFood = พลาดกลุ่ม delivery นอก Wongnai"
+        ],
+        "location": "ซอยตลาดบ้านธาตุ หน้าวัดพระธาตุนารายณ์เจงเวง เมืองสกลนคร",
+        "hours": "ทุกวัน 10:00-18:00 · Delivery 11:00-17:30",
+        "social_trend": {
+            "primary_platform": "TikTok",
+            "posting_frequency": "active (TikTok @ebuai120 + Lemon8 UGC แรง)",
+            "content_style": "vintage home café · คาเฟ่ลับ · มีแมว · workshop · outdoor ร่มรื่น · ราคาน่ารัก",
+            "engagement_level": "medium (TikTok UGC หลายคลิป · Lemon8 หลายบทความ · FB active)"
+        },
+        "delivery": {
+            "primary_app": "LINE MAN",
+            "apps": ["LINE MAN"],
+            "peak_hours": "11:00-17:30 (ตาม delivery window ของ Wongnai)",
+            "active_promos": [],
+            "notes": "Wongnai delivery ✅ 0฿ starting fee · delivery hours 11:00-17:30 · LINE MAN likely via Wongnai integration · ไม่พบ GrabFood/ShopeeFood/FoodPanda · window delivery แคบ (ไม่รวมเช้า)"
+        }
+    },
+    {
         "id": "delivery-apps-overview",
         "category": "delivery",
         "title": "Delivery Apps ร้านกาแฟ สกลนคร — ภาพรวม 2026",
