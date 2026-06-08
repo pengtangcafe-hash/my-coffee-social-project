@@ -839,6 +839,23 @@
       "summary": "นำเข้าข้อมูล TikTok (365 แถว)",
       "details": [],
       "count": 365
+    },
+    {
+      "id": "20260609-014317",
+      "ts": "2026-06-09T01:43:17",
+      "date_th": "9 มิ.ย. 2569",
+      "time_th": "01:43",
+      "category": "intel",
+      "scope": "ติดตามคู่แข่ง (week)",
+      "action": "track",
+      "summary": "ติดตามคู่แข่ง 7 วันล่าสุด — 27 ร้าน",
+      "details": [
+        "คู่แข่งใหม่ 6 ร้าน: Cafe Jackies, Hokkaido Craft, HOME UP, Hook cafe, E BUAI, The Mountain",
+        "WE HUG CAFE เพิ่ม FoodPanda + Mother Day promo 15%",
+        "MOKA FOX: Instagram @mokafox18 พบใหม่, Wongnai rank #19/481 คงที่",
+        "Elemental Haus: LINE MAN confirmed + TikTok personality content"
+      ],
+      "count": 27
     }
   ]
 }
