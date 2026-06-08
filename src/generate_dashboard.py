@@ -667,13 +667,13 @@ INTEL_DATA_FALLBACK = [
         "id": "competitor-mokafox",
         "category": "competitor",
         "title": "MOKA FOX",
-        "summary": "Homey wooden garden cafe · Wongnai 4.6/5 อันดับ #19/443 ในจังหวัด · เปิดทุกวัน จ-ศ 09:00-16:00 เสาร์-อาทิตย์ 09:00-17:00 · LINE MAN ✅ · Family-friendly ที่สมบูรณ์ที่สุดในกลุ่ม",
-        "updated": "23 May 2026",
+        "summary": "Homey wooden garden cafe · Wongnai 4.6/5 อันดับ #19/481 ในจังหวัด (ยังคงอันดับแม้คู่แข่งเพิ่ม 38 ร้าน) · จ-ศ 09:00-16:00 เสาร์-อาทิตย์ 09:00-17:00 · LINE MAN ✅ · Instagram @mokafox18 ✅ (พบใหม่) · TikTok UGC active มิ.ย. 2026",
+        "updated": "9 Jun 2026",
         "source_url": "https://www.wongnai.com/restaurants/1053109Bs-moka-fox",
         "thumbnail_url": "",
         "tags": ["homey", "family-friendly", "garden", "wooden", "delivery", "Wongnai", "สกลนคร"],
         "relevance": "high",
-        "detail": "MOKA FOX — Homey wooden garden cafe กลางเมืองสกลนคร\n\nที่ตั้ง: 691 ถ.รัฐบำรุง ธาตุนาเวง เมืองสกลนคร (ตรงข้ามร้านเหล้าเล็ก ก่อนถึงปั๊ม PTT แสงโฮม)\nRanking: #19 จาก 443 ร้านกาแฟ/ชา ในจังหวัดสกลนคร (Wongnai)\nFacebook: 3,762 likes · 3,922 visits\n\nConcept: Scandinavian + Thai homey aesthetic — บ้านไม้ 2 ชั้น + เฉลียง + สนามหญ้า\n\nZones:\n• ห้องปรับอากาศ (AC zone)\n• Semi-outdoor เฉลียง/ระเบียง\n• สนามหญ้า camping chairs\n• มุมถ่ายรูปหลายมุม\n• สนามเด็กเล่น\n\nAmenities: Wi-Fi, Parking, Pet-friendly, Credit card, LINE MAN Delivery ✅\nFamily-friendly สมบูรณ์ที่สุดในกลุ่ม = สนามเด็กเล่น + หลายโซน + pet-friendly\n\nMenu highlights:\n• Americano 85฿ / Latte 90฿ / Cappuccino 90฿ / Espresso 80฿\n• Iced Mocha 100฿ (เมนูแนะนำ)\n• Matcha Latte ice 150฿ / Hot Matcha 130฿\n• Signature Wake Up (กาแฟดำ + น้ำผลไม้ + syrup) 150฿\n• Hot Chocolate 90฿ / Milk drinks 70-95฿\n• Bakery & เค้ก\n\nSocial: Facebook 3,762 likes · UGC TikTok/Lemon8/Trip.com active · ไม่มี official IG/TikTok\nDelivery: LINE MAN via Wongnai · จ-ศ 09:00-15:30 / เสาร์-อาทิตย์ 09:00-16:30",
+        "detail": "MOKA FOX — Homey wooden garden cafe กลางเมืองสกลนคร\n\nที่ตั้ง: 691 ถ.รัฐบำรุง ธาตุนาเวง เมืองสกลนคร (ตรงข้ามร้านเหล้าเล็ก ก่อนถึงปั๊ม PTT แสงโฮม)\nRanking: #19 จาก 481 ร้านกาแฟ/ชา ในจังหวัดสกลนคร (Wongnai) — ยังคงอันดับเดิมแม้คู่แข่งเพิ่ม 38 ร้าน!\nFacebook: 3,762 likes · 3,922 visits\n\nConcept: Scandinavian + Thai homey aesthetic — บ้านไม้ 2 ชั้น + เฉลียง + สนามหญ้า\n\nZones:\n• ห้องปรับอากาศ (AC zone)\n• Semi-outdoor เฉลียง/ระเบียง\n• สนามหญ้า camping chairs\n• มุมถ่ายรูปหลายมุม\n• สนามเด็กเล่น\n\nAmenities: Wi-Fi, Parking, Pet-friendly, Credit card, LINE MAN Delivery ✅\nFamily-friendly สมบูรณ์ที่สุดในกลุ่ม = สนามเด็กเล่น + หลายโซน + pet-friendly\n\nMenu highlights:\n• Americano 85฿ / Latte 90฿ / Cappuccino 90฿ / Espresso 80฿\n• Iced Mocha 100฿ (เมนูแนะนำ)\n• Matcha Latte ice 150฿ / Hot Matcha 130฿\n• Signature Wake Up (กาแฟดำ + น้ำผลไม้ + syrup) 150฿\n• Hot Chocolate 90฿ / Milk drinks 70-95฿\n• Bakery & เค้ก\n\nSocial (updated 9 Jun 2026):\n• Facebook: 3,762 likes · 3,922 visits (ไม่เปลี่ยน)\n• **Instagram: @mokafox18 ✅ (พบใหม่! — previously missed, now confirmed)**\n• TikTok: UGC active (พบคลิปใหม่ มิ.ย. 2026 @nonnaina: 'คาเฟ่สกลนครบรรยากาศดี')\n• Lemon8/Trip.com: UGC organic active\n• Possible renovation: Instagram reel โดย @millimade.designstudio เรื่อง 'Moka fox cafe counter' — อาจมีการปรับปรุงร้าน\nDelivery: LINE MAN via Wongnai · จ-ศ 09:00-15:30 / เสาร์-อาทิตย์ 09:00-16:30",
         "pricing": {
             "espresso": {"price": "80฿", "note": "hot"},
             "americano": {"price": "85฿", "note": "hot/ice"},
@@ -692,26 +692,27 @@ INTEL_DATA_FALLBACK = [
             ]
         },
         "strengths": [
-            "Wongnai 4.6/5 — Ranked #19/443 ในจังหวัด = Top 5% social proof สูงสุดในกลุ่ม",
+            "Wongnai 4.6/5 — Ranked #19/481 ในจังหวัด = Top 4% แม้คู่แข่งเพิ่ม 38 ร้าน = โดดเด่นมาก",
             "Family-friendly สมบูรณ์ที่สุดในกลุ่ม (สนามเด็กเล่น, pet-friendly, หลายโซน)",
             "Delivery LINE MAN ✅ ทุกวัน — delivery hours กว้าง",
             "เปิดทุกวัน (เสาร์-อาทิตย์ ถึง 17:00) = เวลาบริการครอบคลุม",
-            "หลายโซน (AC + semi-outdoor + สนามหญ้า) = รองรับลูกค้าหลากกลุ่ม"
+            "หลายโซน (AC + semi-outdoor + สนามหญ้า) = รองรับลูกค้าหลากกลุ่ม",
+            "Instagram @mokafox18 official (พบใหม่) — multi-platform ครบกว่าที่คิด"
         ],
         "promotions": [],
         "weaknesses": [
-            "ไม่มี official Instagram/TikTok = visual marketing พึ่ง UGC ทั้งหมด",
             "ราคา 85-150฿ สูงกว่า จุมพฏ/A Cup of Joy — ไม่ใช่ daily coffee",
-            "Wongnai เพียง 2 reviews = social proof ยังน้อย",
-            "ปิด 16:00 (จ-ศ) = ไม่มี after-work market วันธรรมดา"
+            "Wongnai เพียง 2 reviews = social proof ยังน้อยเทียบกับ ranking สูง",
+            "ปิด 16:00 (จ-ศ) = ไม่มี after-work market วันธรรมดา",
+            "ไม่มี official TikTok account (มีแต่ UGC)"
         ],
         "location": "691 ถ.รัฐบำรุง ธาตุนาเวง เมืองสกลนคร สกลนคร (ตรงข้ามร้านเหล้าเล็ก ก่อนปั๊ม PTT แสงโฮม)",
         "hours": "จ.–ศ. 09:00–16:00 · เสาร์–อาทิตย์ 09:00–17:00",
         "social_trend": {
             "primary_platform": "Facebook",
-            "posting_frequency": "ไม่สม่ำเสมอ",
-            "content_style": "Homey/garden aesthetic · family moments · seasonal themes (Christmas)",
-            "engagement_level": "medium (Facebook 3,762 likes · UGC organic)"
+            "posting_frequency": "ไม่สม่ำเสมอ (FB + IG อาจ active กว่าที่คิด)",
+            "content_style": "Homey/garden aesthetic · family moments · seasonal themes (Christmas) · Instagram @mokafox18 official",
+            "engagement_level": "medium-high (Facebook 3,762 likes · Instagram @mokafox18 official · TikTok UGC active Jun 2026)"
         },
         "delivery": {
             "primary_app": "LINE MAN",
