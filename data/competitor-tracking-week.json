@@ -2,17 +2,23 @@
   "generated_at": "2026-06-09T00:00:00",
   "period": "week",
   "period_label": "7 วันล่าสุด",
-  "baseline_date": "2026-05-28",
-  "report_date": "2026-06-09",
+  "from_date": "2026-05-28",
+  "to_date": "2026-06-09",
+  "snapshot_compared": true,
   "total_competitors": 27,
-  "new_competitors_count": 6,
-  "changed_competitors_count": 4,
-  "alert_high": ["WE HUG CAFE", "Café Jackies"],
-  "alert_medium": ["The Mountain", "MOKA FOX", "Hokkaido Craft Cafe"],
   "market_summary": {
     "most_active": "WE HUG CAFE",
     "new_promotions_count": 1,
     "delivery_changes_count": 2,
+    "alert_high": [
+      "WE HUG CAFE",
+      "Café Jackies"
+    ],
+    "alert_medium": [
+      "The Mountain",
+      "MOKA FOX",
+      "Hokkaido Craft Cafe"
+    ],
     "key_insight": "WE HUG CAFE ยืนยัน 3 delivery platforms (LINE MAN + FoodPanda + Wongnai) + Mother Day promo 15%; 6 คู่แข่งใหม่เข้าตลาดสัปดาห์เดียว"
   },
   "competitors": [
@@ -20,170 +26,288 @@
       "id": "competitor-wehugcafe",
       "name": "WE HUG CAFE",
       "alert_level": "high",
-      "activity": "high",
-      "changes": ["promotion_added", "delivery_confirmed"],
-      "promotions_active": ["Loyalty stamp 10 แก้ว = 1 ฟรี", "วันพุธ ลด 10%", "วันเสาร์ ลด 5%", "ใช้แก้วส่วนตัวลด 5 บาท", "เค้กลด 20%", "โปรวันแม่ลด 15%"],
-      "promotions_new": ["โปรวันแม่ (Mother's Day) ลด 15% — seasonal promo"],
-      "delivery": ["LINE MAN", "Wongnai Delivery", "FoodPanda"],
-      "delivery_change": "ยืนยัน LINE MAN ✅ + FoodPanda ✅ ครบ 3 platforms — delivery hours 08:00-19:00 กว้างสุดในกลุ่ม",
-      "content": {
-        "topics": "Minimalist aesthetic + เมนูแนะนำ + บรรยากาศร้าน",
-        "platforms": "Facebook + Instagram 447 posts",
-        "notes": "TikTok UGC active มิ.ย. 2026 (@arissp_7)"
+      "activity_level": "high",
+      "promotions": {
+        "new_this_period": [
+          "โปรวันแม่ (Mother's Day) ลด 15%"
+        ],
+        "active": [
+          "Loyalty stamp 10 แก้ว = 1 ฟรี",
+          "วันพุธ ลด 10%",
+          "วันเสาร์ ลด 5%",
+          "ใช้แก้วส่วนตัวลด 5 บาท",
+          "เค้กลด 20%"
+        ]
       },
+      "content": {
+        "platforms": [
+          "Facebook",
+          "Instagram (447 posts)"
+        ],
+        "topics": [
+          "Minimalist aesthetic",
+          "เมนูแนะนำ",
+          "บรรยากาศร้าน"
+        ],
+        "notable_content": "TikTok UGC active มิ.ย. 2026 (@arissp_7)"
+      },
+      "delivery": {
+        "changed": true,
+        "note": "ยืนยัน LINE MAN ✅ + FoodPanda ✅ + Wongnai ✅ ครบ 3 platforms — delivery hours 08:00-19:00 กว้างสุดในกลุ่ม"
+      },
+      "pricing_changes": [],
       "summary": "น่าจับตา: 3 delivery platforms + โปรโมชัน 6 รายการ (seasonal + daily discount) = aggressive marketing"
     },
     {
       "id": "competitor-cafejackies",
       "name": "Café Jackies สกลนคร",
       "alert_level": "high",
-      "activity": "high",
-      "changes": ["new_competitor"],
-      "promotions_active": [],
-      "promotions_new": [],
-      "delivery": ["LINE MAN"],
-      "delivery_change": "เพิ่งเข้าระบบ (verified 8 Jun 2026) · Wongnai delivery ✅ ส่งฟรีในรัศมีใกล้",
-      "content": {
-        "topics": "aesthetic vibes · photo spots · Scandi concept",
-        "platforms": "Facebook @jackiescafe + TikTok @cafejackies + Instagram @cafejackies",
-        "notes": "Multi-platform official ครบ 3 platforms + UGC แรง visitors รีวิวเอง"
+      "activity_level": "high",
+      "promotions": {
+        "new_this_period": [],
+        "active": []
       },
+      "content": {
+        "platforms": [
+          "Facebook @jackiescafe",
+          "TikTok @cafejackies",
+          "Instagram @cafejackies"
+        ],
+        "topics": [
+          "aesthetic vibes",
+          "photo spots",
+          "Scandi concept"
+        ],
+        "notable_content": "Multi-platform official ครบ 3 platforms + UGC แรง visitors รีวิวเอง"
+      },
+      "delivery": {
+        "changed": true,
+        "note": "คู่แข่งใหม่! Wongnai delivery ✅ ส่งฟรีในรัศมีใกล้ — delivery hours 09:30-19:30"
+      },
+      "pricing_changes": [
+        "Americano 65฿ / Latte 70฿ / Matcha 75฿ — ต่ำสุดในกลุ่ม <100฿ทุกรายการ"
+      ],
       "summary": "คู่แข่งใหม่! ราคาต่ำสุด <100฿ ใกล้ ม.ราชภัฏ multi-platform social ดีที่สุดในกลุ่ม — น่าจับตา"
     },
     {
       "id": "competitor-themountain",
       "name": "The Mountain สกลนคร",
       "alert_level": "medium",
-      "activity": "medium",
-      "changes": ["new_competitor"],
-      "promotions_active": [],
-      "promotions_new": [],
-      "delivery": ["LINE MAN"],
-      "delivery_change": "เพิ่งเข้าระบบ (verified 9 Jun 2026)",
-      "content": {
-        "topics": "Coffee + Food + Event Venue · Wongnai #16",
-        "platforms": "Facebook active",
-        "notes": "Wongnai listing active — Coffee+Food+EventVenue positioning"
+      "activity_level": "medium",
+      "promotions": {
+        "new_this_period": [],
+        "active": []
       },
+      "content": {
+        "platforms": [
+          "Facebook"
+        ],
+        "topics": [
+          "Coffee + Food + Event Venue",
+          "Wongnai #16/481"
+        ],
+        "notable_content": "Wongnai listing active — Coffee+Food+EventVenue positioning แข็ง"
+      },
+      "delivery": {
+        "changed": true,
+        "note": "คู่แข่งใหม่เข้าระบบ (verified 9 Jun 2026) · LINE MAN via Wongnai"
+      },
+      "pricing_changes": [],
       "summary": "คู่แข่งใหม่ที่มี Wongnai ranking ดีตั้งแต่เพิ่งเข้าระบบ + Event venue differentiator"
     },
     {
       "id": "competitor-mokafox",
       "name": "MOKA FOX",
       "alert_level": "medium",
-      "activity": "medium",
-      "changes": ["instagram_found", "ranking_updated"],
-      "promotions_active": [],
-      "promotions_new": [],
-      "delivery": ["LINE MAN"],
-      "delivery_change": "ไม่เปลี่ยน",
-      "content": {
-        "topics": "Homey/garden aesthetic · family moments",
-        "platforms": "Facebook + Instagram @mokafox18 (พบใหม่!) + TikTok UGC active มิ.ย. 2026",
-        "notes": "อาจมีการ renovation counter (Instagram reel @millimade.designstudio)"
+      "activity_level": "medium",
+      "promotions": {
+        "new_this_period": [],
+        "active": []
       },
+      "content": {
+        "platforms": [
+          "Facebook",
+          "Instagram @mokafox18 (พบใหม่!)",
+          "TikTok UGC"
+        ],
+        "topics": [
+          "Homey/garden aesthetic",
+          "family moments",
+          "seasonal themes"
+        ],
+        "notable_content": "TikTok UGC active มิ.ย. 2026 · อาจมีการ renovation counter (@millimade.designstudio)"
+      },
+      "delivery": {
+        "changed": false,
+        "note": "LINE MAN ✅ ทุกวัน — ไม่เปลี่ยน"
+      },
+      "pricing_changes": [],
       "summary": "พบ Instagram @mokafox18 ใหม่ + Wongnai rank ยังอยู่ #19/481 แม้คู่แข่งเพิ่ม 38 ร้าน = brand แข็งแกร่ง"
     },
     {
       "id": "competitor-hokkaido-craft",
       "name": "Hokkaido Craft Cafe & Studio",
       "alert_level": "medium",
-      "activity": "medium",
-      "changes": ["new_competitor"],
-      "promotions_active": [],
-      "promotions_new": [],
-      "delivery": ["FoodPanda"],
-      "delivery_change": "FoodPanda ✅ เท่านั้น (ไม่ใช่ LINE MAN) — unique delivery channel ในกลุ่ม",
-      "content": {
-        "topics": "Japanese ice cream · TARA TORA signature drink",
-        "platforms": "Facebook + Instagram @hokkaido_craftcafe_studio + TikTok UGC",
-        "notes": "สาขาหลักอาจปิดแล้ว เฉพาะสาขา ปตท.มะขามป้อม active"
+      "activity_level": "medium",
+      "promotions": {
+        "new_this_period": [],
+        "active": []
       },
+      "content": {
+        "platforms": [
+          "Facebook",
+          "Instagram @hokkaido_craftcafe_studio",
+          "TikTok UGC"
+        ],
+        "topics": [
+          "Japanese ice cream",
+          "TARA TORA signature",
+          "craft beverages"
+        ],
+        "notable_content": "สาขาหลักอาจปิดแล้ว เฉพาะสาขา ปตท.มะขามป้อม active"
+      },
+      "delivery": {
+        "changed": true,
+        "note": "คู่แข่งใหม่ FoodPanda ✅ (หนึ่งเดียวในกลุ่มที่ใช้ FoodPanda ไม่ใช่ LINE MAN)"
+      },
+      "pricing_changes": [
+        "TARA TORA 75฿ · Hokkaido milk 50฿ · Black cocoa 80฿"
+      ],
       "summary": "คู่แข่งใหม่ FoodPanda (หนึ่งเดียวในกลุ่ม) + Japanese niche TARA TORA ดัง"
     },
     {
       "id": "competitor-elemental",
       "name": "Elemental Haus",
       "alert_level": "low",
-      "activity": "low",
-      "changes": ["delivery_confirmed", "tiktok_content_found"],
-      "promotions_active": ["Own cup ลด 5 บาท", "ระบบ points redeem (10 points)"],
-      "promotions_new": [],
-      "delivery": ["LINE MAN"],
-      "delivery_change": "LINE MAN ✅ confirmed 9 Jun 2026 (ยืนยันครั้งแรก)",
-      "content": {
-        "topics": "วาดแก้วเอง (viral potential) · in-house roastery story",
-        "platforms": "TikTok @elemental.haus active",
-        "notes": "TikTok content personality-driven: วาดแก้วเองตอนแก้วสกรีนหมด"
+      "activity_level": "low",
+      "promotions": {
+        "new_this_period": [],
+        "active": [
+          "Own cup ลด 5 บาท",
+          "ระบบ points redeem (10 points)"
+        ]
       },
-      "summary": "LINE MAN ยืนยัน + TikTok personality content มี viral potential แต่ social reach ยังเล็ก"
+      "content": {
+        "platforms": [
+          "TikTok @elemental.haus"
+        ],
+        "topics": [
+          "วาดแก้วเอง (viral potential)",
+          "in-house roastery",
+          "artisanal craft"
+        ],
+        "notable_content": "TikTok: วาดแก้วเองตอนแก้วสกรีนหมด — personality-driven viral potential"
+      },
+      "delivery": {
+        "changed": true,
+        "note": "LINE MAN ✅ confirmed อย่างเป็นทางการครั้งแรก (9 Jun 2026) via Wongnai"
+      },
+      "pricing_changes": [],
+      "summary": "LINE MAN ยืนยัน + TikTok personality content มี viral potential แต่ social reach ยังเล็ก (FB 101 likes)"
     },
     {
       "id": "competitor-allofkk",
       "name": "All of KK",
       "alert_level": "low",
-      "activity": "low",
-      "changes": ["re_verified"],
-      "promotions_active": [],
-      "promotions_new": [],
-      "delivery": [],
-      "delivery_change": "ไม่เปลี่ยน — ไม่มี delivery",
-      "content": {
-        "topics": "ไม่ทราบ",
-        "platforms": "Facebook เท่านั้น (~700 likes)",
-        "notes": "re-verified 9 Jun 2026 ยังได้ข้อมูลจำกัด"
+      "activity_level": "low",
+      "promotions": {
+        "new_this_period": [],
+        "active": []
       },
+      "content": {
+        "platforms": [
+          "Facebook (~700 likes)"
+        ],
+        "topics": [
+          "ไม่ทราบ — ข้อมูลจำกัด"
+        ],
+        "notable_content": "re-verified 9 Jun 2026 ยังได้ข้อมูลจำกัด ต้องการ field visit"
+      },
+      "delivery": {
+        "changed": false,
+        "note": "ไม่มี delivery apps เลย — dine-in only"
+      },
+      "pricing_changes": [],
       "summary": "สถานะเดิม — ยังไม่มีข้อมูลเพิ่ม ต้องการ field visit"
     },
     {
       "id": "competitor-homeup",
       "name": "HOME UP Cafe",
       "alert_level": "low",
-      "activity": "low",
-      "changes": ["new_competitor"],
-      "promotions_active": [],
-      "promotions_new": [],
-      "delivery": ["LINE MAN"],
-      "delivery_change": "เพิ่งเข้าระบบ",
-      "content": {
-        "topics": "Nature café + Activity · ใกล้ มรภ.สกลนคร",
-        "platforms": "Facebook @homeupcafe",
-        "notes": "ยังต้องการข้อมูลเพิ่มเติม"
+      "activity_level": "low",
+      "promotions": {
+        "new_this_period": [],
+        "active": []
       },
-      "summary": "คู่แข่งใหม่ Nature café ใกล้ มรภ.สกลนคร"
+      "content": {
+        "platforms": [
+          "Facebook @homeupcafe"
+        ],
+        "topics": [
+          "Nature café",
+          "Activity",
+          "ใกล้ มรภ.สกลนคร"
+        ],
+        "notable_content": "คู่แข่งใหม่ — ยังต้องการข้อมูลเพิ่มเติม"
+      },
+      "delivery": {
+        "changed": true,
+        "note": "คู่แข่งใหม่เข้าระบบ — LINE MAN (เพิ่งเข้าระบบ 9 Jun 2026)"
+      },
+      "pricing_changes": [],
+      "summary": "คู่แข่งใหม่ Nature café ใกล้ มรภ.สกลนคร — ทำเลซ้อนทับ Elemental Haus และ Café Jackies"
     },
     {
       "id": "competitor-hookcafe",
       "name": "ฮูกคาเฟ่ (Hook cafe)",
       "alert_level": "low",
-      "activity": "low",
-      "changes": ["new_competitor"],
-      "promotions_active": [],
-      "promotions_new": [],
-      "delivery": ["LINE MAN"],
-      "delivery_change": "เพิ่งเข้าระบบ",
-      "content": {
-        "topics": "Coffee & Cactus Garden · หมากเม่า Nitro",
-        "platforms": "Facebook active",
-        "notes": "จุดเด่น: สวนกระบองเพชร + หมากเม่า nitro coffee unique"
+      "activity_level": "low",
+      "promotions": {
+        "new_this_period": [],
+        "active": []
       },
+      "content": {
+        "platforms": [
+          "Facebook"
+        ],
+        "topics": [
+          "Coffee & Cactus Garden",
+          "หมากเม่า Nitro coffee"
+        ],
+        "notable_content": "จุดเด่น: สวนกระบองเพชร + หมากเม่า nitro — unique ไม่มีร้านอื่นทำ"
+      },
+      "delivery": {
+        "changed": true,
+        "note": "คู่แข่งใหม่เข้าระบบ — LINE MAN (เพิ่งเข้าระบบ 9 Jun 2026)"
+      },
+      "pricing_changes": [],
       "summary": "คู่แข่งใหม่ Cactus Garden concept + หมากเม่า nitro unique differentiator"
     },
     {
       "id": "competitor-ebuai",
       "name": "อีบ๊วย (E BUAI)",
       "alert_level": "low",
-      "activity": "low",
-      "changes": ["new_competitor"],
-      "promotions_active": [],
-      "promotions_new": [],
-      "delivery": ["LINE MAN"],
-      "delivery_change": "เพิ่งเข้าระบบ",
-      "content": {
-        "topics": "Home café + Workshop · ใกล้วัดพระธาตุ",
-        "platforms": "Facebook active",
-        "notes": "ทำเลดี ใกล้แหล่งท่องเที่ยว วัดพระธาตุนารายณ์เจงเวง"
+      "activity_level": "low",
+      "promotions": {
+        "new_this_period": [],
+        "active": []
       },
+      "content": {
+        "platforms": [
+          "Facebook"
+        ],
+        "topics": [
+          "Home café",
+          "Workshop",
+          "ใกล้วัดพระธาตุ"
+        ],
+        "notable_content": "ทำเลดีใกล้วัดพระธาตุนารายณ์เจงเวง (tourist destination)"
+      },
+      "delivery": {
+        "changed": true,
+        "note": "คู่แข่งใหม่เข้าระบบ — LINE MAN (เพิ่งเข้าระบบ 8 Jun 2026)"
+      },
+      "pricing_changes": [],
       "summary": "คู่แข่งใหม่ Home café Workshop ใกล้วัดพระธาตุ"
     }
   ]
