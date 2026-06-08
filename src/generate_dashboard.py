@@ -950,6 +950,68 @@ INTEL_DATA_FALLBACK = [
         }
     },
     {
+        "id": "competitor-hokkaido-craft",
+        "category": "competitor",
+        "title": "Hokkaido Craft Cafe' & Studio สาขา ปตท.มะขามป้อม สกลนคร",
+        "summary": "Japanese ice cream & specialty beverages · สาขา ปตท.มะขามป้อม สกลนคร · ทุกวัน 10:00-19:30 · Facebook active · Instagram @hokkaido_craftcafe_studio · FoodPanda ✅ · Signature: TARA TORA + Hokkaido milk · Wongnai 3.8⭐ · ราคา 50-130฿",
+        "updated": "8 Jun 2026",
+        "source_url": "https://www.facebook.com/hokkaido.craftcafeandstudio.ptt.makhampom/",
+        "thumbnail_url": "",
+        "tags": ["สกลนคร", "Japanese", "ice-cream", "specialty-drinks", "FoodPanda", "delivery", "ปตท"],
+        "relevance": "high",
+        "detail": "Hokkaido Craft Cafe' & Studio สาขา ปตท.มะขามป้อม สกลนคร — Japanese ice cream & craft beverages\n\nที่ตั้ง: ปตท.มะขามป้อม เมืองสกลนคร (สาขาที่ตั้งในปั๊มน้ำมัน PTT)\nโทร: 064-882-7455 / 091-865-5044\nเวลาเปิด: ทุกวัน 10:00-19:30\n\nสาขาหลัก (ถ.สุโขทัย ตรงข้ามศาลากลาง) — มีรายงานว่า permanently closed (restaurantguru/Google)\nสาขา ปตท.มะขามป้อม — active, Facebook page ยังมีการอัพเดท\n\nBranding / Positioning: Japanese-style ice cream café · ไอศกรีมญี่ปุ่น low-fat homemade · craft beverages · Japanese wood décor บรรยากาศชิล\nกลุ่มเป้าหมาย: สายหวาน, สายญี่ปุ่น, ครอบครัว, นักท่องเที่ยว\n\nสิ่งอำนวยความสะดวก: Wi-Fi ✅ · ที่จอดรถ ✅ · รับบัตรเครดิต ✅ · Pet-friendly ✅ · Takeaway ✅\n\nSocial Presence:\n• Facebook: @hokkaido.craftcafeandstudio.ptt.makhampom (PTT branch) + main page (@hokkaido.craftcafeandstudio) — Main FB: 291 reviews, 3.4/5\n• Instagram: @hokkaido_craftcafe_studio — active\n• TikTok: UGC หลายคลิป (#hokkaido #คาเฟ่สกลนคร)\n• YouTube: Hokkaido Craft cafe & Studio channel\n\nMenu highlights:\n• TARA TORA (Taro Tora) 75฿ — signature drink, ดังมาก\n• Hokkaido milk hot 50฿\n• Black cocoa 80฿\n• Yogurt ice cream with cantaloupe jelly 130฿+\n• ไอศกรีมโยเกิร์ต (vanilla/yogurt) — low-fat homemade\n• Taiwan bubble tea\n• Cheese bread / Cheese chicken\n• ช็อคโกแลต 5 แบบ\n\nReviews:\n• Wongnai: 3.8/5 · 13 ratings · 10 reviews (สาขาใจกลางเมือง)\n• Google (main): 4.4/5 · 83 reviews\n• Facebook: 3.4/5 · 291 reviews\n• Notable: 'TARA TORA อร่อยสมค่ำล่ำลือ' · 'ตกแต่งสวยมาก' · 'กาแฟช็อคโก้เข้มข้นกลมกล่อม'\n• Warning: สาขาถ.สุโขทัยอาจปิดแล้ว — ยืนยันเฉพาะสาขา ปตท.มะขามป้อม\n\nDelivery: FoodPanda ✅ (foodpanda.co.th/restaurant/j5ic) · ไม่พบ LINE MAN/GrabFood โดยตรง",
+        "pricing": {
+            "espresso": {"price": "ไม่ทราบ", "note": ""},
+            "americano": {"price": "ไม่ทราบ", "note": ""},
+            "latte": {"price": "ไม่ทราบ", "note": ""},
+            "cappuccino": {"price": "ไม่ทราบ", "note": ""},
+            "cold_brew": {"price": "ไม่ทราบ", "note": ""},
+            "frappe": {"price": "ไม่ทราบ", "note": ""},
+            "matcha": {"price": "ไม่ทราบ", "note": "Matcha drinks available"},
+            "signature_drink": {"price": "75", "note": "TARA TORA (Taro Tora) — signature ดัง"},
+            "food": {"price": "ไม่ทราบ", "note": "Cheese bread, Cheese chicken"},
+            "other": [
+                {"name": "Hokkaido milk (hot)", "price": "50", "note": ""},
+                {"name": "Black cocoa", "price": "80", "note": ""},
+                {"name": "Yogurt ice cream + cantaloupe jelly", "price": "130", "note": "low-fat homemade"},
+                {"name": "Taiwan bubble tea", "price": "ไม่ทราบ", "note": ""},
+                {"name": "ช็อคโกแลต (5 varieties)", "price": "ไม่ทราบ", "note": "เข้มข้นกลมกล่อม"}
+            ]
+        },
+        "strengths": [
+            "Unique positioning — Japanese ice cream + craft beverages แตกต่างจาก local cafés ทั้งหมด",
+            "Signature TARA TORA viral — 'อร่อยสมค่ำล่ำลือ' ลูกค้าแนะนำต่อ",
+            "FoodPanda ✅ — delivery platform ที่คู่แข่ง local ส่วนใหญ่ไม่มี",
+            "ที่ตั้งในปั๊มน้ำมัน PTT = traffic สูงจากนักเดินทาง",
+            "Multi-platform social: Facebook + Instagram + TikTok UGC",
+            "Franchise brand recognition ระดับประเทศ (มีสาขาหลายจังหวัด)",
+            "Google 4.4/5 จาก 83 รีวิว = social proof แข็งแกร่ง"
+        ],
+        "promotions": [],
+        "weaknesses": [
+            "สาขาหลัก (ถ.สุโขทัย) อาจปิดถาวรแล้ว — brand awareness ในพื้นที่อาจลดลง",
+            "ราคาสูงกว่าคู่แข่ง (101-250฿/คน) — ไม่ใช่ทางเลือกสำหรับประหยัด",
+            "เน้น dessert/ice cream ไม่ใช่ specialty coffee — ฐานลูกค้าต่างกับ coffee enthusiasts",
+            "เวลาเปิดสั้น (10:00-19:30) ไม่ capture morning coffee market",
+            "ไม่พบ LINE MAN = พลาด majority ของ delivery traffic ในจังหวัด"
+        ],
+        "location": "ปตท.มะขามป้อม เมืองสกลนคร",
+        "hours": "ทุกวัน 10:00-19:30",
+        "social_trend": {
+            "primary_platform": "Facebook",
+            "posting_frequency": "moderate (Facebook + IG active)",
+            "content_style": "Japanese ice cream aesthetic · craft beverages · dessert showcase · บรรยากาศญี่ปุ่น",
+            "engagement_level": "medium (FB 291 reviews · Google 4.4/5 · TikTok UGC)"
+        },
+        "delivery": {
+            "primary_app": "FoodPanda",
+            "apps": ["FoodPanda"],
+            "peak_hours": "ยังไม่มีข้อมูล",
+            "active_promos": [],
+            "notes": "FoodPanda ✅ ยืนยัน (foodpanda.co.th/restaurant/j5ic/hokkaido-craft-cafe-and-studio) · ไม่พบ LINE MAN/GrabFood · ในปั๊ม PTT ทำให้ FoodPanda เหมาะกว่า Wongnai/LINE MAN สำหรับ takeaway traffic"
+        }
+    },
+    {
         "id": "delivery-apps-overview",
         "category": "delivery",
         "title": "Delivery Apps ร้านกาแฟ สกลนคร — ภาพรวม 2026",
