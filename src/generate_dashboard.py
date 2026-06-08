@@ -1360,6 +1360,18 @@ def load_intel_json() -> list:
     return INTEL_DATA_FALLBACK
 
 
+def load_logos() -> dict:
+    """สแกน dashboard/assets/logos/ → {competitor-id: 'assets/logos/<file>'}"""
+    logos = {}
+    logo_dir = PROJECT_ROOT / "dashboard" / "assets" / "logos"
+    exts = {".png", ".jpg", ".jpeg", ".webp", ".avif", ".svg", ".gif"}
+    if logo_dir.exists():
+        for f in sorted(logo_dir.iterdir()):
+            if f.is_file() and f.suffix.lower() in exts:
+                logos[f.stem] = f"assets/logos/{f.name}"
+    return logos
+
+
 def load_tracker_json() -> dict:
     """Load competitor tracking data from data/competitor-tracking-latest.json."""
     tracking_file = PROJECT_ROOT / "data" / "competitor-tracking-latest.json"
@@ -2519,6 +2531,37 @@ const INTEL = {INTEL_JSON};
 const TRACKER = {TRACKER_JSON};
 const UPDATE_LOG = {UPDATE_LOG_JSON};
 const UPDATE_SUMMARY = {UPDATE_SUMMARY_JSON};
+const LOGOS = {LOGOS_JSON};
+
+// ── Avatar โลโก้ร้าน (ขนาดเท่ากันทุกร้าน) — มีโลโก้ใช้โลโก้ ไม่มีใช้อักษรนำ ──
+function avatarHTML(id, name, color, sizePx) {{
+  var s = sizePx || 40;
+  var nm = String(name || '');
+  var initial = (nm.match(/[A-Za-z฀-๿0-9]/) || ['?'])[0];
+  var box = 'width:' + s + 'px;height:' + s + 'px;flex-shrink:0;border-radius:50%;';
+  var base = '<div style="position:relative;' + box + 'display:flex;align-items:center;justify-content:center;'
+    + 'font-weight:800;color:#fff;font-size:' + Math.round(s * 0.4) + 'px;background:' + (color || '#7a4a20')
+    + ';overflow:hidden;border:1px solid var(--card-border)">' + initial;
+  var logo = (id && LOGOS && LOGOS[id])
+    ? '<img src="' + LOGOS[id] + '" alt="โลโก้ ' + escapeHtml(nm) + '" loading="lazy" '
+      + 'onerror="this.style.display=\\'none\\'" '
+      + 'style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#fff">'
+    : '';
+  return base + logo + '</div>';
+}}
+// resolve โลโก้จากชื่อร้าน (ใช้ในติดตามคู่แข่ง ที่อ้างชื่อ ไม่ใช่ id)
+function logoIdForName(name) {{
+  if (!name) return null;
+  var norm = function(s) {{ return String(s).toLowerCase().replace(/\\s+/g, '').replace(/[^a-z0-9฀-๿]/g, ''); }};
+  var n = norm(name);
+  if (!n) return null;
+  var hit = (INTEL || []).find(function(x) {{
+    if (x.category !== 'competitor' || !x.title) return false;
+    var t = norm(x.title);
+    return t.indexOf(n) >= 0 || n.indexOf(t.slice(0, 8)) >= 0;
+  }});
+  return hit ? hit.id : null;
+}}
 
 // ── Chart instances cache ──
 const chartInstances = {{}};
@@ -3027,7 +3070,6 @@ ${{items.map((item, idx) => {{
   const relCls = RELEVANCE_CLS[item.relevance] || RELEVANCE_CLS.low;
   const st = item.social_trend || {{}};
   const color = palette[idx % palette.length];
-  const initial = (item.title.match(/[฀-๿]/)||[item.title[0]||'?'])[0];
   const socialParts = [
     st.primary_platform || null,
     st.posting_frequency ? 'ความถี่: ' + st.posting_frequency : null,
@@ -3042,7 +3084,7 @@ ${{items.map((item, idx) => {{
   return `<div class="rounded-xl shadow-sm border flex flex-col" style="background:var(--card);border-color:var(--card-border)">
     <div class="p-5 border-b" style="border-color:var(--card-border)">
       <div class="flex items-start gap-3 mb-3">
-        <div class="w-10 h-10 rounded-full flex-shrink-0 flex items-center justify-center font-bold text-base text-white" style="background:${{color}}">${{initial}}</div>
+        ${{avatarHTML(item.id, item.title, color, 44)}}
         <div class="min-w-0 flex-1">
           <div class="font-bold text-sm leading-snug mb-1.5" style="color:var(--text)">${{item.title}}</div>
           <div class="flex flex-wrap gap-1">
@@ -3398,7 +3440,6 @@ function renderDeepOverview() {{
   if (!el) return;
   var cards = comps.map(function(c, i) {{
     var col = palette[i % palette.length];
-    var init = (c.title.match(/[฀-๿]/) || [c.title[0]])[0];
     var wkCount = (c.weaknesses || []).length;
     var badge = wkCount >= 3
       ? '<span style="background:rgba(239,68,68,0.12);color:#dc2626" class="text-xs px-2 py-0.5 rounded-full font-bold">🔴 สูง</span>'
@@ -3416,7 +3457,7 @@ function renderDeepOverview() {{
     var cid = c.id;
     return '<div class="rounded-xl border shadow-sm p-5 flex flex-col gap-3" style="background:var(--card);border-color:var(--card-border)">'
       + '<div class="flex items-start gap-3">'
-        + '<div class="w-9 h-9 rounded-full flex-shrink-0 flex items-center justify-center text-white font-bold text-sm" style="background:' + col + '">' + init + '</div>'
+        + avatarHTML(c.id, c.title, col, 40)
         + '<div class="flex-1 min-w-0">'
           + '<div class="font-bold text-sm leading-tight mb-0.5" style="color:var(--text)">' + c.title + '</div>'
           + '<div class="text-xs" style="color:var(--text-muted)">' + plat + ' · ' + freq + '</div>'
@@ -3644,7 +3685,8 @@ function renderTrackerContent(period) {{
       <div class="rounded-2xl p-5 mb-4" style="background:var(--card);border:2px solid ${{alertColor[al] || 'var(--card-border)'}}20">
         <!-- Header -->
         <div class="flex items-center justify-between mb-4">
-          <div class="flex items-center gap-2">
+          <div class="flex items-center gap-2.5">
+            ${{avatarHTML(logoIdForName(comp.name), comp.name, alertColor[al] || '#7a4a20', 38)}}
             <div class="font-bold text-base" style="color:var(--text)">${{comp.name}}</div>
             <span class="text-xs px-2 py-0.5 rounded-full font-semibold"
                   style="background:${{alertColor[al] || '#64748b'}}20;color:${{alertColor[al] || '#64748b'}}">${{alertLabel[al] || al}}</span>
@@ -3822,6 +3864,7 @@ def build_html(all_history: dict[str, dict], generated_at: str) -> str:
     log_entries = sorted(log.get("entries", []), key=lambda e: e.get("ts", ""), reverse=True)
     update_log_json = json.dumps(log_entries, ensure_ascii=False)
     update_summary_json = json.dumps(update_log.summarize(log), ensure_ascii=False)
+    logos_json = json.dumps(load_logos(), ensure_ascii=False)
 
     sidebar_nav = build_sidebar_nav(all_history)
 
@@ -3838,6 +3881,7 @@ def build_html(all_history: dict[str, dict], generated_at: str) -> str:
         TRACKER_JSON=tracker_json,
         UPDATE_LOG_JSON=update_log_json,
         UPDATE_SUMMARY_JSON=update_summary_json,
+        LOGOS_JSON=logos_json,
         GENERATED_AT=generated_at,
         SIDEBAR_NAV_ITEMS=sidebar_nav,
         PLATFORM_VIEWS=platform_views,
