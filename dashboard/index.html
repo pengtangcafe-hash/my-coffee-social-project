@@ -198,6 +198,7 @@
       --ov-espresso-2: #4a2c17;
       --ov-caramel:    #e0a256;
       --ov-crema:      #f6ecda;
+      --ov-accent-ink: #a55f17;
     }
     .ov-h1 { font-size: clamp(1.7rem, 1.2rem + 1.6vw, 2.4rem); font-weight: 900;
       letter-spacing: -0.02em; color: var(--text); line-height: 1.05; }
@@ -322,6 +323,23 @@
       }
       .ov-hero-chip { min-height: 38px; }
     }
+
+    /* ── Premium card surface ทั่วทั้งแอป (ให้ทุกหน้าเป็นชุดเดียวกับ Overview) ── */
+    .bg-white.rounded-2xl { border-radius: 20px; }
+    .bg-white.shadow-sm { box-shadow: 0 12px 30px -22px rgba(60,40,20,.42); }
+    [data-theme="dark"]   { --ov-accent-ink: #e0a256; }
+    [data-theme="fancy"]  { --ov-accent-ink: #f0b878; }
+    [data-theme="coffee"] { --ov-accent-ink: #e8b06a; }
+
+    /* ── KPI tiles (Pricing) — โทนเดียวกัน ไม่ใช่สีรุ้ง ── */
+    .ov-kpi { padding: 18px 20px; }
+    .ov-kpi-top { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+    .ov-kpi-icon { font-size: 1.05rem; line-height: 1; }
+    .ov-kpi-label { font-size: .74rem; color: var(--text-muted); font-weight: 600; }
+    .ov-kpi-val { font-size: 2.1rem; font-weight: 900; line-height: 1; color: var(--text);
+      font-variant-numeric: tabular-nums; letter-spacing: -.02em; }
+    .ov-kpi-val.accent { color: var(--ov-accent-ink); }
+    .ov-kpi-unit { font-size: .72rem; color: var(--text-muted); margin-top: 6px; }
 
     /* ── History / update-log timeline ── */
     .log-summary-grid {
@@ -578,7 +596,10 @@
 
     <!-- ── Pricing View ── -->
     <div id="view-pricing" class="view">
-      <h1 class="text-3xl font-black text-slate-800 mb-6">ราคาเมนูกาแฟ — เปรียบเทียบคู่แข่ง</h1>
+      <div class="mb-6">
+        <h1 class="ov-h1">ราคาเมนูกาแฟคู่แข่ง</h1>
+        <p class="ov-sub-h">เทียบราคาแต่ละประเภทเมนูของร้านกาแฟใน จ.สกลนคร เพื่อวางราคาให้ได้เปรียบ</p>
+      </div>
 
       <!-- KPI cards (4) -->
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6" id="pricing-kpi-cards"></div>
@@ -630,8 +651,10 @@
 
     <!-- ── Competitor Deep View ── -->
     <div id="view-competitor-deep" class="view">
-      <h1 class="text-3xl font-black text-slate-800 mb-1">วิเคราะห์เชิงลึกคู่แข่ง</h1>
-      <p class="text-sm text-slate-500 mb-6">5 มิติ: Social Presence · Content Strategy · Pricing · Services/Positioning · Reviews</p>
+      <div class="mb-6">
+        <h1 class="ov-h1">วิเคราะห์เชิงลึกคู่แข่ง</h1>
+        <p class="ov-sub-h">6 มิติ: Social Presence · Content Strategy · Pricing · Services/Positioning · Reviews · Delivery</p>
+      </div>
 
       <div class="flex flex-wrap gap-2 mb-6">
         <button class="intel-tab active" id="deep-tab-overview"  onclick="setDeepTab('overview')">📊 ภาพรวมการเปลี่ยนแปลง</button>
@@ -1409,28 +1432,19 @@ function renderPricingView() {
 
     const withPromo = competitors.filter(c => c.promotions && c.promotions.length > 0).length;
 
-    kpiEl.innerHTML = `
-      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
-        <div class="text-xs uppercase tracking-widest text-slate-400 mb-3">จำนวนร้านคู่แข่ง</div>
-        <div class="kpi-value text-4xl font-black text-slate-800">${competitors.length}</div>
-        <div class="text-xs text-slate-400 mt-1">ร้านที่พบ</div>
-      </div>
-      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
-        <div class="text-xs uppercase tracking-widest text-slate-400 mb-3">ราคาเฉลี่ยลาเต้</div>
-        <div class="kpi-value text-4xl font-black text-emerald-500">${avgLatte ? avgLatte.toLocaleString('th-TH') : '—'}</div>
-        <div class="text-xs text-slate-400 mt-1">บาท (เฉลี่ยตลาด)</div>
-      </div>
-      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
-        <div class="text-xs uppercase tracking-widest text-slate-400 mb-3">ราคาเฉลี่ย Cold Brew</div>
-        <div class="kpi-value text-4xl font-black text-blue-500">${avgColdBrew ? avgColdBrew.toLocaleString('th-TH') : '—'}</div>
-        <div class="text-xs text-slate-400 mt-1">บาท (เฉลี่ยตลาด)</div>
-      </div>
-      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
-        <div class="text-xs uppercase tracking-widest text-slate-400 mb-3">ร้านที่มีโปร</div>
-        <div class="kpi-value text-4xl font-black text-purple-500">${withPromo}</div>
-        <div class="text-xs text-slate-400 mt-1">จาก ${competitors.length} ร้าน</div>
-      </div>
-    `;
+    const kpiItems = [
+      { icon:'🏪', label:'ร้านคู่แข่งที่ติดตาม', value: String(competitors.length), unit:'ร้าน', accent:false },
+      { icon:'☕', label:'ราคาเฉลี่ย ลาเต้',     value: avgLatte ? avgLatte.toLocaleString('th-TH') : '—', unit:'บาท · เฉลี่ยตลาด', accent:true },
+      { icon:'🧊', label:'ราคาเฉลี่ย Cold Brew', value: avgColdBrew ? avgColdBrew.toLocaleString('th-TH') : '—', unit:'บาท · เฉลี่ยตลาด', accent:false },
+      { icon:'🎯', label:'ร้านที่มีโปรโมชัน',     value: String(withPromo), unit:'จาก ' + competitors.length + ' ร้าน', accent:false },
+    ];
+    kpiEl.innerHTML = kpiItems.map(function(k) {
+      return '<div class="ov-tile ov-kpi">'
+        + '<div class="ov-kpi-top"><span class="ov-kpi-icon">' + k.icon + '</span><span class="ov-kpi-label">' + k.label + '</span></div>'
+        + '<div class="ov-kpi-val' + (k.accent ? ' accent' : '') + '">' + k.value + '</div>'
+        + '<div class="ov-kpi-unit">' + k.unit + '</div>'
+      + '</div>';
+    }).join('');
   }
 
   // Pricing table
