@@ -890,6 +890,66 @@ INTEL_DATA_FALLBACK = [
         }
     },
     {
+        "id": "competitor-cafejackies",
+        "category": "competitor",
+        "title": "Café Jackies สกลนคร",
+        "summary": "คาเฟ่เปิดใหม่ปี 2025 · สี่แยกโฮมพลัส ทางไปราชภัฏ · จ-ศ 08:30-17:30 / เสาร์-อาทิตย์ 10:30-19:30 · Facebook @jackiescafe · TikTok+IG @cafejackies · ราคาต่ำกว่า 100฿ · Delivery via Wongnai (LINE MAN) · มุมถ่ายรูปเยอะ สไตล์ Scandi",
+        "updated": "8 Jun 2026",
+        "source_url": "https://www.facebook.com/jackiescafe/",
+        "thumbnail_url": "",
+        "tags": ["สกลนคร", "local", "new-opening", "aesthetic", "photo-spot", "Instagram", "TikTok", "delivery"],
+        "relevance": "high",
+        "detail": "Café Jackies สกลนคร — คาเฟ่เปิดใหม่ปี 2025 (เดิมเป็นร้านเน็ต)\n\nที่ตั้ง: 333/11 ธาตุนาเวง เมืองสกลนคร (สี่แยกโฮมพลัส ทางไปราชภัฏสกลนคร)\nโทร: 094-656-8787\nเวลาเปิด:\n• จ-ศ: 08:30-17:30\n• เสาร์-อาทิตย์: 10:30-19:30\nDelivery hours: 09:30-19:30 (vary by day)\n\nBranding / Positioning: มุมถ่ายรูปเยอะมาก · บรรยากาศ Scandi ไม้+กระจก · ฟีลร่มรื่น · โซนใน+โซน Open Air · ราคาเข้าถึงได้ (<100 บาท)\nกลุ่มเป้าหมาย: นักศึกษา ม.ราชภัฏสกลนคร, คนทำงาน, สายถ่ายรูป, ท่องเที่ยว\n\nสิ่งอำนวยความสะดวก: Wi-Fi ✅ · ที่จอดรถ ✅ · Pet-friendly ✅ · บัตรเครดิต ✅ · 41-80 ที่นั่ง\n\nSocial Presence:\n• Facebook: @jackiescafe — active (UGC แรง, โพสต์รีวิวหลายบทความ)\n• TikTok: @cafejackies — active content (Reels บรรยากาศ + vibes)\n• Instagram: @cafejackies — active Reels\n• UGC review: TikTok หลายคลิป (supkadoukmoo, callmepxxch) · Facebook reviews/shares (43 reactions, 15 shares ต่อโพสต์)\n• Hashtags ที่พบ: #คาเฟ่สกลนคร #สกลนคร #ที่เที่ยวสกลนคร #เลาะไปโลดสกลนคร\n\nMenu highlights:\n• Matcha Latte (75฿) · Espresso Cold (70฿) · Americano Cold (65฿)\n• Café Latte (70฿) · Cappuccino Cold (70฿)\n• Orange Cake (เค้กส้ม — พบในรีวิว)\n• หมวด: กาแฟ, มัทฉะ, ชานมญี่ปุ่น, กาแฟดริป, โซดา, สมูทตี้, ของหวาน\n\nReviews:\n• Wongnai: ลงทะเบียนแล้ว แต่ 0 รีวิว (ใหม่)\n• Facebook UGC: 'mood ดีมาก กาแฟอร่อย บรรยากาศน่านั่งทำงาน'\n• TikTok UGC: 'Vibes ดีมากกกก แนะนำให้มา'\n\nDelivery: Wongnai ✅ delivery (ส่งฟรี 0฿ ในรัศมีใกล้) → LINE MAN likely · ไม่พบ GrabFood/ShopeeFood",
+        "pricing": {
+            "espresso": {"price": "70", "note": "cold"},
+            "americano": {"price": "65", "note": "cold"},
+            "latte": {"price": "70", "note": "hot/iced"},
+            "cappuccino": {"price": "70", "note": "cold"},
+            "cold_brew": {"price": "ไม่ทราบ", "note": ""},
+            "frappe": {"price": "ไม่ทราบ", "note": ""},
+            "matcha": {"price": "75", "note": "Matcha Latte"},
+            "signature_drink": {"price": "ไม่ทราบ", "note": "ชานมญี่ปุ่น, สมูทตี้"},
+            "food": {"price": "ไม่ทราบ", "note": "เค้กส้ม + ขนม"},
+            "other": [
+                {"name": "Orange Cake (เค้กส้ม)", "price": "ไม่ทราบ", "note": "พบในรีวิว"},
+                {"name": "ชานมญี่ปุ่น", "price": "ไม่ทราบ", "note": ""},
+                {"name": "โซดา / สมูทตี้", "price": "ไม่ทราบ", "note": ""}
+            ]
+        },
+        "strengths": [
+            "ทำเลดี — สี่แยกโฮมพลัส ทางไปราชภัฏ ใกล้กลุ่มนักศึกษา",
+            "ราคาเข้าถึงได้สูงมาก (<100฿) เทียบกับคู่แข่ง",
+            "Multi-platform social: Facebook + TikTok + Instagram ทำงานพร้อมกัน",
+            "UGC แรง — visitors รีวิว/แชร์เอง ทั้ง TikTok และ Facebook",
+            "มุมถ่ายรูปเยอะ = content engine ฟรีจากลูกค้า",
+            "บรรยากาศ Scandi aesthetic น่านั่งทำงาน = dwell time สูง",
+            "Delivery via Wongnai ✅ ส่งฟรีในรัศมีใกล้"
+        ],
+        "promotions": [],
+        "weaknesses": [
+            "เพิ่งเปิด ยังไม่มี reviews บน Wongnai (0 ดาว)",
+            "ชั่วโมงเปิด weekday สั้น (08:30-17:30) พลาดลูกค้าตอนเย็น",
+            "ราคาบางรายการยังไม่ชัดเจนในสาธารณะ",
+            "ยังไม่มี GrabFood/ShopeeFood = พลาดกลุ่ม delivery นอก Wongnai",
+            "ไม่มี loyalty program / บัตรสะสมแต้ม (ยังไม่พบ)"
+        ],
+        "location": "333/11 ธาตุนาเวง เมืองสกลนคร (สี่แยกโฮมพลัส ทางไปราชภัฏ)",
+        "hours": "จ-ศ 08:30-17:30 · เสาร์-อาทิตย์ 10:30-19:30",
+        "social_trend": {
+            "primary_platform": "TikTok/Instagram",
+            "posting_frequency": "active (UGC + official)",
+            "content_style": "aesthetic vibes · photo spots · new cafe announcement · บรรยากาศ Scandi",
+            "engagement_level": "medium (UGC แรง — visitors share เอง)"
+        },
+        "delivery": {
+            "primary_app": "LINE MAN",
+            "apps": ["LINE MAN"],
+            "peak_hours": "ยังไม่มีข้อมูล",
+            "active_promos": [],
+            "notes": "Wongnai delivery ✅ ส่งฟรีในรัศมีใกล้ (0฿ starting fee) · delivery hours 09:30-19:30 · LINE MAN likely via Wongnai integration · ไม่พบ GrabFood/ShopeeFood"
+        }
+    },
+    {
         "id": "delivery-apps-overview",
         "category": "delivery",
         "title": "Delivery Apps ร้านกาแฟ สกลนคร — ภาพรวม 2026",
