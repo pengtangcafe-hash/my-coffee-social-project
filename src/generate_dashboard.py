@@ -767,8 +767,8 @@ INTEL_DATA_FALLBACK = [
         "id": "competitor-wehugcafe",
         "category": "competitor",
         "title": "WE HUG CAFE (Wehug cafe) สกลนคร",
-        "summary": "Minimalist cafe ถนนเส้น บขส.ใหม่ · Facebook 1,888 likes · Instagram @wehugcafe_sakon · เปิด 08:00-19:00 ทุกวัน · Wongnai delivery ✅ · ราคา <100฿ · Loyalty stamp 10 แก้ว = 1 ฟรี",
-        "updated": "24 May 2026",
+        "summary": "Minimalist cafe ถนนเส้น บขส.ใหม่ · Facebook 1,888 likes · Instagram @wehugcafe_sakon 95 followers · เปิด 08:00-19:00 ทุกวัน · LINE MAN + FoodPanda ✅ · ราคา <100฿ · Loyalty stamp 10 แก้ว = 1 ฟรี · TikTok UGC active Jun 2026",
+        "updated": "9 Jun 2026",
         "source_url": "https://www.wongnai.com/restaurants/1298418Tu-wehug-cafe",
         "thumbnail_url": "",
         "tags": ["minimalist", "สกลนคร", "delivery", "Wongnai", "loyalty", "brunch", "bakery"],
@@ -803,12 +803,13 @@ INTEL_DATA_FALLBACK = [
             "วันพุธ ลด 10%",
             "วันเสาร์ ลด 5%",
             "ใช้แก้วส่วนตัวลด 5 บาท",
-            "เค้กลด 20%"
+            "เค้กลด 20%",
+            "โปรวันแม่ (Mother's Day) ลด 15% — seasonal promo พิสูจน์ว่าทำ occasion-based promotion"
         ],
         "weaknesses": [
             "Instagram followers เพียง 95 คน แม้จะโพสต์ 447 ครั้ง = engagement/follower ratio ต่ำ",
-            "ไม่มี official TikTok = ขาด reach กลุ่ม Gen Z",
-            "ข้อมูลราคาไม่ชัดเจน ต้องยืนยันเพิ่มเติม"
+            "ไม่มี official TikTok = ขาด reach กลุ่ม Gen Z (แม้มี UGC หลายคลิป)",
+            "ข้อมูลราคาจำเพาะยังไม่ชัดเจน"
         ],
         "location": "272/17-18 ถ.นิตโย ธาตุเชิงชุม เมืองสกลนคร (ถนนเส้น บขส.ใหม่)",
         "hours": "ทุกวัน 08:00–19:00",
@@ -823,7 +824,7 @@ INTEL_DATA_FALLBACK = [
             "apps": ["LINE MAN", "Wongnai Delivery", "FoodPanda"],
             "peak_hours": "08:00-11:00 (เช้า) / 14:00-17:00 (บ่าย)",
             "active_promos": [],
-            "notes": "Wongnai delivery ✅ ส่งฟรีระยะใกล้ · Facebook ระบุ LINE MAN และ FoodPanda · เปิด 08:00-19:00 ทุกวัน = delivery hours กว้างสุดในกลุ่ม"
+            "notes": "LINE MAN ✅ + FoodPanda ✅ ยืนยัน (9 Jun 2026) · Wongnai delivery ✅ ส่งฟรีระยะใกล้ · เปิด 08:00-19:00 ทุกวัน = delivery hours กว้างสุดในกลุ่ม · TikTok UGC ยังมีคลิปใหม่ มิ.ย. 2026 (@arissp_7)"
         }
     },
     {
