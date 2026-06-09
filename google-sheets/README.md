@@ -35,7 +35,7 @@
 | แท็บ | คอลัมน์ |
 |---|---|
 | **วัตถุดิบ** | ชื่อ · ราคา · ปริมาณ · หน่วย |
-| **เมนู** | ชื่อ · หมวด (กาแฟ/ชา-นม) · หน้าร้าน · Lineman · Shoppee · ต้นทุนตั้งต้น |
+| **เมนู** | ชื่อ · หมวด (signature/coffee/tea/milk/soda) · หน้าร้าน · Lineman · Shoppee · ต้นทุนตั้งต้น · รูปภาพ (URL) |
 | **สูตร** | เมนู (ชื่อตรงกับแท็บเมนู) · วัตถุดิบ (ชื่อตรงกับคลัง) · ปริมาณ |
 | **ตั้งค่า** | คีย์ · ค่า (overhead, margin_factor, fixed_cost_monthly, days_per_month, gp_lineman, vat_lineman, gp_shoppee, vat_shoppee) |
 

@@ -2169,16 +2169,27 @@ HTML_TEMPLATE = """\
       padding: 15px 18px; cursor: pointer; transition: border-color .18s, box-shadow .18s, transform .18s; }}
     .dc-row:hover {{ border-color: var(--ov-caramel); box-shadow: 0 14px 30px -24px rgba(60,40,20,.5); }}
     .dc-row:focus-visible {{ outline: 2px solid var(--ov-caramel); outline-offset: 2px; }}
-    .dc-row-top {{ display: grid; grid-template-columns: 1.6fr 2fr auto; align-items: center; gap: 18px; }}
+    .dc-row-top {{ display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1.45fr) auto;
+      align-items: center; gap: 16px; }}
     @media (max-width: 720px) {{ .dc-row-top {{ grid-template-columns: 1fr; gap: 12px; }} }}
 
-    .dc-id {{ display: flex; align-items: center; gap: 11px; min-width: 0; }}
-    .dc-rank {{ flex-shrink: 0; width: 26px; height: 26px; border-radius: 8px; display: inline-flex;
-      align-items: center; justify-content: center; font-size: .74rem; font-weight: 800;
-      background: var(--nav-active); color: var(--text-muted); font-variant-numeric: tabular-nums; }}
-    .dc-name {{ font-weight: 700; font-size: .92rem; color: var(--text); line-height: 1.25;
-      overflow: hidden; text-overflow: ellipsis; }}
+    .dc-id {{ display: flex; align-items: center; gap: 10px; min-width: 0; }}
+    .dc-rank {{ flex-shrink: 0; width: 20px; text-align: center; font-size: .72rem; font-weight: 800;
+      color: var(--text-muted); font-variant-numeric: tabular-nums; }}
+    .dc-name {{ font-weight: 700; font-size: .92rem; color: var(--text); line-height: 1.3;
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+      word-break: break-word; }}
     .dc-norec {{ font-size: .68rem; color: var(--text-muted); font-weight: 500; }}
+    .dc-thumb {{ position: relative; flex-shrink: 0; width: 42px; height: 42px; border-radius: 50%;
+      overflow: hidden; display: inline-flex; align-items: center; justify-content: center;
+      background: var(--nav-active); border: 1px solid var(--card-border); }}
+    .dc-thumb-fb {{ position: absolute; font-size: 1.15rem; line-height: 1; }}
+    .dc-thumb img {{ position: relative; width: 100%; height: 100%; object-fit: cover; display: block; }}
+    .dc-addcat {{ margin-left: 10px; cursor: pointer; font-size: .7rem; font-weight: 700;
+      padding: 3px 11px; border-radius: 999px; border: 1px dashed var(--card-border);
+      background: transparent; color: var(--text-muted); }}
+    .dc-addcat:hover {{ background: var(--nav-active); color: var(--text); }}
+    .dc-empty-cat {{ font-size: .8rem; color: var(--text-muted); padding: 8px 4px 6px; }}
 
     /* แถบ ต้นทุน → กำไร (สเกลตามราคาขายสูงสุดในกลุ่ม) */
     .dc-barwrap {{ min-width: 0; }}
@@ -2288,6 +2299,18 @@ HTML_TEMPLATE = """\
     @media (max-width: 560px) {{ .dc-rrow {{ grid-template-columns: 1fr 70px 56px 32px; }} }}
     .dc-rcost {{ font-size: .8rem; font-weight: 700; color: var(--text); text-align: right;
       font-variant-numeric: tabular-nums; }}
+    .dc-ac {{ position: relative; min-width: 0; }}
+    .dc-ac-inp {{ width: 100%; }}
+    #dc-acpanel {{ position: fixed; z-index: 210; background: var(--card); border: 1px solid var(--card-border);
+      border-radius: 12px; box-shadow: 0 22px 55px -20px rgba(0,0,0,.5); overflow-y: auto;
+      max-height: 300px; padding: 6px; }}
+    .dc-ac-grp {{ position: sticky; top: 0; background: var(--card); font-size: .64rem; font-weight: 800;
+      color: var(--ov-accent-ink); letter-spacing: .06em; padding: 8px 10px 4px; }}
+    .dc-ac-item {{ display: flex; align-items: center; justify-content: space-between; gap: 10px;
+      padding: 8px 10px; border-radius: 8px; cursor: pointer; font-size: .85rem; color: var(--text); }}
+    .dc-ac-item:hover, .dc-ac-item.active {{ background: var(--nav-active); }}
+    .dc-ac-item .uc {{ font-size: .7rem; color: var(--text-muted); font-variant-numeric: tabular-nums; flex-shrink: 0; }}
+    .dc-ac-empty {{ padding: 12px 10px; font-size: .8rem; color: var(--text-muted); }}
     .dc-rdel {{ cursor: pointer; border: none; background: none; color: var(--dc-warn); font-size: 1rem; }}
     .dc-preview {{ background: var(--nav-active); border-radius: 14px; padding: 14px 16px; margin: 16px 0;
       display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }}
@@ -4091,9 +4114,42 @@ function renderUpdateLog() {{
 // ── ต้นทุนเครื่องดื่ม (Drink costs + editor) ──
 var DC_CH = ['store', 'lineman', 'shoppee'];
 var DC_CH_FALLBACK = {{ store: 'หน้าร้าน', lineman: 'Lineman', shoppee: 'Shoppee' }};
-var DC_CAT_ICON = {{ 'กาแฟ': '☕', 'ชา/นม': '🥤' }};
-var DC_CATS = ['กาแฟ', 'ชา/นม'];
+var DC_CATS = ['signature', 'coffee', 'tea', 'milk', 'soda'];
+var DC_CAT_LABEL = {{ signature: 'Signature', coffee: 'Coffee', tea: 'Tea', milk: 'Milk', soda: 'Soda' }};
+var DC_CAT_ICON = {{ signature: '⭐', coffee: '☕', tea: '🍵', milk: '🥛', soda: '🥤' }};
 var DC_LS_KEY = 'pengtang_drink_costs_v1';
+
+// จัดหมวดอัตโนมัติจากชื่อ (รองรับข้อมูลเก่า 'กาแฟ'/'ชา/นม' และเมนูใหม่)
+function dcAutoCat(name) {{
+  var n = (name || '').toLowerCase();
+  if (n.indexOf('soda') >= 0 || name.indexOf('โซดา') >= 0) return 'soda';
+  var coffeeKw = ['อเมริกาโน่', 'เอสเพรสโซ่', 'เอสเปรสโซ่', 'ลาเต้', 'มอคค่า', 'คาปู', 'กาแฟ', 'เอสเย็น', 'ช็อต'];
+  for (var i = 0; i < coffeeKw.length; i++) if (name.indexOf(coffeeKw[i]) >= 0) return 'coffee';
+  if (name.indexOf('ชา') >= 0 || name.indexOf('มัทฉะ') >= 0 || n.indexOf('matcha') >= 0) return 'tea';
+  if (name.indexOf('นม') >= 0 || name.indexOf('โกโก้') >= 0 || n.indexOf('milk') >= 0 || n.indexOf('cocoa') >= 0) return 'milk';
+  return 'coffee';
+}}
+function dcCategoryOf(m) {{ return (DC_CAT_LABEL[m.category]) ? m.category : dcAutoCat(m.name); }}
+
+// จัดกลุ่มวัตถุดิบ (สำหรับ dropdown ค้นหา)
+var DC_IGROUPS = [['bean', 'เมล็ดกาแฟ'], ['milk', 'นม / ครีม'], ['powder', 'ผง / หัวเชื้อ'], ['syrup', 'ไซรัป / น้ำเชื่อม'], ['pack', 'บรรจุภัณฑ์'], ['other', 'อื่นๆ']];
+function dcIngGroup(name) {{
+  var n = (name || '').toLowerCase();
+  if (/แก้ว|ฝา|หลอด|ถุง|กระดาษ/.test(name)) return 'pack';
+  if (/กาแฟ|เอสเพรสโซ|เอสเปรสโซ/.test(name) || /coffee|espresso/.test(n)) return 'bean';
+  if (/นม|ข้นหวาน|คอฟฟี่เมจ|ครีม/.test(name) || /mmilk|milk|falcon|oat/.test(n)) return 'milk';
+  if (/โกโก้|ผง|มัทฉะ|คนอร์|ชาตรามือ|หัวเชื้อ/.test(name) || /cho|tulip|matcha/.test(n)) return 'powder';
+  if (/น้ำเชื่อม|มิตรผล|มังกรบิน|น้ำผึ้ง/.test(name) || /monin|syrup|sunquick|honey/.test(n)) return 'syrup';
+  return 'other';
+}}
+function dcMenuImage(m) {{ return (m.image && m.image.trim()) ? m.image.trim() : ('assets/drink-icons/' + dcCategoryOf(m) + '.svg'); }}
+function dcThumb(m, size) {{
+  size = size || 42;
+  var cat = dcCategoryOf(m);
+  return '<span class="dc-thumb" style="width:' + size + 'px;height:' + size + 'px">'
+    + '<span class="dc-thumb-fb">' + (DC_CAT_ICON[cat] || '🥤') + '</span>'
+    + '<img src="' + escapeHtml(dcMenuImage(m)) + '" alt="" loading="lazy" onerror="this.style.display=\\'none\\'"></span>';
+}}
 
 var dcChannel = 'store', dcSort = 'margin', dcEdit = false;
 var DCS = null;       // working state {{source, assumptions, catalog, menus}}
@@ -4255,9 +4311,10 @@ function renderDrinkCosts() {{
   }}
 
   DC_CATS.forEach(function(cat) {{
-    var arr = menus.filter(function(m) {{ return m.category === cat; }}).sort(function(a, b) {{ return key(b) - key(a); }});
-    if (!arr.length) return;
-    h.push('<div class="dc-group-title">' + (DC_CAT_ICON[cat] || '') + ' ' + escapeHtml(cat) + ' <span class="ct">' + arr.length + ' เมนู</span></div>');
+    var arr = menus.filter(function(m) {{ return dcCategoryOf(m) === cat; }}).sort(function(a, b) {{ return key(b) - key(a); }});
+    h.push('<div class="dc-group-title">' + (DC_CAT_ICON[cat] || '') + ' ' + DC_CAT_LABEL[cat] + ' <span class="ct">' + arr.length + ' เมนู</span>'
+      + (dcEdit ? '<button class="dc-addcat" onclick="dcOpenMenu(null,\\'' + cat + '\\')">+ เพิ่ม</button>' : '') + '</div>');
+    if (!arr.length) {{ h.push('<div class="dc-empty-cat">— ยังไม่มีเมนูในหมวดนี้ —</div>'); return; }}
     h.push('<div class="dc-list">');
     arr.forEach(function(m, idx) {{ h.push(dcRow(m, idx + 1, ch, maxP, fixed)); }});
     h.push('</div>');
@@ -4299,7 +4356,7 @@ function dcRow(m, rank, ch, maxP, fixed) {{
 
   return '<div class="dc-row" tabindex="0" role="button" aria-expanded="false" onclick="dcToggle(this)" onkeydown="dcRowKey(event,this)">'
     + '<div class="dc-row-top">'
-    + '<div class="dc-id"><span class="dc-rank">' + rank + '</span>' + nameBlock + '</div>'
+    + '<div class="dc-id"><span class="dc-rank">' + rank + '</span>' + dcThumb(m) + nameBlock + '</div>'
     + '<div class="dc-barwrap">' + bar + '</div>'
     + '<div class="dc-figs">' + figs + '</div>'
     + '</div>'
@@ -4347,7 +4404,7 @@ function dcDetail(m, fixed) {{
 
 // ── Modal infra ──
 function dcEscClose(e) {{ if (e.key === 'Escape') dcCloseModal(); }}
-function dcCloseModal() {{ var b = document.getElementById('dc-modal-bd'); if (b) b.remove(); document.removeEventListener('keydown', dcEscClose); }}
+function dcCloseModal() {{ dcAcClose(false); var p = document.getElementById('dc-acpanel'); if (p) p.remove(); var b = document.getElementById('dc-modal-bd'); if (b) b.remove(); document.removeEventListener('keydown', dcEscClose); }}
 function dcSetModalBody(html) {{
   var inner = document.querySelector('#dc-modal-bd .dc-modal');
   if (inner) {{ inner.innerHTML = html; return; }}
@@ -4367,26 +4424,114 @@ function dcIngOptions(selected) {{
   if (selected && !found) opts += '<option value="' + escapeHtml(selected) + '" selected>' + escapeHtml(selected) + ' (ไม่อยู่ในคลัง)</option>';
   return opts;
 }}
-function dcOpenMenu(id) {{
-  if (id) {{ var m = DCS.menus.filter(function(x) {{ return x.id === id; }})[0]; dcDraft = dcClone(m); }}
-  else dcDraft = {{ id: null, name: '', category: 'กาแฟ', recipe: [], prices: {{store:null,lineman:null,shoppee:null}}, seed_cost_cup: null }};
+function dcOpenMenu(id, presetCat) {{
+  if (id) {{ var m = DCS.menus.filter(function(x) {{ return x.id === id; }})[0]; dcDraft = dcClone(m); dcDraft.category = dcCategoryOf(dcDraft); }}
+  else dcDraft = {{ id: null, name: '', category: presetCat || 'coffee', image: '', recipe: [], prices: {{store:null,lineman:null,shoppee:null}}, seed_cost_cup: null }};
+  if (dcDraft.image == null) dcDraft.image = '';
   dcRenderMenuModal();
 }}
 function dcDraftRead() {{
   var g = function(id) {{ var el = document.getElementById(id); return el ? el.value : ''; }};
   dcDraft.name = g('dc-f-name');
   dcDraft.category = g('dc-f-cat');
+  dcDraft.image = g('dc-f-image');
   DC_CH.forEach(function(ch) {{ var v = g('dc-p-' + ch); dcDraft.prices[ch] = (v === '' ? null : parseFloat(v)); }});
   var rows = document.querySelectorAll('#dc-recipe-rows .dc-rrow');
   var rec = [];
   rows.forEach(function(r) {{
-    var ing = r.querySelector('.dc-ring').value;
+    var ingEl = r.querySelector('.dc-ring');
+    var ing = ingEl ? (ingEl.getAttribute('data-ing') || '') : '';
     var qty = r.querySelector('.dc-rqty').value;
     rec.push({{ ing: ing, qty: (qty === '' ? '' : parseFloat(qty)) }});
   }});
   dcDraft.recipe = rec;
 }}
 function dcOnInput() {{ dcDraftRead(); dcUpdatePreview(); }}
+function dcImgPrev() {{
+  var v = (document.getElementById('dc-f-image').value || '').trim();
+  var cat = document.getElementById('dc-f-cat').value;
+  var img = document.getElementById('dc-f-imgprev');
+  if (!img) return;
+  img.style.display = ''; img.src = v || ('assets/drink-icons/' + cat + '.svg');
+  var fb = img.parentNode.querySelector('.dc-thumb-fb'); if (fb) fb.textContent = DC_CAT_ICON[cat] || '🥤';
+}}
+
+// ── Combobox ค้นหาวัตถุดิบ (แทน select ยาว ๆ) ──
+var dcAcCtx = null;
+function dcAcEnsurePanel() {{
+  var p = document.getElementById('dc-acpanel');
+  if (!p) {{
+    p = document.createElement('div'); p.id = 'dc-acpanel'; p.style.display = 'none';
+    p.addEventListener('mousedown', function(e) {{
+      var it = e.target.closest ? e.target.closest('.dc-ac-item') : null;
+      if (it) {{ e.preventDefault(); dcAcSelect(it.getAttribute('data-name')); }}
+    }});
+    document.body.appendChild(p);
+  }}
+  return p;
+}}
+function dcAcOpen(input, row) {{
+  dcAcCtx = {{ input: input, row: row }};
+  dcAcEnsurePanel();
+  dcAcBuild('');
+  dcAcPosition();
+  document.getElementById('dc-acpanel').style.display = 'block';
+  if (input.select) input.select();
+  setTimeout(function() {{ document.addEventListener('mousedown', dcAcOutside); document.addEventListener('scroll', dcAcScroll, true); }}, 0);
+}}
+function dcAcOutside(e) {{ var p = document.getElementById('dc-acpanel'); if (!p || !dcAcCtx) return; if (e.target === dcAcCtx.input || p.contains(e.target)) return; dcAcClose(true); }}
+function dcAcScroll() {{ if (dcAcCtx) dcAcClose(true); }}
+function dcAcPosition() {{
+  var p = document.getElementById('dc-acpanel'); if (!p || !dcAcCtx) return;
+  var r = dcAcCtx.input.getBoundingClientRect();
+  p.style.left = r.left + 'px'; p.style.top = (r.bottom + 4) + 'px'; p.style.width = Math.max(r.width, 240) + 'px';
+}}
+function dcAcFilter(input) {{ if (dcAcCtx && dcAcCtx.input === input) dcAcBuild(input.value); }}
+function dcAcBuild(query) {{
+  var p = dcAcEnsurePanel(); query = (query || '').trim().toLowerCase();
+  var keys = Object.keys(DCS.catalog).filter(function(k) {{ return k.toLowerCase().indexOf(query) >= 0; }});
+  var byG = {{}}; keys.forEach(function(k) {{ var g = dcIngGroup(k); (byG[g] = byG[g] || []).push(k); }});
+  var html = '', first = true;
+  DC_IGROUPS.forEach(function(gr) {{
+    var items = (byG[gr[0]] || []).sort(function(a, b) {{ return a.localeCompare(b, 'th'); }});
+    if (!items.length) return;
+    html += '<div class="dc-ac-grp">' + gr[1] + '</div>';
+    items.forEach(function(k) {{
+      var c = DCS.catalog[k]; var uc = (c.unit_cost != null ? c.unit_cost : (c.qty ? c.price / c.qty : 0));
+      html += '<div class="dc-ac-item' + (first ? ' active' : '') + '" data-name="' + escapeHtml(k) + '"><span>' + escapeHtml(k) + '</span><span class="uc">' + uc.toFixed(3) + ' ฿</span></div>';
+      first = false;
+    }});
+  }});
+  if (!html) html = '<div class="dc-ac-empty">ไม่พบ "' + escapeHtml(query) + '" — เพิ่มได้ที่ 🧂 คลังวัตถุดิบ</div>';
+  p.innerHTML = html; p.scrollTop = 0;
+}}
+function dcAcSelect(name) {{
+  if (!dcAcCtx) return;
+  var inp = dcAcCtx.input;
+  inp.value = name; inp.setAttribute('data-ing', name);
+  dcAcClose(false);
+  dcOnInput();
+}}
+function dcAcClose(restore) {{
+  var p = document.getElementById('dc-acpanel'); if (p) p.style.display = 'none';
+  document.removeEventListener('mousedown', dcAcOutside); document.removeEventListener('scroll', dcAcScroll, true);
+  if (restore && dcAcCtx && dcAcCtx.input) dcAcCtx.input.value = dcAcCtx.input.getAttribute('data-ing') || '';
+  dcAcCtx = null;
+}}
+function dcAcKey(e, input) {{
+  var p = document.getElementById('dc-acpanel');
+  if (e.key === 'Escape') {{ dcAcClose(true); input.blur(); return; }}
+  if (e.key === 'Enter') {{ e.preventDefault(); if (p) {{ var act = p.querySelector('.dc-ac-item.active') || p.querySelector('.dc-ac-item'); if (act) dcAcSelect(act.getAttribute('data-name')); }} return; }}
+  if ((e.key === 'ArrowDown' || e.key === 'ArrowUp') && p) {{
+    e.preventDefault();
+    var items = [].slice.call(p.querySelectorAll('.dc-ac-item')); if (!items.length) return;
+    var idx = -1; items.forEach(function(x, j) {{ if (x.classList.contains('active')) idx = j; }});
+    items.forEach(function(x) {{ x.classList.remove('active'); }});
+    idx = (e.key === 'ArrowDown') ? Math.min(items.length - 1, idx + 1) : Math.max(0, idx - 1);
+    if (idx < 0) idx = 0;
+    items[idx].classList.add('active'); items[idx].scrollIntoView({{ block: 'nearest' }});
+  }}
+}}
 function dcUpdatePreview() {{
   var clean = {{ recipe: dcDraft.recipe.filter(function(l) {{ return l.ing; }}), seed_cost_cup: dcDraft.seed_cost_cup, prices: dcDraft.prices }};
   var material = dcMaterial(clean), costCup = dcCostCup(clean), suggest = dcSuggestPrice(clean);
@@ -4398,7 +4543,9 @@ function dcUpdatePreview() {{
   set('dc-pv-margin', st && st.margin != null ? dcF1(st.margin) + '%' : '–');
   var pm = document.getElementById('dc-pv-margin'); if (pm) pm.style.color = dcMargCol(st ? st.margin : null);
   document.querySelectorAll('#dc-recipe-rows .dc-rrow').forEach(function(r) {{
-    var ing = r.querySelector('.dc-ring').value, qty = parseFloat(r.querySelector('.dc-rqty').value) || 0;
+    var ingEl = r.querySelector('.dc-ring');
+    var ing = ingEl ? (ingEl.getAttribute('data-ing') || '') : '';
+    var qty = parseFloat(r.querySelector('.dc-rqty').value) || 0;
     var cell = r.querySelector('.dc-rcost'); if (cell) cell.textContent = (dcUnitCost(ing) * qty).toFixed(2) + '฿';
   }});
 }}
@@ -4424,7 +4571,7 @@ function dcDeleteMenu(id) {{
 }}
 function dcRenderMenuModal() {{
   var d = dcDraft;
-  var catOpts = DC_CATS.map(function(c) {{ return '<option' + (c === d.category ? ' selected' : '') + '>' + c + '</option>'; }}).join('');
+  var catOpts = DC_CATS.map(function(c) {{ return '<option value="' + c + '"' + (c === d.category ? ' selected' : '') + '>' + DC_CAT_ICON[c] + ' ' + DC_CAT_LABEL[c] + '</option>'; }}).join('');
   var priceFields = DC_CH.map(function(ch) {{
     return '<div class="dc-field"><label>' + dcChLabel(ch) + ' (฿)</label><div class="dc-pricewrap">'
       + '<input class="dc-inp" id="dc-p-' + ch + '" type="number" min="0" step="any" value="' + (d.prices[ch] == null ? '' : d.prices[ch]) + '" oninput="dcOnInput()">'
@@ -4432,7 +4579,7 @@ function dcRenderMenuModal() {{
   }}).join('');
   var recRows = d.recipe.map(function(l, i) {{
     var cost = dcUnitCost(l.ing) * (parseFloat(l.qty) || 0);
-    return '<div class="dc-rrow"><select class="dc-sel dc-ring" onchange="dcOnInput()">' + dcIngOptions(l.ing) + '</select>'
+    return '<div class="dc-rrow"><div class="dc-ac"><input class="dc-inp dc-ac-inp dc-ring" data-ing="' + escapeHtml(l.ing || '') + '" value="' + escapeHtml(l.ing || '') + '" placeholder="ค้นหา / เลือกวัตถุดิบ" autocomplete="off" onfocus="dcAcOpen(this,' + i + ')" oninput="dcAcFilter(this)" onkeydown="dcAcKey(event,this)"></div>'
       + '<input class="dc-inp dc-rqty" type="number" min="0" step="any" placeholder="ปริมาณ" value="' + (l.qty === '' || l.qty == null ? '' : l.qty) + '" oninput="dcOnInput()">'
       + '<span class="dc-rcost">' + cost.toFixed(2) + '฿</span>'
       + '<button class="dc-rdel" type="button" title="ลบ" onclick="dcDelIng(' + i + ')">✕</button></div>';
@@ -4441,8 +4588,13 @@ function dcRenderMenuModal() {{
   var html = '<div class="dc-modal-head"><h3>' + (d.id ? 'แก้ไขเมนู' : 'เพิ่มเมนูใหม่') + '</h3><button class="dc-x" onclick="dcCloseModal()" aria-label="ปิด">✕</button></div>'
     + '<div class="dc-grid3" style="grid-template-columns:2fr 1fr">'
     + '<div class="dc-field"><label>ชื่อเมนู</label><input class="dc-inp" id="dc-f-name" value="' + escapeHtml(d.name) + '" oninput="dcOnInput()"></div>'
-    + '<div class="dc-field"><label>หมวด</label><select class="dc-sel" id="dc-f-cat" onchange="dcOnInput()">' + catOpts + '</select></div>'
+    + '<div class="dc-field"><label>หมวด</label><select class="dc-sel" id="dc-f-cat" onchange="dcOnInput(); dcImgPrev()">' + catOpts + '</select></div>'
     + '</div>'
+    + '<div class="dc-field"><label>รูปภาพ (URL) — เว้นว่าง = ใช้ไอคอนหมวดอัตโนมัติ</label>'
+    + '<div style="display:flex;gap:11px;align-items:center">'
+    + '<span class="dc-thumb" style="width:48px;height:48px"><span class="dc-thumb-fb">' + (DC_CAT_ICON[d.category] || '🥤') + '</span>'
+    + '<img id="dc-f-imgprev" src="' + escapeHtml(d.image || ('assets/drink-icons/' + d.category + '.svg')) + '" alt="" onerror="this.style.display=\\'none\\'"></span>'
+    + '<input class="dc-inp" id="dc-f-image" placeholder="https://...jpg / .png" value="' + escapeHtml(d.image || '') + '" oninput="dcImgPrev()"></div></div>'
     + '<div class="dc-field"><label>ราคาขายต่อช่องทาง</label><div class="dc-grid3">' + priceFields + '</div></div>'
     + '<div class="dc-field"><label>สูตร / วัตถุดิบ (เลือกจากคลัง + ใส่ปริมาณ)</label>'
     + '<div id="dc-recipe-rows">' + recRows + '</div>'

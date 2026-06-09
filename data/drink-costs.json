@@ -1,6 +1,6 @@
 {
   "source": "Behind_drinks_cost2025.xlsx",
-  "parsed_at": "2026-06-09T21:27:18",
+  "parsed_at": "2026-06-09T22:39:33",
   "assumptions": {
     "overhead": 0.3,
     "margin_factor": 1.6,
@@ -504,7 +504,7 @@
     {
       "id": "m1",
       "name": "อเมริกาโน่เย็นคั่วเข้ม EP",
-      "category": "กาแฟ",
+      "category": "coffee",
       "recipe": [],
       "prices": {
         "store": 45.0,
@@ -516,7 +516,7 @@
     {
       "id": "m2",
       "name": "อเมริกาโน่เย็นคั่วกลาง Peaberry",
-      "category": "กาแฟ",
+      "category": "coffee",
       "recipe": [],
       "prices": {
         "store": 50.0,
@@ -528,7 +528,7 @@
     {
       "id": "m3",
       "name": "อเมริกาโน่ Blueberry",
-      "category": "กาแฟ",
+      "category": "coffee",
       "recipe": [],
       "prices": {
         "store": 80.0,
@@ -540,7 +540,7 @@
     {
       "id": "m4",
       "name": "อเมริกาโน่ Rumrum",
-      "category": "กาแฟ",
+      "category": "coffee",
       "recipe": [],
       "prices": {
         "store": 60.0,
@@ -552,7 +552,7 @@
     {
       "id": "m5",
       "name": "อเมริกาโน่ส้ม",
-      "category": "กาแฟ",
+      "category": "coffee",
       "recipe": [
         {
           "ing": "กาแฟ วน",
@@ -589,7 +589,7 @@
     {
       "id": "m6",
       "name": "อเมริกาโน่น้ำผึ้ง",
-      "category": "กาแฟ",
+      "category": "coffee",
       "recipe": [
         {
           "ing": "กาแฟ วน",
@@ -622,7 +622,7 @@
     {
       "id": "m7",
       "name": "อเมริกาโน่น้ำผึ้งมะนาว",
-      "category": "กาแฟ",
+      "category": "coffee",
       "recipe": [
         {
           "ing": "กาแฟ วน",
@@ -663,7 +663,7 @@
     {
       "id": "m8",
       "name": "เอสเพรสโซ่ช็อต",
-      "category": "กาแฟ",
+      "category": "coffee",
       "recipe": [],
       "prices": {
         "store": 20.0,
@@ -675,7 +675,7 @@
     {
       "id": "m9",
       "name": "เอสเปรสโซ่เย็น",
-      "category": "กาแฟ",
+      "category": "coffee",
       "recipe": [],
       "prices": {
         "store": 50.0,
@@ -687,7 +687,7 @@
     {
       "id": "m10",
       "name": "เอสเปรสโซ่เย็น Rumrum",
-      "category": "กาแฟ",
+      "category": "coffee",
       "recipe": [],
       "prices": {
         "store": 60.0,
@@ -699,7 +699,7 @@
     {
       "id": "m11",
       "name": "ลาเต้",
-      "category": "กาแฟ",
+      "category": "coffee",
       "recipe": [
         {
           "ing": "กาแฟ วน",
@@ -732,7 +732,7 @@
     {
       "id": "m12",
       "name": "ลาเต้ MINT",
-      "category": "กาแฟ",
+      "category": "coffee",
       "recipe": [],
       "prices": {
         "store": 60.0,
@@ -744,7 +744,7 @@
     {
       "id": "m13",
       "name": "ลาเต้ POPCORN",
-      "category": "กาแฟ",
+      "category": "coffee",
       "recipe": [],
       "prices": {
         "store": 60.0,
@@ -756,7 +756,7 @@
     {
       "id": "m14",
       "name": "มอคค่า",
-      "category": "กาแฟ",
+      "category": "coffee",
       "recipe": [
         {
           "ing": "กาแฟ วน",
@@ -805,7 +805,7 @@
     {
       "id": "m15",
       "name": "ชาเขียว",
-      "category": "ชา/นม",
+      "category": "tea",
       "recipe": [
         {
           "ing": "ชาเขียว (หัวเชื้อ)",
@@ -854,7 +854,7 @@
     {
       "id": "m16",
       "name": "ชาเขียวมะนาว",
-      "category": "ชา/นม",
+      "category": "tea",
       "recipe": [
         {
           "ing": "ชาเขียวหัวเชื้อ",
@@ -887,7 +887,7 @@
     {
       "id": "m17",
       "name": "ชาเขียวน้ำผึ้งมะนาว",
-      "category": "ชา/นม",
+      "category": "tea",
       "recipe": [
         {
           "ing": "เบสชา",
@@ -920,7 +920,7 @@
     {
       "id": "m18",
       "name": "โกโก้",
-      "category": "ชา/นม",
+      "category": "milk",
       "recipe": [
         {
           "ing": "โกโก้ Tulip 32 %",
@@ -965,7 +965,7 @@
     {
       "id": "m19",
       "name": "นมสด",
-      "category": "ชา/นม",
+      "category": "milk",
       "recipe": [
         {
           "ing": "Mmilk",
@@ -998,7 +998,7 @@
     {
       "id": "m20",
       "name": "นม Popcorn",
-      "category": "ชา/นม",
+      "category": "milk",
       "recipe": [],
       "prices": {
         "store": 50.0,
@@ -1010,7 +1010,7 @@
     {
       "id": "m21",
       "name": "นม Mint",
-      "category": "ชา/นม",
+      "category": "milk",
       "recipe": [],
       "prices": {
         "store": 50.0,
@@ -1022,7 +1022,7 @@
     {
       "id": "m22",
       "name": "ส้ม Soda",
-      "category": "ชา/นม",
+      "category": "soda",
       "recipe": [
         {
           "ing": "Soda",

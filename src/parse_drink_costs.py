@@ -75,11 +75,17 @@ def norm(name):
 
 
 def categorize(name):
-    if any(k in name for k in MATCHA_KW):
-        return "ชา/นม"
+    """แยก 5 หมวด: signature (ตั้งเองเท่านั้น) / coffee / tea / milk / soda"""
+    n = name.lower()
+    if "soda" in n or "โซดา" in name:
+        return "soda"
     if any(k in name for k in COFFEE_KW):
-        return "กาแฟ"
-    return "ชา/นม"
+        return "coffee"
+    if "ชา" in name or "matcha" in n or any(k in name for k in MATCHA_KW):
+        return "tea"
+    if "นม" in name or "โกโก้" in name or "milk" in n or "cocoa" in n:
+        return "milk"
+    return "coffee"
 
 
 def unit_of(name):

@@ -95,9 +95,10 @@ function buildData_() {
     var r = mv[i], name = String(r[0] || '').trim();
     if (!name) continue;
     menus.push({
-      id: name, name: name, category: String(r[1] || 'กาแฟ').trim(),
+      id: name, name: name, category: String(r[1] || 'coffee').trim(),
       prices: { store: num_(r[2]), lineman: num_(r[3]), shoppee: num_(r[4]) },
       seed_cost_cup: num_(r[5]),
+      image: String(r[6] || '').trim(),
       recipe: recByMenu[name] || []
     });
   }
@@ -115,10 +116,10 @@ function writeData_(data) {
   writeSheet_(SH.cat, crows);
 
   var menus = data.menus || [];
-  var mrows = [['ชื่อ', 'หมวด', 'หน้าร้าน', 'Lineman', 'Shoppee', 'ต้นทุนตั้งต้น']];
+  var mrows = [['ชื่อ', 'หมวด', 'หน้าร้าน', 'Lineman', 'Shoppee', 'ต้นทุนตั้งต้น', 'รูปภาพ']];
   menus.forEach(function (m) {
     var p = m.prices || {};
-    mrows.push([m.name, m.category || '', blank_(p.store), blank_(p.lineman), blank_(p.shoppee), blank_(m.seed_cost_cup)]);
+    mrows.push([m.name, m.category || '', blank_(p.store), blank_(p.lineman), blank_(p.shoppee), blank_(m.seed_cost_cup), m.image || '']);
   });
   writeSheet_(SH.menu, mrows);
 
