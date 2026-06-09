@@ -38,6 +38,18 @@
 - รีเฟรช dashboard โดยไม่ import ใหม่: `python src/generate_dashboard.py --rebuild`
 - ดู log: `python src/update_log.py show` · สรุป: `python src/update_log.py summary`
 
+## Backbar — ต้นทุนเครื่องดื่ม (Drink Costs)
+หน้า `view-cost-drinks` คำนวณต้นทุน/แก้ว, กำไร & กำไร %, สัดส่วนวัตถุดิบ, จุดคุ้มทุน — ต่อ 3 ช่องทาง (หน้าร้าน/Lineman/Shoppee)
+- แหล่งข้อมูลตั้งต้น: `import-data/cost/*.xlsx` → parse เป็น `data/drink-costs.json`
+- โมดูล parser: `src/parse_drink_costs.py` (ใช้ openpyxl) — ดึง **คลังวัตถุดิบกลาง (catalog)** + สูตรพร้อมปริมาณ + ราคาขายต่อช่องทาง
+- โมเดล "สูตร = แหล่งความจริง": ต้นทุน/แก้ว = Σ(unit_cost × ปริมาณ) × (1+overhead 30%); ราคาแนะนำ = ต้นทุน × 1.6; เดลิเวอรีหัก GP+VAT
+- **แก้ไขในหน้าเว็บได้** (เพิ่ม/ลบ/แก้เมนู, แก้สูตร+ปริมาณ, จัดการคลังวัตถุดิบ) — บันทึกใน localStorage (`pengtang_drink_costs_v1`) + Export/Import JSON
+- อัปเดตจาก Excel: แก้ไฟล์ → คัดลอกทับ `import-data/cost/` → `python src/parse_drink_costs.py` → `python src/generate_dashboard.py --rebuild`
+- การแก้ใน localStorage จะ override ค่า seed จาก JSON; กด "คืนค่าจากไฟล์" เพื่อล้างกลับเป็นข้อมูล Excel
+- **ซิงก์สองทางกับ Google Sheet** (ทางเลือก): `google-sheets/Code.gs` = Apps Script Web App (doGet ส่ง JSON / doPost เขียนทับแท็บ วัตถุดิบ·เมนู·สูตร·ตั้งค่า)
+  - dashboard เก็บ Web app URL ใน localStorage (`pengtang_gs_url`) — แก้ในเว็บ auto-push, แก้ใน Sheet กด "🔄 ซิงก์" เพื่อ pull
+  - วิธีตั้งค่า/Deploy: `google-sheets/README.md` · POST ใช้ Content-Type text/plain เลี่ยง CORS preflight
+
 ## Report Format
 ทุก report ที่ /analyze สร้างต้องมี sections เหล่านี้เสมอ:
 1. Executive Summary (3-5 bullet points ที่สำคัญที่สุด)

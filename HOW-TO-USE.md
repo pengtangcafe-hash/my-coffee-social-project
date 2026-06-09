@@ -87,6 +87,40 @@
 
 ---
 
+## 🧮 ต้นทุนเครื่องดื่ม (Backbar) — คำนวณต้นทุน/กำไร/สูตร
+
+หน้า **Backbar → ต้นทุนเครื่องดื่ม** คำนวณให้ครบต่อเมนู ใน 3 ช่องทาง (หน้าร้าน / Lineman / Shoppee):
+- **ต้นทุน/แก้ว** (วัตถุดิบ + ต้นทุนแฝง 30%) · **กำไร & กำไร %** · **สัดส่วนวัตถุดิบ** · **จุดคุ้มทุน** (ขายกี่แก้ว/วัน)
+- โมเดล "สูตร = แหล่งความจริง": แก้สูตร/ปริมาณ → ทุกตัวเลขคำนวณใหม่สดทันที
+- ใช้ **คลังวัตถุดิบกลาง** — แก้ราคาวัตถุดิบครั้งเดียว ทุกเมนูที่ใช้อัปเดตหมด
+
+### ที่มาของข้อมูล (จากไฟล์ Excel)
+```bash
+# 1. วางไฟล์ต้นทุน (.xlsx) ไว้ที่ import-data/cost/
+# 2. แปลง Excel → data/drink-costs.json
+python src/parse_drink_costs.py
+# 3. rebuild dashboard
+python src/generate_dashboard.py --rebuild
+```
+รองรับชีต `สรุปรายการ` (ราคา 3 ช่องทาง) + `กาแฟ/นม-ชา/คำนวนต้นทุน.` (สูตร) + `วัตถุดิบ` (ราคากลาง)
+
+### แก้ไขในหน้าเว็บ (ไม่ต้องแตะ Excel)
+กดปุ่ม **✏️ แก้ไขเมนู/สูตร** ในหน้านั้น:
+- ➕ เพิ่มเมนู · ✏️ แก้ไข · 🗑️ ลบ — แต่ละเมนู
+- 🧪 แก้สูตร: เลือกวัตถุดิบจากคลัง + ใส่ปริมาณ → เห็นต้นทุน/ราคาแนะนำ/กำไร% สดๆ
+- 🧂 จัดการคลังวัตถุดิบ (เพิ่ม/แก้/ลบ ราคา-ปริมาณแพ็ก)
+- ⬇️ Export / ⬆️ นำเข้า JSON · ↺ คืนค่าจากไฟล์
+- **บันทึกอัตโนมัติใน browser (localStorage)** — เปิดมาแก้ต่อได้
+
+### ซิงก์สองทางกับ Google Sheet (ทางเลือก)
+แก้จาก Google Sheet หรือจากหน้าเว็บก็ได้ ซิงก์หากันอัตโนมัติ — ไม่ต้องแตะ Excel/git
+1. ทำตามคู่มือ **`google-sheets/README.md`** (วางโค้ด `google-sheets/Code.gs` ใน Apps Script → Deploy เป็น Web app · Who has access: **Anyone**)
+2. ในหน้าเว็บ → ✏️ แก้ไข → **🔗 เชื่อม Sheet** → วาง Web app URL (`.../exec`) → บันทึก
+3. แก้ในเว็บ → เขียนกลับ Sheet อัตโนมัติ · แก้ใน Sheet → กด **🔄 ซิงก์** เพื่อดึงมา
+> URL เก็บใน localStorage ของเบราว์เซอร์เท่านั้น ไม่ฝังในเว็บสาธารณะ
+
+---
+
 ## Workflow แนะนำ
 
 ### เริ่มต้นครั้งแรก (ยังไม่มี API)
@@ -165,8 +199,12 @@ python src/fetch_social.py --tiktok
 | Facebook | กราฟ reach, engagement, followers ใหม่ |
 | Instagram | กราฟ reach, impressions, profile visits |
 | ข่าวกรองตลาด | Competitor cards, Coffee trends, Events, **Delivery Apps** |
-| ราคากลางร้านกาแฟ | เปรียบเทียบราคาคู่แข่ง |
 | วิเคราะห์เชิงลึก | Timeline คู่แข่ง + **Delivery & Food Apps section** |
+| ติดตามคู่แข่ง | การเปลี่ยนแปลงของคู่แข่งเทียบช่วงก่อนหน้า |
+| ราคากลางร้านกาแฟ | เปรียบเทียบราคาคู่แข่ง |
+| **ต้นทุนเครื่องดื่ม** (Backbar) | ต้นทุน/กำไร/สูตร 3 ช่องทาง + แก้ไขได้ + ซิงก์ Google Sheet |
+| POS check COST (Backbar) | *(กำลังพัฒนา)* |
+| บันทึกอัปเดต | ประวัติการอัปเดตทั้งหมด (Platforms + Intelligence) |
 
 ---
 
@@ -200,14 +238,24 @@ my-coffee-social-project/
 │   ├── generate_dashboard.py     ← สร้าง HTML dashboard
 │   ├── normalize.py              ← แปลง CSV → JSON
 │   ├── compare.py                ← เปรียบเทียบ platforms
+│   ├── parse_drink_costs.py      ← แปลง Excel ต้นทุน → drink-costs.json
+│   ├── update_log.py             ← ระบบบันทึกการอัปเดต (audit log)
 │   ├── history_store.py          ← จัดการ history snapshots
 │   └── competitor_history.py     ← จัดการ competitor snapshots
 │
+├── google-sheets/                ← ระบบซิงก์ต้นทุนกับ Google Sheet
+│   ├── Code.gs                   ← Apps Script Web App (วางใน Apps Script)
+│   └── README.md                 ← วิธีตั้งค่า/Deploy
+│
 ├── sample-data/                  ← ข้อมูลตัวอย่างสำหรับทดสอบ
+├── import-data/
+│   └── cost/                     ← วางไฟล์ Excel ต้นทุนเครื่องดื่มที่นี่
 ├── data/
 │   ├── imports/                  ← วางไฟล์ CSV จริงที่นี่
 │   ├── history/                  ← snapshots สะสมอัตโนมัติ
 │   ├── competitor-history/       ← snapshots คู่แข่งสะสมอัตโนมัติ
+│   ├── drink-costs.json          ← ข้อมูลต้นทุนเครื่องดื่ม (seed)
+│   ├── update-log.json           ← audit log การอัปเดต
 │   └── schema.json               ← mapping column ของแต่ละ platform
 │
 ├── reports/                      ← รายงานทั้งหมด (สร้างอัตโนมัติ)
@@ -238,3 +286,14 @@ A: ทุกครั้งที่รัน update commands — ทุก comm
 **Q: Routine อัตโนมัติทำงานยังไง?**  
 A: ตั้ง Remote Routine ไว้แล้ว — `/update-market` รันทุกวันจันทร์ 04:01 น.  
 ทำงานบน Anthropic cloud แม้ปิดคอมอยู่
+
+**Q: แก้เมนู/สูตรในหน้าต้นทุนเครื่องดื่มแล้ว ข้อมูลเก็บที่ไหน?**  
+A: เก็บใน localStorage ของเบราว์เซอร์โดยอัตโนมัติ — ถ้าเชื่อม Google Sheet ไว้ จะเขียนกลับ Sheet ด้วย  
+อยากเซฟเป็นไฟล์ให้กด **Export** (ได้ `drink-costs.json`) แล้วนำมาวางทับใน `data/` + rebuild ได้
+
+**Q: แก้ราคาวัตถุดิบทีเดียวให้มีผลทุกเมนูได้ไหม?**  
+A: ได้ — แก้ใน **🧂 คลังวัตถุดิบ** ครั้งเดียว ทุกเมนูที่ใช้วัตถุดิบนั้นคำนวณต้นทุนใหม่ทันที
+
+**Q: เชื่อม Google Sheet แล้วยิงเตือน "ดึงข้อมูลไม่สำเร็จ"?**  
+A: เช็กว่า Deploy เป็น **Web app** และ Who has access = **Anyone** (ไม่ใช่ "Anyone with Google account")  
+แก้สคริปต์แล้วต้อง Deploy → Manage deployments → New version ทุกครั้ง ดูละเอียดใน `google-sheets/README.md`

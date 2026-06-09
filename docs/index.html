@@ -355,6 +355,180 @@
     .ov-kpi-val.accent { color: var(--ov-accent-ink); }
     .ov-kpi-unit { font-size: .72rem; color: var(--text-muted); margin-top: 6px; }
 
+    /* ── ต้นทุนเครื่องดื่ม (Drink costs) ── */
+    :root { --dc-cost: #c08a4a; --dc-profit: #2f9e6b; --dc-warn: #c2410c; }
+    [data-theme="dark"]   { --dc-cost: #b5793a; --dc-profit: #34b87e; --dc-warn: #fb923c; }
+    [data-theme="fancy"]  { --dc-cost: #d39a52; --dc-profit: #4cd6a0; --dc-warn: #fdba74; }
+    [data-theme="coffee"] { --dc-cost: #c89a5e; --dc-profit: #46c98c; --dc-warn: #f8a560; }
+
+    .dc-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px;
+      font-size: .76rem; color: var(--text-muted); margin: -6px 0 22px; }
+    .dc-meta .src { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; color: var(--text); }
+    .dc-meta .note { opacity: .9; }
+
+    .dc-kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 16px; margin-bottom: 22px; }
+    .dc-kpi { background: var(--card); border: 1px solid var(--card-border); border-radius: 18px;
+      padding: 18px 20px; }
+    .dc-kpi .k-lab { display: flex; align-items: center; gap: 7px; font-size: .76rem;
+      color: var(--text-muted); font-weight: 600; margin-bottom: 11px; }
+    .dc-kpi .k-val { font-size: 2rem; font-weight: 900; line-height: 1; color: var(--text);
+      font-variant-numeric: tabular-nums; letter-spacing: -.02em; }
+    .dc-kpi .k-val small { font-size: .95rem; font-weight: 700; color: var(--text-muted); }
+    .dc-kpi .k-sub { font-size: .74rem; color: var(--text-muted); margin-top: 7px; }
+    .dc-kpi.hero { background: linear-gradient(152deg, var(--ov-espresso-2), var(--ov-espresso-1) 80%);
+      border: none; }
+    .dc-kpi.hero .k-lab, .dc-kpi.hero .k-sub { color: rgba(246,236,218,.78); }
+    .dc-kpi.hero .k-val { color: var(--ov-crema); }
+
+    .dc-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px;
+      margin-bottom: 18px; }
+    .dc-controls .grp { display: inline-flex; align-items: center; gap: 7px; }
+    .dc-controls .grp > .lbl { font-size: .74rem; color: var(--text-muted); font-weight: 600; }
+
+    .dc-group-title { display: flex; align-items: center; gap: 9px; font-size: .82rem;
+      font-weight: 800; color: var(--text); margin: 26px 0 12px; letter-spacing: .01em; }
+    .dc-group-title .ct { font-size: .72rem; font-weight: 700; color: var(--text-muted); }
+
+    .dc-list { display: flex; flex-direction: column; gap: 10px; }
+    .dc-row { background: var(--card); border: 1px solid var(--card-border); border-radius: 16px;
+      padding: 15px 18px; cursor: pointer; transition: border-color .18s, box-shadow .18s, transform .18s; }
+    .dc-row:hover { border-color: var(--ov-caramel); box-shadow: 0 14px 30px -24px rgba(60,40,20,.5); }
+    .dc-row:focus-visible { outline: 2px solid var(--ov-caramel); outline-offset: 2px; }
+    .dc-row-top { display: grid; grid-template-columns: 1.6fr 2fr auto; align-items: center; gap: 18px; }
+    @media (max-width: 720px) { .dc-row-top { grid-template-columns: 1fr; gap: 12px; } }
+
+    .dc-id { display: flex; align-items: center; gap: 11px; min-width: 0; }
+    .dc-rank { flex-shrink: 0; width: 26px; height: 26px; border-radius: 8px; display: inline-flex;
+      align-items: center; justify-content: center; font-size: .74rem; font-weight: 800;
+      background: var(--nav-active); color: var(--text-muted); font-variant-numeric: tabular-nums; }
+    .dc-name { font-weight: 700; font-size: .92rem; color: var(--text); line-height: 1.25;
+      overflow: hidden; text-overflow: ellipsis; }
+    .dc-norec { font-size: .68rem; color: var(--text-muted); font-weight: 500; }
+
+    /* แถบ ต้นทุน → กำไร (สเกลตามราคาขายสูงสุดในกลุ่ม) */
+    .dc-barwrap { min-width: 0; }
+    .dc-bar { display: flex; height: 26px; border-radius: 8px; overflow: hidden;
+      background: var(--nav-active); }
+    .dc-seg-cost { height: 100%; width: 0; background: var(--dc-cost);
+      transition: width .9s cubic-bezier(.22,1,.36,1); }
+    .dc-seg-profit { height: 100%; width: 0; background: var(--dc-profit);
+      transition: width .9s cubic-bezier(.22,1,.36,1); }
+    .dc-barlabels { display: flex; justify-content: space-between; gap: 8px; margin-top: 6px;
+      font-size: .7rem; color: var(--text-muted); }
+    .dc-barlabels b { color: var(--text); font-weight: 700; }
+
+    .dc-figs { text-align: right; min-width: 96px; }
+    .dc-margin { font-size: 1.5rem; font-weight: 900; line-height: 1; font-variant-numeric: tabular-nums;
+      letter-spacing: -.02em; }
+    .dc-margin small { font-size: .8rem; font-weight: 800; }
+    .dc-profitline { font-size: .76rem; color: var(--text-muted); margin-top: 4px; }
+    .dc-profitline b { color: var(--dc-profit); font-weight: 800; }
+
+    /* รายละเอียดเมื่อกดเปิด */
+    .dc-detail { display: none; margin-top: 15px; padding-top: 15px;
+      border-top: 1px dashed var(--card-border); }
+    .dc-row.open .dc-detail { display: block; }
+    .dc-row.open { border-color: var(--ov-caramel); }
+    .dc-detail-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 22px; }
+    @media (max-width: 720px) { .dc-detail-grid { grid-template-columns: 1fr; gap: 16px; } }
+    .dc-sub { font-size: .74rem; font-weight: 700; color: var(--text-muted); margin-bottom: 11px;
+      display: flex; align-items: center; gap: 7px; }
+    .dc-ing { display: grid; grid-template-columns: 1fr 56px; align-items: center; gap: 10px;
+      margin-bottom: 9px; }
+    .dc-ing-nm { font-size: .8rem; color: var(--text); display: flex; align-items: baseline; gap: 8px; }
+    .dc-ing-nm .pc { font-size: .72rem; color: var(--text-muted); font-variant-numeric: tabular-nums; }
+    .dc-ing-track { grid-column: 1 / -1; height: 7px; border-radius: 999px; background: var(--nav-active);
+      overflow: hidden; margin-top: -3px; }
+    .dc-ing-fill { height: 100%; width: 0; border-radius: 999px; background: var(--dc-cost);
+      transition: width .8s cubic-bezier(.22,1,.36,1); }
+    .dc-ing-cost { text-align: right; font-size: .78rem; font-weight: 700; color: var(--text);
+      font-variant-numeric: tabular-nums; }
+    .dc-ingfoot { font-size: .73rem; color: var(--text-muted); margin-top: 10px; padding-top: 10px;
+      border-top: 1px solid var(--card-border); line-height: 1.5; }
+    .dc-ingfoot b { color: var(--text); font-weight: 700; }
+    .dc-be { background: var(--nav-active); border-radius: 14px; padding: 16px 18px; }
+    .dc-be .big { font-size: 1.7rem; font-weight: 900; color: var(--text); line-height: 1;
+      font-variant-numeric: tabular-nums; }
+    .dc-be .big small { font-size: .85rem; font-weight: 700; color: var(--text-muted); }
+    .dc-be .cap { font-size: .74rem; color: var(--text-muted); margin-top: 7px; line-height: 1.5; }
+    .dc-chrow { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    .dc-chip { font-size: .72rem; padding: 4px 11px; border-radius: 999px; background: var(--nav-active);
+      color: var(--text); display: inline-flex; align-items: center; gap: 6px;
+      border: 1px solid var(--card-border); }
+    .dc-chip .ch-price { font-weight: 800; color: var(--ov-accent-ink); }
+    @media (prefers-reduced-motion: reduce) {
+      .dc-seg-cost, .dc-seg-profit, .dc-ing-fill, .dc-row { transition: none; }
+    }
+
+    /* ── ตัวแก้ไขเมนู/สูตร (editor) ── */
+    .dc-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
+      margin-bottom: 16px; }
+    .dc-btn { display: inline-flex; align-items: center; gap: 6px; cursor: pointer;
+      font-size: .8rem; font-weight: 700; padding: 8px 14px; border-radius: 10px;
+      border: 1px solid var(--card-border); background: var(--card); color: var(--text);
+      transition: background .15s, border-color .15s, transform .1s; }
+    .dc-btn:hover { background: var(--nav-active); }
+    .dc-btn:active { transform: translateY(1px); }
+    .dc-btn.primary { background: var(--ov-espresso-2); border-color: var(--ov-espresso-2); color: var(--ov-crema); }
+    .dc-btn.primary:hover { background: var(--ov-espresso-1); }
+    .dc-btn.ghost { background: transparent; }
+    .dc-btn.danger { color: var(--dc-warn); border-color: var(--dc-warn); }
+    .dc-btn:focus-visible { outline: 2px solid var(--ov-caramel); outline-offset: 2px; }
+    .dc-edithint { font-size: .74rem; color: var(--text-muted); }
+    .dc-rowacts { display: inline-flex; gap: 6px; margin-left: 10px; }
+    .dc-iconbtn { width: 30px; height: 30px; border-radius: 8px; display: inline-flex;
+      align-items: center; justify-content: center; cursor: pointer; font-size: .85rem;
+      border: 1px solid var(--card-border); background: var(--card); color: var(--text); }
+    .dc-iconbtn:hover { background: var(--nav-active); }
+
+    .dc-modal-bd { position: fixed; inset: 0; z-index: 200; background: rgba(20,12,4,.55);
+      display: flex; align-items: flex-start; justify-content: center; padding: 28px 16px;
+      overflow-y: auto; backdrop-filter: blur(2px); }
+    .dc-modal { background: var(--card); border: 1px solid var(--card-border); border-radius: 20px;
+      width: 100%; max-width: 720px; padding: 24px; box-shadow: 0 40px 90px -30px rgba(0,0,0,.6);
+      animation: dcPop .26s cubic-bezier(.22,1,.36,1) both; }
+    @keyframes dcPop { from { opacity: 0; transform: translateY(14px) scale(.98); } to { opacity: 1; transform: none; } }
+    @media (prefers-reduced-motion: reduce) { .dc-modal { animation: none; } }
+    .dc-modal h3 { font-size: 1.2rem; font-weight: 900; color: var(--text); letter-spacing: -.02em; }
+    .dc-modal-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+    .dc-x { cursor: pointer; font-size: 1.2rem; color: var(--text-muted); background: none; border: none;
+      width: 34px; height: 34px; border-radius: 9px; }
+    .dc-x:hover { background: var(--nav-active); color: var(--text); }
+
+    .dc-field { margin-bottom: 14px; }
+    .dc-field > label { display: block; font-size: .76rem; font-weight: 700; color: var(--text-muted); margin-bottom: 6px; }
+    .dc-inp, .dc-sel { width: 100%; font-family: inherit; font-size: .9rem; color: var(--text);
+      background: var(--nav-active); border: 1px solid var(--card-border); border-radius: 10px;
+      padding: 9px 12px; }
+    .dc-inp:focus, .dc-sel:focus { outline: 2px solid var(--ov-caramel); outline-offset: 0; border-color: transparent; }
+    .dc-grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    @media (max-width: 560px) { .dc-grid3 { grid-template-columns: 1fr; } }
+    .dc-pricewrap { position: relative; }
+    .dc-auto { position: absolute; right: 6px; top: 50%; transform: translateY(-50%);
+      font-size: .66rem; font-weight: 700; padding: 4px 8px; border-radius: 7px; cursor: pointer;
+      border: none; background: var(--nav-active); color: var(--ov-accent-ink); }
+
+    .dc-rrow { display: grid; grid-template-columns: 1fr 84px 64px 34px; gap: 8px; align-items: center;
+      margin-bottom: 8px; }
+    @media (max-width: 560px) { .dc-rrow { grid-template-columns: 1fr 70px 56px 32px; } }
+    .dc-rcost { font-size: .8rem; font-weight: 700; color: var(--text); text-align: right;
+      font-variant-numeric: tabular-nums; }
+    .dc-rdel { cursor: pointer; border: none; background: none; color: var(--dc-warn); font-size: 1rem; }
+    .dc-preview { background: var(--nav-active); border-radius: 14px; padding: 14px 16px; margin: 16px 0;
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    @media (max-width: 560px) { .dc-preview { grid-template-columns: repeat(2, 1fr); } }
+    .dc-pv .l { font-size: .68rem; color: var(--text-muted); }
+    .dc-pv .v { font-size: 1.15rem; font-weight: 900; color: var(--text); font-variant-numeric: tabular-nums; }
+    .dc-modal-foot { display: flex; flex-wrap: wrap; gap: 10px; justify-content: flex-end; margin-top: 18px; }
+    .dc-modal-foot .spacer { margin-right: auto; }
+
+    .dc-cat-row { display: grid; grid-template-columns: 1.6fr 70px 80px 70px 32px; gap: 8px;
+      align-items: center; margin-bottom: 7px; }
+    .dc-cat-row .uc { font-size: .76rem; color: var(--text-muted); text-align: right; font-variant-numeric: tabular-nums; }
+    .dc-cat-head { font-size: .68rem; font-weight: 700; color: var(--text-muted); }
+    .dc-cat-list { max-height: 48vh; overflow-y: auto; padding-right: 4px; margin-top: 8px; }
+
     /* ── History / update-log timeline ── */
     .log-summary-grid {
       display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -798,18 +972,13 @@
       </div>
     </div>
 
-    <!-- ── Backbar: ต้นทุนเครื่องดื่ม (Launching soon) ── -->
+    <!-- ── Backbar: ต้นทุนเครื่องดื่ม ── -->
     <div id="view-cost-drinks" class="view">
       <div class="mb-6">
         <h1 class="ov-h1">ต้นทุนเครื่องดื่ม</h1>
-        <p class="ov-sub-h">คำนวณต้นทุนต่อแก้ว วัตถุดิบ และกำไรของแต่ละเมนู</p>
+        <p class="ov-sub-h">ต้นทุนต่อแก้ว กำไร และสัดส่วนวัตถุดิบของแต่ละเมนู — จากไฟล์ต้นทุนของร้าน</p>
       </div>
-      <div class="ov-tile ov-soon">
-        <div class="ov-soon-emoji">🧮</div>
-        <div class="ov-soon-title">Launching soon..</div>
-        <div class="ov-soon-sub">เครื่องมือคำนวณต้นทุนเครื่องดื่มกำลังพัฒนา เร็ว ๆ นี้</div>
-        <span class="ov-soon-badge"><span class="ov-soon-dot"></span>อยู่ระหว่างพัฒนา</span>
-      </div>
+      <div id="dc-root"></div>
     </div>
 
     <!-- ── Backbar: POS check COST (Launching soon) ── -->
@@ -842,6 +1011,7 @@ const TRACKER = {"generated_at": "2026-06-09T00:00:00", "period": "week", "perio
 const UPDATE_LOG = [{"id": "bf-intel-competitor-changes-20260609", "ts": "2026-06-09T11:00:00", "date_th": "9 มิ.ย. 2569", "time_th": "11:00", "category": "intel", "scope": "ติดตามคู่แข่ง", "action": "track", "summary": "อัปเดตการเปลี่ยนแปลงคู่แข่ง (20260609)", "details": [], "count": null}, {"id": "bf-intel-competitor-changes-20260609b", "ts": "2026-06-09T11:00:00", "date_th": "9 มิ.ย. 2569", "time_th": "11:00", "category": "intel", "scope": "ติดตามคู่แข่ง", "action": "track", "summary": "อัปเดตการเปลี่ยนแปลงคู่แข่ง (20260609b)", "details": [], "count": null}, {"id": "bf-intel-competitor-changes-20260609c", "ts": "2026-06-09T11:00:00", "date_th": "9 มิ.ย. 2569", "time_th": "11:00", "category": "intel", "scope": "ติดตามคู่แข่ง", "action": "track", "summary": "อัปเดตการเปลี่ยนแปลงคู่แข่ง (20260609c)", "details": [], "count": null}, {"id": "bf-intel-competitor-changes-20260609d", "ts": "2026-06-09T11:00:00", "date_th": "9 มิ.ย. 2569", "time_th": "11:00", "category": "intel", "scope": "ติดตามคู่แข่ง", "action": "track", "summary": "อัปเดตการเปลี่ยนแปลงคู่แข่ง (20260609d)", "details": [], "count": null}, {"id": "bf-intel-competitor-changes-20260609e", "ts": "2026-06-09T11:00:00", "date_th": "9 มิ.ย. 2569", "time_th": "11:00", "category": "intel", "scope": "ติดตามคู่แข่ง", "action": "track", "summary": "อัปเดตการเปลี่ยนแปลงคู่แข่ง (20260609e)", "details": [], "count": null}, {"id": "bf-intel-competitor-changes-20260609f", "ts": "2026-06-09T11:00:00", "date_th": "9 มิ.ย. 2569", "time_th": "11:00", "category": "intel", "scope": "ติดตามคู่แข่ง", "action": "track", "summary": "อัปเดตการเปลี่ยนแปลงคู่แข่ง (20260609f)", "details": [], "count": null}, {"id": "bf-intel-competitor-changes-20260609g", "ts": "2026-06-09T11:00:00", "date_th": "9 มิ.ย. 2569", "time_th": "11:00", "category": "intel", "scope": "ติดตามคู่แข่ง", "action": "track", "summary": "อัปเดตการเปลี่ยนแปลงคู่แข่ง (20260609g)", "details": [], "count": null}, {"id": "bf-platform-facebook-20260609", "ts": "2026-06-09T09:00:00", "date_th": "9 มิ.ย. 2569", "time_th": "09:00", "category": "platform", "scope": "facebook", "action": "import", "summary": "นำเข้าข้อมูล Facebook (140 แถว)", "details": [], "count": 140}, {"id": "bf-platform-instagram-20260609", "ts": "2026-06-09T09:00:00", "date_th": "9 มิ.ย. 2569", "time_th": "09:00", "category": "platform", "scope": "instagram", "action": "import", "summary": "นำเข้าข้อมูล Instagram (140 แถว)", "details": [], "count": 140}, {"id": "bf-platform-tiktok-20260609", "ts": "2026-06-09T09:00:00", "date_th": "9 มิ.ย. 2569", "time_th": "09:00", "category": "platform", "scope": "tiktok", "action": "import", "summary": "นำเข้าข้อมูล TikTok (365 แถว)", "details": [], "count": 365}, {"id": "20260609-014317", "ts": "2026-06-09T01:43:17", "date_th": "9 มิ.ย. 2569", "time_th": "01:43", "category": "intel", "scope": "ติดตามคู่แข่ง (week)", "action": "track", "summary": "ติดตามคู่แข่ง 7 วันล่าสุด — 27 ร้าน", "details": ["คู่แข่งใหม่ 6 ร้าน: Cafe Jackies, Hokkaido Craft, HOME UP, Hook cafe, E BUAI, The Mountain", "WE HUG CAFE เพิ่ม FoodPanda + Mother Day promo 15%", "MOKA FOX: Instagram @mokafox18 พบใหม่, Wongnai rank #19/481 คงที่", "Elemental Haus: LINE MAN confirmed + TikTok personality content"], "count": 27}, {"id": "20260609-012412", "ts": "2026-06-09T01:24:12", "date_th": "9 มิ.ย. 2569", "time_th": "01:24", "category": "platform", "scope": "tiktok", "action": "import", "summary": "นำเข้าข้อมูล TikTok (365 แถว)", "details": [], "count": 365}, {"id": "bf-intel-competitor-changes-20260608", "ts": "2026-06-08T11:00:00", "date_th": "8 มิ.ย. 2569", "time_th": "11:00", "category": "intel", "scope": "ติดตามคู่แข่ง", "action": "track", "summary": "อัปเดตการเปลี่ยนแปลงคู่แข่ง (20260608)", "details": [], "count": null}, {"id": "bf-intel-competitor-changes-20260608b", "ts": "2026-06-08T11:00:00", "date_th": "8 มิ.ย. 2569", "time_th": "11:00", "category": "intel", "scope": "ติดตามคู่แข่ง", "action": "track", "summary": "อัปเดตการเปลี่ยนแปลงคู่แข่ง (20260608b)", "details": [], "count": null}, {"id": "bf-intel-competitor-changes-20260608c", "ts": "2026-06-08T11:00:00", "date_th": "8 มิ.ย. 2569", "time_th": "11:00", "category": "intel", "scope": "ติดตามคู่แข่ง", "action": "track", "summary": "อัปเดตการเปลี่ยนแปลงคู่แข่ง (20260608c)", "details": [], "count": null}, {"id": "bf-platform-facebook-20260608", "ts": "2026-06-08T09:00:00", "date_th": "8 มิ.ย. 2569", "time_th": "09:00", "category": "platform", "scope": "facebook", "action": "import", "summary": "นำเข้าข้อมูล Facebook (140 แถว)", "details": [], "count": 140}, {"id": "bf-platform-instagram-20260608", "ts": "2026-06-08T09:00:00", "date_th": "8 มิ.ย. 2569", "time_th": "09:00", "category": "platform", "scope": "instagram", "action": "import", "summary": "นำเข้าข้อมูล Instagram (140 แถว)", "details": [], "count": 140}, {"id": "bf-platform-tiktok-20260608", "ts": "2026-06-08T09:00:00", "date_th": "8 มิ.ย. 2569", "time_th": "09:00", "category": "platform", "scope": "tiktok", "action": "import", "summary": "นำเข้าข้อมูล TikTok (365 แถว)", "details": [], "count": 365}, {"id": "bf-intel-competitor-changes-20260528", "ts": "2026-05-28T11:00:00", "date_th": "28 พ.ค. 2569", "time_th": "11:00", "category": "intel", "scope": "ติดตามคู่แข่ง", "action": "track", "summary": "อัปเดตการเปลี่ยนแปลงคู่แข่ง (20260528)", "details": [], "count": null}, {"id": "bf-platform-facebook-20260528", "ts": "2026-05-28T09:00:00", "date_th": "28 พ.ค. 2569", "time_th": "09:00", "category": "platform", "scope": "facebook", "action": "import", "summary": "นำเข้าข้อมูล Facebook (140 แถว)", "details": [], "count": 140}, {"id": "bf-platform-instagram-20260528", "ts": "2026-05-28T09:00:00", "date_th": "28 พ.ค. 2569", "time_th": "09:00", "category": "platform", "scope": "instagram", "action": "import", "summary": "นำเข้าข้อมูล Instagram (140 แถว)", "details": [], "count": 140}, {"id": "bf-platform-tiktok-20260528", "ts": "2026-05-28T09:00:00", "date_th": "28 พ.ค. 2569", "time_th": "09:00", "category": "platform", "scope": "tiktok", "action": "import", "summary": "นำเข้าข้อมูล TikTok (365 แถว)", "details": [], "count": 365}, {"id": "bf-intel-competitor-changes-20260525", "ts": "2026-05-25T11:00:00", "date_th": "25 พ.ค. 2569", "time_th": "11:00", "category": "intel", "scope": "ติดตามคู่แข่ง", "action": "track", "summary": "อัปเดตการเปลี่ยนแปลงคู่แข่ง (20260525)", "details": [], "count": null}, {"id": "bf-platform-facebook-20260525", "ts": "2026-05-25T09:00:00", "date_th": "25 พ.ค. 2569", "time_th": "09:00", "category": "platform", "scope": "facebook", "action": "import", "summary": "นำเข้าข้อมูล Facebook (140 แถว)", "details": [], "count": 140}, {"id": "bf-platform-instagram-20260525", "ts": "2026-05-25T09:00:00", "date_th": "25 พ.ค. 2569", "time_th": "09:00", "category": "platform", "scope": "instagram", "action": "import", "summary": "นำเข้าข้อมูล Instagram (140 แถว)", "details": [], "count": 140}, {"id": "bf-platform-tiktok-20260525", "ts": "2026-05-25T09:00:00", "date_th": "25 พ.ค. 2569", "time_th": "09:00", "category": "platform", "scope": "tiktok", "action": "import", "summary": "นำเข้าข้อมูล TikTok (365 แถว)", "details": [], "count": 365}, {"id": "bf-intel-competitor-changes-20260524", "ts": "2026-05-24T11:00:00", "date_th": "24 พ.ค. 2569", "time_th": "11:00", "category": "intel", "scope": "ติดตามคู่แข่ง", "action": "track", "summary": "อัปเดตการเปลี่ยนแปลงคู่แข่ง (20260524)", "details": [], "count": null}, {"id": "bf-intel-competitor-changes-20260524b", "ts": "2026-05-24T11:00:00", "date_th": "24 พ.ค. 2569", "time_th": "11:00", "category": "intel", "scope": "ติดตามคู่แข่ง", "action": "track", "summary": "อัปเดตการเปลี่ยนแปลงคู่แข่ง (20260524b)", "details": [], "count": null}, {"id": "bf-intel-intel-20260524-wehug-cafe", "ts": "2026-05-24T10:00:00", "date_th": "24 พ.ค. 2569", "time_th": "10:00", "category": "intel", "scope": "wehug-cafe", "action": "research", "summary": "ค้นข้อมูลตลาด/คู่แข่ง: wehug-cafe", "details": [], "count": null}, {"id": "bf-platform-facebook-20260524", "ts": "2026-05-24T09:00:00", "date_th": "24 พ.ค. 2569", "time_th": "09:00", "category": "platform", "scope": "facebook", "action": "import", "summary": "นำเข้าข้อมูล Facebook (140 แถว)", "details": [], "count": 140}, {"id": "bf-platform-instagram-20260524", "ts": "2026-05-24T09:00:00", "date_th": "24 พ.ค. 2569", "time_th": "09:00", "category": "platform", "scope": "instagram", "action": "import", "summary": "นำเข้าข้อมูล Instagram (140 แถว)", "details": [], "count": 140}, {"id": "bf-platform-tiktok-20260524", "ts": "2026-05-24T09:00:00", "date_th": "24 พ.ค. 2569", "time_th": "09:00", "category": "platform", "scope": "tiktok", "action": "import", "summary": "นำเข้าข้อมูล TikTok (365 แถว)", "details": [], "count": 365}, {"id": "bf-intel-competitor-changes-20260523a", "ts": "2026-05-23T11:00:00", "date_th": "23 พ.ค. 2569", "time_th": "11:00", "category": "intel", "scope": "ติดตามคู่แข่ง", "action": "track", "summary": "อัปเดตการเปลี่ยนแปลงคู่แข่ง (20260523a)", "details": [], "count": null}, {"id": "bf-intel-competitor-changes-20260523b", "ts": "2026-05-23T11:00:00", "date_th": "23 พ.ค. 2569", "time_th": "11:00", "category": "intel", "scope": "ติดตามคู่แข่ง", "action": "track", "summary": "อัปเดตการเปลี่ยนแปลงคู่แข่ง (20260523b)", "details": [], "count": null}, {"id": "bf-intel-competitor-changes-20260523c", "ts": "2026-05-23T11:00:00", "date_th": "23 พ.ค. 2569", "time_th": "11:00", "category": "intel", "scope": "ติดตามคู่แข่ง", "action": "track", "summary": "อัปเดตการเปลี่ยนแปลงคู่แข่ง (20260523c)", "details": [], "count": null}, {"id": "bf-intel-competitor-changes-20260523d", "ts": "2026-05-23T11:00:00", "date_th": "23 พ.ค. 2569", "time_th": "11:00", "category": "intel", "scope": "ติดตามคู่แข่ง", "action": "track", "summary": "อัปเดตการเปลี่ยนแปลงคู่แข่ง (20260523d)", "details": [], "count": null}, {"id": "bf-intel-intel-20260523-a-cup-of-joy", "ts": "2026-05-23T10:00:00", "date_th": "23 พ.ค. 2569", "time_th": "10:00", "category": "intel", "scope": "a-cup-of-joy", "action": "research", "summary": "ค้นข้อมูลตลาด/คู่แข่ง: a-cup-of-joy", "details": [], "count": null}, {"id": "bf-intel-intel-20260523-boonnar-art-space", "ts": "2026-05-23T10:00:00", "date_th": "23 พ.ค. 2569", "time_th": "10:00", "category": "intel", "scope": "boonnar-art-space", "action": "research", "summary": "ค้นข้อมูลตลาด/คู่แข่ง: boonnar-art-space", "details": [], "count": null}, {"id": "bf-intel-intel-20260523-moka-fox", "ts": "2026-05-23T10:00:00", "date_th": "23 พ.ค. 2569", "time_th": "10:00", "category": "intel", "scope": "moka-fox", "action": "research", "summary": "ค้นข้อมูลตลาด/คู่แข่ง: moka-fox", "details": [], "count": null}, {"id": "bf-intel-intel-20260523-panacomehome", "ts": "2026-05-23T10:00:00", "date_th": "23 พ.ค. 2569", "time_th": "10:00", "category": "intel", "scope": "panacomehome", "action": "research", "summary": "ค้นข้อมูลตลาด/คู่แข่ง: panacomehome", "details": [], "count": null}, {"id": "bf-platform-facebook-20260523", "ts": "2026-05-23T09:00:00", "date_th": "23 พ.ค. 2569", "time_th": "09:00", "category": "platform", "scope": "facebook", "action": "import", "summary": "นำเข้าข้อมูล Facebook (140 แถว)", "details": [], "count": 140}, {"id": "bf-platform-instagram-20260523", "ts": "2026-05-23T09:00:00", "date_th": "23 พ.ค. 2569", "time_th": "09:00", "category": "platform", "scope": "instagram", "action": "import", "summary": "นำเข้าข้อมูล Instagram (140 แถว)", "details": [], "count": 140}, {"id": "bf-platform-tiktok-20260523", "ts": "2026-05-23T09:00:00", "date_th": "23 พ.ค. 2569", "time_th": "09:00", "category": "platform", "scope": "tiktok", "action": "import", "summary": "นำเข้าข้อมูล TikTok (365 แถว)", "details": [], "count": 365}, {"id": "bf-intel-competitor-changes-20260522", "ts": "2026-05-22T11:00:00", "date_th": "22 พ.ค. 2569", "time_th": "11:00", "category": "intel", "scope": "ติดตามคู่แข่ง", "action": "track", "summary": "อัปเดตการเปลี่ยนแปลงคู่แข่ง (20260522)", "details": [], "count": null}, {"id": "bf-intel-competitor-changes-20260522b", "ts": "2026-05-22T11:00:00", "date_th": "22 พ.ค. 2569", "time_th": "11:00", "category": "intel", "scope": "ติดตามคู่แข่ง", "action": "track", "summary": "อัปเดตการเปลี่ยนแปลงคู่แข่ง (20260522b)", "details": [], "count": null}, {"id": "bf-intel-competitor-changes-20260522c", "ts": "2026-05-22T11:00:00", "date_th": "22 พ.ค. 2569", "time_th": "11:00", "category": "intel", "scope": "ติดตามคู่แข่ง", "action": "track", "summary": "อัปเดตการเปลี่ยนแปลงคู่แข่ง (20260522c)", "details": [], "count": null}, {"id": "bf-intel-competitor-changes-20260522d", "ts": "2026-05-22T11:00:00", "date_th": "22 พ.ค. 2569", "time_th": "11:00", "category": "intel", "scope": "ติดตามคู่แข่ง", "action": "track", "summary": "อัปเดตการเปลี่ยนแปลงคู่แข่ง (20260522d)", "details": [], "count": null}, {"id": "bf-intel-competitor-changes-20260522e", "ts": "2026-05-22T11:00:00", "date_th": "22 พ.ค. 2569", "time_th": "11:00", "category": "intel", "scope": "ติดตามคู่แข่ง", "action": "track", "summary": "อัปเดตการเปลี่ยนแปลงคู่แข่ง (20260522e)", "details": [], "count": null}, {"id": "bf-intel-competitor-changes-20260522f", "ts": "2026-05-22T11:00:00", "date_th": "22 พ.ค. 2569", "time_th": "11:00", "category": "intel", "scope": "ติดตามคู่แข่ง", "action": "track", "summary": "อัปเดตการเปลี่ยนแปลงคู่แข่ง (20260522f)", "details": [], "count": null}, {"id": "bf-intel-competitor-changes-20260522g", "ts": "2026-05-22T11:00:00", "date_th": "22 พ.ค. 2569", "time_th": "11:00", "category": "intel", "scope": "ติดตามคู่แข่ง", "action": "track", "summary": "อัปเดตการเปลี่ยนแปลงคู่แข่ง (20260522g)", "details": [], "count": null}, {"id": "bf-intel-intel-20260522-AllofKK", "ts": "2026-05-22T10:00:00", "date_th": "22 พ.ค. 2569", "time_th": "10:00", "category": "intel", "scope": "AllofKK", "action": "research", "summary": "ค้นข้อมูลตลาด/คู่แข่ง: AllofKK", "details": [], "count": null}, {"id": "bf-intel-intel-20260522-chann-cafe", "ts": "2026-05-22T10:00:00", "date_th": "22 พ.ค. 2569", "time_th": "10:00", "category": "intel", "scope": "chann-cafe", "action": "research", "summary": "ค้นข้อมูลตลาด/คู่แข่ง: chann-cafe", "details": [], "count": null}, {"id": "bf-intel-intel-20260522-elemental-haus", "ts": "2026-05-22T10:00:00", "date_th": "22 พ.ค. 2569", "time_th": "10:00", "category": "intel", "scope": "elemental-haus", "action": "research", "summary": "ค้นข้อมูลตลาด/คู่แข่ง: elemental-haus", "details": [], "count": null}, {"id": "bf-intel-intel-20260522-jumpot-kuckhang", "ts": "2026-05-22T10:00:00", "date_th": "22 พ.ค. 2569", "time_th": "10:00", "category": "intel", "scope": "jumpot-kuckhang", "action": "research", "summary": "ค้นข้อมูลตลาด/คู่แข่ง: jumpot-kuckhang", "details": [], "count": null}, {"id": "bf-intel-intel-20260522-rok-n-road", "ts": "2026-05-22T10:00:00", "date_th": "22 พ.ค. 2569", "time_th": "10:00", "category": "intel", "scope": "rok-n-road", "action": "research", "summary": "ค้นข้อมูลตลาด/คู่แข่ง: rok-n-road", "details": [], "count": null}, {"id": "bf-intel-intel-20260522-SNIFF-coffee", "ts": "2026-05-22T10:00:00", "date_th": "22 พ.ค. 2569", "time_th": "10:00", "category": "intel", "scope": "SNIFF-coffee", "action": "research", "summary": "ค้นข้อมูลตลาด/คู่แข่ง: SNIFF-coffee", "details": [], "count": null}, {"id": "bf-intel-intel-20260522-ZMd-cafe", "ts": "2026-05-22T10:00:00", "date_th": "22 พ.ค. 2569", "time_th": "10:00", "category": "intel", "scope": "ZMd-cafe", "action": "research", "summary": "ค้นข้อมูลตลาด/คู่แข่ง: ZMd-cafe", "details": [], "count": null}, {"id": "bf-intel-intel-20260522-มีสุขสโลว์บาร์", "ts": "2026-05-22T10:00:00", "date_th": "22 พ.ค. 2569", "time_th": "10:00", "category": "intel", "scope": "มีสุขสโลว์บาร์", "action": "research", "summary": "ค้นข้อมูลตลาด/คู่แข่ง: มีสุขสโลว์บาร์", "details": [], "count": null}, {"id": "bf-platform-facebook-20260522", "ts": "2026-05-22T09:00:00", "date_th": "22 พ.ค. 2569", "time_th": "09:00", "category": "platform", "scope": "facebook", "action": "import", "summary": "นำเข้าข้อมูล Facebook (140 แถว)", "details": [], "count": 140}, {"id": "bf-platform-instagram-20260522", "ts": "2026-05-22T09:00:00", "date_th": "22 พ.ค. 2569", "time_th": "09:00", "category": "platform", "scope": "instagram", "action": "import", "summary": "นำเข้าข้อมูล Instagram (140 แถว)", "details": [], "count": 140}, {"id": "bf-platform-tiktok-20260522", "ts": "2026-05-22T09:00:00", "date_th": "22 พ.ค. 2569", "time_th": "09:00", "category": "platform", "scope": "tiktok", "action": "import", "summary": "นำเข้าข้อมูล TikTok (365 แถว)", "details": [], "count": 365}, {"id": "bf-intel-competitor-changes-20260521", "ts": "2026-05-21T11:00:00", "date_th": "21 พ.ค. 2569", "time_th": "11:00", "category": "intel", "scope": "ติดตามคู่แข่ง", "action": "track", "summary": "อัปเดตการเปลี่ยนแปลงคู่แข่ง (20260521)", "details": [], "count": null}, {"id": "bf-intel-intel-20260521-Alice-cafe", "ts": "2026-05-21T10:00:00", "date_th": "21 พ.ค. 2569", "time_th": "10:00", "category": "intel", "scope": "Alice-cafe", "action": "research", "summary": "ค้นข้อมูลตลาด/คู่แข่ง: Alice-cafe", "details": [], "count": null}, {"id": "bf-intel-intel-20260521-delivery", "ts": "2026-05-21T10:00:00", "date_th": "21 พ.ค. 2569", "time_th": "10:00", "category": "intel", "scope": "delivery", "action": "research", "summary": "ค้นข้อมูลตลาด/คู่แข่ง: delivery", "details": [], "count": null}, {"id": "bf-intel-intel-20260521-Raintree.cafe", "ts": "2026-05-21T10:00:00", "date_th": "21 พ.ค. 2569", "time_th": "10:00", "category": "intel", "scope": "Raintree.cafe", "action": "research", "summary": "ค้นข้อมูลตลาด/คู่แข่ง: Raintree.cafe", "details": [], "count": null}, {"id": "bf-platform-facebook-20260521", "ts": "2026-05-21T09:00:00", "date_th": "21 พ.ค. 2569", "time_th": "09:00", "category": "platform", "scope": "facebook", "action": "import", "summary": "นำเข้าข้อมูล Facebook (140 แถว)", "details": [], "count": 140}, {"id": "bf-platform-instagram-20260521", "ts": "2026-05-21T09:00:00", "date_th": "21 พ.ค. 2569", "time_th": "09:00", "category": "platform", "scope": "instagram", "action": "import", "summary": "นำเข้าข้อมูล Instagram (140 แถว)", "details": [], "count": 140}, {"id": "bf-platform-tiktok-20260521", "ts": "2026-05-21T09:00:00", "date_th": "21 พ.ค. 2569", "time_th": "09:00", "category": "platform", "scope": "tiktok", "action": "import", "summary": "นำเข้าข้อมูล TikTok (365 แถว)", "details": [], "count": 365}, {"id": "bf-platform-facebook-20260520", "ts": "2026-05-20T09:00:00", "date_th": "20 พ.ค. 2569", "time_th": "09:00", "category": "platform", "scope": "facebook", "action": "import", "summary": "นำเข้าข้อมูล Facebook (140 แถว)", "details": [], "count": 140}, {"id": "bf-platform-instagram-20260520", "ts": "2026-05-20T09:00:00", "date_th": "20 พ.ค. 2569", "time_th": "09:00", "category": "platform", "scope": "instagram", "action": "import", "summary": "นำเข้าข้อมูล Instagram (140 แถว)", "details": [], "count": 140}, {"id": "bf-platform-tiktok-20260520", "ts": "2026-05-20T09:00:00", "date_th": "20 พ.ค. 2569", "time_th": "09:00", "category": "platform", "scope": "tiktok", "action": "import", "summary": "นำเข้าข้อมูล TikTok (365 แถว)", "details": [], "count": 365}];
 const UPDATE_SUMMARY = {"platform": {"count": 28, "last_ts": "2026-06-09T09:00:00", "last_date_th": "9 มิ.ย. 2569", "last_time_th": "09:00"}, "intel": {"count": 43, "last_ts": "2026-06-09T11:00:00", "last_date_th": "9 มิ.ย. 2569", "last_time_th": "11:00"}, "all": {"count": 71, "last_ts": "2026-06-09T11:00:00", "last_date_th": "9 มิ.ย. 2569", "last_time_th": "11:00"}};
 const LOGOS = {"competitor-acupofjoycoffee": "assets/logos/competitor-acupofjoycoffee.png", "competitor-alice": "assets/logos/competitor-alice.jpg", "competitor-allofkk": "assets/logos/competitor-allofkk.jpg", "competitor-amazon-coffee": "assets/logos/competitor-amazon-coffee.png", "competitor-boonnar": "assets/logos/competitor-boonnar.png", "competitor-cafejackies": "assets/logos/competitor-cafejackies.jpg", "competitor-cantocafe": "assets/logos/competitor-cantocafe.jpg", "competitor-chann": "assets/logos/competitor-chann.jpg", "competitor-ebuai": "assets/logos/competitor-ebuai.jpg", "competitor-elemental": "assets/logos/competitor-elemental.jpg", "competitor-hokkaido-craft": "assets/logos/competitor-hokkaido-craft.jpg", "competitor-homeup": "assets/logos/competitor-homeup.jpg", "competitor-hookcafe": "assets/logos/competitor-hookcafe.jpg", "competitor-inthanin": "assets/logos/competitor-inthanin.png", "competitor-jumpot": "assets/logos/competitor-jumpot.jpg", "competitor-local-cafe": "assets/logos/competitor-local-cafe.png", "competitor-meesuk": "assets/logos/competitor-meesuk.jpg", "competitor-mokafox": "assets/logos/competitor-mokafox.jpg", "competitor-panacomehome": "assets/logos/competitor-panacomehome.png", "competitor-raintree": "assets/logos/competitor-raintree.jpg", "competitor-roknroad": "assets/logos/competitor-roknroad.png", "competitor-sniff": "assets/logos/competitor-sniff.jpg", "competitor-themountain": "assets/logos/competitor-themountain.jpg", "competitor-wawee": "assets/logos/competitor-wawee.jpg", "competitor-wehugcafe": "assets/logos/competitor-wehugcafe.jpg", "competitor-yepcafe": "assets/logos/competitor-yepcafe.png", "competitor-zmd": "assets/logos/competitor-zmd.jpg"};
+const DRINK_COSTS = {"source": "Behind_drinks_cost2025.xlsx", "parsed_at": "2026-06-09T21:27:18", "assumptions": {"overhead": 0.3, "margin_factor": 1.6, "fixed_cost_monthly": 30000, "days_per_month": 30, "channels": {"store": {"label": "หน้าร้าน", "gp": 0.0, "vat": 0.0}, "lineman": {"label": "Lineman", "gp": 0.3, "vat": 0.07}, "shoppee": {"label": "Shoppee", "gp": 0.32, "vat": 0.07}}}, "catalog": {"กาแฟ วน": {"price": 420.0, "qty": 1000.0, "unit_cost": 0.42, "unit": "กรัม/มล."}, "แก้ว 14 + ฝา 98": {"price": 100.0, "qty": 50.0, "unit_cost": 2.0, "unit": "ชิ้น"}, "หลอด": {"price": 17.0, "qty": 100.0, "unit_cost": 0.17, "unit": "ชิ้น"}, "น้ำเปล่า": {"price": 4.6, "qty": 1500.0, "unit_cost": 0.00307, "unit": "กรัม/มล."}, "Sunquick 1966": {"price": 219.0, "qty": 1000.0, "unit_cost": 0.219, "unit": "กรัม/มล."}, "มิตรผลน้ำเชื่อมเข้มข้น": {"price": 45.0, "qty": 800.0, "unit_cost": 0.05625, "unit": "กรัม/มล."}, "แก้ว 16 + ฝา 98": {"price": 100.0, "qty": 50.0, "unit_cost": 2.0, "unit": "ชิ้น"}, "Mmilk": {"price": 98.0, "qty": 2000.0, "unit_cost": 0.049, "unit": "กรัม/มล."}, "ข้นหวาน Canation": {"price": 118.0, "qty": 2000.0, "unit_cost": 0.059, "unit": "กรัม/มล."}, "Soda": {"price": 7.5, "qty": 325.0, "unit_cost": 0.02308, "unit": "กรัม/มล."}, "Falcon": {"price": 53.0, "qty": 1000.0, "unit_cost": 0.053, "unit": "กรัม/มล."}, "น้ำผึ้ง Aro": {"price": 150.0, "qty": 1000.0, "unit_cost": 0.15, "unit": "กรัม/มล."}, "คนอร์ผงรสมะนาว": {"price": 27.0, "qty": 250.0, "unit_cost": 0.108, "unit": "กรัม/มล."}, "ลองบีช เลม่อนมะนาว": {"price": 125.0, "qty": 740.0, "unit_cost": 0.16892, "unit": "กรัม/มล."}, "Monin popcorn/mint": {"price": 390.0, "qty": 700.0, "unit_cost": 0.55714, "unit": "กรัม/มล."}, "White Cho LongBeach": {"price": 145.0, "qty": 700.0, "unit_cost": 0.20714, "unit": "กรัม/มล."}, "คอฟฟี่เมจ": {"price": 135.0, "qty": 1000.0, "unit_cost": 0.135, "unit": "กรัม/มล."}, "โกโก้ Tulip 32 %": {"price": 265.0, "qty": 350.0, "unit_cost": 0.75714, "unit": "กรัม/มล."}, "พีชไซรัป": {"price": 205.0, "qty": 750.0, "unit_cost": 0.27333, "unit": "กรัม/มล."}, "โซดา": {"price": 8.0, "qty": 325.0, "unit_cost": 0.02462, "unit": "กรัม/มล."}, "มังกรบิน หัวเชื้อ": {"price": 100.0, "qty": 200.0, "unit_cost": 0.5, "unit": "กรัม/มล."}, "ชาตรามือเขียว": {"price": 75.0, "qty": 200.0, "unit_cost": 0.375, "unit": "กรัม/มล."}, "ผงชาเขียวญี่ปุ่น": {"price": 85.0, "qty": 450.0, "unit_cost": 0.18889, "unit": "กรัม/มล."}, "ชาเขียวหัวเชื้อ": {"price": 120.0, "qty": 900.0, "unit_cost": 0.13333, "unit": "กรัม/มล."}, "Monin mint": {"price": 390.0, "qty": 700.0, "unit_cost": 0.55714, "unit": "กรัม/มล."}, "ชาตรามือแดง": {"price": 75.0, "qty": 400.0, "unit_cost": 0.1875, "unit": "กรัม/มล."}, "Macha Kawami": {"price": 210.0, "qty": 200.0, "unit_cost": 1.05, "unit": "กรัม/มล."}, "ชาไทยหัวเชื้อ": {"price": 64.77, "qty": 900.0, "unit_cost": 0.07197, "unit": "กรัม/มล."}, "กาแฟ Brazil เข้ม": {"price": 400.0, "qty": 1000.0, "unit_cost": 0.4, "unit": "กรัม/มล."}, "กาแฟ พี่ต้น": {"price": 730.0, "qty": 1000.0, "unit_cost": 0.73, "unit": "กรัม/มล."}, "กาแฟ ต้น": {"price": 730.0, "qty": 1000.0, "unit_cost": 0.73, "unit": "กรัม/มล."}, "กาแฟ หอมนัว": {"price": 480.0, "qty": 1000.0, "unit_cost": 0.48, "unit": "กรัม/มล."}, "กาแฟ Peaberry": {"price": 650.0, "qty": 1000.0, "unit_cost": 0.65, "unit": "กรัม/มล."}, "กาแฟ ดรีมมี่": {"price": 400.0, "qty": 1000.0, "unit_cost": 0.4, "unit": "กรัม/มล."}, "กาแฟ บราซิลเข้ม": {"price": 600.0, "qty": 1000.0, "unit_cost": 0.6, "unit": "กรัม/มล."}, "กาแฟ Blueberry": {"price": 300.0, "qty": 250.0, "unit_cost": 1.2, "unit": "กรัม/มล."}, "กาแฟ Ethiopia G1": {"price": 339.0, "qty": 250.0, "unit_cost": 1.356, "unit": "กรัม/มล."}, "กาแฟ Rumrum": {"price": 1000.0, "qty": 1000.0, "unit_cost": 1.0, "unit": "กรัม/มล."}, "กาแฟ brazil santos": {"price": 159.0, "qty": 250.0, "unit_cost": 0.636, "unit": "กรัม/มล."}, "กาแฟ Gentleman": {"price": 179.0, "qty": 250.0, "unit_cost": 0.716, "unit": "กรัม/มล."}, "กาแฟ หอมนัวฟ้า": {"price": 480.0, "qty": 1000.0, "unit_cost": 0.48, "unit": "กรัม/มล."}, "ถุงซิปใส่น้ำแข็ง": {"price": 70.0, "qty": 100.0, "unit_cost": 0.7, "unit": "ชิ้น"}, "น้ำร้อน": {"price": 4.6, "qty": 1500.0, "unit_cost": 0.00307, "unit": "กรัม/มล."}, "น้ำผึ้ง": {"price": 225.0, "qty": 1000.0, "unit_cost": 0.225, "unit": "กรัม/มล."}, "ผงมะนาว": {"price": 25.0, "qty": 67.0, "unit_cost": 0.37313, "unit": "กรัม/มล."}, "น้ำส้ม (ซันควิก)": {"price": 219.0, "qty": 1000.0, "unit_cost": 0.219, "unit": "กรัม/มล."}, "ไซรัปมะพร้าว": {"price": 199.0, "qty": 750.0, "unit_cost": 0.26533, "unit": "กรัม/มล."}, "นมข้นจืด (Falcon)": {"price": 55.0, "qty": 1000.0, "unit_cost": 0.055, "unit": "กรัม/มล."}, "นมสด Mmilk": {"price": 98.0, "qty": 2000.0, "unit_cost": 0.049, "unit": "กรัม/มล."}, "นมข้นหวาน": {"price": 118.0, "qty": 2000.0, "unit_cost": 0.059, "unit": "กรัม/มล."}, "กาแฟ หอมนัวแดง": {"price": 480.0, "qty": 1000.0, "unit_cost": 0.48, "unit": "กรัม/มล."}, "ฟองนมMmilk": {"price": 98.0, "qty": 2000.0, "unit_cost": 0.049, "unit": "กรัม/มล."}, "กาแฟ 88 coffee": {"price": 600.0, "qty": 1000.0, "unit_cost": 0.6, "unit": "กรัม/มล."}, "นมจืด Mmilk": {"price": 98.0, "qty": 2000.0, "unit_cost": 0.049, "unit": "กรัม/มล."}, "popcorn/mint": {"price": 390.0, "qty": 700.0, "unit_cost": 0.55714, "unit": "กรัม/มล."}, "น้ำเปล่าใส่ในการสกัด": {"price": 4.6, "qty": 1500.0, "unit_cost": 0.00307, "unit": "กรัม/มล."}, "ชาเขียว (หัวเชื้อ)": {"price": 100.0, "qty": 200.0, "unit_cost": 0.5, "unit": "กรัม/มล."}, "ชาเขียว (มือ)": {"price": 85.0, "qty": 200.0, "unit_cost": 0.425, "unit": "กรัม/มล."}, "ผงชาเขียว": {"price": 85.0, "qty": 450.0, "unit_cost": 0.18889, "unit": "กรัม/มล."}, "ฟองนม mmilk": {"price": 98.0, "qty": 2000.0, "unit_cost": 0.049, "unit": "กรัม/มล."}, "เบสชา": {"price": 150.0, "qty": 900.0, "unit_cost": 0.16667, "unit": "กรัม/มล."}, "มิตรผล": {"price": 45.0, "qty": 800.0, "unit_cost": 0.05625, "unit": "กรัม/มล."}, "ชาไทยตรามือ": {"price": 85.0, "qty": 400.0, "unit_cost": 0.2125, "unit": "กรัม/มล."}, "ชาตรามือ": {"price": 85.0, "qty": 400.0, "unit_cost": 0.2125, "unit": "กรัม/มล."}, "นมข้นจืด (คาเนชัน)": {"price": 118.0, "qty": 2000.0, "unit_cost": 0.059, "unit": "กรัม/มล."}, "popcorn / mint": {"price": 390.0, "qty": 700.0, "unit_cost": 0.55714, "unit": "กรัม/มล."}, "โกโก้ทิวลิป": {"price": 265.0, "qty": 350.0, "unit_cost": 0.75714, "unit": "กรัม/มล."}, "ไซรัปไวท์ช็อค": {"price": 145.0, "qty": 700.0, "unit_cost": 0.20714, "unit": "กรัม/มล."}, "นมข้นหวาน (คาเนชัน)": {"price": 118.0, "qty": 2000.0, "unit_cost": 0.059, "unit": "กรัม/มล."}, "กาแฟ": {"price": 340.0, "qty": 1000.0, "unit_cost": 0.34, "unit": "กรัม/มล."}, "แก้ว 16 ออน": {"price": 60.0, "qty": 50.0, "unit_cost": 1.2, "unit": "ชิ้น"}, "แก้ว 14 ออน": {"price": 65.0, "qty": 50.0, "unit_cost": 1.3, "unit": "ชิ้น"}, "ฝา 98 ยกดื่ม": {"price": 28.0, "qty": 50.0, "unit_cost": 0.56, "unit": "ชิ้น"}, "ถุงซิป": {"price": 70.0, "qty": 100.0, "unit_cost": 0.7, "unit": "ชิ้น"}, "กระดาษปิดฝาแก้ว": {"price": 50.0, "qty": 500.0, "unit_cost": 0.1, "unit": "ชิ้น"}, "ถุงใส่แก้ว": {"price": 17.0, "qty": 100.0, "unit_cost": 0.17, "unit": "ชิ้น"}, "น้ำเปล่า ปันสุข": {"price": 4.6, "qty": 1500.0, "unit_cost": 0.00307, "unit": "กรัม/มล."}, "Monin popcorn": {"price": 390.0, "qty": 700.0, "unit_cost": 0.55714, "unit": "กรัม/มล."}, "มังกรบิน หัววเชื้อ": {"price": 100.0, "qty": 200.0, "unit_cost": 0.5, "unit": "กรัม/มล."}}, "menus": [{"id": "m1", "name": "อเมริกาโน่เย็นคั่วเข้ม EP", "category": "กาแฟ", "recipe": [], "prices": {"store": 45.0, "lineman": 45.0, "shoppee": 45.0}, "seed_cost_cup": 12.61}, {"id": "m2", "name": "อเมริกาโน่เย็นคั่วกลาง Peaberry", "category": "กาแฟ", "recipe": [], "prices": {"store": 50.0, "lineman": 50.0, "shoppee": 50.0}, "seed_cost_cup": 18.46}, {"id": "m3", "name": "อเมริกาโน่ Blueberry", "category": "กาแฟ", "recipe": [], "prices": {"store": 80.0, "lineman": 80.0, "shoppee": 80.0}, "seed_cost_cup": 31.33}, {"id": "m4", "name": "อเมริกาโน่ Rumrum", "category": "กาแฟ", "recipe": [], "prices": {"store": 60.0, "lineman": 60.0, "shoppee": 60.0}, "seed_cost_cup": 26.65}, {"id": "m5", "name": "อเมริกาโน่ส้ม", "category": "กาแฟ", "recipe": [{"ing": "กาแฟ วน", "qty": 18.0}, {"ing": "แก้ว 14 + ฝา 98", "qty": 1.0}, {"ing": "หลอด", "qty": 1.0}, {"ing": "น้ำเปล่า", "qty": 100.0}, {"ing": "Sunquick 1966", "qty": 25.0}, {"ing": "มิตรผลน้ำเชื่อมเข้มข้น", "qty": 10.0}], "prices": {"store": 55.0, "lineman": 55.0, "shoppee": 55.0}, "seed_cost_cup": 19.72}, {"id": "m6", "name": "อเมริกาโน่น้ำผึ้ง", "category": "กาแฟ", "recipe": [{"ing": "กาแฟ วน", "qty": 18.0}, {"ing": "แก้ว 14 + ฝา 98", "qty": 1.0}, {"ing": "หลอด", "qty": 1.0}, {"ing": "น้ำเปล่า", "qty": 100.0}, {"ing": "น้ำผึ้ง Aro", "qty": 30.0}], "prices": {"store": 55.0, "lineman": 55.0, "shoppee": 55.0}, "seed_cost_cup": 17.48}, {"id": "m7", "name": "อเมริกาโน่น้ำผึ้งมะนาว", "category": "กาแฟ", "recipe": [{"ing": "กาแฟ วน", "qty": 18.0}, {"ing": "แก้ว 14 + ฝา 98", "qty": 1.0}, {"ing": "หลอด", "qty": 1.0}, {"ing": "น้ำเปล่า", "qty": 100.0}, {"ing": "น้ำผึ้ง Aro", "qty": 30.0}, {"ing": "คนอร์ผงรสมะนาว", "qty": 10.0}, {"ing": "ลองบีช เลม่อนมะนาว", "qty": 10.0}], "prices": {"store": 60.0, "lineman": 60.0, "shoppee": 60.0}, "seed_cost_cup": 18.18}, {"id": "m8", "name": "เอสเพรสโซ่ช็อต", "category": "กาแฟ", "recipe": [], "prices": {"store": 20.0, "lineman": 20.0, "shoppee": 20.0}, "seed_cost_cup": 9.68}, {"id": "m9", "name": "เอสเปรสโซ่เย็น", "category": "กาแฟ", "recipe": [], "prices": {"store": 50.0, "lineman": 50.0, "shoppee": 50.0}, "seed_cost_cup": 21.19}, {"id": "m10", "name": "เอสเปรสโซ่เย็น Rumrum", "category": "กาแฟ", "recipe": [], "prices": {"store": 60.0, "lineman": 60.0, "shoppee": 60.0}, "seed_cost_cup": 35.23}, {"id": "m11", "name": "ลาเต้", "category": "กาแฟ", "recipe": [{"ing": "กาแฟ วน", "qty": 18.0}, {"ing": "แก้ว 16 + ฝา 98", "qty": 1.0}, {"ing": "หลอด", "qty": 1.0}, {"ing": "Mmilk", "qty": 120.0}, {"ing": "ข้นหวาน Canation", "qty": 20.0}], "prices": {"store": 55.0, "lineman": 55.0, "shoppee": 55.0}, "seed_cost_cup": 21.38}, {"id": "m12", "name": "ลาเต้ MINT", "category": "กาแฟ", "recipe": [], "prices": {"store": 60.0, "lineman": 60.0, "shoppee": 60.0}, "seed_cost_cup": 31.1}, {"id": "m13", "name": "ลาเต้ POPCORN", "category": "กาแฟ", "recipe": [], "prices": {"store": 60.0, "lineman": 60.0, "shoppee": 60.0}, "seed_cost_cup": 31.1}, {"id": "m14", "name": "มอคค่า", "category": "กาแฟ", "recipe": [{"ing": "กาแฟ วน", "qty": 18.0}, {"ing": "แก้ว 16 + ฝา 98", "qty": 1.0}, {"ing": "หลอด", "qty": 1.0}, {"ing": "น้ำเปล่า", "qty": 30.0}, {"ing": "Mmilk", "qty": 60.0}, {"ing": "ข้นหวาน Canation", "qty": 30.0}, {"ing": "White Cho LongBeach", "qty": 10.0}, {"ing": "คอฟฟี่เมจ", "qty": 10.0}, {"ing": "โกโก้ Tulip 32 %", "qty": 10.0}], "prices": {"store": 55.0, "lineman": 55.0, "shoppee": 55.0}, "seed_cost_cup": 32.74}, {"id": "m15", "name": "ชาเขียว", "category": "ชา/นม", "recipe": [{"ing": "ชาเขียว (หัวเชื้อ)", "qty": 10.0}, {"ing": "ชาเขียว (มือ)", "qty": 5.0}, {"ing": "นมข้นจืด (Falcon)", "qty": 40.0}, {"ing": "นมข้นหวาน", "qty": 20.0}, {"ing": "แก้ว 16 + ฝา 98", "qty": 1.0}, {"ing": "หลอด", "qty": 1.0}, {"ing": "ผงชาเขียว", "qty": 13.0}, {"ing": "คอฟฟี่เมจ", "qty": 10.0}, {"ing": "ฟองนม mmilk", "qty": 50.0}], "prices": {"store": 50.0, "lineman": 50.0, "shoppee": 50.0}, "seed_cost_cup": 29.62}, {"id": "m16", "name": "ชาเขียวมะนาว", "category": "ชา/นม", "recipe": [{"ing": "ชาเขียวหัวเชื้อ", "qty": 100.0}, {"ing": "แก้ว 16 + ฝา 98", "qty": 1.0}, {"ing": "หลอด", "qty": 1.0}, {"ing": "มิตรผลน้ำเชื่อมเข้มข้น", "qty": 40.0}, {"ing": "คนอร์ผงรสมะนาว", "qty": 10.0}], "prices": {"store": 50.0, "lineman": 50.0, "shoppee": 50.0}, "seed_cost_cup": 25.54}, {"id": "m17", "name": "ชาเขียวน้ำผึ้งมะนาว", "category": "ชา/นม", "recipe": [{"ing": "เบสชา", "qty": 100.0}, {"ing": "น้ำผึ้ง", "qty": 30.0}, {"ing": "ผงมะนาว", "qty": 5.0}, {"ing": "แก้ว 14 + ฝา 98", "qty": 1.0}, {"ing": "หลอด", "qty": 1.0}], "prices": {"store": 55.0, "lineman": 55.0, "shoppee": 55.0}, "seed_cost_cup": 27.49}, {"id": "m18", "name": "โกโก้", "category": "ชา/นม", "recipe": [{"ing": "โกโก้ Tulip 32 %", "qty": 18.0}, {"ing": "แก้ว 16 + ฝา 98", "qty": 1.0}, {"ing": "หลอด", "qty": 1.0}, {"ing": "น้ำเปล่า", "qty": 35.0}, {"ing": "Mmilk", "qty": 130.0}, {"ing": "คอฟฟี่เมจ", "qty": 10.0}, {"ing": "White Cho LongBeach", "qty": 10.0}, {"ing": "ข้นหวาน Canation", "qty": 30.0}], "prices": {"store": 60.0, "lineman": 60.0, "shoppee": 60.0}, "seed_cost_cup": 35.73}, {"id": "m19", "name": "นมสด", "category": "ชา/นม", "recipe": [{"ing": "Mmilk", "qty": 150.0}, {"ing": "แก้ว 16 + ฝา 98", "qty": 1.0}, {"ing": "หลอด", "qty": 1.0}, {"ing": "Falcon", "qty": 30.0}, {"ing": "ข้นหวาน Canation", "qty": 20.0}], "prices": {"store": 45.0, "lineman": 45.0, "shoppee": 45.0}, "seed_cost_cup": 16.0}, {"id": "m20", "name": "นม Popcorn", "category": "ชา/นม", "recipe": [], "prices": {"store": 50.0, "lineman": 50.0, "shoppee": 50.0}, "seed_cost_cup": 26.1}, {"id": "m21", "name": "นม Mint", "category": "ชา/นม", "recipe": [], "prices": {"store": 50.0, "lineman": 50.0, "shoppee": 50.0}, "seed_cost_cup": 26.1}, {"id": "m22", "name": "ส้ม Soda", "category": "ชา/นม", "recipe": [{"ing": "Soda", "qty": 100.0}, {"ing": "แก้ว 16 + ฝา 98", "qty": 1.0}, {"ing": "หลอด", "qty": 1.0}, {"ing": "Sunquick 1966", "qty": 30.0}], "prices": {"store": 40.0, "lineman": 40.0, "shoppee": 40.0}, "seed_cost_cup": 15.23}]};
 
 // ── Avatar โลโก้ร้าน (ขนาดเท่ากันทุกร้าน) — มีโลโก้ใช้โลโก้ ไม่มีใช้อักษรนำ ──
 function avatarHTML(id, name, color, sizePx) {
@@ -945,6 +1115,7 @@ function initCharts(viewId) {
   if (viewId === 'view-pricing') { try { renderPricingView(); } catch(e) { console.error('renderPricingView', e); } return; }
   if (viewId === 'view-competitor-deep') { try { renderDeepTab(); } catch(e) { console.error('renderDeepTab', e); } return; }
   if (viewId === 'view-tracker') { try { renderTrackerView(); } catch(e) { console.error('renderTrackerView', e); } return; }
+  if (viewId === 'view-cost-drinks') { try { renderDrinkCosts(); } catch(e) { console.error('renderDrinkCosts', e); } return; }
   const platform = viewId.replace('view-', '');
   if (!DATA[platform]) return;
   try { initLineChart(platform); } catch(e) { console.error('initLineChart', e); }
@@ -2148,6 +2319,502 @@ function renderUpdateLog() {
   renderLogSummaryCards();
   renderLogTimeline();
 }
+
+// ── ต้นทุนเครื่องดื่ม (Drink costs + editor) ──
+var DC_CH = ['store', 'lineman', 'shoppee'];
+var DC_CH_FALLBACK = { store: 'หน้าร้าน', lineman: 'Lineman', shoppee: 'Shoppee' };
+var DC_CAT_ICON = { 'กาแฟ': '☕', 'ชา/นม': '🥤' };
+var DC_CATS = ['กาแฟ', 'ชา/นม'];
+var DC_LS_KEY = 'pengtang_drink_costs_v1';
+
+var dcChannel = 'store', dcSort = 'margin', dcEdit = false;
+var DCS = null;       // working state {source, assumptions, catalog, menus}
+var dcDraft = null;   // เมนูที่กำลังแก้ใน modal
+
+// ---- state ----
+function dcClone(o) { return JSON.parse(JSON.stringify(o || {})); }
+function dcDefaults() {
+  return { overhead: 0.30, margin_factor: 1.6, fixed_cost_monthly: 30000, days_per_month: 30,
+    channels: { store: {label:'หน้าร้าน',gp:0,vat:0}, lineman: {label:'Lineman',gp:0.30,vat:0.07}, shoppee: {label:'Shoppee',gp:0.32,vat:0.07} } };
+}
+function dcNormalize(s) {
+  s = s || {};
+  s.catalog = s.catalog || {};
+  s.menus = s.menus || [];
+  s.assumptions = Object.assign(dcDefaults(), s.assumptions || {});
+  s.assumptions.channels = Object.assign(dcDefaults().channels, s.assumptions.channels || {});
+  return s;
+}
+function dcLoadState() {
+  try { var raw = localStorage.getItem(DC_LS_KEY); if (raw) { DCS = dcNormalize(JSON.parse(raw)); return; } } catch (e) {}
+  DCS = dcNormalize(dcClone(DRINK_COSTS));
+}
+function dcSave() { try { localStorage.setItem(DC_LS_KEY, JSON.stringify(DCS)); } catch (e) {} }
+function dcResetToFile() {
+  if (!confirm('คืนค่ากลับเป็นข้อมูลจากไฟล์ Excel? การแก้ไขในเครื่องนี้จะถูกล้างทั้งหมด')) return;
+  try { localStorage.removeItem(DC_LS_KEY); } catch (e) {}
+  DCS = dcNormalize(dcClone(DRINK_COSTS));
+  renderDrinkCosts();
+  showToast('คืนค่าจากไฟล์ Excel แล้ว');
+}
+function dcChLabel(ch) { var c = DCS.assumptions.channels[ch]; return (c && c.label) || DC_CH_FALLBACK[ch] || ch; }
+
+// ---- compute ----
+function dcUnitCost(name) { var c = DCS.catalog[name]; if (!c) return 0; if (c.unit_cost != null) return c.unit_cost; return c.qty ? c.price / c.qty : 0; }
+function dcMaterial(m) { var s = 0; (m.recipe || []).forEach(function(l) { s += dcUnitCost(l.ing) * (parseFloat(l.qty) || 0); }); return s; }
+function dcCostCup(m) {
+  if (m.recipe && m.recipe.length) return dcMaterial(m) * (1 + DCS.assumptions.overhead);
+  return (m.seed_cost_cup != null ? m.seed_cost_cup : 0);
+}
+function dcChannelCalc(m, ch) {
+  var price = m.prices ? m.prices[ch] : null;
+  if (price == null || price === '') return null;
+  price = parseFloat(price); if (isNaN(price)) return null;
+  var cc = dcCostCup(m);
+  var p = DCS.assumptions.channels[ch] || {gp:0,vat:0};
+  var cost = cc + price * (p.gp || 0) + price * (p.vat || 0);
+  var profit = price - cost;
+  return { price: price, cost: cost, profit: profit, margin: price ? profit / price * 100 : null };
+}
+function dcSuggestPrice(m) { return Math.round(dcCostCup(m) * (DCS.assumptions.margin_factor || 1.6)); }
+function dcBreakeven(m) {
+  var st = dcChannelCalc(m, 'store');
+  if (!st || st.profit <= 0) return null;
+  var fixed = DCS.assumptions.fixed_cost_monthly || 0, days = DCS.assumptions.days_per_month || 30;
+  var cm = Math.ceil(fixed / st.profit);
+  return { cups_month: cm, cups_day: Math.ceil(cm / days) };
+}
+function dcUsedBy(name) { return DCS.menus.filter(function(m) { return (m.recipe||[]).some(function(l) { return l.ing === name; }); }).length; }
+
+// ---- format ----
+function dcMoney(v) { return (v == null) ? '–' : Number(v).toLocaleString('th-TH', {maximumFractionDigits: 0}); }
+function dcF1(v) { return (v == null) ? '–' : Number(v).toLocaleString('th-TH', {minimumFractionDigits: 1, maximumFractionDigits: 1}); }
+function dcMargCol(m) { if (m == null) return 'var(--text-muted)'; if (m >= 60) return 'var(--dc-profit)'; if (m >= 45) return 'var(--ov-accent-ink)'; return 'var(--dc-warn)'; }
+
+function dcSetChannel(ch) { dcChannel = ch; renderDrinkCosts(); }
+function dcSetSort(s) { dcSort = s; renderDrinkCosts(); }
+function dcToggleEdit() { dcEdit = !dcEdit; renderDrinkCosts(); }
+function dcToggle(el) { var o = el.classList.toggle('open'); el.setAttribute('aria-expanded', o ? 'true' : 'false'); }
+function dcRowKey(e, el) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); dcToggle(el); } }
+
+function dcStats(menus, ch) {
+  var arr = [];
+  menus.forEach(function(m) { var c = dcChannelCalc(m, ch); if (c && c.margin != null) arr.push({m: m, c: c}); });
+  var margins = arr.map(function(x) { return x.c.margin; });
+  var avg = margins.length ? margins.reduce(function(a, b) { return a + b; }, 0) / margins.length : null;
+  var costs = menus.map(function(m) { return dcCostCup(m); }).filter(function(v) { return v > 0; });
+  var avgCost = costs.length ? costs.reduce(function(a, b) { return a + b; }, 0) / costs.length : null;
+  var sorted = arr.slice().sort(function(a, b) { return b.c.margin - a.c.margin; });
+  return { avg: avg, avgCost: avgCost, best: sorted[0], worst: sorted[sorted.length - 1] };
+}
+
+function dcEmpty() {
+  return '<div class="ov-tile ov-soon">'
+    + '<div class="ov-soon-emoji">🧮</div>'
+    + '<div class="ov-soon-title">ยังไม่มีข้อมูลต้นทุน</div>'
+    + '<div class="ov-soon-sub">เริ่มจากกด <b>เพิ่มเมนู</b> หรือวางไฟล์ Excel ที่ import-data/cost/ แล้วรัน parse_drink_costs.py</div>'
+    + '<div style="margin-top:18px"><button class="dc-btn primary" onclick="dcOpenMenu(null)">+ เพิ่มเมนูแรก</button></div>'
+    + '</div>';
+}
+
+function renderDrinkCosts() {
+  var root = document.getElementById('dc-root');
+  if (!root) return;
+  if (!DCS) dcLoadState();
+  if (dcGsUrl() && !dcSyncedSession) { dcSyncedSession = true; dcSyncPull(true); }
+  var menus = DCS.menus;
+  var ch = dcChannel;
+  var fixed = DCS.assumptions.fixed_cost_monthly || 0;
+  var connected = !!dcGsUrl();
+
+  var h = [];
+
+  // meta
+  var withRec = menus.filter(function(m) { return m.recipe && m.recipe.length; }).length;
+  h.push('<div class="dc-meta">'
+    + '<span class="src">📄 ' + escapeHtml(DCS.source || 'ต้นทุนเครื่องดื่ม') + '</span>'
+    + '<span class="note">' + menus.length + ' เมนู · ' + withRec + ' เมนูมีสูตร · คลังวัตถุดิบ ' + Object.keys(DCS.catalog).length + ' รายการ</span>'
+    + '<span class="note">ต้นทุน/แก้ว = วัตถุดิบ +' + Math.round(DCS.assumptions.overhead * 100) + '% (ต้นทุนแฝง)</span>'
+    + (connected ? '<span class="note" style="color:var(--dc-profit);font-weight:700">🟢 เชื่อม Google Sheet</span>' : '<span class="note">⚪ เก็บในเครื่อง (ยังไม่เชื่อม Sheet)</span>')
+    + '</div>');
+
+  // toolbar (edit controls)
+  if (!dcEdit) {
+    h.push('<div class="dc-toolbar"><button class="dc-btn primary" onclick="dcToggleEdit()">✏️ แก้ไขเมนู / สูตร</button></div>');
+  } else {
+    h.push('<div class="dc-toolbar">'
+      + '<button class="dc-btn primary" onclick="dcOpenMenu(null)">+ เพิ่มเมนู</button>'
+      + '<button class="dc-btn" onclick="dcOpenCatalog()">🧂 คลังวัตถุดิบ</button>'
+      + '<button class="dc-btn" onclick="dcOpenConnect()">🔗 ' + (connected ? 'Google Sheet ✓' : 'เชื่อม Sheet') + '</button>'
+      + (connected ? '<button class="dc-btn" onclick="dcSyncPull()">🔄 ซิงก์จาก Sheet</button>' : '')
+      + '<button class="dc-btn" onclick="dcExport()">⬇️ Export</button>'
+      + '<button class="dc-btn" onclick="dcImportClick()">⬆️ นำเข้า</button>'
+      + '<button class="dc-btn ghost danger" onclick="dcResetToFile()">↺ คืนค่าจากไฟล์</button>'
+      + '<button class="dc-btn" onclick="dcToggleEdit()">✓ เสร็จสิ้น</button>'
+      + '<input type="file" id="dc-import-file" accept="application/json,.json" style="display:none" onchange="dcImportFile(this)">'
+      + '<span class="dc-edithint">' + (connected ? 'แก้ในเว็บหรือใน Sheet ก็ได้ ซิงก์หากันอัตโนมัติ' : 'แก้ไขบันทึกในเบราว์เซอร์นี้ · เชื่อม Sheet เพื่อซิงก์สองทาง') + '</span>'
+      + '</div>');
+  }
+
+  if (!menus.length) { root.innerHTML = h.join('') + dcEmpty(); return; }
+
+  // KPIs (คำนวณสดตามช่องทาง)
+  var stats = dcStats(menus, ch);
+  var k = [];
+  k.push('<div class="dc-kpi hero"><div class="k-lab">🥤 จำนวนเมนู</div><div class="k-val">' + menus.length + ' <small>เมนู</small></div><div class="k-sub">' + withRec + ' เมนูตั้งสูตรวัตถุดิบแล้ว</div></div>');
+  k.push('<div class="dc-kpi"><div class="k-lab">📈 กำไรเฉลี่ย · ' + dcChLabel(ch) + '</div><div class="k-val" style="color:' + dcMargCol(stats.avg) + '">' + dcF1(stats.avg) + '<small>%</small></div><div class="k-sub">เฉลี่ยทุกเมนูในช่องทางนี้</div></div>');
+  k.push('<div class="dc-kpi"><div class="k-lab">💧 ต้นทุนเฉลี่ย/แก้ว</div><div class="k-val">' + dcF1(stats.avgCost) + '<small> ฿</small></div><div class="k-sub">วัตถุดิบ + ต้นทุนแฝง</div></div>');
+  if (stats.best) k.push('<div class="dc-kpi"><div class="k-lab">🏆 กำไรดีสุด</div><div class="k-val" style="color:var(--dc-profit)">' + dcF1(stats.best.c.margin) + '<small>%</small></div><div class="k-sub">' + escapeHtml(stats.best.m.name) + '</div></div>');
+  if (stats.worst) k.push('<div class="dc-kpi"><div class="k-lab">⚠️ ต้องระวัง</div><div class="k-val" style="color:var(--dc-warn)">' + dcF1(stats.worst.c.margin) + '<small>%</small></div><div class="k-sub">' + escapeHtml(stats.worst.m.name) + '</div></div>');
+  h.push('<div class="dc-kpis">' + k.join('') + '</div>');
+
+  // controls
+  var chBtns = DC_CH.map(function(c) { return '<button class="ov-mtab' + (c === ch ? ' active' : '') + '" onclick="dcSetChannel(\'' + c + '\')">' + dcChLabel(c) + '</button>'; }).join('');
+  var sortDefs = [['margin', 'กำไร %'], ['profit', 'กำไร ฿'], ['cost', 'ต้นทุน/แก้ว']];
+  var sortBtns = sortDefs.map(function(s) { return '<button class="ov-mtab' + (s[0] === dcSort ? ' active' : '') + '" onclick="dcSetSort(\'' + s[0] + '\')">' + s[1] + '</button>'; }).join('');
+  h.push('<div class="dc-controls"><div class="grp"><span class="lbl">ช่องทาง</span>' + chBtns + '</div><div class="grp"><span class="lbl">เรียงตาม</span>' + sortBtns + '</div></div>');
+
+  // max ราคา สำหรับสเกลแถบ
+  var maxP = 1;
+  menus.forEach(function(m) { var c = dcChannelCalc(m, ch); if (c && c.price > maxP) maxP = c.price; });
+
+  // sort key
+  function key(m) {
+    if (dcSort === 'cost') return dcCostCup(m) || -1;
+    var c = dcChannelCalc(m, ch);
+    if (!c) return -Infinity;
+    return dcSort === 'profit' ? c.profit : (c.margin == null ? -Infinity : c.margin);
+  }
+
+  DC_CATS.forEach(function(cat) {
+    var arr = menus.filter(function(m) { return m.category === cat; }).sort(function(a, b) { return key(b) - key(a); });
+    if (!arr.length) return;
+    h.push('<div class="dc-group-title">' + (DC_CAT_ICON[cat] || '') + ' ' + escapeHtml(cat) + ' <span class="ct">' + arr.length + ' เมนู</span></div>');
+    h.push('<div class="dc-list">');
+    arr.forEach(function(m, idx) { h.push(dcRow(m, idx + 1, ch, maxP, fixed)); });
+    h.push('</div>');
+  });
+
+  root.innerHTML = h.join('');
+  requestAnimationFrame(function() {
+    root.querySelectorAll('[data-w]').forEach(function(el) { el.style.width = el.getAttribute('data-w'); });
+  });
+}
+
+function dcRow(m, rank, ch, maxP, fixed) {
+  var c = dcChannelCalc(m, ch);
+  var loss = c && c.profit < 0;
+  var costW = c ? (c.cost / maxP * 100) : 0;
+  var profitW = c ? (Math.max(c.profit, 0) / maxP * 100) : 0;
+
+  var bar;
+  if (c) {
+    bar = '<div class="dc-bar"><div class="dc-seg-cost" data-w="' + costW.toFixed(1) + '%"></div><div class="dc-seg-profit" data-w="' + profitW.toFixed(1) + '%"></div></div>'
+      + '<div class="dc-barlabels"><span>ต้นทุน <b>' + dcMoney(c.cost) + '฿</b></span>'
+      + '<span>' + (loss ? '<b style="color:var(--dc-warn)">ขาดทุน ' + dcMoney(c.profit) + '฿</b>' : 'กำไร <b style="color:var(--dc-profit)">' + dcMoney(c.profit) + '฿</b>') + '</span>'
+      + '<span>ราคา <b>' + dcMoney(c.price) + '฿</b></span></div>';
+  } else {
+    bar = '<div class="dc-norec">ไม่มีราคาในช่องทาง ' + dcChLabel(ch) + '</div>';
+  }
+
+  var figs = (c && c.margin != null)
+    ? '<div class="dc-margin" style="color:' + dcMargCol(c.margin) + '">' + dcF1(c.margin) + '<small>%</small></div><div class="dc-profitline">กำไร <b>' + dcMoney(c.profit) + '฿</b>/แก้ว</div>'
+    : '<div class="dc-margin" style="color:var(--text-muted)">–</div>';
+
+  var hasRec = m.recipe && m.recipe.length;
+  var acts = dcEdit
+    ? '<span class="dc-rowacts"><button class="dc-iconbtn" title="แก้ไข" onclick="event.stopPropagation(); dcOpenMenu(\'' + m.id + '\')">✏️</button>'
+      + '<button class="dc-iconbtn" title="ลบ" onclick="event.stopPropagation(); dcDeleteMenu(\'' + m.id + '\')">🗑️</button></span>'
+    : '';
+  var nameBlock = '<div style="min-width:0"><div class="dc-name">' + escapeHtml(m.name) + acts + '</div>'
+    + (hasRec ? '' : '<div class="dc-norec">ยังไม่ได้ตั้งสูตร (ใช้ต้นทุนตั้งต้น)</div>') + '</div>';
+
+  return '<div class="dc-row" tabindex="0" role="button" aria-expanded="false" onclick="dcToggle(this)" onkeydown="dcRowKey(event,this)">'
+    + '<div class="dc-row-top">'
+    + '<div class="dc-id"><span class="dc-rank">' + rank + '</span>' + nameBlock + '</div>'
+    + '<div class="dc-barwrap">' + bar + '</div>'
+    + '<div class="dc-figs">' + figs + '</div>'
+    + '</div>'
+    + dcDetail(m, fixed)
+    + '</div>';
+}
+
+function dcDetail(m, fixed) {
+  var material = dcMaterial(m), costCup = dcCostCup(m);
+  var left;
+  if (m.recipe && m.recipe.length) {
+    var items = m.recipe.map(function(l) { var cost = dcUnitCost(l.ing) * (parseFloat(l.qty) || 0); return {name: l.ing, qty: l.qty, cost: cost, pct: material ? cost / material * 100 : 0}; })
+      .sort(function(a, b) { return b.cost - a.cost; });
+    var maxc = items.length ? items[0].cost || 1 : 1;
+    var rows = items.map(function(i) {
+      return '<div class="dc-ing"><div class="dc-ing-nm">' + escapeHtml(i.name) + '<span class="pc">' + dcF1(i.pct) + '% · ' + dcMoney(i.qty) + ' ' + ((DCS.catalog[i.name]||{}).unit || '') + '</span></div>'
+        + '<div class="dc-ing-cost">' + i.cost.toFixed(2) + '฿</div>'
+        + '<div class="dc-ing-track"><div class="dc-ing-fill" data-w="' + (i.cost / maxc * 100).toFixed(1) + '%"></div></div></div>';
+    }).join('');
+    var foot = '<div class="dc-ingfoot">รวมวัตถุดิบ <b>' + dcF1(material) + '฿</b> · ต้นทุนต่อแก้ว <b>' + dcF1(costCup) + '฿</b> (รวมต้นทุนแฝง ' + Math.round(DCS.assumptions.overhead * 100) + '%)</div>';
+    left = '<div><div class="dc-sub">🧪 องค์ประกอบต้นทุนวัตถุดิบ</div>' + rows + foot + '</div>';
+  } else {
+    left = '<div><div class="dc-sub">🧪 องค์ประกอบต้นทุนวัตถุดิบ</div><div class="dc-norec">ยังไม่ได้ตั้งสูตรของเมนูนี้'
+      + '<br>ต้นทุนต่อแก้ว (ตั้งต้น) <b>' + dcF1(costCup) + '฿</b>'
+      + (dcEdit ? '<br><button class="dc-btn ghost" style="margin-top:10px" onclick="event.stopPropagation(); dcOpenMenu(\'' + m.id + '\')">+ ตั้งสูตรเลย</button>' : '') + '</div></div>';
+  }
+
+  var be = dcBreakeven(m);
+  var beHtml = be
+    ? '<div class="dc-be"><div class="big">' + dcMoney(be.cups_day) + ' <small>แก้ว/วัน</small></div>'
+      + '<div class="cap">ขายเฉลี่ย ~' + dcMoney(be.cups_day) + ' แก้ว/วัน (' + dcMoney(be.cups_month) + ' แก้ว/เดือน) เพื่อคุ้มค่าใช้จ่ายคงที่ ' + dcMoney(fixed) + ' บาท/เดือน · อิงกำไรหน้าร้าน</div></div>'
+    : '<div class="dc-be"><div class="cap">คำนวณจุดคุ้มทุนไม่ได้ (ไม่มีกำไร/ราคาหน้าร้าน)</div></div>';
+
+  var chips = DC_CH.map(function(k) {
+    var cc = dcChannelCalc(m, k);
+    if (!cc) return '';
+    return '<div class="dc-chip">' + dcChLabel(k) + ' <span class="ch-price">' + dcMoney(cc.price) + '฿</span> · ' + dcF1(cc.margin) + '%</div>';
+  }).join('');
+
+  var right = '<div><div class="dc-sub">⚖️ จุดคุ้มทุน</div>' + beHtml
+    + '<div class="dc-sub" style="margin-top:14px">🏷️ ราคา/กำไรแต่ละช่องทาง</div><div class="dc-chrow">' + chips + '</div></div>';
+
+  return '<div class="dc-detail"><div class="dc-detail-grid">' + left + right + '</div></div>';
+}
+
+// ── Modal infra ──
+function dcEscClose(e) { if (e.key === 'Escape') dcCloseModal(); }
+function dcCloseModal() { var b = document.getElementById('dc-modal-bd'); if (b) b.remove(); document.removeEventListener('keydown', dcEscClose); }
+function dcSetModalBody(html) {
+  var inner = document.querySelector('#dc-modal-bd .dc-modal');
+  if (inner) { inner.innerHTML = html; return; }
+  var bd = document.createElement('div'); bd.className = 'dc-modal-bd'; bd.id = 'dc-modal-bd';
+  bd.innerHTML = '<div class="dc-modal" role="dialog" aria-modal="true">' + html + '</div>';
+  bd.addEventListener('mousedown', function(e) { if (e.target === bd) dcCloseModal(); });
+  document.body.appendChild(bd);
+  document.addEventListener('keydown', dcEscClose);
+}
+
+// ── Menu editor ──
+function dcIngOptions(selected) {
+  var keys = Object.keys(DCS.catalog).sort(function(a, b) { return a.localeCompare(b, 'th'); });
+  var opts = '<option value="">— เลือกวัตถุดิบ —</option>';
+  var found = false;
+  opts += keys.map(function(k) { if (k === selected) found = true; return '<option value="' + escapeHtml(k) + '"' + (k === selected ? ' selected' : '') + '>' + escapeHtml(k) + '</option>'; }).join('');
+  if (selected && !found) opts += '<option value="' + escapeHtml(selected) + '" selected>' + escapeHtml(selected) + ' (ไม่อยู่ในคลัง)</option>';
+  return opts;
+}
+function dcOpenMenu(id) {
+  if (id) { var m = DCS.menus.filter(function(x) { return x.id === id; })[0]; dcDraft = dcClone(m); }
+  else dcDraft = { id: null, name: '', category: 'กาแฟ', recipe: [], prices: {store:null,lineman:null,shoppee:null}, seed_cost_cup: null };
+  dcRenderMenuModal();
+}
+function dcDraftRead() {
+  var g = function(id) { var el = document.getElementById(id); return el ? el.value : ''; };
+  dcDraft.name = g('dc-f-name');
+  dcDraft.category = g('dc-f-cat');
+  DC_CH.forEach(function(ch) { var v = g('dc-p-' + ch); dcDraft.prices[ch] = (v === '' ? null : parseFloat(v)); });
+  var rows = document.querySelectorAll('#dc-recipe-rows .dc-rrow');
+  var rec = [];
+  rows.forEach(function(r) {
+    var ing = r.querySelector('.dc-ring').value;
+    var qty = r.querySelector('.dc-rqty').value;
+    rec.push({ ing: ing, qty: (qty === '' ? '' : parseFloat(qty)) });
+  });
+  dcDraft.recipe = rec;
+}
+function dcOnInput() { dcDraftRead(); dcUpdatePreview(); }
+function dcUpdatePreview() {
+  var clean = { recipe: dcDraft.recipe.filter(function(l) { return l.ing; }), seed_cost_cup: dcDraft.seed_cost_cup, prices: dcDraft.prices };
+  var material = dcMaterial(clean), costCup = dcCostCup(clean), suggest = dcSuggestPrice(clean);
+  var st = dcChannelCalc(clean, 'store');
+  var set = function(id, v) { var el = document.getElementById(id); if (el) el.textContent = v; };
+  set('dc-pv-material', dcF1(material) + '฿');
+  set('dc-pv-cost', dcF1(costCup) + '฿');
+  set('dc-pv-suggest', dcMoney(suggest) + '฿');
+  set('dc-pv-margin', st && st.margin != null ? dcF1(st.margin) + '%' : '–');
+  var pm = document.getElementById('dc-pv-margin'); if (pm) pm.style.color = dcMargCol(st ? st.margin : null);
+  document.querySelectorAll('#dc-recipe-rows .dc-rrow').forEach(function(r) {
+    var ing = r.querySelector('.dc-ring').value, qty = parseFloat(r.querySelector('.dc-rqty').value) || 0;
+    var cell = r.querySelector('.dc-rcost'); if (cell) cell.textContent = (dcUnitCost(ing) * qty).toFixed(2) + '฿';
+  });
+}
+function dcAddIng() { dcDraftRead(); dcDraft.recipe.push({ ing: '', qty: '' }); dcRenderMenuModal(); }
+function dcDelIng(i) { dcDraftRead(); dcDraft.recipe.splice(i, 1); dcRenderMenuModal(); }
+function dcAutoPrice(ch) { dcDraftRead(); var clean = { recipe: dcDraft.recipe.filter(function(l) { return l.ing; }), seed_cost_cup: dcDraft.seed_cost_cup }; dcDraft.prices[ch] = dcSuggestPrice(clean); dcRenderMenuModal(); }
+function dcSaveMenu() {
+  dcDraftRead();
+  if (!dcDraft.name.trim()) { showToast('กรุณาใส่ชื่อเมนู'); return; }
+  dcDraft.recipe = dcDraft.recipe.filter(function(l) { return l.ing && (parseFloat(l.qty) || 0) > 0; });
+  if (!dcDraft.id) dcDraft.id = 'm' + Date.now();
+  var i = -1;
+  DCS.menus.forEach(function(m, idx) { if (m.id === dcDraft.id) i = idx; });
+  if (i >= 0) DCS.menus[i] = dcDraft; else DCS.menus.push(dcDraft);
+  dcAfterChange(); dcCloseModal(); renderDrinkCosts(); showToast('บันทึกเมนู "' + dcDraft.name + '" แล้ว');
+}
+function dcDeleteMenu(id) {
+  var m = DCS.menus.filter(function(x) { return x.id === id; })[0];
+  if (!m) return;
+  if (!confirm('ลบเมนู "' + m.name + '" ?')) return;
+  DCS.menus = DCS.menus.filter(function(x) { return x.id !== id; });
+  dcAfterChange(); dcCloseModal(); renderDrinkCosts(); showToast('ลบเมนูแล้ว');
+}
+function dcRenderMenuModal() {
+  var d = dcDraft;
+  var catOpts = DC_CATS.map(function(c) { return '<option' + (c === d.category ? ' selected' : '') + '>' + c + '</option>'; }).join('');
+  var priceFields = DC_CH.map(function(ch) {
+    return '<div class="dc-field"><label>' + dcChLabel(ch) + ' (฿)</label><div class="dc-pricewrap">'
+      + '<input class="dc-inp" id="dc-p-' + ch + '" type="number" min="0" step="any" value="' + (d.prices[ch] == null ? '' : d.prices[ch]) + '" oninput="dcOnInput()">'
+      + '<button class="dc-auto" type="button" onclick="dcAutoPrice(\'' + ch + '\')">auto</button></div></div>';
+  }).join('');
+  var recRows = d.recipe.map(function(l, i) {
+    var cost = dcUnitCost(l.ing) * (parseFloat(l.qty) || 0);
+    return '<div class="dc-rrow"><select class="dc-sel dc-ring" onchange="dcOnInput()">' + dcIngOptions(l.ing) + '</select>'
+      + '<input class="dc-inp dc-rqty" type="number" min="0" step="any" placeholder="ปริมาณ" value="' + (l.qty === '' || l.qty == null ? '' : l.qty) + '" oninput="dcOnInput()">'
+      + '<span class="dc-rcost">' + cost.toFixed(2) + '฿</span>'
+      + '<button class="dc-rdel" type="button" title="ลบ" onclick="dcDelIng(' + i + ')">✕</button></div>';
+  }).join('');
+
+  var html = '<div class="dc-modal-head"><h3>' + (d.id ? 'แก้ไขเมนู' : 'เพิ่มเมนูใหม่') + '</h3><button class="dc-x" onclick="dcCloseModal()" aria-label="ปิด">✕</button></div>'
+    + '<div class="dc-grid3" style="grid-template-columns:2fr 1fr">'
+    + '<div class="dc-field"><label>ชื่อเมนู</label><input class="dc-inp" id="dc-f-name" value="' + escapeHtml(d.name) + '" oninput="dcOnInput()"></div>'
+    + '<div class="dc-field"><label>หมวด</label><select class="dc-sel" id="dc-f-cat" onchange="dcOnInput()">' + catOpts + '</select></div>'
+    + '</div>'
+    + '<div class="dc-field"><label>ราคาขายต่อช่องทาง</label><div class="dc-grid3">' + priceFields + '</div></div>'
+    + '<div class="dc-field"><label>สูตร / วัตถุดิบ (เลือกจากคลัง + ใส่ปริมาณ)</label>'
+    + '<div id="dc-recipe-rows">' + recRows + '</div>'
+    + '<button class="dc-btn ghost" type="button" style="margin-top:6px" onclick="dcAddIng()">+ เพิ่มวัตถุดิบ</button></div>'
+    + '<div class="dc-preview">'
+    + '<div class="dc-pv"><div class="l">วัตถุดิบรวม</div><div class="v" id="dc-pv-material">–</div></div>'
+    + '<div class="dc-pv"><div class="l">ต้นทุน/แก้ว</div><div class="v" id="dc-pv-cost">–</div></div>'
+    + '<div class="dc-pv"><div class="l">ราคาแนะนำ</div><div class="v" id="dc-pv-suggest">–</div></div>'
+    + '<div class="dc-pv"><div class="l">กำไร หน้าร้าน</div><div class="v" id="dc-pv-margin">–</div></div>'
+    + '</div>'
+    + '<div class="dc-modal-foot">'
+    + (d.id ? '<button class="dc-btn ghost danger spacer" onclick="dcDeleteMenu(\'' + d.id + '\')">🗑️ ลบเมนู</button>' : '<span class="spacer"></span>')
+    + '<button class="dc-btn" onclick="dcCloseModal()">ยกเลิก</button>'
+    + '<button class="dc-btn primary" onclick="dcSaveMenu()">บันทึกเมนู</button>'
+    + '</div>';
+  dcSetModalBody(html);
+  dcUpdatePreview();
+}
+
+// ── Catalog editor ──
+function dcOpenCatalog() { dcRenderCatalogModal(); }
+function dcRenderCatalogModal() {
+  var keys = Object.keys(DCS.catalog).sort(function(a, b) { return a.localeCompare(b, 'th'); });
+  var rows = keys.map(function(k) {
+    var c = DCS.catalog[k];
+    return '<div class="dc-cat-row" data-orig="' + escapeHtml(k) + '">'
+      + '<input class="dc-inp dc-c-name" value="' + escapeHtml(k) + '">'
+      + '<input class="dc-inp dc-c-price" type="number" min="0" step="any" value="' + c.price + '" oninput="dcCatUC(this)">'
+      + '<input class="dc-inp dc-c-qty" type="number" min="0" step="any" value="' + c.qty + '" oninput="dcCatUC(this)">'
+      + '<span class="uc">' + (c.unit_cost != null ? c.unit_cost.toFixed(3) : (c.qty ? (c.price/c.qty).toFixed(3) : '0')) + '</span>'
+      + '<button class="dc-rdel" type="button" title="ลบ" onclick="this.closest(\'.dc-cat-row\').remove()">✕</button></div>';
+  }).join('');
+  var html = '<div class="dc-modal-head"><h3>🧂 คลังวัตถุดิบ</h3><button class="dc-x" onclick="dcCloseModal()" aria-label="ปิด">✕</button></div>'
+    + '<div class="dc-edithint" style="margin-bottom:10px">แก้ราคา/ปริมาณแพ็ก แล้วทุกเมนูที่ใช้วัตถุดิบนั้นจะคำนวณต้นทุนใหม่ทันที</div>'
+    + '<div class="dc-cat-row"><span class="dc-cat-head">ชื่อวัตถุดิบ</span><span class="dc-cat-head">ราคาแพ็ก</span><span class="dc-cat-head">ปริมาณ</span><span class="dc-cat-head" style="text-align:right">฿/หน่วย</span><span></span></div>'
+    + '<div class="dc-cat-list" id="dc-cat-list">' + rows + '</div>'
+    + '<button class="dc-btn ghost" type="button" style="margin-top:10px" onclick="dcAddCatalogRow()">+ เพิ่มวัตถุดิบใหม่</button>'
+    + '<div class="dc-modal-foot"><span class="spacer"></span><button class="dc-btn" onclick="dcCloseModal()">ยกเลิก</button><button class="dc-btn primary" onclick="dcSaveCatalog()">บันทึกคลัง</button></div>';
+  dcSetModalBody(html);
+}
+function dcCatUC(inp) {
+  var row = inp.closest('.dc-cat-row');
+  var price = parseFloat(row.querySelector('.dc-c-price').value) || 0;
+  var qty = parseFloat(row.querySelector('.dc-c-qty').value) || 0;
+  row.querySelector('.uc').textContent = qty ? (price / qty).toFixed(3) : '0';
+}
+function dcAddCatalogRow() {
+  var list = document.getElementById('dc-cat-list');
+  var div = document.createElement('div'); div.className = 'dc-cat-row'; div.setAttribute('data-orig', '');
+  div.innerHTML = '<input class="dc-inp dc-c-name" placeholder="ชื่อวัตถุดิบ">'
+    + '<input class="dc-inp dc-c-price" type="number" min="0" step="any" placeholder="ราคา" oninput="dcCatUC(this)">'
+    + '<input class="dc-inp dc-c-qty" type="number" min="0" step="any" placeholder="ปริมาณ" oninput="dcCatUC(this)">'
+    + '<span class="uc">0</span><button class="dc-rdel" type="button" onclick="this.closest(\'.dc-cat-row\').remove()">✕</button>';
+  list.appendChild(div);
+  div.querySelector('.dc-c-name').focus();
+}
+function dcSaveCatalog() {
+  var cat = {};
+  document.querySelectorAll('#dc-cat-list .dc-cat-row').forEach(function(r) {
+    var name = r.querySelector('.dc-c-name').value.trim();
+    if (!name) return;
+    var price = parseFloat(r.querySelector('.dc-c-price').value) || 0;
+    var qty = parseFloat(r.querySelector('.dc-c-qty').value) || 0;
+    var orig = r.getAttribute('data-orig');
+    var unit = (orig && DCS.catalog[orig]) ? DCS.catalog[orig].unit : '';
+    cat[name] = { price: price, qty: qty, unit_cost: qty ? +(price / qty).toFixed(5) : 0, unit: unit };
+  });
+  DCS.catalog = cat;
+  dcAfterChange(); dcCloseModal(); renderDrinkCosts(); showToast('บันทึกคลังวัตถุดิบแล้ว');
+}
+
+// ── Export / Import ──
+function dcExport() {
+  var blob = new Blob([JSON.stringify(DCS, null, 2)], { type: 'application/json' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url; a.download = 'drink-costs.json'; document.body.appendChild(a); a.click();
+  setTimeout(function() { URL.revokeObjectURL(url); a.remove(); }, 100);
+  showToast('ดาวน์โหลด drink-costs.json แล้ว');
+}
+function dcImportClick() { var el = document.getElementById('dc-import-file'); if (el) el.click(); }
+function dcImportFile(input) {
+  var f = input.files && input.files[0];
+  if (!f) return;
+  var rd = new FileReader();
+  rd.onload = function() {
+    try {
+      var obj = JSON.parse(rd.result);
+      if (!obj.menus) throw new Error('no menus');
+      DCS = dcNormalize(obj); dcSave(); renderDrinkCosts(); showToast('นำเข้าข้อมูลแล้ว');
+    } catch (e) { showToast('ไฟล์ไม่ถูกต้อง'); }
+  };
+  rd.readAsText(f);
+  input.value = '';
+}
+
+// ── Google Sheet sync (สองทาง) ──
+var dcSyncedSession = false;
+function dcGsUrl() { try { return localStorage.getItem('pengtang_gs_url') || ''; } catch (e) { return ''; } }
+function dcSetGsUrl(u) { try { if (u) localStorage.setItem('pengtang_gs_url', u); else localStorage.removeItem('pengtang_gs_url'); } catch (e) {} }
+function dcAfterChange() { dcSave(); if (dcGsUrl()) dcSyncPush(); }
+
+function dcSyncPull(silent) {
+  var url = dcGsUrl();
+  if (!url) { if (!silent) showToast('ยังไม่ได้เชื่อม Google Sheet'); return; }
+  fetch(url, { method: 'GET' })
+    .then(function(r) { return r.json(); })
+    .then(function(obj) {
+      if (!obj || !obj.menus) throw new Error('bad');
+      DCS = dcNormalize(obj); dcSave(); renderDrinkCosts();
+      if (!silent) showToast('ซิงก์จาก Google Sheet แล้ว (' + DCS.menus.length + ' เมนู)');
+    })
+    .catch(function(e) { if (!silent) showToast('ดึงข้อมูลไม่สำเร็จ — ตรวจ URL / สิทธิ์ Anyone'); });
+}
+function dcSyncPush() {
+  var url = dcGsUrl();
+  if (!url) return;
+  fetch(url, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(DCS) })
+    .then(function(r) { return r.json(); })
+    .then(function(res) { showToast((res && res.ok) ? 'บันทึกขึ้น Google Sheet แล้ว' : 'เขียน Sheet ไม่สำเร็จ'); })
+    .catch(function(e) { showToast('เขียน Sheet ไม่สำเร็จ (เก็บในเครื่องแล้ว)'); });
+}
+
+function dcOpenConnect() {
+  var url = dcGsUrl();
+  var html = '<div class="dc-modal-head"><h3>🔗 เชื่อม Google Sheet</h3><button class="dc-x" onclick="dcCloseModal()" aria-label="ปิด">✕</button></div>'
+    + '<div class="dc-field"><label>Google Apps Script — Web app URL</label>'
+    + '<input class="dc-inp" id="dc-gs-url" placeholder="https://script.google.com/macros/s/.../exec" value="' + escapeHtml(url) + '"></div>'
+    + '<div class="dc-edithint">วาง URL จากการ Deploy เป็น Web app (วิธีทำดูไฟล์ google-sheets/README.md) · '
+    + 'URL เก็บในเบราว์เซอร์นี้เท่านั้น ไม่ฝังในเว็บสาธารณะ · ครั้งแรกให้กด "ดันข้อมูลขึ้น Sheet" เพื่อเอาเมนูปัจจุบันขึ้นไป</div>'
+    + '<div class="dc-modal-foot">'
+    + '<button class="dc-btn ghost spacer" onclick="dcConnectTest()">🔄 ทดสอบ + ดึงข้อมูล</button>'
+    + '<button class="dc-btn" onclick="dcConnectPush()">⬆️ ดันข้อมูลขึ้น Sheet</button>'
+    + '<button class="dc-btn primary" onclick="dcConnectSave()">บันทึก URL</button>'
+    + '</div>';
+  dcSetModalBody(html);
+}
+function dcConnectSave() { var u = document.getElementById('dc-gs-url').value.trim(); dcSetGsUrl(u); dcCloseModal(); renderDrinkCosts(); showToast(u ? 'เชื่อม Google Sheet แล้ว' : 'ยกเลิกการเชื่อมต่อแล้ว'); }
+function dcConnectTest() { dcSetGsUrl(document.getElementById('dc-gs-url').value.trim()); dcSyncPull(); }
+function dcConnectPush() { dcSetGsUrl(document.getElementById('dc-gs-url').value.trim()); dcSyncPush(); }
 
 // ── Boot ──
 applyStoredTheme();
