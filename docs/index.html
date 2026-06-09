@@ -387,8 +387,15 @@
     .dc-controls .grp > .lbl { font-size: .74rem; color: var(--text-muted); font-weight: 600; }
 
     .dc-group-title { display: flex; align-items: center; gap: 9px; font-size: .82rem;
-      font-weight: 800; color: var(--text); margin: 26px 0 12px; letter-spacing: .01em; }
+      font-weight: 800; color: var(--text); margin: 26px 0 12px; letter-spacing: .01em;
+      cursor: pointer; user-select: none; }
+    .dc-group-title:hover { color: var(--ov-accent-ink); }
+    .dc-group-title:focus-visible { outline: 2px solid var(--ov-caramel); outline-offset: 3px; border-radius: 6px; }
     .dc-group-title .ct { font-size: .72rem; font-weight: 700; color: var(--text-muted); }
+    .dc-chev { display: inline-flex; font-size: .66rem; color: var(--text-muted); transition: transform .2s ease; }
+    .dc-group-title.dc-collapsed .dc-chev { transform: rotate(-90deg); }
+    .dc-group-body.dc-collapsed { display: none; }
+    @media (prefers-reduced-motion: reduce) { .dc-chev { transition: none; } }
 
     .dc-list { display: flex; flex-direction: column; gap: 10px; }
     .dc-row { background: var(--card); border: 1px solid var(--card-border); border-radius: 16px;
@@ -2459,6 +2466,20 @@ function dcToggleEdit() { dcEdit = !dcEdit; renderDrinkCosts(); }
 function dcToggle(el) { var o = el.classList.toggle('open'); el.setAttribute('aria-expanded', o ? 'true' : 'false'); }
 function dcRowKey(e, el) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); dcToggle(el); } }
 
+// หุบ/กางหมวด (จำสถานะ)
+var dcCollapsed = null;
+function dcLoadCollapsed() { if (dcCollapsed) return; try { dcCollapsed = JSON.parse(localStorage.getItem('pengtang_dc_collapsed') || '{}'); } catch (e) { dcCollapsed = {}; } if (!dcCollapsed) dcCollapsed = {}; }
+function dcSaveCollapsed() { try { localStorage.setItem('pengtang_dc_collapsed', JSON.stringify(dcCollapsed)); } catch (e) {} }
+function dcToggleCat(cat) {
+  dcLoadCollapsed(); dcCollapsed[cat] = !dcCollapsed[cat]; dcSaveCollapsed();
+  var body = document.querySelector('#dc-root .dc-group-body[data-cat="' + cat + '"]');
+  var title = document.querySelector('#dc-root .dc-group-title[data-cat="' + cat + '"]');
+  if (body) body.classList.toggle('dc-collapsed', dcCollapsed[cat]);
+  if (title) { title.classList.toggle('dc-collapsed', dcCollapsed[cat]); title.setAttribute('aria-expanded', dcCollapsed[cat] ? 'false' : 'true'); }
+}
+function dcCatKey(e, cat) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); dcToggleCat(cat); } }
+function dcCollapseAll(collapse) { dcLoadCollapsed(); DC_CATS.forEach(function(c) { dcCollapsed[c] = collapse; }); dcSaveCollapsed(); renderDrinkCosts(); }
+
 function dcStats(menus, ch) {
   var arr = [];
   menus.forEach(function(m) { var c = dcChannelCalc(m, ch); if (c && c.margin != null) arr.push({m: m, c: c}); });
@@ -2539,7 +2560,9 @@ function renderDrinkCosts() {
   var chBtns = DC_CH.map(function(c) { return '<button class="ov-mtab' + (c === ch ? ' active' : '') + '" onclick="dcSetChannel(\'' + c + '\')">' + dcChLabel(c) + '</button>'; }).join('');
   var sortDefs = [['margin', 'กำไร %'], ['profit', 'กำไร ฿'], ['cost', 'ต้นทุน/แก้ว']];
   var sortBtns = sortDefs.map(function(s) { return '<button class="ov-mtab' + (s[0] === dcSort ? ' active' : '') + '" onclick="dcSetSort(\'' + s[0] + '\')">' + s[1] + '</button>'; }).join('');
-  h.push('<div class="dc-controls"><div class="grp"><span class="lbl">ช่องทาง</span>' + chBtns + '</div><div class="grp"><span class="lbl">เรียงตาม</span>' + sortBtns + '</div></div>');
+  h.push('<div class="dc-controls"><div class="grp"><span class="lbl">ช่องทาง</span>' + chBtns + '</div>'
+    + '<div class="grp"><span class="lbl">เรียงตาม</span>' + sortBtns + '</div>'
+    + '<div class="grp"><button class="ov-mtab" onclick="dcCollapseAll(true)">⊟ หุบทั้งหมด</button><button class="ov-mtab" onclick="dcCollapseAll(false)">⊞ กางทั้งหมด</button></div></div>');
 
   // max ราคา สำหรับสเกลแถบ
   var maxP = 1;
@@ -2553,13 +2576,20 @@ function renderDrinkCosts() {
     return dcSort === 'profit' ? c.profit : (c.margin == null ? -Infinity : c.margin);
   }
 
+  dcLoadCollapsed();
   DC_CATS.forEach(function(cat) {
     var arr = menus.filter(function(m) { return dcCategoryOf(m) === cat; }).sort(function(a, b) { return key(b) - key(a); });
-    h.push('<div class="dc-group-title">' + (DC_CAT_ICON[cat] || '') + ' ' + DC_CAT_LABEL[cat] + ' <span class="ct">' + arr.length + ' เมนู</span>'
-      + (dcEdit ? '<button class="dc-addcat" onclick="dcOpenMenu(null,\'' + cat + '\')">+ เพิ่ม</button>' : '') + '</div>');
-    if (!arr.length) { h.push('<div class="dc-empty-cat">— ยังไม่มีเมนูในหมวดนี้ —</div>'); return; }
-    h.push('<div class="dc-list">');
-    arr.forEach(function(m, idx) { h.push(dcRow(m, idx + 1, ch, maxP, fixed)); });
+    var col = !!dcCollapsed[cat];
+    h.push('<div class="dc-group-title' + (col ? ' dc-collapsed' : '') + '" data-cat="' + cat + '" role="button" tabindex="0" aria-expanded="' + (col ? 'false' : 'true') + '" onclick="dcToggleCat(\'' + cat + '\')" onkeydown="dcCatKey(event,\'' + cat + '\')">'
+      + '<span class="dc-chev">▾</span> ' + (DC_CAT_ICON[cat] || '') + ' ' + DC_CAT_LABEL[cat] + ' <span class="ct">' + arr.length + ' เมนู</span>'
+      + (dcEdit ? '<button class="dc-addcat" onclick="event.stopPropagation(); dcOpenMenu(null,\'' + cat + '\')">+ เพิ่ม</button>' : '') + '</div>');
+    h.push('<div class="dc-group-body' + (col ? ' dc-collapsed' : '') + '" data-cat="' + cat + '">');
+    if (!arr.length) { h.push('<div class="dc-empty-cat">— ยังไม่มีเมนูในหมวดนี้ —</div>'); }
+    else {
+      h.push('<div class="dc-list">');
+      arr.forEach(function(m, idx) { h.push(dcRow(m, idx + 1, ch, maxP, fixed)); });
+      h.push('</div>');
+    }
     h.push('</div>');
   });
 
