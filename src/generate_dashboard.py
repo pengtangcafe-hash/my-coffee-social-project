@@ -2261,6 +2261,12 @@ HTML_TEMPLATE = """\
     .dc-btn.danger {{ color: var(--dc-warn); border-color: var(--dc-warn); }}
     .dc-btn:focus-visible {{ outline: 2px solid var(--ov-caramel); outline-offset: 2px; }}
     .dc-edithint {{ font-size: .74rem; color: var(--text-muted); }}
+    .dc-note {{ background: var(--nav-active); border: 1px solid var(--card-border); border-radius: 14px;
+      padding: 13px 16px; margin-bottom: 18px; font-size: .82rem; color: var(--text); line-height: 1.6; }}
+    .dc-note-h {{ font-weight: 800; margin-bottom: 3px; }}
+    .dc-note b {{ color: var(--ov-accent-ink); font-weight: 700; }}
+    .dc-note-sub {{ font-size: .76rem; color: var(--text-muted); margin-top: 5px; }}
+    .dc-note-sub b {{ color: var(--text); }}
     .dc-rowacts {{ display: inline-flex; gap: 6px; margin-left: 10px; }}
     .dc-iconbtn {{ width: 30px; height: 30px; border-radius: 8px; display: inline-flex;
       align-items: center; justify-content: center; cursor: pointer; font-size: .85rem;
@@ -4277,6 +4283,11 @@ function renderDrinkCosts() {{
       + '<button class="dc-btn" onclick="dcToggleEdit()">✓ เสร็จสิ้น</button>'
       + '<input type="file" id="dc-import-file" accept="application/json,.json" style="display:none" onchange="dcImportFile(this)">'
       + '<span class="dc-edithint">' + (connected ? 'แก้ในเว็บหรือใน Sheet ก็ได้ ซิงก์หากันอัตโนมัติ' : 'แก้ไขบันทึกในเบราว์เซอร์นี้ · เชื่อม Sheet เพื่อซิงก์สองทาง') + '</span>'
+      + '</div>');
+    h.push('<div class="dc-note">'
+      + '<div class="dc-note-h">💡 วิธีเปลี่ยนรูปเมนู (กันลืม)</div>'
+      + '<div>กดปุ่ม ✏️ ที่เมนู → วาง URL รูปในช่อง <b>“รูปภาพ (URL)”</b> → กดบันทึกเมนู (เว้นว่าง = ใช้ไอคอนหมวดอัตโนมัติ)</div>'
+      + '<div class="dc-note-sub">ถ้าเชื่อม Google Sheet ไว้ การแก้จะเขียนกลับ Sheet อัตโนมัติ · <b>ครั้งแรกหลังอัปเดตระบบ</b> ต้องไปที่ Apps Script → Deploy → <b>New version</b> 1 ครั้ง เพื่อให้คอลัมน์ “รูปภาพ” ซิงก์ได้ (ดูวิธีใน google-sheets/README.md)</div>'
       + '</div>');
   }}
 
