@@ -4574,7 +4574,7 @@ function dcAcEnsurePanel() {{
     p = document.createElement('div'); p.id = 'dc-acpanel'; p.style.display = 'none';
     p.addEventListener('mousedown', function(e) {{
       var tab = e.target.closest ? e.target.closest('.dc-ac-tab') : null;
-      if (tab) {{ e.preventDefault(); dcAcGroup = tab.getAttribute('data-g'); dcAcBuild(); return; }}
+      if (tab) {{ e.preventDefault(); var g = tab.getAttribute('data-g'); setTimeout(function() {{ dcAcGroup = g; dcAcBuild(); }}, 0); return; }}
       var it = e.target.closest ? e.target.closest('.dc-ac-item') : null;
       if (it) {{ e.preventDefault(); dcAcSelect(it.getAttribute('data-name')); }}
     }});
