@@ -511,7 +511,10 @@
       overflow-y: auto; backdrop-filter: blur(2px); }
     .dc-modal { background: var(--card); border: 1px solid var(--card-border); border-radius: 20px;
       width: 100%; max-width: 720px; padding: 24px; box-shadow: 0 40px 90px -30px rgba(0,0,0,.6);
-      animation: dcPop .26s cubic-bezier(.22,1,.36,1) both; }
+      animation: dcPop .26s cubic-bezier(.22,1,.36,1) both;
+      max-height: calc(100vh - 36px); overflow-y: auto; overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch; }
+    .dc-modal-bd { overflow: hidden; }
     @keyframes dcPop { from { opacity: 0; transform: translateY(14px) scale(.98); } to { opacity: 1; transform: none; } }
     @media (prefers-reduced-motion: reduce) { .dc-modal { animation: none; } }
     .dc-modal h3 { font-size: 1.2rem; font-weight: 900; color: var(--text); letter-spacing: -.02em; }
