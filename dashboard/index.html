@@ -751,7 +751,7 @@
         <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest px-4">Tools</p>
       </div>
 
-      <button onclick="showView('view-import')" id="nav-import"
+      <button onclick="requireImportAccess()" id="nav-import"
         class="nav-btn w-full text-left px-4 py-2.5 rounded-xl flex items-center gap-3
                text-slate-600 hover:bg-slate-50 transition-colors text-sm">
         <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -2495,14 +2495,20 @@ function dcSha256(s) {
     return Array.prototype.map.call(new Uint8Array(buf), function(b) { return ('0' + b.toString(16)).slice(-2); }).join('');
   });
 }
+var dcPwOnOk = null;
 function dcRequestEdit() {
   if (dcEdit) { dcToggleEdit(); return; }
-  dcOpenPwModal();
+  dcOpenPwModal('🔒 ปลดล็อกการแก้ไข', 'ใส่รหัสเพื่อแก้ไขเมนู / สูตร', function() { dcEdit = true; renderDrinkCosts(); showToast('ปลดล็อกแล้ว ✓'); });
 }
-function dcOpenPwModal() {
-  var html = '<div class="dc-modal-head"><h3>🔒 ปลดล็อกการแก้ไข</h3><button class="dc-x" onclick="dcCloseModal()" aria-label="ปิด">✕</button></div>'
+// เรียกจากเมนู "นำเข้าข้อมูล" — ต้องใส่รหัสก่อนเข้า
+function requireImportAccess() {
+  dcOpenPwModal('🔒 เข้าระบบนำเข้าข้อมูล', 'ใส่รหัสเพื่อเข้าระบบนำเข้าข้อมูล', function() { showView('view-import'); });
+}
+function dcOpenPwModal(title, label, onOk) {
+  dcPwOnOk = onOk || null;
+  var html = '<div class="dc-modal-head"><h3>' + (title || '🔒 ใส่รหัส') + '</h3><button class="dc-x" onclick="dcCloseModal()" aria-label="ปิด">✕</button></div>'
     + '<div class="dc-modal-scroll">'
-    + '<div class="dc-field" style="margin-bottom:6px"><label>ใส่รหัสเพื่อแก้ไขเมนู / สูตร</label>'
+    + '<div class="dc-field" style="margin-bottom:6px"><label>' + (label || 'ใส่รหัสผ่าน') + '</label>'
     + '<div class="dc-pwwrap"><input class="dc-inp" id="dc-pw" type="password" placeholder="รหัสผ่าน" autocomplete="off" onkeydown="dcPwKey(event)" oninput="dcPwClearErr()">'
     + '<button class="dc-eye" type="button" id="dc-eye" onclick="dcPwToggle()" aria-label="แสดง/ซ่อนรหัส">👁</button></div>'
     + '<div class="dc-pwerr" id="dc-pwerr">รหัสไม่ถูกต้อง ลองใหม่อีกครั้ง</div></div>'
@@ -2523,7 +2529,7 @@ function dcPwSubmit() {
   var i = document.getElementById('dc-pw'); if (!i) return;
   if (!window.crypto || !crypto.subtle) { showToast('เบราว์เซอร์ไม่รองรับการตรวจรหัส'); return; }
   dcSha256((i.value || '').trim()).then(function(h) {
-    if (h === DC_EDIT_HASH) { dcCloseModal(); dcEdit = true; renderDrinkCosts(); showToast('ปลดล็อกแล้ว ✓'); }
+    if (h === DC_EDIT_HASH) { var cb = dcPwOnOk; dcPwOnOk = null; dcCloseModal(); if (cb) cb(); }
     else { var e = document.getElementById('dc-pwerr'); if (e) e.classList.add('show'); i.value = ''; i.focus(); }
   });
 }
