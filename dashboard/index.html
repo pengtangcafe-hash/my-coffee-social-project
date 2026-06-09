@@ -547,8 +547,15 @@
     .dc-ac-inp { width: 100%; }
     #dc-acpanel { position: fixed; z-index: 210; background: var(--card); border: 1px solid var(--card-border);
       border-radius: 12px; box-shadow: 0 22px 55px -20px rgba(0,0,0,.5); overflow-y: auto;
-      max-height: 300px; padding: 6px; }
-    .dc-ac-grp { position: sticky; top: 0; background: var(--card); font-size: .64rem; font-weight: 800;
+      max-height: 380px; padding: 0; }
+    .dc-ac-tabs { position: sticky; top: 0; z-index: 1; background: var(--card); display: flex; flex-wrap: wrap;
+      gap: 5px; padding: 9px 9px 8px; border-bottom: 1px solid var(--card-border); }
+    .dc-ac-tab { font-size: .7rem; font-weight: 700; padding: 4px 10px; border-radius: 999px; cursor: pointer;
+      border: 1px solid var(--card-border); background: transparent; color: var(--text-muted); white-space: nowrap; }
+    .dc-ac-tab:hover { background: var(--nav-active); }
+    .dc-ac-tab.active { background: var(--ov-espresso-2); border-color: var(--ov-espresso-2); color: var(--ov-crema); }
+    .dc-ac-body { padding: 6px; }
+    .dc-ac-grp { background: var(--card); font-size: .64rem; font-weight: 800;
       color: var(--ov-accent-ink); letter-spacing: .06em; padding: 8px 10px 4px; }
     .dc-ac-item { display: flex; align-items: center; justify-content: space-between; gap: 10px;
       padding: 8px 10px; border-radius: 8px; cursor: pointer; font-size: .85rem; color: var(--text); }
@@ -2787,12 +2794,14 @@ function dcImgPrev() {
 }
 
 // ── Combobox ค้นหาวัตถุดิบ (แทน select ยาว ๆ) ──
-var dcAcCtx = null;
+var dcAcCtx = null, dcAcGroup = 'all', dcAcQuery = '';
 function dcAcEnsurePanel() {
   var p = document.getElementById('dc-acpanel');
   if (!p) {
     p = document.createElement('div'); p.id = 'dc-acpanel'; p.style.display = 'none';
     p.addEventListener('mousedown', function(e) {
+      var tab = e.target.closest ? e.target.closest('.dc-ac-tab') : null;
+      if (tab) { e.preventDefault(); dcAcGroup = tab.getAttribute('data-g'); dcAcBuild(); return; }
       var it = e.target.closest ? e.target.closest('.dc-ac-item') : null;
       if (it) { e.preventDefault(); dcAcSelect(it.getAttribute('data-name')); }
     });
@@ -2803,7 +2812,8 @@ function dcAcEnsurePanel() {
 function dcAcOpen(input, row) {
   dcAcCtx = { input: input, row: row };
   dcAcEnsurePanel();
-  dcAcBuild('');
+  dcAcGroup = 'all'; dcAcQuery = '';
+  dcAcBuild();
   dcAcPosition();
   document.getElementById('dc-acpanel').style.display = 'block';
   if (input.select) input.select();
@@ -2816,24 +2826,36 @@ function dcAcPosition() {
   var r = dcAcCtx.input.getBoundingClientRect();
   p.style.left = r.left + 'px'; p.style.top = (r.bottom + 4) + 'px'; p.style.width = Math.max(r.width, 240) + 'px';
 }
-function dcAcFilter(input) { if (dcAcCtx && dcAcCtx.input === input) dcAcBuild(input.value); }
-function dcAcBuild(query) {
-  var p = dcAcEnsurePanel(); query = (query || '').trim().toLowerCase();
-  var keys = Object.keys(DCS.catalog).filter(function(k) { return k.toLowerCase().indexOf(query) >= 0; });
-  var byG = {}; keys.forEach(function(k) { var g = dcIngGroup(k); (byG[g] = byG[g] || []).push(k); });
-  var html = '', first = true;
-  DC_IGROUPS.forEach(function(gr) {
-    var items = (byG[gr[0]] || []).sort(function(a, b) { return a.localeCompare(b, 'th'); });
-    if (!items.length) return;
-    html += '<div class="dc-ac-grp">' + gr[1] + '</div>';
-    items.forEach(function(k) {
-      var c = DCS.catalog[k]; var uc = (c.unit_cost != null ? c.unit_cost : (c.qty ? c.price / c.qty : 0));
-      html += '<div class="dc-ac-item' + (first ? ' active' : '') + '" data-name="' + escapeHtml(k) + '"><span>' + escapeHtml(k) + '</span><span class="uc">' + uc.toFixed(3) + ' ฿</span></div>';
-      first = false;
-    });
+function dcAcFilter(input) { if (dcAcCtx && dcAcCtx.input === input) { dcAcQuery = input.value || ''; dcAcBuild(); } }
+function dcAcBuild() {
+  var p = dcAcEnsurePanel();
+  var query = (dcAcQuery || '').trim().toLowerCase();
+  function itemHtml(k, active) {
+    var c = DCS.catalog[k]; var uc = (c.unit_cost != null ? c.unit_cost : (c.qty ? c.price / c.qty : 0));
+    return '<div class="dc-ac-item' + (active ? ' active' : '') + '" data-name="' + escapeHtml(k) + '"><span>' + escapeHtml(k) + '</span><span class="uc">' + uc.toFixed(3) + ' ฿</span></div>';
+  }
+  var keys = Object.keys(DCS.catalog).filter(function(k) {
+    if (query && k.toLowerCase().indexOf(query) < 0) return false;
+    if (dcAcGroup !== 'all' && dcIngGroup(k) !== dcAcGroup) return false;
+    return true;
   });
-  if (!html) html = '<div class="dc-ac-empty">ไม่พบ "' + escapeHtml(query) + '" — เพิ่มได้ที่ 🧂 คลังวัตถุดิบ</div>';
-  p.innerHTML = html; p.scrollTop = 0;
+  var tabs = '<div class="dc-ac-tabs"><button class="dc-ac-tab' + (dcAcGroup === 'all' ? ' active' : '') + '" data-g="all">ทั้งหมด</button>'
+    + DC_IGROUPS.map(function(g) { return '<button class="dc-ac-tab' + (dcAcGroup === g[0] ? ' active' : '') + '" data-g="' + g[0] + '">' + g[1] + '</button>'; }).join('') + '</div>';
+  var body = '', first = true;
+  if (dcAcGroup === 'all') {
+    var byG = {}; keys.forEach(function(k) { var g = dcIngGroup(k); (byG[g] = byG[g] || []).push(k); });
+    DC_IGROUPS.forEach(function(gr) {
+      var items = (byG[gr[0]] || []).sort(function(a, b) { return a.localeCompare(b, 'th'); });
+      if (!items.length) return;
+      body += '<div class="dc-ac-grp">' + gr[1] + '</div>';
+      items.forEach(function(k) { body += itemHtml(k, first); first = false; });
+    });
+  } else {
+    keys.sort(function(a, b) { return a.localeCompare(b, 'th'); }).forEach(function(k) { body += itemHtml(k, first); first = false; });
+  }
+  if (!body) body = '<div class="dc-ac-empty">ไม่พบรายการ — เพิ่มได้ที่ 🧂 คลังวัตถุดิบ</div>';
+  p.innerHTML = tabs + '<div class="dc-ac-body">' + body + '</div>';
+  p.scrollTop = 0;
 }
 function dcAcSelect(name) {
   if (!dcAcCtx) return;
