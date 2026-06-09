@@ -2753,7 +2753,6 @@ function dcSetModalBody(html) {
   if (inner) { inner.innerHTML = html; return; }
   var bd = document.createElement('div'); bd.className = 'dc-modal-bd'; bd.id = 'dc-modal-bd';
   bd.innerHTML = '<div class="dc-modal" role="dialog" aria-modal="true">' + html + '</div>';
-  bd.addEventListener('mousedown', function(e) { if (e.target === bd) dcCloseModal(); });
   document.body.appendChild(bd);
   document.addEventListener('keydown', dcEscClose);
 }
@@ -2826,11 +2825,26 @@ function dcAcOpen(input, row) {
   setTimeout(function() { document.addEventListener('mousedown', dcAcOutside); document.addEventListener('scroll', dcAcScroll, true); }, 0);
 }
 function dcAcOutside(e) { var p = document.getElementById('dc-acpanel'); if (!p || !dcAcCtx) return; if (e.target === dcAcCtx.input || p.contains(e.target)) return; dcAcClose(true); }
-function dcAcScroll() { if (dcAcCtx) dcAcClose(true); }
+function dcAcScroll() {
+  if (!dcAcCtx) return;
+  var r = dcAcCtx.input.getBoundingClientRect();
+  if (r.bottom < 4 || r.top > window.innerHeight - 4) { dcAcClose(true); return; }  // ช่องเลื่อนพ้นจอ -> ปิด
+  dcAcPosition();  // ไม่งั้นตาม input ไป
+}
 function dcAcPosition() {
   var p = document.getElementById('dc-acpanel'); if (!p || !dcAcCtx) return;
   var r = dcAcCtx.input.getBoundingClientRect();
-  p.style.left = r.left + 'px'; p.style.top = (r.bottom + 4) + 'px'; p.style.width = Math.max(r.width, 240) + 'px';
+  var vh = window.innerHeight;
+  var spaceBelow = vh - r.bottom - 10, spaceAbove = r.top - 10, cap = 340;
+  p.style.left = r.left + 'px';
+  p.style.width = Math.max(r.width, 240) + 'px';
+  if (spaceBelow >= 180 || spaceBelow >= spaceAbove) {
+    p.style.top = (r.bottom + 4) + 'px'; p.style.bottom = 'auto';
+    p.style.maxHeight = Math.max(120, Math.min(cap, spaceBelow)) + 'px';
+  } else {
+    p.style.top = 'auto'; p.style.bottom = (vh - r.top + 4) + 'px';
+    p.style.maxHeight = Math.max(120, Math.min(cap, spaceAbove)) + 'px';
+  }
 }
 function dcAcFilter(input) { if (dcAcCtx && dcAcCtx.input === input) { dcAcQuery = input.value || ''; dcAcBuild(); } }
 function dcAcBuild() {
