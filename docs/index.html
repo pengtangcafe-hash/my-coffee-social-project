@@ -510,15 +510,17 @@
       display: flex; align-items: flex-start; justify-content: center; padding: 28px 16px;
       overflow-y: auto; backdrop-filter: blur(2px); }
     .dc-modal { background: var(--card); border: 1px solid var(--card-border); border-radius: 20px;
-      width: 100%; max-width: 720px; padding: 24px; box-shadow: 0 40px 90px -30px rgba(0,0,0,.6);
+      width: 100%; max-width: 720px; box-shadow: 0 40px 90px -30px rgba(0,0,0,.6);
       animation: dcPop .26s cubic-bezier(.22,1,.36,1) both;
-      max-height: calc(100vh - 36px); overflow-y: auto; overscroll-behavior: contain;
-      -webkit-overflow-scrolling: touch; }
-    .dc-modal-bd { overflow: hidden; }
+      display: flex; flex-direction: column; max-height: calc(100vh - 40px); overflow: hidden; }
+    .dc-modal-bd { align-items: flex-start; padding: 20px 16px; overflow: hidden; }
+    .dc-modal-scroll { flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch; padding: 6px 24px; }
     @keyframes dcPop { from { opacity: 0; transform: translateY(14px) scale(.98); } to { opacity: 1; transform: none; } }
     @media (prefers-reduced-motion: reduce) { .dc-modal { animation: none; } }
     .dc-modal h3 { font-size: 1.2rem; font-weight: 900; color: var(--text); letter-spacing: -.02em; }
-    .dc-modal-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+    .dc-modal-head { display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      flex-shrink: 0; padding: 22px 24px 14px; }
     .dc-x { cursor: pointer; font-size: 1.2rem; color: var(--text-muted); background: none; border: none;
       width: 34px; height: 34px; border-radius: 9px; }
     .dc-x:hover { background: var(--nav-active); color: var(--text); }
@@ -559,14 +561,15 @@
     @media (max-width: 560px) { .dc-preview { grid-template-columns: repeat(2, 1fr); } }
     .dc-pv .l { font-size: .68rem; color: var(--text-muted); }
     .dc-pv .v { font-size: 1.15rem; font-weight: 900; color: var(--text); font-variant-numeric: tabular-nums; }
-    .dc-modal-foot { display: flex; flex-wrap: wrap; gap: 10px; justify-content: flex-end; margin-top: 18px; }
+    .dc-modal-foot { display: flex; flex-wrap: wrap; gap: 10px; justify-content: flex-end;
+      flex-shrink: 0; padding: 14px 24px; border-top: 1px solid var(--card-border); background: var(--card); }
     .dc-modal-foot .spacer { margin-right: auto; }
 
     .dc-cat-row { display: grid; grid-template-columns: 1.6fr 70px 80px 70px 32px; gap: 8px;
       align-items: center; margin-bottom: 7px; }
     .dc-cat-row .uc { font-size: .76rem; color: var(--text-muted); text-align: right; font-variant-numeric: tabular-nums; }
     .dc-cat-head { font-size: .68rem; font-weight: 700; color: var(--text-muted); }
-    .dc-cat-list { max-height: 48vh; overflow-y: auto; padding-right: 4px; margin-top: 8px; }
+    .dc-cat-list { padding-right: 4px; margin-top: 8px; }
 
     /* ── History / update-log timeline ── */
     .log-summary-grid {
@@ -2862,6 +2865,7 @@ function dcRenderMenuModal() {
   }).join('');
 
   var html = '<div class="dc-modal-head"><h3>' + (d.id ? 'แก้ไขเมนู' : 'เพิ่มเมนูใหม่') + '</h3><button class="dc-x" onclick="dcCloseModal()" aria-label="ปิด">✕</button></div>'
+    + '<div class="dc-modal-scroll">'
     + '<div class="dc-grid3" style="grid-template-columns:2fr 1fr">'
     + '<div class="dc-field"><label>ชื่อเมนู</label><input class="dc-inp" id="dc-f-name" value="' + escapeHtml(d.name) + '" oninput="dcOnInput()"></div>'
     + '<div class="dc-field"><label>หมวด</label><select class="dc-sel" id="dc-f-cat" onchange="dcOnInput(); dcImgPrev()">' + catOpts + '</select></div>'
@@ -2880,6 +2884,7 @@ function dcRenderMenuModal() {
     + '<div class="dc-pv"><div class="l">ต้นทุน/แก้ว</div><div class="v" id="dc-pv-cost">–</div></div>'
     + '<div class="dc-pv"><div class="l">ราคาแนะนำ</div><div class="v" id="dc-pv-suggest">–</div></div>'
     + '<div class="dc-pv"><div class="l">กำไร หน้าร้าน</div><div class="v" id="dc-pv-margin">–</div></div>'
+    + '</div>'
     + '</div>'
     + '<div class="dc-modal-foot">'
     + (d.id ? '<button class="dc-btn ghost danger spacer" onclick="dcDeleteMenu(\'' + d.id + '\')">🗑️ ลบเมนู</button>' : '<span class="spacer"></span>')
@@ -2904,10 +2909,12 @@ function dcRenderCatalogModal() {
       + '<button class="dc-rdel" type="button" title="ลบ" onclick="this.closest(\'.dc-cat-row\').remove()">✕</button></div>';
   }).join('');
   var html = '<div class="dc-modal-head"><h3>🧂 คลังวัตถุดิบ</h3><button class="dc-x" onclick="dcCloseModal()" aria-label="ปิด">✕</button></div>'
+    + '<div class="dc-modal-scroll">'
     + '<div class="dc-edithint" style="margin-bottom:10px">แก้ราคา/ปริมาณแพ็ก แล้วทุกเมนูที่ใช้วัตถุดิบนั้นจะคำนวณต้นทุนใหม่ทันที</div>'
     + '<div class="dc-cat-row"><span class="dc-cat-head">ชื่อวัตถุดิบ</span><span class="dc-cat-head">ราคาแพ็ก</span><span class="dc-cat-head">ปริมาณ</span><span class="dc-cat-head" style="text-align:right">฿/หน่วย</span><span></span></div>'
     + '<div class="dc-cat-list" id="dc-cat-list">' + rows + '</div>'
     + '<button class="dc-btn ghost" type="button" style="margin-top:10px" onclick="dcAddCatalogRow()">+ เพิ่มวัตถุดิบใหม่</button>'
+    + '</div>'
     + '<div class="dc-modal-foot"><span class="spacer"></span><button class="dc-btn" onclick="dcCloseModal()">ยกเลิก</button><button class="dc-btn primary" onclick="dcSaveCatalog()">บันทึกคลัง</button></div>';
   dcSetModalBody(html);
 }
@@ -2997,10 +3004,12 @@ function dcSyncPush() {
 function dcOpenConnect() {
   var url = dcGsUrl();
   var html = '<div class="dc-modal-head"><h3>🔗 เชื่อม Google Sheet</h3><button class="dc-x" onclick="dcCloseModal()" aria-label="ปิด">✕</button></div>'
+    + '<div class="dc-modal-scroll">'
     + '<div class="dc-field"><label>Google Apps Script — Web app URL</label>'
     + '<input class="dc-inp" id="dc-gs-url" placeholder="https://script.google.com/macros/s/.../exec" value="' + escapeHtml(url) + '"></div>'
     + '<div class="dc-edithint">วาง URL จากการ Deploy เป็น Web app (วิธีทำดูไฟล์ google-sheets/README.md) · '
     + 'URL เก็บในเบราว์เซอร์นี้เท่านั้น ไม่ฝังในเว็บสาธารณะ · ครั้งแรกให้กด "ดันข้อมูลขึ้น Sheet" เพื่อเอาเมนูปัจจุบันขึ้นไป</div>'
+    + '</div>'
     + '<div class="dc-modal-foot">'
     + '<button class="dc-btn ghost spacer" onclick="dcConnectTest()">🔄 ทดสอบ + ดึงข้อมูล</button>'
     + '<button class="dc-btn" onclick="dcConnectPush()">⬆️ ดันข้อมูลขึ้น Sheet</button>'
