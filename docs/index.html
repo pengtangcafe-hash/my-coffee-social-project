@@ -570,6 +570,16 @@
     .dc-cat-row .uc { font-size: .76rem; color: var(--text-muted); text-align: right; font-variant-numeric: tabular-nums; }
     .dc-cat-head { font-size: .68rem; font-weight: 700; color: var(--text-muted); }
     .dc-cat-list { padding-right: 4px; margin-top: 8px; }
+    .dc-catfilter { position: sticky; top: 0; z-index: 2; background: var(--card); display: flex;
+      flex-wrap: wrap; gap: 6px; padding: 2px 0 10px; margin-bottom: 2px; }
+    .dc-pwwrap { position: relative; }
+    .dc-pwwrap .dc-inp { padding-right: 44px; }
+    .dc-eye { position: absolute; right: 6px; top: 50%; transform: translateY(-50%); border: none;
+      background: none; cursor: pointer; font-size: 1.1rem; line-height: 1; width: 34px; height: 34px;
+      border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; }
+    .dc-eye:hover { background: var(--nav-active); }
+    .dc-pwerr { display: none; margin-top: 8px; font-size: .78rem; color: var(--dc-warn); font-weight: 700; }
+    .dc-pwerr.show { display: block; }
 
     /* ── History / update-log timeline ── */
     .log-summary-grid {
@@ -764,7 +774,7 @@
         <button class="theme-btn" id="theme-dark"  onclick="setTheme('dark')"   title="Dark Mode">🌙</button>
         <button class="theme-btn" id="theme-fancy" onclick="setTheme('fancy')"  title="Fancy Mode">✨</button>
       </div>
-      <div class="text-[10px] text-slate-400 uppercase tracking-widest text-center">สร้างเมื่อ 09 June 2026</div>
+      <div class="text-[10px] text-slate-400 uppercase tracking-widest text-center">สร้างเมื่อ 10 June 2026</div>
     </div>
 
   </aside>
@@ -2383,14 +2393,16 @@ function dcAutoCat(name) {
 function dcCategoryOf(m) { return (DC_CAT_LABEL[m.category]) ? m.category : dcAutoCat(m.name); }
 
 // จัดกลุ่มวัตถุดิบ (สำหรับ dropdown ค้นหา)
-var DC_IGROUPS = [['bean', 'เมล็ดกาแฟ'], ['milk', 'นม / ครีม'], ['powder', 'ผง / หัวเชื้อ'], ['syrup', 'ไซรัป / น้ำเชื่อม'], ['pack', 'บรรจุภัณฑ์'], ['other', 'อื่นๆ']];
+var DC_IGROUPS = [['bean', 'เมล็ดกาแฟ'], ['milk', 'นม'], ['cocoa', 'โกโก้'], ['tea', 'ผงชา'], ['sweet', 'ความหวาน'], ['syrup', 'ไซรัป'], ['pack', 'บรรจุภัณฑ์'], ['other', 'อื่นๆ']];
 function dcIngGroup(name) {
   var n = (name || '').toLowerCase();
   if (/แก้ว|ฝา|หลอด|ถุง|กระดาษ/.test(name)) return 'pack';
   if (/กาแฟ|เอสเพรสโซ|เอสเปรสโซ/.test(name) || /coffee|espresso/.test(n)) return 'bean';
-  if (/นม|ข้นหวาน|คอฟฟี่เมจ|ครีม/.test(name) || /mmilk|milk|falcon|oat/.test(n)) return 'milk';
-  if (/โกโก้|ผง|มัทฉะ|คนอร์|ชาตรามือ|หัวเชื้อ/.test(name) || /cho|tulip|matcha/.test(n)) return 'powder';
-  if (/น้ำเชื่อม|มิตรผล|มังกรบิน|น้ำผึ้ง/.test(name) || /monin|syrup|sunquick|honey/.test(n)) return 'syrup';
+  if (/โกโก้/.test(name) || /cho|tulip|cocoa/.test(n)) return 'cocoa';
+  if (/ชา|มัทฉะ/.test(name) || /matcha/.test(n)) return 'tea';
+  if (/ข้นหวาน|น้ำตาล|น้ำผึ้ง|น้ำเชื่อม|มิตรผล/.test(name) || /honey/.test(n)) return 'sweet';
+  if (/นมสด|นมข้น|นมจืด|ฟองนม|ครีม|คอฟฟี่เมจ/.test(name) || /mmilk|milk|falcon|oat/.test(n)) return 'milk';
+  if (/มังกรบิน/.test(name) || /monin|syrup|sunquick/.test(n)) return 'syrup';
   return 'other';
 }
 function dcMenuImage(m) { return (m.image && m.image.trim()) ? m.image.trim() : ('assets/drink-icons/' + dcCategoryOf(m) + '.svg'); }
@@ -2478,12 +2490,34 @@ function dcSha256(s) {
 }
 function dcRequestEdit() {
   if (dcEdit) { dcToggleEdit(); return; }
-  var pw = prompt('🔒 ใส่รหัสเพื่อแก้ไขเมนู / สูตร');
-  if (pw == null) return;
+  dcOpenPwModal();
+}
+function dcOpenPwModal() {
+  var html = '<div class="dc-modal-head"><h3>🔒 ปลดล็อกการแก้ไข</h3><button class="dc-x" onclick="dcCloseModal()" aria-label="ปิด">✕</button></div>'
+    + '<div class="dc-modal-scroll">'
+    + '<div class="dc-field" style="margin-bottom:6px"><label>ใส่รหัสเพื่อแก้ไขเมนู / สูตร</label>'
+    + '<div class="dc-pwwrap"><input class="dc-inp" id="dc-pw" type="password" placeholder="รหัสผ่าน" autocomplete="off" onkeydown="dcPwKey(event)" oninput="dcPwClearErr()">'
+    + '<button class="dc-eye" type="button" id="dc-eye" onclick="dcPwToggle()" aria-label="แสดง/ซ่อนรหัส">👁</button></div>'
+    + '<div class="dc-pwerr" id="dc-pwerr">รหัสไม่ถูกต้อง ลองใหม่อีกครั้ง</div></div>'
+    + '</div>'
+    + '<div class="dc-modal-foot"><span class="spacer"></span><button class="dc-btn" onclick="dcCloseModal()">ยกเลิก</button><button class="dc-btn primary" onclick="dcPwSubmit()">ปลดล็อก</button></div>';
+  dcSetModalBody(html);
+  setTimeout(function() { var i = document.getElementById('dc-pw'); if (i) i.focus(); }, 60);
+}
+function dcPwToggle() {
+  var i = document.getElementById('dc-pw'), e = document.getElementById('dc-eye');
+  if (!i) return;
+  if (i.type === 'password') { i.type = 'text'; if (e) e.textContent = '🙈'; } else { i.type = 'password'; if (e) e.textContent = '👁'; }
+  i.focus();
+}
+function dcPwClearErr() { var e = document.getElementById('dc-pwerr'); if (e) e.classList.remove('show'); }
+function dcPwKey(e) { if (e.key === 'Enter') { e.preventDefault(); dcPwSubmit(); } }
+function dcPwSubmit() {
+  var i = document.getElementById('dc-pw'); if (!i) return;
   if (!window.crypto || !crypto.subtle) { showToast('เบราว์เซอร์ไม่รองรับการตรวจรหัส'); return; }
-  dcSha256(pw.trim()).then(function(h) {
-    if (h === DC_EDIT_HASH) { dcEdit = true; renderDrinkCosts(); }
-    else showToast('รหัสไม่ถูกต้อง');
+  dcSha256((i.value || '').trim()).then(function(h) {
+    if (h === DC_EDIT_HASH) { dcCloseModal(); dcEdit = true; renderDrinkCosts(); showToast('ปลดล็อกแล้ว ✓'); }
+    else { var e = document.getElementById('dc-pwerr'); if (e) e.classList.add('show'); i.value = ''; i.focus(); }
   });
 }
 function dcToggle(el) { var o = el.classList.toggle('open'); el.setAttribute('aria-expanded', o ? 'true' : 'false'); }
@@ -2913,12 +2947,28 @@ function dcRenderMenuModal() {
 }
 
 // ── Catalog editor ──
-function dcOpenCatalog() { dcRenderCatalogModal(); }
+var dcCatFilter = 'all';
+function dcCatFilterBtns() {
+  var b = '<button class="ov-mtab" data-g="all" onclick="dcCatFilterSet(\'all\')">ทั้งหมด</button>';
+  b += DC_IGROUPS.map(function(g) { return '<button class="ov-mtab" data-g="' + g[0] + '" onclick="dcCatFilterSet(\'' + g[0] + '\')">' + g[1] + '</button>'; }).join('');
+  return b;
+}
+function dcCatFilterSet(g) { dcCatFilter = g; dcApplyCatFilter(); }
+function dcApplyCatFilter() {
+  var g = dcCatFilter, shown = 0;
+  document.querySelectorAll('#dc-cat-list .dc-cat-row').forEach(function(r) {
+    var ok = (g === 'all' || r.getAttribute('data-group') === g);
+    r.style.display = ok ? '' : 'none'; if (ok) shown++;
+  });
+  document.querySelectorAll('.dc-catfilter .ov-mtab').forEach(function(b) { b.classList.toggle('active', b.getAttribute('data-g') === g); });
+  var sc = document.querySelector('#dc-cat-list'); if (sc) sc.parentNode.scrollTop = 0;
+}
+function dcOpenCatalog() { dcCatFilter = 'all'; dcRenderCatalogModal(); }
 function dcRenderCatalogModal() {
   var keys = Object.keys(DCS.catalog).sort(function(a, b) { return a.localeCompare(b, 'th'); });
   var rows = keys.map(function(k) {
     var c = DCS.catalog[k];
-    return '<div class="dc-cat-row" data-orig="' + escapeHtml(k) + '">'
+    return '<div class="dc-cat-row" data-orig="' + escapeHtml(k) + '" data-group="' + dcIngGroup(k) + '">'
       + '<input class="dc-inp dc-c-name" value="' + escapeHtml(k) + '">'
       + '<input class="dc-inp dc-c-price" type="number" min="0" step="any" value="' + c.price + '" oninput="dcCatUC(this)">'
       + '<input class="dc-inp dc-c-qty" type="number" min="0" step="any" value="' + c.qty + '" oninput="dcCatUC(this)">'
@@ -2928,12 +2978,14 @@ function dcRenderCatalogModal() {
   var html = '<div class="dc-modal-head"><h3>🧂 คลังวัตถุดิบ</h3><button class="dc-x" onclick="dcCloseModal()" aria-label="ปิด">✕</button></div>'
     + '<div class="dc-modal-scroll">'
     + '<div class="dc-edithint" style="margin-bottom:10px">แก้ราคา/ปริมาณแพ็ก แล้วทุกเมนูที่ใช้วัตถุดิบนั้นจะคำนวณต้นทุนใหม่ทันที</div>'
+    + '<div class="dc-catfilter">' + dcCatFilterBtns() + '</div>'
     + '<div class="dc-cat-row"><span class="dc-cat-head">ชื่อวัตถุดิบ</span><span class="dc-cat-head">ราคาแพ็ก</span><span class="dc-cat-head">ปริมาณ</span><span class="dc-cat-head" style="text-align:right">฿/หน่วย</span><span></span></div>'
     + '<div class="dc-cat-list" id="dc-cat-list">' + rows + '</div>'
     + '<button class="dc-btn ghost" type="button" style="margin-top:10px" onclick="dcAddCatalogRow()">+ เพิ่มวัตถุดิบใหม่</button>'
     + '</div>'
     + '<div class="dc-modal-foot"><span class="spacer"></span><button class="dc-btn" onclick="dcCloseModal()">ยกเลิก</button><button class="dc-btn primary" onclick="dcSaveCatalog()">บันทึกคลัง</button></div>';
   dcSetModalBody(html);
+  dcApplyCatFilter();
 }
 function dcCatUC(inp) {
   var row = inp.closest('.dc-cat-row');
@@ -2944,6 +2996,7 @@ function dcCatUC(inp) {
 function dcAddCatalogRow() {
   var list = document.getElementById('dc-cat-list');
   var div = document.createElement('div'); div.className = 'dc-cat-row'; div.setAttribute('data-orig', '');
+  div.setAttribute('data-group', dcCatFilter === 'all' ? 'other' : dcCatFilter);
   div.innerHTML = '<input class="dc-inp dc-c-name" placeholder="ชื่อวัตถุดิบ">'
     + '<input class="dc-inp dc-c-price" type="number" min="0" step="any" placeholder="ราคา" oninput="dcCatUC(this)">'
     + '<input class="dc-inp dc-c-qty" type="number" min="0" step="any" placeholder="ปริมาณ" oninput="dcCatUC(this)">'
