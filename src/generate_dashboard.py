@@ -4237,6 +4237,23 @@ function dcMargCol(m) {{ if (m == null) return 'var(--text-muted)'; if (m >= 60)
 function dcSetChannel(ch) {{ dcChannel = ch; renderDrinkCosts(); }}
 function dcSetSort(s) {{ dcSort = s; renderDrinkCosts(); }}
 function dcToggleEdit() {{ dcEdit = !dcEdit; renderDrinkCosts(); }}
+// ล็อกโหมดแก้ไขด้วยรหัส (soft lock — เก็บเป็น SHA-256 ไม่ใช่ข้อความจริง)
+var DC_EDIT_HASH = '7faf99673e7b404b5f83cd7ceb3b3093f65590e0545309f7efad769994f5b541';
+function dcSha256(s) {{
+  return crypto.subtle.digest('SHA-256', new TextEncoder().encode(s)).then(function(buf) {{
+    return Array.prototype.map.call(new Uint8Array(buf), function(b) {{ return ('0' + b.toString(16)).slice(-2); }}).join('');
+  }});
+}}
+function dcRequestEdit() {{
+  if (dcEdit) {{ dcToggleEdit(); return; }}
+  var pw = prompt('🔒 ใส่รหัสเพื่อแก้ไขเมนู / สูตร');
+  if (pw == null) return;
+  if (!window.crypto || !crypto.subtle) {{ showToast('เบราว์เซอร์ไม่รองรับการตรวจรหัส'); return; }}
+  dcSha256(pw.trim()).then(function(h) {{
+    if (h === DC_EDIT_HASH) {{ dcEdit = true; renderDrinkCosts(); }}
+    else showToast('รหัสไม่ถูกต้อง');
+  }});
+}}
 function dcToggle(el) {{ var o = el.classList.toggle('open'); el.setAttribute('aria-expanded', o ? 'true' : 'false'); }}
 function dcRowKey(e, el) {{ if (e.key === 'Enter' || e.key === ' ') {{ e.preventDefault(); dcToggle(el); }} }}
 
@@ -4297,7 +4314,7 @@ function renderDrinkCosts() {{
 
   // toolbar (edit controls)
   if (!dcEdit) {{
-    h.push('<div class="dc-toolbar"><button class="dc-btn primary" onclick="dcToggleEdit()">✏️ แก้ไขเมนู / สูตร</button></div>');
+    h.push('<div class="dc-toolbar"><button class="dc-btn primary" onclick="dcRequestEdit()">🔒 แก้ไขเมนู / สูตร</button></div>');
   }} else {{
     h.push('<div class="dc-toolbar">'
       + '<button class="dc-btn primary" onclick="dcOpenMenu(null)">+ เพิ่มเมนู</button>'
