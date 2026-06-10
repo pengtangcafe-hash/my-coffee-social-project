@@ -2140,17 +2140,18 @@ HTML_TEMPLATE = """\
     .dc-meta .src {{ display: inline-flex; align-items: center; gap: 6px; font-weight: 600; color: var(--text); }}
     .dc-meta .note {{ opacity: .9; }}
 
-    /* ── view-cost-drinks: flex column fills viewport — ไม่ต้อง page-scroll ── */
-    #view-cost-drinks.active {{ height: 100%; display: flex; flex-direction: column; overflow: hidden; }}
-    #dc-root {{ flex: 1 1 0; min-height: 0; display: flex; flex-direction: column; overflow: hidden; }}
-    /* ส่วนหัว chart+สถิติ+controls: ไม่ sticky แล้ว ใช้ flex-shrink:0 แทน */
-    .dc-sticky-header {{ flex-shrink: 0; z-index: 5; background: var(--bg);
-      padding: 10px 0 6px; border-bottom: 1px solid var(--card-border); margin-bottom: 4px; }}
-    /* Polar chart: square, responsive, centered */
+    /* ── view-cost-drinks: เลื่อนหน้าปกติ — chart ใหญ่อยู่บน, รายการไหลต่อด้านล่าง ── */
+    #dc-root {{ display: block; }}
+    .dc-sticky-header {{ padding: 2px 0 8px; margin-bottom: 6px;
+      border-bottom: 1px solid var(--card-border); }}
+    /* Polar chart: square, responsive, centered — ใหญ่สมส่วนทั้ง PC/มือถือ */
     .dc-polar-wrap {{ margin-bottom: 8px; }}
     .dc-polar-canvas-wrap {{ position: relative;
-      width: clamp(80px, min(1120px, 92vw), calc(100vh - 640px));
-      aspect-ratio: 1 / 1; margin: 0 auto; overflow: hidden; }}
+      width: clamp(240px, min(92vw, 62vh), 820px);
+      aspect-ratio: 1 / 1; margin: 0 auto; }}
+    @media (max-height: 560px) {{
+      .dc-polar-canvas-wrap {{ width: clamp(200px, min(80vw, 70vh), 520px); }}
+    }}
     .dc-polar-caption {{ text-align: center; font-size: .72rem; color: var(--text-muted);
       margin: 3px 0 0; line-height: 1.4; }}
     /* 5 สถิติเต็มความกว้าง 1 แถว */
@@ -2169,9 +2170,8 @@ HTML_TEMPLATE = """\
       border: none; }}
     .dc-stat.hero .dc-st-lab, .dc-stat.hero .dc-st-sub {{ color: rgba(246,236,218,.78); }}
     .dc-stat.hero .dc-st-val {{ color: var(--ov-crema); }}
-    /* กล่อง scroll รายการ — flex fill ส่วนที่เหลือ, ไม่ fix max-height */
-    .dc-list-scroll {{ flex: 1 1 0; min-height: 0; overflow-y: auto;
-      padding: 0 2px 8px; overscroll-behavior: contain; }}
+    /* รายการเมนู — ไหลในหน้า (เลื่อนด้วย scroll หลัก ขึ้นบนสุดได้เสมอ) */
+    .dc-list-scroll {{ padding: 0 2px 8px; }}
     @media (max-width: 720px) {{
       .dc-stats-row .dc-stat {{ flex: 1 1 80px; }}
     }}
@@ -4500,7 +4500,7 @@ function dcRenderPolar(menus) {{
     return ch === dcChannel ? colors[i] + 'ee' : colors[i] + '44';
   }});
   var borderColors = DC_CH.map(function(ch, i) {{
-    return ch === dcChannel ? '#ffffff' : colors[i] + '88';
+    return ch === dcChannel ? textColor : colors[i] + '88';
   }});
   var borderWidths = DC_CH.map(function(ch) {{ return ch === dcChannel ? 3 : 1; }});
   dcPolarChart = new Chart(canvas, {{
@@ -4524,6 +4524,7 @@ function dcRenderPolar(menus) {{
       plugins: {{
         legend: {{
           position: 'top',
+          onClick: function(e, item) {{ var ch = DC_CH[item.index]; if (ch) dcSetChannel(ch); }},
           labels: {{ color: textColor, font: {{ size: 12, weight: '700' }}, padding: 16, boxWidth: 14,
             generateLabels: function(chart) {{
               var ds = chart.data.datasets[0];
