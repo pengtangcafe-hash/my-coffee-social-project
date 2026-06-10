@@ -5557,7 +5557,18 @@ def generate_dashboard(input_path: str) -> Path:
 
     print(f"\n[ok] บันทึกแล้ว : {named_path}")
     print(f"[ok] index.html  : {index_path}")
+    _check_js_syntax(index_path)
     return index_path
+
+
+def _check_js_syntax(html_path: Path) -> None:
+    checker = PROJECT_ROOT / "scripts" / "check_js_syntax.js"
+    if shutil.which("node") and checker.exists():
+        r = subprocess.run(["node", str(checker), str(html_path)])
+        if r.returncode == 1:
+            sys.exit("build หยุด: พบ JS syntax error ในผลลัพธ์ (ดูข้างบน) — แก้ก่อน deploy")
+    else:
+        print("[warn] ข้ามการเช็ค JS syntax (ไม่พบ node) — แนะนำติดตั้ง Node เพื่อความปลอดภัย")
 
 
 def rebuild_dashboard() -> Path:
@@ -5588,6 +5599,7 @@ def rebuild_dashboard() -> Path:
     index_path = dashboard_dir / "index.html"
     index_path.write_text(html, encoding="utf-8")
     print(f"[ok] index.html อัปเดตแล้ว : {index_path}")
+    _check_js_syntax(index_path)
     return index_path
 
 
