@@ -146,12 +146,12 @@
       border: 2px solid transparent; transition: all .18s;
       color: var(--text-muted); background: transparent;
     }
-    .intel-tab.active, .pricing-tab.active {
-      background: var(--nav-active); color: var(--text);
-      border-color: var(--card-border);
+    .intel-tab.active, .pricing-tab.active, .trk-tab.active {
+      box-shadow: 0 0 0 2px #f6ecda, 0 0 0 4px #75410a, 0 3px 10px rgba(70,37,6,.35);
+      transform: translateY(-1px); font-weight: 800;
     }
-    .intel-tab:hover:not(.active), .pricing-tab:hover:not(.active) {
-      background: var(--nav-active);
+    .intel-tab:hover:not(.active), .pricing-tab:hover:not(.active), .trk-tab:hover:not(.active) {
+      filter: brightness(1.06);
     }
 
     /* ── Intel accordion ── */
@@ -284,8 +284,9 @@
     .ov-mtab { cursor: pointer; padding: 5px 13px; border-radius: 999px; font-size: .76rem;
       font-weight: 600; border: 1px solid var(--card-border); background: transparent;
       color: var(--text-muted); transition: all .18s; }
-    .ov-mtab.active { background: var(--ov-espresso-2); border-color: var(--ov-espresso-2); color: var(--ov-crema); }
-    .ov-mtab:hover:not(.active) { background: var(--nav-active); }
+    .ov-mtab.active { box-shadow: 0 0 0 2px #f6ecda, 0 0 0 4px #75410a, 0 3px 10px rgba(70,37,6,.35);
+      transform: translateY(-1px); font-weight: 800; }
+    .ov-mtab:hover:not(.active) { filter: brightness(1.06); }
     .ov-bars { display: flex; flex-direction: column; gap: 16px; }
     .ov-bar-row { display: grid; grid-template-columns: 96px 1fr auto; align-items: center; gap: 14px; }
     .ov-bar-name { display: inline-flex; align-items: center; gap: 8px; font-weight: 600;
@@ -527,14 +528,16 @@
       margin-bottom: 16px; }
     .dc-btn { display: inline-flex; align-items: center; gap: 6px; cursor: pointer;
       font-size: .8rem; font-weight: 700; padding: 8px 14px; border-radius: 10px;
-      border: 1px solid var(--card-border); background: var(--card); color: var(--text);
-      transition: background .15s, border-color .15s, transform .1s; }
-    .dc-btn:hover { background: var(--nav-active); }
+      border: 1px solid rgba(70,37,6,.2);
+      background: linear-gradient(180deg,#ecdcab,#cfc196); color: #3a2410;
+      transition: filter .15s, background .15s, transform .1s; }
+    .dc-btn:hover { filter: brightness(1.06); }
     .dc-btn:active { transform: translateY(1px); }
-    .dc-btn.primary { background: var(--ov-espresso-2); border-color: var(--ov-espresso-2); color: var(--ov-crema); }
-    .dc-btn.primary:hover { background: var(--ov-espresso-1); }
-    .dc-btn.ghost { background: transparent; }
-    .dc-btn.danger { color: var(--dc-warn); border-color: var(--dc-warn); }
+    .dc-btn.primary { background: linear-gradient(180deg,#75410a,#462506); border-color: rgba(70,37,6,.35); color: #f6ecda; }
+    .dc-btn.primary:hover { filter: brightness(1.14); }
+    .dc-btn.ghost { background: transparent; border-color: transparent; color: var(--text-muted); }
+    .dc-btn.ghost:hover { filter: none; background: var(--nav-active); color: var(--text); }
+    .dc-btn.danger { color: var(--dc-warn); border-color: rgba(194,65,12,.35); }
     .dc-btn:focus-visible { outline: 2px solid var(--ov-caramel); outline-offset: 2px; }
     .dc-edithint { font-size: .74rem; color: var(--text-muted); }
     .dc-note { background: var(--nav-active); border: 1px solid var(--card-border); border-radius: 14px;
@@ -870,7 +873,7 @@
         <button class="theme-btn" id="theme-dark"  onclick="setTheme('dark')"   title="Dark Mode">🌙</button>
         <button class="theme-btn" id="theme-fancy" onclick="setTheme('fancy')"  title="Fancy Mode">✨</button>
       </div>
-      <div class="text-[10px] text-slate-400 uppercase tracking-widest text-center">สร้างเมื่อ 10 June 2026</div>
+      <div class="text-[10px] text-slate-400 uppercase tracking-widest text-center">สร้างเมื่อ 11 June 2026</div>
     </div>
 
   </aside>
@@ -2310,18 +2313,10 @@ let currentTrackerPeriod = 'week';
 
 function setTrackerPeriod(period) {
   currentTrackerPeriod = period;
-  ['week','month','year'].forEach(p => {
-    const btn = document.getElementById('trk-' + p);
+  ['week','month','year'].forEach(function(p) {
+    var btn = document.getElementById('trk-' + p);
     if (!btn) return;
-    if (p === period) {
-      btn.style.background = 'var(--nav-active)';
-      btn.style.color = 'var(--text)';
-      btn.style.border = '1.5px solid var(--card-border)';
-    } else {
-      btn.style.background = 'transparent';
-      btn.style.color = 'var(--text-muted)';
-      btn.style.border = '1.5px solid transparent';
-    }
+    btn.classList.toggle('active', p === period);
   });
   renderTrackerContent(period);
 }
@@ -3426,9 +3421,31 @@ function dcConnectSave() { var u = document.getElementById('dc-gs-url').value.tr
 function dcConnectTest() { dcSetGsUrl(document.getElementById('dc-gs-url').value.trim()); dcSyncPull(); }
 function dcConnectPush() { dcSetGsUrl(document.getElementById('dc-gs-url').value.trim()); dcSyncPush(); }
 
+// ── Roast palette (ไล่เฉด อ่อน→เข้ม) ──
+var ROAST = ['#ecdcab','#d8b26f','#daa755','#d2a941','#bf914a','#9e6924','#75410a','#523828','#462506'];
+function roastAt(i,n){ if(n<=1) return ROAST[4]; var idx=Math.round(i/(n-1)*(ROAST.length-1)); return ROAST[idx]; }
+function roastInk(hex){ var r=parseInt(hex.substr(1,2),16),g=parseInt(hex.substr(3,2),16),b=parseInt(hex.substr(5,2),16);
+  return (0.299*r+0.587*g+0.114*b) > 150 ? '#3a2410' : '#f6ecda'; }
+function roastDark(hex,p){ var n=parseInt(hex.slice(1),16); var r=(n>>16)&255,g=(n>>8)&255,b=n&255;
+  r=Math.round(r*(1-p)); g=Math.round(g*(1-p)); b=Math.round(b*(1-p));
+  return '#'+((1<<24)+(r<<16)+(g<<8)+b).toString(16).slice(1); }
+function colorizeRow(btns){ var n=btns.length; btns.forEach(function(b,i){
+  var c=roastAt(i,n);
+  b.style.background='linear-gradient(180deg,'+c+','+roastDark(c,0.12)+')';
+  b.style.color=roastInk(c); b.style.borderColor='rgba(70,37,6,.18)';
+}); }
+function applyRoast(){ ['.ov-mtab','.intel-tab','.pricing-tab','.trk-tab'].forEach(function(cls){
+  var groups=new Map();
+  document.querySelectorAll(cls).forEach(function(b){ var p=b.parentElement; if(!groups.has(p)) groups.set(p,[]); groups.get(p).push(b); });
+  groups.forEach(function(btns){ colorizeRow(btns); });
+}); }
+var _roastTimer=null;
+new MutationObserver(function(){ clearTimeout(_roastTimer); _roastTimer=setTimeout(applyRoast,60); }).observe(document.body,{childList:true,subtree:true});
+
 // ── Boot ──
 applyStoredTheme();
 showView('view-home');
+applyRoast();
 </script>
 
 </body>
