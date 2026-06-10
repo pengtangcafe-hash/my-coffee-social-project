@@ -666,7 +666,7 @@
 
 <!-- Mobile top bar -->
 <div id="mobile-topbar" class="items-center justify-between px-4 py-3">
-  <button class="app-logo-btn" onclick="showView('view-home'); closeSidebar();" aria-label="กลับหน้าภาพรวม">
+  <button class="app-logo-btn" onclick="goHomeFresh()" aria-label="กลับหน้าภาพรวม">
     <img class="app-logo-img" src="assets/logo-anim.gif" alt="โลโก้" style="width:30px;height:30px">
     <div>
       <div class="text-sm font-black" style="color:var(--text)">Social Analytics</div>
@@ -691,7 +691,7 @@
 
     <!-- Logo -->
     <div class="p-5 border-b border-slate-100 flex items-center justify-between gap-2">
-      <button class="app-logo-btn" onclick="showView('view-home')" aria-label="กลับหน้าภาพรวม">
+      <button class="app-logo-btn" onclick="goHomeFresh()" aria-label="กลับหน้าภาพรวม">
         <img class="app-logo-img" src="assets/logo-anim.gif" alt="โลโก้" style="width:40px;height:40px">
         <div>
           <div class="text-lg font-black leading-tight" style="color:var(--text)">Social Analytics</div>
@@ -883,7 +883,7 @@
 
       <div class="mb-6">
         <div class="ov-h1-row">
-          <img class="app-logo-img" src="assets/logo-anim.gif" alt="" aria-hidden="true"
+          <img class="app-logo-img" src="assets/overview-anim.gif" alt="" aria-hidden="true"
                style="width:60px;height:60px">
           <div>
             <h1 class="ov-h1" style="margin:0">ภาพรวม Social Media</h1>
@@ -1333,6 +1333,10 @@ function closeSidebar() {
 }
 
 // ── Navigation ──
+function goHomeFresh() {
+  var base = location.origin + location.pathname;
+  location.replace(base + '?r=' + Date.now());
+}
 function showView(id) {
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   const target = document.getElementById(id);
