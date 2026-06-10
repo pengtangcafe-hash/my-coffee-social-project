@@ -1,6 +1,6 @@
 {
   "source": "Behind_drinks_cost2025.xlsx",
-  "parsed_at": "2026-06-09T22:39:33",
+  "parsed_at": "2026-06-10T09:59:34",
   "assumptions": {
     "overhead": 0.3,
     "margin_factor": 1.6,
@@ -20,6 +20,11 @@
       "shoppee": {
         "label": "Shoppee",
         "gp": 0.32,
+        "vat": 0.07
+      },
+      "grab": {
+        "label": "Grab",
+        "gp": 0.251,
         "vat": 0.07
       }
     }
@@ -509,7 +514,8 @@
       "prices": {
         "store": 45.0,
         "lineman": 45.0,
-        "shoppee": 45.0
+        "shoppee": 45.0,
+        "grab": null
       },
       "seed_cost_cup": 12.61
     },
@@ -521,7 +527,8 @@
       "prices": {
         "store": 50.0,
         "lineman": 50.0,
-        "shoppee": 50.0
+        "shoppee": 50.0,
+        "grab": null
       },
       "seed_cost_cup": 18.46
     },
@@ -533,7 +540,8 @@
       "prices": {
         "store": 80.0,
         "lineman": 80.0,
-        "shoppee": 80.0
+        "shoppee": 80.0,
+        "grab": null
       },
       "seed_cost_cup": 31.33
     },
@@ -545,7 +553,8 @@
       "prices": {
         "store": 60.0,
         "lineman": 60.0,
-        "shoppee": 60.0
+        "shoppee": 60.0,
+        "grab": null
       },
       "seed_cost_cup": 26.65
     },
@@ -582,7 +591,8 @@
       "prices": {
         "store": 55.0,
         "lineman": 55.0,
-        "shoppee": 55.0
+        "shoppee": 55.0,
+        "grab": null
       },
       "seed_cost_cup": 19.72
     },
@@ -615,7 +625,8 @@
       "prices": {
         "store": 55.0,
         "lineman": 55.0,
-        "shoppee": 55.0
+        "shoppee": 55.0,
+        "grab": null
       },
       "seed_cost_cup": 17.48
     },
@@ -656,7 +667,8 @@
       "prices": {
         "store": 60.0,
         "lineman": 60.0,
-        "shoppee": 60.0
+        "shoppee": 60.0,
+        "grab": null
       },
       "seed_cost_cup": 18.18
     },
@@ -668,7 +680,8 @@
       "prices": {
         "store": 20.0,
         "lineman": 20.0,
-        "shoppee": 20.0
+        "shoppee": 20.0,
+        "grab": null
       },
       "seed_cost_cup": 9.68
     },
@@ -680,7 +693,8 @@
       "prices": {
         "store": 50.0,
         "lineman": 50.0,
-        "shoppee": 50.0
+        "shoppee": 50.0,
+        "grab": null
       },
       "seed_cost_cup": 21.19
     },
@@ -692,7 +706,8 @@
       "prices": {
         "store": 60.0,
         "lineman": 60.0,
-        "shoppee": 60.0
+        "shoppee": 60.0,
+        "grab": null
       },
       "seed_cost_cup": 35.23
     },
@@ -725,7 +740,8 @@
       "prices": {
         "store": 55.0,
         "lineman": 55.0,
-        "shoppee": 55.0
+        "shoppee": 55.0,
+        "grab": null
       },
       "seed_cost_cup": 21.38
     },
@@ -737,7 +753,8 @@
       "prices": {
         "store": 60.0,
         "lineman": 60.0,
-        "shoppee": 60.0
+        "shoppee": 60.0,
+        "grab": null
       },
       "seed_cost_cup": 31.1
     },
@@ -749,7 +766,8 @@
       "prices": {
         "store": 60.0,
         "lineman": 60.0,
-        "shoppee": 60.0
+        "shoppee": 60.0,
+        "grab": null
       },
       "seed_cost_cup": 31.1
     },
@@ -798,7 +816,8 @@
       "prices": {
         "store": 55.0,
         "lineman": 55.0,
-        "shoppee": 55.0
+        "shoppee": 55.0,
+        "grab": null
       },
       "seed_cost_cup": 32.74
     },
@@ -847,7 +866,8 @@
       "prices": {
         "store": 50.0,
         "lineman": 50.0,
-        "shoppee": 50.0
+        "shoppee": 50.0,
+        "grab": null
       },
       "seed_cost_cup": 29.62
     },
@@ -880,7 +900,8 @@
       "prices": {
         "store": 50.0,
         "lineman": 50.0,
-        "shoppee": 50.0
+        "shoppee": 50.0,
+        "grab": null
       },
       "seed_cost_cup": 25.54
     },
@@ -913,7 +934,8 @@
       "prices": {
         "store": 55.0,
         "lineman": 55.0,
-        "shoppee": 55.0
+        "shoppee": 55.0,
+        "grab": null
       },
       "seed_cost_cup": 27.49
     },
@@ -958,7 +980,8 @@
       "prices": {
         "store": 60.0,
         "lineman": 60.0,
-        "shoppee": 60.0
+        "shoppee": 60.0,
+        "grab": null
       },
       "seed_cost_cup": 35.73
     },
@@ -991,7 +1014,8 @@
       "prices": {
         "store": 45.0,
         "lineman": 45.0,
-        "shoppee": 45.0
+        "shoppee": 45.0,
+        "grab": null
       },
       "seed_cost_cup": 16.0
     },
@@ -1003,7 +1027,8 @@
       "prices": {
         "store": 50.0,
         "lineman": 50.0,
-        "shoppee": 50.0
+        "shoppee": 50.0,
+        "grab": null
       },
       "seed_cost_cup": 26.1
     },
@@ -1015,7 +1040,8 @@
       "prices": {
         "store": 50.0,
         "lineman": 50.0,
-        "shoppee": 50.0
+        "shoppee": 50.0,
+        "grab": null
       },
       "seed_cost_cup": 26.1
     },
@@ -1044,7 +1070,8 @@
       "prices": {
         "store": 40.0,
         "lineman": 40.0,
-        "shoppee": 40.0
+        "shoppee": 40.0,
+        "grab": null
       },
       "seed_cost_cup": 15.23
     }

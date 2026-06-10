@@ -63,9 +63,10 @@ function buildData_() {
   var asm = {
     overhead: 0.30, margin_factor: 1.6, fixed_cost_monthly: 30000, days_per_month: 30,
     channels: {
-      store: { label: 'หน้าร้าน', gp: 0, vat: 0 },
-      lineman: { label: 'Lineman', gp: 0.30, vat: 0.07 },
-      shoppee: { label: 'Shoppee', gp: 0.32, vat: 0.07 }
+      store:   { label: 'หน้าร้าน', gp: 0,     vat: 0 },
+      lineman: { label: 'Lineman',  gp: 0.30,  vat: 0.07 },
+      shoppee: { label: 'Shoppee',  gp: 0.32,  vat: 0.07 },
+      grab:    { label: 'Grab',     gp: 0.251, vat: 0.07 }
     }
   };
   var sv = rows_(SH.settings), sm = {};
@@ -78,6 +79,8 @@ function buildData_() {
   if (sm.vat_lineman !== undefined && sm.vat_lineman !== '') asm.channels.lineman.vat = Number(sm.vat_lineman);
   if (sm.gp_shoppee !== undefined && sm.gp_shoppee !== '') asm.channels.shoppee.gp = Number(sm.gp_shoppee);
   if (sm.vat_shoppee !== undefined && sm.vat_shoppee !== '') asm.channels.shoppee.vat = Number(sm.vat_shoppee);
+  if (sm.gp_grab !== undefined && sm.gp_grab !== '') asm.channels.grab.gp = Number(sm.gp_grab);
+  if (sm.vat_grab !== undefined && sm.vat_grab !== '') asm.channels.grab.vat = Number(sm.vat_grab);
 
   // สูตร (จับกลุ่มตามชื่อเมนู)
   var recByMenu = {};
@@ -96,9 +99,9 @@ function buildData_() {
     if (!name) continue;
     menus.push({
       id: name, name: name, category: String(r[1] || 'coffee').trim(),
-      prices: { store: num_(r[2]), lineman: num_(r[3]), shoppee: num_(r[4]) },
-      seed_cost_cup: num_(r[5]),
-      image: String(r[6] || '').trim(),
+      prices: { store: num_(r[2]), lineman: num_(r[3]), shoppee: num_(r[4]), grab: num_(r[5]) },
+      seed_cost_cup: num_(r[6]),
+      image: String(r[7] || '').trim(),
       recipe: recByMenu[name] || []
     });
   }
@@ -116,10 +119,10 @@ function writeData_(data) {
   writeSheet_(SH.cat, crows);
 
   var menus = data.menus || [];
-  var mrows = [['ชื่อ', 'หมวด', 'หน้าร้าน', 'Lineman', 'Shoppee', 'ต้นทุนตั้งต้น', 'รูปภาพ']];
+  var mrows = [['ชื่อ', 'หมวด', 'หน้าร้าน', 'Lineman', 'Shoppee', 'Grab', 'ต้นทุนตั้งต้น', 'รูปภาพ']];
   menus.forEach(function (m) {
     var p = m.prices || {};
-    mrows.push([m.name, m.category || '', blank_(p.store), blank_(p.lineman), blank_(p.shoppee), blank_(m.seed_cost_cup), m.image || '']);
+    mrows.push([m.name, m.category || '', blank_(p.store), blank_(p.lineman), blank_(p.shoppee), blank_(p.grab), blank_(m.seed_cost_cup), m.image || '']);
   });
   writeSheet_(SH.menu, mrows);
 
@@ -136,7 +139,9 @@ function writeData_(data) {
     ['gp_lineman', (ch.lineman || {}).gp || 0],
     ['vat_lineman', (ch.lineman || {}).vat || 0],
     ['gp_shoppee', (ch.shoppee || {}).gp || 0],
-    ['vat_shoppee', (ch.shoppee || {}).vat || 0]];
+    ['vat_shoppee', (ch.shoppee || {}).vat || 0],
+    ['gp_grab', (ch.grab || {}).gp || 0],
+    ['vat_grab', (ch.grab || {}).vat || 0]];
   writeSheet_(SH.settings, srows);
 }
 

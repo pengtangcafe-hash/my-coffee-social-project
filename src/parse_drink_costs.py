@@ -36,9 +36,10 @@ FIXED_COST_MONTHLY = 30000
 DAYS_PER_MONTH = 30
 
 CHANNELS = {
-    "store":   {"label": "หน้าร้าน", "gp": 0.0,  "vat": 0.0},
-    "lineman": {"label": "Lineman",  "gp": 0.30, "vat": 0.07},
-    "shoppee": {"label": "Shoppee",  "gp": 0.32, "vat": 0.07},
+    "store":   {"label": "หน้าร้าน", "gp": 0.0,   "vat": 0.0},
+    "lineman": {"label": "Lineman",  "gp": 0.30,  "vat": 0.07},
+    "shoppee": {"label": "Shoppee",  "gp": 0.32,  "vat": 0.07},
+    "grab":    {"label": "Grab",     "gp": 0.251, "vat": 0.07},
 }
 
 RECIPE_SHEETS = ["กาแฟ", "นม-ชา", "คำนวนต้นทุน."]
@@ -191,7 +192,7 @@ def parse_summary(wb, recipes):
             "category": categorize(name),
             "recipe": rec["recipe"] if rec else [],
             "prices": {"store": r2(price_store), "lineman": r2(price_lineman),
-                       "shoppee": r2(price_shoppee)},
+                       "shoppee": r2(price_shoppee), "grab": None},
             "seed_cost_cup": r2(seed_cost),
         })
     return menus

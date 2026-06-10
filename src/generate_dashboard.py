@@ -2140,20 +2140,36 @@ HTML_TEMPLATE = """\
     .dc-meta .src {{ display: inline-flex; align-items: center; gap: 6px; font-weight: 600; color: var(--text); }}
     .dc-meta .note {{ opacity: .9; }}
 
-    .dc-kpis {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-      gap: 16px; margin-bottom: 22px; }}
-    .dc-kpi {{ background: var(--card); border: 1px solid var(--card-border); border-radius: 18px;
-      padding: 18px 20px; }}
-    .dc-kpi .k-lab {{ display: flex; align-items: center; gap: 7px; font-size: .76rem;
-      color: var(--text-muted); font-weight: 600; margin-bottom: 11px; }}
-    .dc-kpi .k-val {{ font-size: 2rem; font-weight: 900; line-height: 1; color: var(--text);
+    /* ── ส่วนหัวตรึง (Polar chart + สถิติ + controls) ── */
+    .dc-sticky-header {{ position: sticky; top: 0; z-index: 5; background: var(--bg);
+      padding: 10px 0 6px; border-bottom: 1px solid var(--card-border); margin-bottom: 10px; }}
+    /* Polar chart + stats เรียงซ้าย-ขวา */
+    .dc-polar-section {{ display: flex; align-items: center; gap: 18px; margin-bottom: 12px;
+      flex-wrap: wrap; }}
+    .dc-polar-chart-area {{ display: flex; align-items: center; justify-content: center; flex-shrink: 0; }}
+    /* 5 สถิติ */
+    .dc-stats-row {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 8px; flex: 1; min-width: 0; }}
+    .dc-stat {{ background: var(--card); border: 1px solid var(--card-border); border-radius: 14px;
+      padding: 10px 13px; display: flex; flex-direction: column; gap: 4px; overflow: hidden; }}
+    .dc-st-lab {{ font-size: .68rem; color: var(--text-muted); font-weight: 600; white-space: nowrap;
+      overflow: hidden; text-overflow: ellipsis; }}
+    .dc-st-val {{ font-size: 1.45rem; font-weight: 900; color: var(--text); line-height: 1;
       font-variant-numeric: tabular-nums; letter-spacing: -.02em; }}
-    .dc-kpi .k-val small {{ font-size: .95rem; font-weight: 700; color: var(--text-muted); }}
-    .dc-kpi .k-sub {{ font-size: .74rem; color: var(--text-muted); margin-top: 7px; }}
-    .dc-kpi.hero {{ background: linear-gradient(152deg, var(--ov-espresso-2), var(--ov-espresso-1) 80%);
+    .dc-st-val small {{ font-size: .8rem; font-weight: 700; color: var(--text-muted); }}
+    .dc-st-sub {{ font-size: .67rem; color: var(--text-muted); white-space: nowrap;
+      overflow: hidden; text-overflow: ellipsis; }}
+    .dc-stat.hero {{ background: linear-gradient(152deg, var(--ov-espresso-2), var(--ov-espresso-1) 80%);
       border: none; }}
-    .dc-kpi.hero .k-lab, .dc-kpi.hero .k-sub {{ color: rgba(246,236,218,.78); }}
-    .dc-kpi.hero .k-val {{ color: var(--ov-crema); }}
+    .dc-stat.hero .dc-st-lab, .dc-stat.hero .dc-st-sub {{ color: rgba(246,236,218,.78); }}
+    .dc-stat.hero .dc-st-val {{ color: var(--ov-crema); }}
+    /* กล่อง scroll ของรายการ */
+    .dc-list-scroll {{ overflow-y: auto; max-height: clamp(200px, calc(100vh - 400px), 70vh);
+      padding-right: 2px; overscroll-behavior: contain; }}
+    @media (max-width: 720px) {{
+      .dc-polar-section {{ flex-direction: column; align-items: flex-start; }}
+      .dc-stats-row {{ grid-template-columns: repeat(2, 1fr); }}
+    }}
 
     .dc-controls {{ display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px;
       margin-bottom: 18px; }}
@@ -2305,8 +2321,8 @@ HTML_TEMPLATE = """\
       background: var(--nav-active); border: 1px solid var(--card-border); border-radius: 10px;
       padding: 9px 12px; }}
     .dc-inp:focus, .dc-sel:focus {{ outline: 2px solid var(--ov-caramel); outline-offset: 0; border-color: transparent; }}
-    .dc-grid3 {{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }}
-    @media (max-width: 560px) {{ .dc-grid3 {{ grid-template-columns: 1fr; }} }}
+    .dc-grid3 {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; }}
+    @media (max-width: 560px) {{ .dc-grid3 {{ grid-template-columns: repeat(2, 1fr); }} }}
     .dc-pricewrap {{ position: relative; }}
     .dc-auto {{ position: absolute; right: 6px; top: 50%; transform: translateY(-50%);
       font-size: .66rem; font-weight: 700; padding: 4px 8px; border-radius: 7px; cursor: pointer;
@@ -4148,8 +4164,8 @@ function renderUpdateLog() {{
 }}
 
 // ── ต้นทุนเครื่องดื่ม (Drink costs + editor) ──
-var DC_CH = ['store', 'lineman', 'shoppee'];
-var DC_CH_FALLBACK = {{ store: 'หน้าร้าน', lineman: 'Lineman', shoppee: 'Shoppee' }};
+var DC_CH = ['store', 'lineman', 'shoppee', 'grab'];
+var DC_CH_FALLBACK = {{ store: 'หน้าร้าน', lineman: 'Lineman', shoppee: 'Shoppee', grab: 'Grab' }};
 var DC_CATS = ['signature', 'coffee', 'tea', 'milk', 'soda'];
 var DC_CAT_LABEL = {{ signature: 'Signature', coffee: 'Coffee', tea: 'Tea', milk: 'Milk', soda: 'Soda' }};
 var DC_CAT_ICON = {{ signature: '⭐', coffee: '☕', tea: '🍵', milk: '🥛', soda: '🥤' }};
@@ -4192,12 +4208,14 @@ function dcThumb(m, size) {{
 var dcChannel = 'store', dcSort = 'margin', dcEdit = false;
 var DCS = null;       // working state {{source, assumptions, catalog, menus}}
 var dcDraft = null;   // เมนูที่กำลังแก้ใน modal
+var dcPolarChart = null; // Chart.js instance (destroy ก่อน re-create เสมอ)
+var DC_CH_COLORS = {{ store: '#00085f', lineman: '#648a23', shoppee: '#f86612', grab: '#056837' }};
 
 // ---- state ----
 function dcClone(o) {{ return JSON.parse(JSON.stringify(o || {{}})); }}
 function dcDefaults() {{
   return {{ overhead: 0.30, margin_factor: 1.6, fixed_cost_monthly: 30000, days_per_month: 30,
-    channels: {{ store: {{label:'หน้าร้าน',gp:0,vat:0}}, lineman: {{label:'Lineman',gp:0.30,vat:0.07}}, shoppee: {{label:'Shoppee',gp:0.32,vat:0.07}} }} }};
+    channels: {{ store: {{label:'หน้าร้าน',gp:0,vat:0}}, lineman: {{label:'Lineman',gp:0.30,vat:0.07}}, shoppee: {{label:'Shoppee',gp:0.32,vat:0.07}}, grab: {{label:'Grab',gp:0.251,vat:0.07}} }} }};
 }}
 function dcNormalize(s) {{
   s = s || {{}};
@@ -4384,23 +4402,37 @@ function renderDrinkCosts() {{
 
   if (!menus.length) {{ root.innerHTML = h.join('') + dcEmpty(); return; }}
 
-  // KPIs (คำนวณสดตามช่องทาง)
+  // สถิติ 5 ตัว (ใต้ Polar chart)
   var stats = dcStats(menus, ch);
   var k = [];
-  k.push('<div class="dc-kpi hero"><div class="k-lab">🥤 จำนวนเมนู</div><div class="k-val">' + menus.length + ' <small>เมนู</small></div><div class="k-sub">' + withRec + ' เมนูตั้งสูตรวัตถุดิบแล้ว</div></div>');
-  k.push('<div class="dc-kpi"><div class="k-lab">📈 กำไรเฉลี่ย · ' + dcChLabel(ch) + '</div><div class="k-val" style="color:' + dcMargCol(stats.avg) + '">' + dcF1(stats.avg) + '<small>%</small></div><div class="k-sub">เฉลี่ยทุกเมนูในช่องทางนี้</div></div>');
-  k.push('<div class="dc-kpi"><div class="k-lab">💧 ต้นทุนเฉลี่ย/แก้ว</div><div class="k-val">' + dcF1(stats.avgCost) + '<small> ฿</small></div><div class="k-sub">วัตถุดิบ + ต้นทุนแฝง</div></div>');
-  if (stats.best) k.push('<div class="dc-kpi"><div class="k-lab">🏆 กำไรดีสุด</div><div class="k-val" style="color:var(--dc-profit)">' + dcF1(stats.best.c.margin) + '<small>%</small></div><div class="k-sub">' + escapeHtml(stats.best.m.name) + '</div></div>');
-  if (stats.worst) k.push('<div class="dc-kpi"><div class="k-lab">⚠️ ต้องระวัง</div><div class="k-val" style="color:var(--dc-warn)">' + dcF1(stats.worst.c.margin) + '<small>%</small></div><div class="k-sub">' + escapeHtml(stats.worst.m.name) + '</div></div>');
-  h.push('<div class="dc-kpis">' + k.join('') + '</div>');
+  k.push('<div class="dc-stat hero"><span class="dc-st-lab">🥤 จำนวนเมนู</span><span class="dc-st-val">' + menus.length + ' <small>เมนู</small></span><span class="dc-st-sub">' + withRec + ' มีสูตรแล้ว</span></div>');
+  k.push('<div class="dc-stat"><span class="dc-st-lab">📈 กำไรเฉลี่ย · ' + escapeHtml(dcChLabel(ch)) + '</span><span class="dc-st-val" style="color:' + dcMargCol(stats.avg) + '">' + dcF1(stats.avg) + '<small>%</small></span><span class="dc-st-sub">เฉลี่ยทุกเมนู</span></div>');
+  k.push('<div class="dc-stat"><span class="dc-st-lab">💧 ต้นทุนเฉลี่ย/แก้ว</span><span class="dc-st-val">' + dcF1(stats.avgCost) + '<small>฿</small></span><span class="dc-st-sub">วัตถุดิบ + ต้นทุนแฝง</span></div>');
+  k.push(stats.best
+    ? '<div class="dc-stat"><span class="dc-st-lab">🏆 กำไรดีสุด</span><span class="dc-st-val" style="color:var(--dc-profit)">' + dcF1(stats.best.c.margin) + '<small>%</small></span><span class="dc-st-sub">' + escapeHtml(stats.best.m.name) + '</span></div>'
+    : '<div class="dc-stat"><span class="dc-st-lab">🏆 กำไรดีสุด</span><span class="dc-st-val" style="color:var(--text-muted)">–</span></div>');
+  k.push(stats.worst
+    ? '<div class="dc-stat"><span class="dc-st-lab">⚠️ ต้องระวัง</span><span class="dc-st-val" style="color:var(--dc-warn)">' + dcF1(stats.worst.c.margin) + '<small>%</small></span><span class="dc-st-sub">' + escapeHtml(stats.worst.m.name) + '</span></div>'
+    : '<div class="dc-stat"><span class="dc-st-lab">⚠️ ต้องระวัง</span><span class="dc-st-val" style="color:var(--text-muted)">–</span></div>');
 
   // controls
   var chBtns = DC_CH.map(function(c) {{ return '<button class="ov-mtab' + (c === ch ? ' active' : '') + '" onclick="dcSetChannel(\\'' + c + '\\')">' + dcChLabel(c) + '</button>'; }}).join('');
   var sortDefs = [['margin', 'กำไร %'], ['profit', 'กำไร ฿'], ['cost', 'ต้นทุน/แก้ว']];
   var sortBtns = sortDefs.map(function(s) {{ return '<button class="ov-mtab' + (s[0] === dcSort ? ' active' : '') + '" onclick="dcSetSort(\\'' + s[0] + '\\')">' + s[1] + '</button>'; }}).join('');
-  h.push('<div class="dc-controls"><div class="grp"><span class="lbl">ช่องทาง</span>' + chBtns + '</div>'
+
+  // sticky header: Polar chart + stats + controls
+  h.push('<div class="dc-sticky-header">'
+    + '<div class="dc-polar-section">'
+    + '<div class="dc-polar-chart-area"><canvas id="dc-polar" width="200" height="200"></canvas></div>'
+    + '<div class="dc-stats-row">' + k.join('') + '</div>'
+    + '</div>'
+    + '<div class="dc-controls"><div class="grp"><span class="lbl">ช่องทาง</span>' + chBtns + '</div>'
     + '<div class="grp"><span class="lbl">เรียงตาม</span>' + sortBtns + '</div>'
-    + '<div class="grp"><button class="ov-mtab" onclick="dcCollapseAll(true)">⊟ หุบทั้งหมด</button><button class="ov-mtab" onclick="dcCollapseAll(false)">⊞ กางทั้งหมด</button></div></div>');
+    + '<div class="grp"><button class="ov-mtab" onclick="dcCollapseAll(true)">⊟ หุบทั้งหมด</button><button class="ov-mtab" onclick="dcCollapseAll(false)">⊞ กางทั้งหมด</button></div></div>'
+    + '</div>');
+
+  // เริ่ม scroll container ของรายการ
+  h.push('<div class="dc-list-scroll">');
 
   // max ราคา สำหรับสเกลแถบ
   var maxP = 1;
@@ -4431,9 +4463,57 @@ function renderDrinkCosts() {{
     h.push('</div>');
   }});
 
+  h.push('</div>'); // ปิด dc-list-scroll
+
   root.innerHTML = h.join('');
   requestAnimationFrame(function() {{
     root.querySelectorAll('[data-w]').forEach(function(el) {{ el.style.width = el.getAttribute('data-w'); }});
+    dcRenderPolar(menus);
+  }});
+}}
+
+function dcRenderPolar(menus) {{
+  var canvas = document.getElementById('dc-polar');
+  if (!canvas || typeof Chart === 'undefined') return;
+  if (dcPolarChart) {{ dcPolarChart.destroy(); dcPolarChart = null; }}
+  var textColor = getComputedStyle(document.documentElement).getPropertyValue('--text').trim() || '#1c160f';
+  var mutedColor = getComputedStyle(document.documentElement).getPropertyValue('--text-muted').trim() || '#6b7280';
+  var gridColor = 'rgba(128,128,128,0.18)';
+  var labels = DC_CH.map(function(ch) {{ return dcChLabel(ch); }});
+  var realValues = DC_CH.map(function(ch) {{ var s = dcStats(menus, ch); return s.avg; }});
+  var displayValues = realValues.map(function(v) {{ return (v != null && v > 0) ? v : 0; }});
+  var colors = DC_CH.map(function(ch) {{ return DC_CH_COLORS[ch] || '#888'; }});
+  var bgColors = colors.map(function(c) {{ return c + 'cc'; }});
+  dcPolarChart = new Chart(canvas, {{
+    type: 'polarArea',
+    data: {{
+      labels: labels,
+      datasets: [{{ data: displayValues, backgroundColor: bgColors, borderColor: colors, borderWidth: 2 }}]
+    }},
+    options: {{
+      responsive: false,
+      plugins: {{
+        legend: {{
+          position: 'bottom',
+          labels: {{ color: textColor, font: {{ size: 11, weight: '700' }}, padding: 10, boxWidth: 12 }}
+        }},
+        tooltip: {{
+          callbacks: {{
+            label: function(ctx) {{
+              var real = realValues[ctx.dataIndex];
+              return ' ' + labels[ctx.dataIndex] + ': ' + (real != null ? real.toFixed(1) : '–') + '%';
+            }}
+          }}
+        }}
+      }},
+      scales: {{
+        r: {{
+          ticks: {{ color: mutedColor, font: {{ size: 9 }}, backdropColor: 'transparent', maxTicksLimit: 4 }},
+          grid: {{ color: gridColor }},
+          pointLabels: {{ display: false }}
+        }}
+      }}
+    }}
   }});
 }}
 
@@ -4536,7 +4616,7 @@ function dcIngOptions(selected) {{
 }}
 function dcOpenMenu(id, presetCat) {{
   if (id) {{ var m = DCS.menus.filter(function(x) {{ return x.id === id; }})[0]; dcDraft = dcClone(m); dcDraft.category = dcCategoryOf(dcDraft); }}
-  else dcDraft = {{ id: null, name: '', category: presetCat || 'coffee', image: '', recipe: [], prices: {{store:null,lineman:null,shoppee:null}}, seed_cost_cup: null }};
+  else dcDraft = {{ id: null, name: '', category: presetCat || 'coffee', image: '', recipe: [], prices: {{store:null,lineman:null,shoppee:null,grab:null}}, seed_cost_cup: null }};
   if (dcDraft.image == null) dcDraft.image = '';
   dcRenderMenuModal();
 }}

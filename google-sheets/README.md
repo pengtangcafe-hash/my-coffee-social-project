@@ -35,9 +35,11 @@
 | แท็บ | คอลัมน์ |
 |---|---|
 | **วัตถุดิบ** | ชื่อ · ราคา · ปริมาณ · หน่วย |
-| **เมนู** | ชื่อ · หมวด (signature/coffee/tea/milk/soda) · หน้าร้าน · Lineman · Shoppee · ต้นทุนตั้งต้น · รูปภาพ (URL) |
+| **เมนู** | ชื่อ · หมวด (signature/coffee/tea/milk/soda) · หน้าร้าน · Lineman · Shoppee · **Grab** · ต้นทุนตั้งต้น · รูปภาพ (URL) |
 | **สูตร** | เมนู (ชื่อตรงกับแท็บเมนู) · วัตถุดิบ (ชื่อตรงกับคลัง) · ปริมาณ |
-| **ตั้งค่า** | คีย์ · ค่า (overhead, margin_factor, fixed_cost_monthly, days_per_month, gp_lineman, vat_lineman, gp_shoppee, vat_shoppee) |
+| **ตั้งค่า** | คีย์ · ค่า (overhead, margin_factor, fixed_cost_monthly, days_per_month, gp_lineman, vat_lineman, gp_shoppee, vat_shoppee, **gp_grab**, **vat_grab**) |
+
+> ⚠️ **หลังอัปเดต Code.gs ครั้งนี้** (เพิ่มคอลัมน์ Grab และ gp_grab/vat_grab) ต้อง Deploy → Manage deployments → ✏️ → **Version: New version → Deploy** 1 ครั้ง — มิฉะนั้น URL เดิมยังรันสคริปต์เวอร์ชันเก่าที่ไม่รู้จักคอลัมน์ Grab
 
 ต้นทุน/แก้ว = Σ(ราคา÷ปริมาณ × ปริมาณที่ใช้) × (1 + overhead) · เดลิเวอรีหัก GP + VAT ของช่องทางนั้น
 
