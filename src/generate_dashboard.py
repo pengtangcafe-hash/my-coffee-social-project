@@ -2118,6 +2118,13 @@ HTML_TEMPLATE = """\
       animation: ovPulse 1.6s ease-in-out infinite; }}
     @keyframes ovPulse {{ 0%,100% {{ opacity: 1; transform: scale(1); }} 50% {{ opacity: .35; transform: scale(.75); }} }}
     @media (prefers-reduced-motion: reduce) {{ .ov-soon-dot {{ animation: none; }} }}
+    /* ── App logo (GIF วงกลม + ปุ่มกลับ overview) ── */
+    .app-logo-img {{ border-radius:999px; object-fit:cover; flex-shrink:0; background:var(--card);
+      border:2px solid var(--card-border); }}
+    .app-logo-btn {{ display:flex; align-items:center; gap:10px; cursor:pointer; background:none; border:none;
+      padding:0; text-align:left; border-radius:12px; transition:opacity .15s; }}
+    .app-logo-btn:hover {{ opacity:.78; }}
+    .ov-h1-row {{ display:flex; align-items:center; gap:16px; }}
     /* ── Backbar status bar ── */
     .bb-status-bar {{ display:flex; flex-wrap:wrap; align-items:center; gap:8px 14px; margin:10px 0 6px; font-size:.8rem; }}
     .bb-status-pill {{ display:inline-flex; align-items:center; gap:7px; padding:5px 12px; border-radius:999px; font-weight:800; border:1px solid var(--card-border); background:var(--card); }}
@@ -2433,10 +2440,13 @@ HTML_TEMPLATE = """\
 
 <!-- Mobile top bar -->
 <div id="mobile-topbar" class="items-center justify-between px-4 py-3">
-  <div>
-    <div class="text-sm font-black" style="color:var(--text)">☕ Social Analytics</div>
-    <div class="text-[10px]" style="color:var(--text-muted)">ร้านกาแฟ สกลนคร</div>
-  </div>
+  <button class="app-logo-btn" onclick="showView('view-home'); closeSidebar();" aria-label="กลับหน้าภาพรวม">
+    <img class="app-logo-img" src="assets/logo-anim.gif" alt="โลโก้" style="width:30px;height:30px">
+    <div>
+      <div class="text-sm font-black" style="color:var(--text)">Social Analytics</div>
+      <div class="text-[10px]" style="color:var(--text-muted)">ร้านกาแฟ สกลนคร</div>
+    </div>
+  </button>
   <button onclick="openSidebar()" class="p-2 rounded-xl transition-colors"
     style="color:var(--text-muted);background:transparent" aria-label="เปิดเมนู">
     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -2455,13 +2465,16 @@ HTML_TEMPLATE = """\
 
     <!-- Logo -->
     <div class="p-5 border-b border-slate-100 flex items-center justify-between gap-2">
-      <div>
-        <div class="text-lg font-black text-slate-800 leading-tight">☕ Social Analytics</div>
-        <div class="text-xs text-slate-400 mt-0.5">ร้านกาแฟ สกลนคร</div>
-      </div>
-      <button onclick="closeSidebar()" id="sidebar-close-btn"
+      <button class="app-logo-btn" onclick="showView('view-home')" aria-label="กลับหน้าภาพรวม">
+        <img class="app-logo-img" src="assets/logo-anim.gif" alt="โลโก้" style="width:40px;height:40px">
+        <div>
+          <div class="text-lg font-black leading-tight" style="color:var(--text)">Social Analytics</div>
+          <div class="text-xs mt-0.5" style="color:var(--text-muted)">ร้านกาแฟ สกลนคร</div>
+        </div>
+      </button>
+      <button onclick="event.stopPropagation(); closeSidebar();" id="sidebar-close-btn"
         class="p-1.5 rounded-lg hover:bg-slate-100 transition-colors text-slate-400"
-        style="display:none" aria-label="ปิดเมนู">
+        style="display:none;flex-shrink:0" aria-label="ปิดเมนู">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
         </svg>
@@ -2641,8 +2654,14 @@ HTML_TEMPLATE = """\
     <div id="view-home" class="view">
 
       <div class="mb-6">
-        <h1 class="ov-h1">ภาพรวม Social Media</h1>
-        <p class="ov-sub-h">ร้านกาแฟ สกลนคร · ภาพรวมผลงานทั้ง 3 แพลตฟอร์มในที่เดียว</p>
+        <div class="ov-h1-row">
+          <img class="app-logo-img" src="assets/logo-anim.gif" alt="" aria-hidden="true"
+               style="width:60px;height:60px">
+          <div>
+            <h1 class="ov-h1" style="margin:0">ภาพรวม Social Media</h1>
+            <p class="ov-sub-h" style="margin:0">ร้านกาแฟ สกลนคร · ภาพรวมผลงานทั้ง 3 แพลตฟอร์มในที่เดียว</p>
+          </div>
+        </div>
       </div>
 
       <!-- Row 1: Hero + Share donut -->
