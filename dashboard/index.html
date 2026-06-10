@@ -344,6 +344,14 @@
       animation: ovPulse 1.6s ease-in-out infinite; }
     @keyframes ovPulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: .35; transform: scale(.75); } }
     @media (prefers-reduced-motion: reduce) { .ov-soon-dot { animation: none; } }
+    /* ── Backbar status bar ── */
+    .bb-status-bar { display:flex; flex-wrap:wrap; align-items:center; gap:8px 14px; margin:10px 0 6px; font-size:.8rem; }
+    .bb-status-pill { display:inline-flex; align-items:center; gap:7px; padding:5px 12px; border-radius:999px; font-weight:800; border:1px solid var(--card-border); background:var(--card); }
+    .bb-status-pill .dot { width:8px; height:8px; border-radius:999px; }
+    .bb-status-pill.soon .dot { background:var(--ov-caramel); }
+    .bb-status-pill.live .dot { background:var(--dc-profit); }
+    .bb-status-meta { color:var(--text-muted); }
+    .bb-status-meta b { color:var(--text); font-weight:800; }
 
     /* ── KPI tiles (Pricing) — โทนเดียวกัน ไม่ใช่สีรุ้ง ── */
     .ov-kpi { padding: 18px 20px; }
@@ -755,6 +763,36 @@
         <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest px-4">Backbar</p>
       </div>
 
+      <button onclick="showView('view-bb-armory')" id="nav-bb-armory"
+        class="nav-btn w-full text-left px-4 py-2.5 rounded-xl flex items-center gap-3
+               text-slate-600 hover:bg-slate-50 transition-colors text-sm">
+        <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+        </svg>
+        คลังแสง
+      </button>
+
+      <button onclick="showView('view-bb-stock')" id="nav-bb-stock"
+        class="nav-btn w-full text-left px-4 py-2.5 rounded-xl flex items-center gap-3
+               text-slate-600 hover:bg-slate-50 transition-colors text-sm">
+        <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+        </svg>
+        สต็อกหลังบ้าน
+      </button>
+
+      <button onclick="showView('view-bb-varfix')" id="nav-bb-varfix"
+        class="nav-btn w-full text-left px-4 py-2.5 rounded-xl flex items-center gap-3
+               text-slate-600 hover:bg-slate-50 transition-colors text-sm">
+        <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+        </svg>
+        ต้นทุนผันแปรและคงที่
+      </button>
+
       <button onclick="showView('view-cost-drinks')" id="nav-cost-drinks"
         class="nav-btn w-full text-left px-4 py-2.5 rounded-xl flex items-center gap-3
                text-slate-600 hover:bg-slate-50 transition-colors text-sm">
@@ -772,7 +810,17 @@
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
             d="M9 7h6m-6 4h6m-6 4h4M5 4h14a1 1 0 011 1v15l-3-2-2 2-2-2-2 2-2-2-3 2V5a1 1 0 011-1z"/>
         </svg>
-        POS check COST
+        ตรวจสอบยอดขายจริง &amp; ทุนรวม
+      </button>
+
+      <button onclick="showView('view-bb-posimport')" id="nav-bb-posimport"
+        class="nav-btn w-full text-left px-4 py-2.5 rounded-xl flex items-center gap-3
+               text-slate-600 hover:bg-slate-50 transition-colors text-sm">
+        <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+        </svg>
+        บันทึกข้อมูลนำเข้า POS
       </button>
 
       <div class="pt-2 pb-1">
@@ -1064,20 +1112,106 @@
       <div class="mb-6">
         <h1 class="ov-h1">ต้นทุนเครื่องดื่ม</h1>
         <p class="ov-sub-h">ต้นทุนต่อแก้ว กำไร และสัดส่วนวัตถุดิบของแต่ละเมนู — จากไฟล์ต้นทุนของร้าน</p>
+        <div class="bb-status-bar">
+          <span class="bb-status-pill live"><span class="dot"></span>🟢 ใช้งานอยู่</span>
+          <span class="bb-status-meta">ใช้งานล่าสุด: <b>—</b></span>
+          <span class="bb-status-meta">อัปเดตข้อมูลล่าสุด: <b id="bb-updated-cost">—</b></span>
+        </div>
       </div>
       <div id="dc-root"></div>
     </div>
 
-    <!-- ── Backbar: POS check COST (Launching soon) ── -->
+    <!-- ── Backbar: ตรวจสอบยอดขายจริง & ทุนรวม (Launching soon) ── -->
     <div id="view-pos-cost" class="view">
       <div class="mb-6">
-        <h1 class="ov-h1">POS check COST</h1>
-        <p class="ov-sub-h">ตรวจสอบต้นทุนจากข้อมูลการขายในระบบ POS</p>
+        <h1 class="ov-h1">ตรวจสอบยอดขายจริง &amp; ทุนรวม</h1>
+        <p class="ov-sub-h">ดึงข้อมูลจริงจาก POS วิเคราะห์ร่วมกับต้นทุนผันแปร&amp;คงที่ เพื่อดูอัตราคืนทุน/กำไร/ขาดทุน</p>
+        <div class="bb-status-bar">
+          <span class="bb-status-pill soon"><span class="dot"></span>🟡 เร็วๆ นี้</span>
+          <span class="bb-status-meta">ใช้งานล่าสุด: <b>—</b></span>
+          <span class="bb-status-meta">อัปเดตข้อมูลล่าสุด: <b>—</b></span>
+        </div>
       </div>
       <div class="ov-tile ov-soon">
         <div class="ov-soon-emoji">🧾</div>
         <div class="ov-soon-title">Launching soon..</div>
-        <div class="ov-soon-sub">ระบบเชื่อมต่อ POS เพื่อตรวจต้นทุนกำลังพัฒนา เร็ว ๆ นี้</div>
+        <div class="ov-soon-sub">ดึงข้อมูลจริงจาก POS วิเคราะห์ร่วมกับต้นทุนผันแปร&amp;คงที่ เพื่อดูอัตราคืนทุน/กำไร/ขาดทุน</div>
+        <span class="ov-soon-badge"><span class="ov-soon-dot"></span>อยู่ระหว่างพัฒนา</span>
+      </div>
+    </div>
+
+    <!-- ── Backbar: คลังแสง (Launching soon) ── -->
+    <div id="view-bb-armory" class="view">
+      <div class="mb-6">
+        <h1 class="ov-h1">คลังแสง</h1>
+        <p class="ov-sub-h">ศูนย์รวมข้อมูลทั้งหมดของ Backbar — สรุปรวมทุกหมวดให้เห็นผลลัพธ์ครอบคลุม พร้อม Insight เพื่อยกระดับและแก้จุดบกพร่องรอบด้าน</p>
+        <div class="bb-status-bar">
+          <span class="bb-status-pill soon"><span class="dot"></span>🟡 เร็วๆ นี้</span>
+          <span class="bb-status-meta">ใช้งานล่าสุด: <b>—</b></span>
+          <span class="bb-status-meta">อัปเดตข้อมูลล่าสุด: <b>—</b></span>
+        </div>
+      </div>
+      <div class="ov-tile ov-soon">
+        <div class="ov-soon-emoji">🏛️</div>
+        <div class="ov-soon-title">Launching soon..</div>
+        <div class="ov-soon-sub">ศูนย์รวมข้อมูลทั้งหมดของ Backbar — สรุปรวมทุกหมวดให้เห็นผลลัพธ์ครอบคลุม พร้อม Insight เพื่อยกระดับและแก้จุดบกพร่องรอบด้าน</div>
+        <span class="ov-soon-badge"><span class="ov-soon-dot"></span>อยู่ระหว่างพัฒนา</span>
+      </div>
+    </div>
+
+    <!-- ── Backbar: สต็อกหลังบ้าน (Launching soon) ── -->
+    <div id="view-bb-stock" class="view">
+      <div class="mb-6">
+        <h1 class="ov-h1">สต็อกหลังบ้าน</h1>
+        <p class="ov-sub-h">สต็อกวัตถุดิบที่เห็นการใช้จริง อิงยอดขายจริงจาก POS + คำนวณปริมาณที่ใช้จริงจากต้นทุนเครื่องดื่ม</p>
+        <div class="bb-status-bar">
+          <span class="bb-status-pill soon"><span class="dot"></span>🟡 เร็วๆ นี้</span>
+          <span class="bb-status-meta">ใช้งานล่าสุด: <b>—</b></span>
+          <span class="bb-status-meta">อัปเดตข้อมูลล่าสุด: <b>—</b></span>
+        </div>
+      </div>
+      <div class="ov-tile ov-soon">
+        <div class="ov-soon-emoji">📦</div>
+        <div class="ov-soon-title">Launching soon..</div>
+        <div class="ov-soon-sub">สต็อกวัตถุดิบที่เห็นการใช้จริง อิงยอดขายจริงจาก POS + คำนวณปริมาณที่ใช้จริงจากต้นทุนเครื่องดื่ม</div>
+        <span class="ov-soon-badge"><span class="ov-soon-dot"></span>อยู่ระหว่างพัฒนา</span>
+      </div>
+    </div>
+
+    <!-- ── Backbar: ต้นทุนผันแปรและคงที่ (Launching soon) ── -->
+    <div id="view-bb-varfix" class="view">
+      <div class="mb-6">
+        <h1 class="ov-h1">ต้นทุนผันแปรและคงที่</h1>
+        <p class="ov-sub-h">Variable &amp; Fixed Cost — บันทึกค่าใช้จ่ายรวมร้านแบบแยกประเภท เห็นรายจ่ายประจำ/รายจ่ายจริง รายวัน/สัปดาห์/เดือน/ปี</p>
+        <div class="bb-status-bar">
+          <span class="bb-status-pill soon"><span class="dot"></span>🟡 เร็วๆ นี้</span>
+          <span class="bb-status-meta">ใช้งานล่าสุด: <b>—</b></span>
+          <span class="bb-status-meta">อัปเดตข้อมูลล่าสุด: <b>—</b></span>
+        </div>
+      </div>
+      <div class="ov-tile ov-soon">
+        <div class="ov-soon-emoji">📊</div>
+        <div class="ov-soon-title">Launching soon..</div>
+        <div class="ov-soon-sub">Variable &amp; Fixed Cost — บันทึกค่าใช้จ่ายรวมร้านแบบแยกประเภท เห็นรายจ่ายประจำ/รายจ่ายจริง รายวัน/สัปดาห์/เดือน/ปี</div>
+        <span class="ov-soon-badge"><span class="ov-soon-dot"></span>อยู่ระหว่างพัฒนา</span>
+      </div>
+    </div>
+
+    <!-- ── Backbar: บันทึกข้อมูลนำเข้า POS (Launching soon) ── -->
+    <div id="view-bb-posimport" class="view">
+      <div class="mb-6">
+        <h1 class="ov-h1">บันทึกข้อมูลนำเข้า POS</h1>
+        <p class="ov-sub-h">บันทึก/ประวัติการนำเข้าข้อมูลจาก POS (คล้ายระบบบันทึกอัปเดต)</p>
+        <div class="bb-status-bar">
+          <span class="bb-status-pill soon"><span class="dot"></span>🟡 เร็วๆ นี้</span>
+          <span class="bb-status-meta">ใช้งานล่าสุด: <b>—</b></span>
+          <span class="bb-status-meta">อัปเดตข้อมูลล่าสุด: <b>—</b></span>
+        </div>
+      </div>
+      <div class="ov-tile ov-soon">
+        <div class="ov-soon-emoji">📤</div>
+        <div class="ov-soon-title">Launching soon..</div>
+        <div class="ov-soon-sub">บันทึก/ประวัติการนำเข้าข้อมูลจาก POS (คล้ายระบบบันทึกอัปเดต)</div>
         <span class="ov-soon-badge"><span class="ov-soon-dot"></span>อยู่ระหว่างพัฒนา</span>
       </div>
     </div>
@@ -1203,6 +1337,7 @@ function initCharts(viewId) {
   if (viewId === 'view-competitor-deep') { try { renderDeepTab(); } catch(e) { console.error('renderDeepTab', e); } return; }
   if (viewId === 'view-tracker') { try { renderTrackerView(); } catch(e) { console.error('renderTrackerView', e); } return; }
   if (viewId === 'view-cost-drinks') { try { renderDrinkCosts(); } catch(e) { console.error('renderDrinkCosts', e); } return; }
+  if (viewId === 'view-bb-armory' || viewId === 'view-bb-stock' || viewId === 'view-bb-varfix' || viewId === 'view-bb-posimport') { return; }
   const platform = viewId.replace('view-', '');
   if (!DATA[platform]) return;
   try { initLineChart(platform); } catch(e) { console.error('initLineChart', e); }
@@ -2605,6 +2740,14 @@ function renderDrinkCosts() {
   if (!root) return;
   if (!DCS) dcLoadState();
   if (dcGsUrl() && !dcSyncedSession) { dcSyncedSession = true; dcSyncPull(true); }
+  // อัปเดตวันที่ใน bb-status-bar
+  var bbEl = document.getElementById('bb-updated-cost');
+  if (bbEl && DCS.parsed_at) {
+    try {
+      var d = new Date(DCS.parsed_at);
+      bbEl.textContent = d.toLocaleDateString('th-TH', {year:'numeric', month:'short', day:'numeric'});
+    } catch(e) { bbEl.textContent = DCS.parsed_at.slice(0,10); }
+  }
   var menus = DCS.menus;
   var ch = dcChannel;
   var fixed = DCS.assumptions.fixed_cost_monthly || 0;
