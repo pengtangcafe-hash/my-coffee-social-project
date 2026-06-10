@@ -2140,18 +2140,22 @@ HTML_TEMPLATE = """\
     .dc-meta .src {{ display: inline-flex; align-items: center; gap: 6px; font-weight: 600; color: var(--text); }}
     .dc-meta .note {{ opacity: .9; }}
 
-    /* ── ส่วนหัวตรึง (Polar chart + สถิติ + controls) ── */
-    .dc-sticky-header {{ position: sticky; top: 0; z-index: 5; background: var(--bg);
-      padding: 10px 0 6px; border-bottom: 1px solid var(--card-border); margin-bottom: 10px; }}
-    /* Polar chart block กึ่งกลาง */
-    .dc-polar-wrap {{ max-width: 820px; width: 100%; margin: 0 auto 10px; }}
-    .dc-polar-canvas-wrap {{ position: relative; width: 100%;
-      height: clamp(300px, 46vh, 520px); }}
+    /* ── view-cost-drinks: flex column fills viewport — ไม่ต้อง page-scroll ── */
+    #view-cost-drinks.active {{ height: 100%; display: flex; flex-direction: column; overflow: hidden; }}
+    #dc-root {{ flex: 1 1 0; min-height: 0; display: flex; flex-direction: column; overflow: hidden; }}
+    /* ส่วนหัว chart+สถิติ+controls: ไม่ sticky แล้ว ใช้ flex-shrink:0 แทน */
+    .dc-sticky-header {{ flex-shrink: 0; z-index: 5; background: var(--bg);
+      padding: 10px 0 6px; border-bottom: 1px solid var(--card-border); margin-bottom: 4px; }}
+    /* Polar chart: square, responsive, centered */
+    .dc-polar-wrap {{ margin-bottom: 8px; }}
+    .dc-polar-canvas-wrap {{ position: relative;
+      width: clamp(80px, min(1120px, 92vw), calc(100vh - 640px));
+      aspect-ratio: 1 / 1; margin: 0 auto; overflow: hidden; }}
     .dc-polar-caption {{ text-align: center; font-size: .72rem; color: var(--text-muted);
       margin: 3px 0 0; line-height: 1.4; }}
     /* 5 สถิติเต็มความกว้าง 1 แถว */
-    .dc-stats-row {{ display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }}
-    .dc-stats-row .dc-stat {{ flex: 1 1 120px; min-width: 0; }}
+    .dc-stats-row {{ display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }}
+    .dc-stats-row .dc-stat {{ flex: 1 1 100px; min-width: 0; }}
     .dc-stat {{ background: var(--card); border: 1px solid var(--card-border); border-radius: 14px;
       padding: 10px 13px; display: flex; flex-direction: column; gap: 4px; overflow: hidden; }}
     .dc-st-lab {{ font-size: .68rem; color: var(--text-muted); font-weight: 600; white-space: nowrap;
@@ -2165,12 +2169,18 @@ HTML_TEMPLATE = """\
       border: none; }}
     .dc-stat.hero .dc-st-lab, .dc-stat.hero .dc-st-sub {{ color: rgba(246,236,218,.78); }}
     .dc-stat.hero .dc-st-val {{ color: var(--ov-crema); }}
-    /* กล่อง scroll ของรายการ */
-    .dc-list-scroll {{ overflow-y: auto; max-height: clamp(150px, calc(100vh - 480px), 60vh);
-      padding-right: 2px; overscroll-behavior: contain; }}
+    /* กล่อง scroll รายการ — flex fill ส่วนที่เหลือ, ไม่ fix max-height */
+    .dc-list-scroll {{ flex: 1 1 0; min-height: 0; overflow-y: auto;
+      padding: 0 2px 8px; overscroll-behavior: contain; }}
     @media (max-width: 720px) {{
-      .dc-polar-canvas-wrap {{ height: clamp(240px, 36vh, 360px); }}
-      .dc-stats-row .dc-stat {{ flex: 1 1 100px; }}
+      .dc-stats-row .dc-stat {{ flex: 1 1 80px; }}
+    }}
+    @media (max-width: 500px) {{
+      .dc-stats-row .dc-stat {{ flex: 1 1 58px; padding: 6px 8px; gap: 2px; }}
+      .dc-stats-row .dc-st-val {{ font-size: 1.15rem; }}
+      .dc-controls {{ gap: 5px 12px; margin-bottom: 8px; }}
+      .dc-controls .ov-mtab {{ padding: 3px 8px; font-size: .72rem; }}
+      .dc-controls .grp > .lbl {{ font-size: .72rem; }}
     }}
 
     .dc-controls {{ display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px;
