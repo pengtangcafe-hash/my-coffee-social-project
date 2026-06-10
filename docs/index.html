@@ -3500,8 +3500,8 @@ function renderStockView() {
     + (dcGsUrl() ? '<button class="dc-btn" onclick="dcSyncPull()">🔄 ซิงก์</button>' : '')
     + '</div>';
   var tabs = '<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px">'
-    + '<button class="ov-mtab' + (stkTab==='remain'?' active':'') + '" onclick="stkSetTab('remain')">สต็อกคงเหลือ</button>'
-    + '<button class="ov-mtab' + (stkTab==='usage'?' active':'') + '" onclick="stkSetTab('usage')">การใช้ต่อเมนู</button>'
+    + '<button class="ov-mtab' + (stkTab==='remain'?' active':'') + '" onclick="stkSetTab(\'remain\')">สต็อกคงเหลือ</button>'
+    + '<button class="ov-mtab' + (stkTab==='usage'?' active':'') + '" onclick="stkSetTab(\'usage\')">การใช้ต่อเมนู</button>'
     + '</div>';
   root.innerHTML = kpi + toolbar + tabs + '<div>' + (stkTab==='remain'?stkRenderRemain():stkRenderUsage()) + '</div>';
 }
