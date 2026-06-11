@@ -3206,7 +3206,7 @@ function dcDetail(m, fixed) {
 
 // ── Modal infra ──
 function dcEscClose(e) { if (e.key === 'Escape') dcCloseModal(); }
-function dcCloseModal() { dcAcClose(false); var p = document.getElementById('dc-acpanel'); if (p) p.remove(); var b = document.getElementById('dc-modal-bd'); if (b) b.remove(); document.removeEventListener('keydown', dcEscClose); }
+function dcCloseModal() { dcAcClose(false); _vfNewSlip=null; var p = document.getElementById('dc-acpanel'); if (p) p.remove(); var b = document.getElementById('dc-modal-bd'); if (b) b.remove(); document.removeEventListener('keydown', dcEscClose); }
 function dcSetModalBody(html) {
   var inner = document.querySelector('#dc-modal-bd .dc-modal');
   if (inner) { inner.innerHTML = html; return; }
@@ -4235,18 +4235,31 @@ function vfThumbToView(thumb) {
   return m?'https://drive.google.com/file/d/'+m[1]+'/view':thumb;
 }
 var _vfSlipCtx=null;
+var _vfNewSlip=null;
 function vfAttachSlip(btn) {
   if (!saIsUnlocked()) { dcRequestEdit(); return; }
   if (!dcGsUrl()) { showToast('เชื่อม Google Sheet ก่อน — ไปที่เมนู "เชื่อม Sheet"'); return; }
   _vfSlipCtx={key:btn.dataset.slipkey,isVar:btn.dataset.isvar==='1'};
   document.getElementById('vf-slip-file-input').click();
 }
+function vfAttachSlipModal() {
+  if (!saIsUnlocked()) { dcRequestEdit(); return; }
+  if (!dcGsUrl()) { showToast('เชื่อม Google Sheet ก่อน — ไปที่เมนู "เชื่อม Sheet"'); return; }
+  _vfSlipCtx={target:'modal'};
+  document.getElementById('vf-slip-file-input').click();
+}
+function vfRemoveModalSlip() {
+  _vfNewSlip=null;
+  var prev=document.getElementById('vf-e-slip-preview');
+  if (prev) prev.innerHTML='<button class="dc-btn ghost" onclick="vfAttachSlipModal()" style="font-size:.8rem">📎 แนบสลิป</button>';
+}
 function vfSlipFileSelected(input) {
   if (!input.files||!input.files[0]||!_vfSlipCtx) return;
   var file=input.files[0];
   var ctx=_vfSlipCtx; _vfSlipCtx=null;
   input.value='';
-  var btn=document.querySelector('[data-slipkey="'+ctx.key+'"]');
+  var isModal=ctx.target==='modal';
+  var btn=isModal?document.querySelector('#vf-e-slip-preview .dc-btn'):document.querySelector('[data-slipkey="'+ctx.key+'"]');
   if (btn) { btn.textContent='⏳ กำลังอัป...'; btn.disabled=true; }
   var reader=new FileReader();
   reader.onload=function(ev) {
@@ -4263,17 +4276,31 @@ function vfSlipFileSelected(input) {
       .then(function(r) { return r.json(); })
       .then(function(res) {
         if (!res||!res.ok) throw new Error(res&&res.error||'upload failed');
-        if (ctx.isVar) {
+        if (isModal) {
+          _vfNewSlip=res.thumb;
+          var prev=document.getElementById('vf-e-slip-preview');
+          if (prev) prev.innerHTML='<a href="'+escapeHtml(vfThumbToView(res.thumb))+'" target="_blank" rel="noopener"><img class="vf-slip-thumb" src="'+escapeHtml(res.thumb)+'" alt="สลิป"></a>'
+            +'<span style="color:#22c55e;font-size:.8rem;font-weight:600">แนบแล้ว ✓</span>'
+            +'<button class="dc-btn ghost" onclick="vfAttachSlipModal()" style="font-size:.75rem">🔄 เปลี่ยน</button>'
+            +'<button class="dc-btn ghost" onclick="vfRemoveModalSlip()" style="font-size:.75rem">✕ ลบ</button>';
+        } else if (ctx.isVar) {
           if (!DCS.expense_slips) DCS.expense_slips={};
           DCS.expense_slips[ctx.key]=res.thumb;
+          dcAfterChange(); renderVarfixView();
         } else {
           var exp=DCS.expenses.find(function(e) { return e.id===ctx.key; });
           if (exp) exp.slip=res.thumb;
+          dcAfterChange(); renderVarfixView();
         }
-        dcAfterChange(); renderVarfixView(); showToast('แนบสลิปแล้ว ✓');
+        showToast('แนบสลิปแล้ว ✓');
       })
       .catch(function() {
-        if (btn) { btn.textContent='📎 แนบสลิป'; btn.disabled=false; }
+        if (isModal) {
+          var prev=document.getElementById('vf-e-slip-preview');
+          if (prev) prev.innerHTML='<button class="dc-btn ghost" onclick="vfAttachSlipModal()" style="font-size:.8rem">📎 แนบสลิป</button>';
+        } else {
+          if (btn) { btn.textContent='📎 แนบสลิป'; btn.disabled=false; }
+        }
         showToast('อัปไม่สำเร็จ — ตรวจว่า re-deploy Apps Script + อนุญาต Drive แล้ว');
       });
     };
@@ -4405,6 +4432,10 @@ function vfOpenAddExpense() {
     +'<input class="dc-inp" id="vf-e-vendor" type="text" placeholder="—"></div>'
     +'</div>'
     +'<div class="dc-field"><label>หมายเหตุ (ถ้ามี)</label><input class="dc-inp" id="vf-e-note" type="text" placeholder="—"></div>'
+    +'<div class="dc-field"><label>สลิปใบเสร็จ</label>'
+    +'<div id="vf-e-slip-preview" style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">'
+    +'<button class="dc-btn ghost" onclick="vfAttachSlipModal()" style="font-size:.8rem">📎 แนบสลิป</button>'
+    +'</div></div>'
     +'</div>'
     +'<div class="dc-modal-foot"><span class="spacer"></span>'
     +'<button class="dc-btn ghost" onclick="dcCloseModal()">ยกเลิก</button>'
@@ -4426,7 +4457,8 @@ function vfSaveExpense() {
   if (!(amount>0)) { showToast('ใส่จำนวนเงินก่อน'); return; }
   var doSave=function() {
     var exp={id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),
-      date:date,group:group,category:category,label:label,amount:amount,color:color,slip:'',note:note,pay:pay,vendor:vendor};
+      date:date,group:group,category:category,label:label,amount:amount,color:color,slip:_vfNewSlip||'',note:note,pay:pay,vendor:vendor};
+    _vfNewSlip=null;
     DCS.expenses.push(exp);
     dcAfterChange(); dcCloseModal(); renderVarfixView(); showToast('บันทึกรายจ่ายแล้ว ✓');
   };
