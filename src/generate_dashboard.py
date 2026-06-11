@@ -2761,6 +2761,9 @@ HTML_TEMPLATE = """\
 
     <!-- Footer: theme toggle + date -->
     <div class="p-4 border-t border-slate-100">
+      <div id="sa-lock-wrap" style="display:none;margin-bottom:8px">
+        <button id="sa-lock-chip" onclick="saLock()" style="width:100%;font-size:.68rem;padding:5px 10px;border-radius:8px;background:var(--nav-active);color:var(--text-muted);border:1px solid var(--card-border);cursor:pointer;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">🔓 ปลดล็อกแล้ว · กดเพื่อล็อก</button>
+      </div>
       <div class="flex items-center justify-center gap-1 mb-2">
         <button class="theme-btn" id="theme-coffee" onclick="setTheme('coffee')" title="Coffee Mode">☕</button>
         <button class="theme-btn" id="theme-light" onclick="setTheme('light')"  title="Light Mode">☀️</button>
@@ -4494,7 +4497,34 @@ function dcThumb(m, size) {{
     + '<img src="' + escapeHtml(dcMenuImage(m)) + '" alt="" loading="lazy" onerror="this.style.display=\\'none\\'"></span>';
 }}
 
-var dcChannel = 'store', dcSort = 'margin', dcEdit = false;
+// ── สถานะปลดล็อกกลาง (sessionStorage: คงอยู่ตอนรีเฟรช, หายเมื่อปิดแท็บ) ──
+function saIsUnlocked() {{ return sessionStorage.getItem('pengtang_unlocked')==='1'; }}
+function saUpdateChip() {{
+  var wrap=document.getElementById('sa-lock-wrap');
+  if (!wrap) return;
+  wrap.style.display=saIsUnlocked()?'':'none';
+}}
+function saUnlock() {{ sessionStorage.setItem('pengtang_unlocked','1'); saUpdateChip(); }}
+function saLock() {{
+  sessionStorage.removeItem('pengtang_unlocked');
+  dcEdit=false;
+  try {{ dcCloseModal(); }} catch(e) {{}}
+  saUpdateChip();
+  renderActiveBackbar();
+}}
+function renderActiveBackbar() {{
+  var viewMap={{
+    'view-cost-drinks':renderDrinkCosts,
+    'view-bb-stock':renderStockView,
+    'view-bb-varfix':renderVarfixView
+  }};
+  Object.keys(viewMap).forEach(function(id) {{
+    var v=document.getElementById(id);
+    if (v&&v.classList.contains('active')) {{ try {{ viewMap[id](); }} catch(e) {{}} }}
+  }});
+}}
+
+var dcChannel = 'store', dcSort = 'margin', dcEdit = saIsUnlocked();
 var DCS = null;       // working state {{source, assumptions, catalog, menus}}
 var dcDraft = null;   // เมนูที่กำลังแก้ใน modal
 var dcPolarChart = null; // Chart.js instance (destroy ก่อน re-create เสมอ)
@@ -4579,12 +4609,13 @@ function dcSha256(s) {{
 }}
 var dcPwOnOk = null;
 function dcRequestEdit() {{
-  if (dcEdit) {{ dcToggleEdit(); return; }}
-  dcOpenPwModal('🔒 ปลดล็อกการแก้ไข', 'ใส่รหัสเพื่อแก้ไขเมนู / สูตร', function() {{ dcEdit = true; renderDrinkCosts(); showToast('ปลดล็อกแล้ว ✓'); }});
+  if (dcEdit) {{ saLock(); return; }}
+  dcOpenPwModal('🔒 ปลดล็อกการแก้ไข', 'ใส่รหัสเพื่อแก้ไขเมนู / สูตร', function() {{ dcEdit=true; saUnlock(); renderDrinkCosts(); showToast('ปลดล็อกแล้ว ✓'); }});
 }}
 // เรียกจากเมนู "นำเข้าข้อมูล" — ต้องใส่รหัสก่อนเข้า
 function requireImportAccess() {{
-  dcOpenPwModal('🔒 เข้าระบบนำเข้าข้อมูล', 'ใส่รหัสเพื่อเข้าระบบนำเข้าข้อมูล', function() {{ showView('view-import'); }});
+  if (saIsUnlocked()) {{ showView('view-import'); return; }}
+  dcOpenPwModal('🔒 เข้าระบบนำเข้าข้อมูล', 'ใส่รหัสเพื่อเข้าระบบนำเข้าข้อมูล', function() {{ saUnlock(); showView('view-import'); }});
 }}
 function dcOpenPwModal(title, label, onOk) {{
   dcPwOnOk = onOk || null;
@@ -5663,8 +5694,10 @@ function stkSavePurchase() {{
     dcAfterChange(); dcCloseModal(); renderStockView();
     showToast('บันทึกซื้อ '+escapeHtml(ing)+' '+qty+' '+unit+' ✓');
   }};
-  if (!dcEdit) {{ dcOpenPwModal('🔒 ปลดล็อกก่อนบันทึก','ใส่รหัสเพื่อแก้ไขข้อมูลสต็อก',function() {{ dcEdit=true; showToast('ปลดล็อกแล้ว ✓'); doSave(); }}); }}
-  else {{ doSave(); }}
+  if (!dcEdit) {{
+    if (saIsUnlocked()) {{ dcEdit=true; doSave(); return; }}
+    dcOpenPwModal('🔒 ปลดล็อกก่อนบันทึก','ใส่รหัสเพื่อแก้ไขข้อมูลสต็อก',function() {{ dcEdit=true; saUnlock(); showToast('ปลดล็อกแล้ว ✓'); doSave(); }});
+  }} else {{ doSave(); }}
 }}
 
 function stkOpenSales() {{
@@ -5719,8 +5752,10 @@ function stkSaveSales() {{
     dcAfterChange(); dcCloseModal(); renderStockView();
     showToast('บันทึกยอดขาย '+entries.length+' เมนู ✓');
   }};
-  if (!dcEdit) {{ dcOpenPwModal('🔒 ปลดล็อกก่อนบันทึก','ใส่รหัสเพื่อแก้ไขข้อมูลสต็อก',function() {{ dcEdit=true; showToast('ปลดล็อกแล้ว ✓'); doSave(); }}); }}
-  else {{ doSave(); }}
+  if (!dcEdit) {{
+    if (saIsUnlocked()) {{ dcEdit=true; doSave(); return; }}
+    dcOpenPwModal('🔒 ปลดล็อกก่อนบันทึก','ใส่รหัสเพื่อแก้ไขข้อมูลสต็อก',function() {{ dcEdit=true; saUnlock(); showToast('ปลดล็อกแล้ว ✓'); doSave(); }});
+  }} else {{ doSave(); }}
 }}
 
 function stkOpenPar() {{
@@ -5801,8 +5836,10 @@ function stkSavePar() {{
     dcAfterChange(); dcCloseModal(); renderStockView();
     showToast('บันทึกการตั้งค่าสต็อกแล้ว ✓');
   }};
-  if (!dcEdit) {{ dcOpenPwModal('🔒 ปลดล็อกก่อนบันทึก','ใส่รหัสเพื่อแก้ไขข้อมูลสต็อก',function() {{ dcEdit=true; showToast('ปลดล็อกแล้ว ✓'); doSave(); }}); }}
-  else {{ doSave(); }}
+  if (!dcEdit) {{
+    if (saIsUnlocked()) {{ dcEdit=true; doSave(); return; }}
+    dcOpenPwModal('🔒 ปลดล็อกก่อนบันทึก','ใส่รหัสเพื่อแก้ไขข้อมูลสต็อก',function() {{ dcEdit=true; saUnlock(); showToast('ปลดล็อกแล้ว ✓'); doSave(); }});
+  }} else {{ doSave(); }}
 }}
 
 // ── Roast palette (ไล่เฉด อ่อน→เข้ม) ──
@@ -6037,8 +6074,9 @@ function vfUpdateColor() {{
 }}
 function vfBtnAddExpense() {{
   if (!dcEdit) {{
+    if (saIsUnlocked()) {{ dcEdit=true; vfOpenAddExpense(); return; }}
     dcOpenPwModal('🔒 ปลดล็อกก่อนบันทึก','ใส่รหัสเพื่อบันทึกรายจ่าย',function() {{
-      dcEdit=true; showToast('ปลดล็อกแล้ว ✓'); vfOpenAddExpense();
+      dcEdit=true; saUnlock(); showToast('ปลดล็อกแล้ว ✓'); vfOpenAddExpense();
     }});
   }} else {{ vfOpenAddExpense(); }}
 }}
@@ -6089,7 +6127,8 @@ function vfSaveExpense() {{
     dcAfterChange(); dcCloseModal(); renderVarfixView(); showToast('บันทึกรายจ่ายแล้ว ✓');
   }};
   if (!dcEdit) {{
-    dcOpenPwModal('🔒 ปลดล็อกบันทึกรายจ่าย','ใส่รหัสเพื่อบันทึกรายจ่าย',function() {{ dcEdit=true; doSave(); }});
+    if (saIsUnlocked()) {{ dcEdit=true; doSave(); return; }}
+    dcOpenPwModal('🔒 ปลดล็อกบันทึกรายจ่าย','ใส่รหัสเพื่อบันทึกรายจ่าย',function() {{ dcEdit=true; saUnlock(); doSave(); }});
   }} else {{
     doSave();
   }}
@@ -6099,6 +6138,7 @@ function vfSaveExpense() {{
 applyStoredTheme();
 showView('view-home');
 applyRoast();
+saUpdateChip();
 </script>
 
 </body>
