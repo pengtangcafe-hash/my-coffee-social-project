@@ -86,7 +86,7 @@ function buildData_() {
   if (sm.vat_grab !== undefined && sm.vat_grab !== '') asm.channels.grab.vat = Number(sm.vat_grab);
   if (sm.stock_threshold_pct !== undefined && sm.stock_threshold_pct !== '') asm.stock_threshold_pct = Number(sm.stock_threshold_pct);
 
-  // สต็อก-ซื้อเข้า (schema ใหม่: วันที่,วัตถุดิบ,จำนวน,หน่วย,ปริมาณต่อหน่วย,ราคา/หน่วย,หมายเหตุ)
+  // สต็อก-ซื้อเข้า (schema 10 คอลัมน์: วันที่,วัตถุดิบ,จำนวน,หน่วย,ปริมาณต่อหน่วย,ราคา/หน่วย,หมายเหตุ,ร้าน,เวลา,วิธีจ่าย)
   var purchases = [];
   var bv = rows_(SH.buyLogs);
   for (var i = 1; i < bv.length; i++) {
@@ -98,7 +98,10 @@ function buildData_() {
     var size = r[4] !== '' && r[4] != null ? Number(r[4]) : null;
     var price = r[5] !== '' && r[5] != null ? Number(r[5]) : null;
     var note = String(r[6] || '').trim();
-    purchases.push({ date: date, ing: ing, qty: qty, unit: unit, size: size, price: price, note: note });
+    var vendor = String(r[7] || '').trim();
+    var time = String(r[8] || '').trim();
+    var pay = String(r[9] || 'cash').trim();
+    purchases.push({ date: date, ing: ing, qty: qty, unit: unit, size: size, price: price, note: note, vendor: vendor, time: time, pay: pay });
   }
 
   // สต็อก-ยอดขาย
@@ -152,7 +155,7 @@ function buildData_() {
     });
   }
 
-  // รายจ่าย
+  // รายจ่าย (schema 11 คอลัมน์: id,วันที่,กลุ่ม,หมวด,รายการ,จำนวนเงิน,สี,สลิป,หมายเหตุ,วิธีจ่าย,ร้าน/ผู้รับเงิน)
   var expenses = [];
   var ev = rows_(SH.expenses);
   for (var i = 1; i < ev.length; i++) {
@@ -162,7 +165,8 @@ function buildData_() {
     expenses.push({ id: eid, date: edate, group: String(r[2] || 'fixed').trim(),
       category: String(r[3] || '').trim(), label: String(r[4] || '').trim(),
       amount: Number(r[5]) || 0, color: String(r[6] || '#607d8b').trim(),
-      slip: String(r[7] || '').trim(), note: String(r[8] || '').trim() });
+      slip: String(r[7] || '').trim(), note: String(r[8] || '').trim(),
+      pay: String(r[9] || 'cash').trim(), vendor: String(r[10] || '').trim() });
   }
 
   return { source: 'Google Sheet', parsed_at: new Date().toISOString(),
@@ -207,10 +211,10 @@ function writeData_(data) {
     ['stock_threshold_pct', stk.threshold_pct != null ? stk.threshold_pct : 55]];
   writeSheet_(SH.settings, srows);
 
-  // สต็อก-ซื้อเข้า (schema ใหม่ 7 คอลัมน์)
-  var brows = [['วันที่', 'วัตถุดิบ', 'จำนวน', 'หน่วย', 'ปริมาณต่อหน่วย', 'ราคา/หน่วย', 'หมายเหตุ']];
+  // สต็อก-ซื้อเข้า (schema 10 คอลัมน์)
+  var brows = [['วันที่', 'วัตถุดิบ', 'จำนวน', 'หน่วย', 'ปริมาณต่อหน่วย', 'ราคา/หน่วย', 'หมายเหตุ', 'ร้าน', 'เวลา', 'วิธีจ่าย']];
   (data.purchases || []).forEach(function(p) {
-    brows.push([p.date || '', p.ing || '', blank_(p.qty), p.unit || 'แพ็ค', blank_(p.size), blank_(p.price), p.note || '']);
+    brows.push([p.date || '', p.ing || '', blank_(p.qty), p.unit || 'แพ็ค', blank_(p.size), blank_(p.price), p.note || '', p.vendor || '', p.time || '', p.pay || 'cash']);
   });
   writeSheet_(SH.buyLogs, brows);
 
@@ -235,10 +239,10 @@ function writeData_(data) {
   Object.keys(images).forEach(function(k) { if (images[k]) irows.push([k, images[k]]); });
   writeSheet_(SH.imgSheet, irows);
 
-  // รายจ่าย
-  var erows = [['id', 'วันที่', 'กลุ่ม', 'หมวด', 'รายการ', 'จำนวนเงิน', 'สี', 'สลิป', 'หมายเหตุ']];
+  // รายจ่าย (schema 11 คอลัมน์)
+  var erows = [['id', 'วันที่', 'กลุ่ม', 'หมวด', 'รายการ', 'จำนวนเงิน', 'สี', 'สลิป', 'หมายเหตุ', 'วิธีจ่าย', 'ร้าน/ผู้รับเงิน']];
   (data.expenses || []).forEach(function(e) {
-    erows.push([e.id||'', e.date||'', e.group||'fixed', e.category||'', e.label||'', e.amount||0, e.color||'', e.slip||'', e.note||'']);
+    erows.push([e.id||'', e.date||'', e.group||'fixed', e.category||'', e.label||'', e.amount||0, e.color||'', e.slip||'', e.note||'', e.pay||'cash', e.vendor||'']);
   });
   writeSheet_(SH.expenses, erows);
 }

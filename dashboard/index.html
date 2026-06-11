@@ -748,38 +748,42 @@
       border-left: 2px solid var(--card-border); }
 
     /* ── ต้นทุนผันแปรและคงที่ (Varfix) ── */
-    .vf-kpi-row { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:18px; }
-    .vf-kpi-card { background:var(--card); border:1px solid var(--card-border); border-radius:14px;
-      padding:12px 16px; flex:1 1 130px; min-width:0; }
-    .vf-kpi-label { font-size:.72rem; color:var(--text-muted); font-weight:700; text-transform:uppercase;
-      letter-spacing:.05em; margin-bottom:2px; }
-    .vf-kpi-val { font-size:1.22rem; font-weight:900; color:var(--text); font-variant-numeric:tabular-nums;
-      overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-    .vf-kpi-fixed .vf-kpi-val { color:#e53935; }
-    .vf-kpi-var   .vf-kpi-val { color:#1e88e5; }
-    .vf-kpi-cat { font-size:.88rem!important; }
-    .vf-bills { display:flex; flex-direction:column; gap:12px; }
+    .vf-summary { margin-bottom:18px; }
+    .vf-summary-head { display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; margin-bottom:8px; }
+    .vf-summary-title { font-size:.95rem; font-weight:900; color:var(--text); }
+    .vf-summary-sub { font-size:.78rem; color:var(--text-muted); }
+    .vf-bar-wrap { height:20px; border-radius:999px; background:var(--nav-active); overflow:hidden;
+      display:flex; margin-bottom:10px; }
+    .vf-bar-seg { height:100%; transition:width .4s cubic-bezier(.22,1,.36,1); flex-shrink:0; }
+    .vf-legend { display:flex; flex-wrap:wrap; gap:5px 12px; }
+    .vf-legend-item { display:flex; align-items:center; gap:5px; font-size:.75rem; color:var(--text-muted); }
+    .vf-legend-dot { width:8px; height:8px; border-radius:999px; flex-shrink:0; }
+    .vf-legend-pct { font-weight:700; color:var(--text); }
+    .vf-bills { display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:14px; align-items:start; }
     .vf-receipt-card { background:var(--card); border:1px solid var(--card-border); border-radius:16px;
       overflow:hidden; }
     .vf-receipt-head { padding:10px 14px; display:flex; align-items:center; gap:8px; flex-wrap:wrap;
-      min-height:38px; border-radius:14px 14px 0 0; }
+      min-height:38px; border-radius:14px 14px 0 0; text-shadow:0 1px 3px rgba(0,0,0,.25); }
     .vf-receipt-chip { background:rgba(255,255,255,.22); color:#fff; font-size:.72rem; font-weight:800;
       padding:3px 9px; border-radius:999px; white-space:nowrap; }
+    .vf-pay-badge { background:rgba(255,255,255,.22); color:#fff; font-size:.66rem; font-weight:700;
+      padding:2px 7px; border-radius:999px; white-space:nowrap; }
     .vf-receipt-group { font-size:.7rem; color:rgba(255,255,255,.82); margin-left:auto; white-space:nowrap; }
     .vf-receipt-date  { font-size:.7rem; color:rgba(255,255,255,.88); font-weight:700; white-space:nowrap; }
-    .vf-receipt-body { padding:12px 16px 14px; font-feature-settings:"tnum"; }
-    .vf-receipt-label { font-weight:700; font-size:.92rem; color:var(--text); margin-bottom:6px;
+    .vf-receipt-body { padding:10px 14px 6px; font-feature-settings:"tnum"; }
+    .vf-receipt-label { font-weight:700; font-size:.88rem; color:var(--text); margin-bottom:4px;
       display:flex; align-items:center; flex-wrap:wrap; gap:4px; }
-    .vf-readonly-badge { font-size:.66rem; color:var(--text-muted); background:var(--nav-active);
+    .vf-vendor { font-size:.75rem; color:var(--text-muted); margin-bottom:5px; }
+    .vf-readonly-badge { font-size:.64rem; color:var(--text-muted); background:var(--nav-active);
       border-radius:6px; padding:2px 7px; font-weight:600; }
-    .vf-receipt-lines { font-size:.78rem; color:var(--text-muted); margin:4px 0 4px; }
-    .vf-receipt-line { padding:2px 0; border-bottom:1px dashed var(--card-border); }
-    .vf-receipt-line:last-child { border-bottom:none; }
-    .vf-receipt-dashes { font-size:.7rem; color:var(--card-border); letter-spacing:3px; margin:8px 0 6px;
-      overflow:hidden; white-space:nowrap; }
-    .vf-receipt-amount { font-size:1.4rem; font-weight:900; color:var(--text); margin:4px 0 6px;
-      font-variant-numeric:tabular-nums; }
-    .vf-receipt-note { font-size:.75rem; color:var(--text-muted); margin-bottom:8px; }
+    .vf-line-table { width:100%; border-collapse:collapse; font-size:.78rem; margin:4px 0 4px; }
+    .vf-line-table td { padding:3px 4px 3px 0; color:var(--text-muted); vertical-align:top; }
+    .vf-line-table td:last-child { text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap; }
+    .vf-line-table tr:not(:last-child) td { border-bottom:1px dashed var(--card-border); }
+    .vf-receipt-note { font-size:.75rem; color:var(--text-muted); margin:4px 0; }
+    .vf-receipt-foot { padding:6px 14px 12px; border-top:1px dashed var(--card-border); margin-top:4px;
+      display:flex; align-items:center; justify-content:space-between; }
+    .vf-receipt-total { font-size:1.15rem; font-weight:900; color:var(--text); font-variant-numeric:tabular-nums; }
     .vf-slip-btn { font-size:.72rem!important; padding:4px 10px!important; opacity:.5; cursor:not-allowed!important; }
   </style>
 </head>
@@ -3795,6 +3799,7 @@ function stkRenderUsage() {
 
 // ---- modals ----
 function stkTodayISO() { return new Date().toISOString().slice(0,10); }
+function stkNowTime() { var d=new Date(); return ('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2); }
 function stkAcOpenPurch(inp) { dcAcOpen(inp,null); dcAcCtx.onSelect=stkOnIngSelect; }
 function stkOnIngSelect(name) {
   var c=DCS.catalog[name]||{};
@@ -3845,10 +3850,18 @@ function stkOpenPurchase() {
     +'<input class="dc-inp" id="stk-p-price" type="number" min="0" step="any" placeholder="บาท" oninput="stkPurchPreview()"></div>'
     +'</div>'
     +'<div style="display:flex;gap:10px;flex-wrap:wrap">'
-    +'<div class="dc-field" style="flex:1;min-width:130px"><label>📅 วันที่</label>'
+    +'<div class="dc-field" style="flex:1;min-width:110px"><label>📅 วันที่</label>'
     +'<input class="dc-inp" id="stk-p-date" type="date" value="'+stkTodayISO()+'"></div>'
+    +'<div class="dc-field" style="flex:1;min-width:90px"><label>⏰ เวลา</label>'
+    +'<input class="dc-inp" id="stk-p-time" type="time" value="'+stkNowTime()+'"></div>'
+    +'<div class="dc-field" style="flex:1;min-width:100px"><label>วิธีจ่าย</label>'
+    +'<select class="dc-inp" id="stk-p-pay"><option value="cash">💵 เงินสด</option><option value="transfer">🏦 โอน</option></select></div>'
+    +'</div>'
+    +'<div style="display:flex;gap:10px;flex-wrap:wrap">'
+    +'<div class="dc-field" style="flex:1;min-width:150px"><label>🏪 ร้าน/แหล่งซื้อ (ไม่บังคับ)</label>'
+    +'<input class="dc-inp" id="stk-p-vendor" type="text" placeholder="เช่น ตลาดสกลนคร"></div>'
     +'<div class="dc-field" style="flex:2;min-width:150px"><label>หมายเหตุ</label>'
-    +'<input class="dc-inp" id="stk-p-note" placeholder="เช่น ซื้อจากโลตัส"></div>'
+    +'<input class="dc-inp" id="stk-p-note" placeholder="—"></div>'
     +'</div>'
     +'<div class="stk-preview" id="stk-p-preview">กรอกจำนวนและปริมาณ/หน่วย</div>'
     +'</div>'
@@ -3869,11 +3882,14 @@ function stkSavePurchase() {
   var prRaw=((document.getElementById('stk-p-price')||{}).value||'').trim();
   var price=prRaw===''?null:(parseFloat(prRaw)||null);
   var date=(document.getElementById('stk-p-date')||{}).value||stkTodayISO();
+  var time=(document.getElementById('stk-p-time')||{}).value||'';
+  var pay=(document.getElementById('stk-p-pay')||{}).value||'cash';
+  var vendor=((document.getElementById('stk-p-vendor')||{}).value||'').trim();
   var note=((document.getElementById('stk-p-note')||{}).value||'').trim();
   if (!ing) { showToast('เลือกวัตถุดิบก่อน'); return; }
   if (!(qty>0)) { showToast('ใส่จำนวนให้ถูกต้อง'); return; }
   if (!(size>0)) { showToast('ใส่ปริมาณ/หน่วยให้ถูกต้อง'); return; }
-  var rec={date:date,ing:ing,qty:qty,unit:unit,size:size,price:price,note:note};
+  var rec={date:date,ing:ing,qty:qty,unit:unit,size:size,price:price,note:note,vendor:vendor,time:time,pay:pay};
   var doSave=function() {
     DCS.purchases.push(rec);
     dcAfterChange(); dcCloseModal(); renderStockView();
@@ -4070,6 +4086,11 @@ function vfCatColor(cat) {
   var found=all.filter(function(c) { return c.cat===cat; })[0];
   return found?found.color:'#607d8b';
 }
+function vfCatByColor(color) {
+  var all=EXP_CATS.fixed.concat(EXP_CATS.variable);
+  var found=all.filter(function(c) { return c.color===color; })[0];
+  return found?found.label:'อื่นๆ';
+}
 function vfTodayISO() { var d=new Date(); return d.toISOString().slice(0,10); }
 function vfFmtDate(iso) {
   if (!iso) return '—';
@@ -4091,64 +4112,112 @@ function vfInRange(dateStr,range) {
 }
 function vfSetRange(r) { vfRange=r; renderVarfixView(); }
 function vfPurchaseBills() {
-  var byDate={};
+  var byKey={};
   (DCS.purchases||[]).forEach(function(p) {
     var d=p.date||''; if (!d) return;
-    if (!byDate[d]) byDate[d]=[];
-    byDate[d].push(p);
+    var v=p.vendor||'';
+    var key=d+'|'+v;
+    if (!byKey[key]) { byKey[key]={date:d,vendor:v,items:[],pay:p.pay||'cash',time:p.time||''}; }
+    else {
+      if (!byKey[key].pay&&p.pay) byKey[key].pay=p.pay;
+      if (p.time&&p.time>byKey[key].time) byKey[key].time=p.time;
+    }
+    byKey[key].items.push(p);
   });
-  return Object.keys(byDate).map(function(date) {
-    var items=byDate[date];
-    var total=items.reduce(function(s,p) { return s+(p.qty&&p.price?p.qty*p.price:0); },0);
-    return {id:'stock-'+date,date:date,group:'variable',category:'ingredient',label:'ซื้อเข้าสต็อก',amount:total,color:'#1e88e5',slip:'',note:'',items:items,readonly:true};
+  return Object.keys(byKey).map(function(key) {
+    var g=byKey[key];
+    var total=g.items.reduce(function(s,p) { return s+(p.qty&&p.price?p.qty*p.price:0); },0);
+    var safeKey=key.replace('|','_');
+    return {id:'stock-'+safeKey,date:g.date,time:g.time,vendor:g.vendor,pay:g.pay,
+      group:'variable',category:'ingredient',label:'ซื้อเข้าสต็อก',amount:total,
+      color:'#1e88e5',slip:'',note:'',items:g.items,readonly:true};
   });
+}
+function vfLineTable(items) {
+  if (!items||!items.length) return '';
+  var rows=items.map(function(p) {
+    var lineAmt=p.qty&&p.price?p.qty*p.price:null;
+    return '<tr><td>'+escapeHtml(p.ing||'—')+'</td>'
+      +'<td style="padding-left:8px;text-align:center">'+(p.qty?p.qty+(p.unit?' '+p.unit:''):'—')+'</td>'
+      +'<td>'+(lineAmt?vfFmtMoney(lineAmt):'—')+'</td></tr>';
+  }).join('');
+  return '<table class="vf-line-table">'+rows+'</table>';
 }
 function vfReceiptCard(b) {
   var color=b.color||'#607d8b';
   var catLabel=vfCatLabel(b.category);
   var groupLabel=b.group==='fixed'?'📌 Fixed':'📦 Variable';
+  var payText=b.pay==='transfer'?'🏦 โอน':(b.pay?'💵 เงินสด':'');
+  var dateTime=vfFmtDate(b.date)+(b.time?' · '+b.time:'');
   var headHtml='<div class="vf-receipt-head" style="background:'+escapeHtml(color)+'">'
     +'<span class="vf-receipt-chip">'+escapeHtml(catLabel)+'</span>'
+    +(payText?'<span class="vf-pay-badge">'+payText+'</span>':'')
     +'<span class="vf-receipt-group">'+groupLabel+'</span>'
-    +'<span class="vf-receipt-date">'+vfFmtDate(b.date)+'</span>'
+    +'<span class="vf-receipt-date">'+dateTime+'</span>'
     +'</div>';
-  var linesHtml='';
-  if (b.items&&b.items.length) {
-    var lineRows=b.items.map(function(p) {
-      var lineAmt=p.qty&&p.price?p.qty*p.price:null;
-      return '<div class="vf-receipt-line">'+escapeHtml(p.ing||'')
-        +(p.qty?' · '+p.qty+(p.unit?' '+p.unit:''):'')
-        +(lineAmt?' · '+vfFmtMoney(lineAmt):'')+'</div>';
-    }).join('');
-    linesHtml='<div class="vf-receipt-lines">'+lineRows+'</div>';
-  }
-  var readonlyBadge=b.readonly?'<span class="vf-readonly-badge">จากซื้อเข้าสต็อก</span>':'';
+  var readonlyBadge=b.readonly?'<span class="vf-readonly-badge">สต็อก</span>':'';
+  var vendorHtml=b.vendor?'<div class="vf-vendor">🏪 '+escapeHtml(b.vendor)+'</div>':'';
+  var linesHtml=(b.items&&b.items.length)?vfLineTable(b.items):'';
   var noteHtml=b.note&&!b.readonly?'<div class="vf-receipt-note">📝 '+escapeHtml(b.note)+'</div>':'';
   var slipBtn=b.readonly?'':"<button class='vf-slip-btn dc-btn' disabled>📎 แนบสลิป (เร็วๆ นี้)</button>";
   return '<div class="vf-receipt-card">'
     +headHtml
     +'<div class="vf-receipt-body">'
     +'<div class="vf-receipt-label">'+escapeHtml(b.label||'')+(readonlyBadge?' '+readonlyBadge:'')+'</div>'
-    +linesHtml
-    +'<div class="vf-receipt-dashes">- - - - - - - - - - - - - - - - - - - -</div>'
-    +'<div class="vf-receipt-amount">'+vfFmtMoney(b.amount||0)+'</div>'
-    +noteHtml
+    +vendorHtml+linesHtml+noteHtml
+    +'</div>'
+    +'<div class="vf-receipt-foot">'
+    +'<span class="vf-receipt-total">'+vfFmtMoney(b.amount||0)+'</span>'
     +slipBtn
-    +'</div></div>';
+    +'</div>'
+    +'</div>';
 }
 function vfMockBills() {
   var t=vfTodayISO();
   return [
-    {id:'mock1',date:t,group:'fixed',category:'rent',label:'ค่าเช่าร้าน (ตัวอย่าง)',amount:8000,color:'#e53935',slip:'',note:'',readonly:true},
-    {id:'mock2',date:t,group:'fixed',category:'utility',label:'ค่าน้ำ-ไฟ (ตัวอย่าง)',amount:1200,color:'#fb8c00',slip:'',note:'',readonly:true},
-    {id:'mock3',date:t,group:'variable',category:'ingredient',label:'ซื้อเข้าสต็อก (ตัวอย่าง)',amount:3500,color:'#1e88e5',slip:'',note:'',readonly:true,
+    {id:'mock1',date:t,time:'09:00',group:'fixed',category:'rent',label:'ค่าเช่าร้าน (ตัวอย่าง)',amount:8000,color:'#e53935',slip:'',note:'',pay:'transfer',vendor:'บ้านแม่มณี (ตัวอย่าง)',readonly:true},
+    {id:'mock2',date:t,time:'14:30',group:'fixed',category:'utility',label:'ค่าน้ำ-ไฟ (ตัวอย่าง)',amount:1200,color:'#fb8c00',slip:'',note:'',pay:'transfer',vendor:'',readonly:true},
+    {id:'mock3',date:t,time:'07:00',group:'variable',category:'ingredient',label:'ซื้อเข้าสต็อก (ตัวอย่าง)',amount:3500,color:'#1e88e5',slip:'',note:'',pay:'cash',vendor:'ตลาดสกลนคร (ตัวอย่าง)',readonly:true,
       items:[
         {ing:'นมสด (ตัวอย่าง)',qty:10,unit:'ลิตร',price:150},
         {ing:'เมล็ดกาแฟ (ตัวอย่าง)',qty:2,unit:'กก.',price:1000},
         {ing:'ไซรัป (ตัวอย่าง)',qty:1,unit:'ขวด',price:350}
       ]},
-    {id:'mock4',date:t,group:'variable',category:'packaging',label:'บรรจุภัณฑ์ (ตัวอย่าง)',amount:850,color:'#3949ab',slip:'',note:'',readonly:true}
+    {id:'mock4',date:t,time:'11:15',group:'variable',category:'packaging',label:'บรรจุภัณฑ์ (ตัวอย่าง)',amount:850,color:'#3949ab',slip:'',note:'',pay:'cash',vendor:'',readonly:true}
   ];
+}
+function vfSummaryBar(displayBills,totalAmt,fixedAmt,varAmt,isMock) {
+  var mockNote=isMock?' (ตัวอย่าง)':'';
+  var headHtml='<div class="vf-summary-head">'
+    +'<span class="vf-summary-title">รายจ่ายรวม '+vfFmtMoney(totalAmt)+mockNote+'</span>'
+    +'<span class="vf-summary-sub">Fixed '+vfFmtMoney(fixedAmt)+' · Variable '+vfFmtMoney(varAmt)+'</span>'
+    +'</div>';
+  if (totalAmt===0) return '<div class="vf-summary">'+headHtml+'</div>';
+  var colorTotals={};
+  displayBills.forEach(function(b) {
+    var c=b.color||'#607d8b';
+    colorTotals[c]=(colorTotals[c]||0)+(b.amount||0);
+  });
+  var segs=Object.keys(colorTotals).map(function(c) {
+    return {color:c,amount:colorTotals[c]};
+  }).sort(function(a,b) { return b.amount-a.amount; });
+  var barHtml=segs.map(function(s) {
+    var pct=(s.amount/totalAmt*100).toFixed(2);
+    return '<div class="vf-bar-seg" style="width:'+pct+'%;background:'+escapeHtml(s.color)+'"></div>';
+  }).join('');
+  var legendHtml=segs.map(function(s) {
+    var pct=Math.round(s.amount/totalAmt*100);
+    var lbl=vfCatByColor(s.color);
+    return '<span class="vf-legend-item">'
+      +'<span class="vf-legend-dot" style="background:'+escapeHtml(s.color)+'"></span>'
+      +escapeHtml(lbl)+' <span class="vf-legend-pct">'+pct+'%</span> '+vfFmtMoney(s.amount)
+      +'</span>';
+  }).join('');
+  return '<div class="vf-summary">'
+    +headHtml
+    +'<div class="vf-bar-wrap">'+barHtml+'</div>'
+    +'<div class="vf-legend">'+legendHtml+'</div>'
+    +'</div>';
 }
 function renderVarfixView() {
   var root=document.getElementById('vf-root');
@@ -4162,29 +4231,20 @@ function renderVarfixView() {
   var totalAmt=displayBills.reduce(function(s,b) { return s+(b.amount||0); },0);
   var fixedAmt=displayBills.filter(function(b) { return b.group==='fixed'; }).reduce(function(s,b) { return s+(b.amount||0); },0);
   var varAmt=displayBills.filter(function(b) { return b.group==='variable'; }).reduce(function(s,b) { return s+(b.amount||0); },0);
-  var catTotals={};
-  displayBills.forEach(function(b) { catTotals[b.category]=(catTotals[b.category]||0)+(b.amount||0); });
-  var topCat=Object.keys(catTotals).sort(function(a,b) { return catTotals[b]-catTotals[a]; })[0];
-  var topCatLabel=topCat?vfCatLabel(topCat):'—';
   var ranges=[['day','วันนี้'],['week','7 วัน'],['month','เดือนนี้'],['year','ปีนี้']];
   var tabsHtml='<div class="stk-gtab-row">'
     +ranges.map(function(rg) {
       return '<button class="ov-mtab'+(vfRange===rg[0]?' active':'')+'" onclick="vfSetRange(\''+rg[0]+'\')">'+rg[1]+'</button>';
     }).join('')+'</div>';
-  var kpiHtml='<div class="vf-kpi-row">'
-    +'<div class="vf-kpi-card"><div class="vf-kpi-label">รวมรายจ่าย</div><div class="vf-kpi-val">'+vfFmtMoney(totalAmt)+'</div></div>'
-    +'<div class="vf-kpi-card vf-kpi-fixed"><div class="vf-kpi-label">Fixed</div><div class="vf-kpi-val">'+vfFmtMoney(fixedAmt)+'</div></div>'
-    +'<div class="vf-kpi-card vf-kpi-var"><div class="vf-kpi-label">Variable</div><div class="vf-kpi-val">'+vfFmtMoney(varAmt)+'</div></div>'
-    +'<div class="vf-kpi-card"><div class="vf-kpi-label">จ่ายมากสุด</div><div class="vf-kpi-val vf-kpi-cat">'+escapeHtml(topCatLabel)+'</div></div>'
-    +'</div>';
-  var toolbarHtml='<div class="dc-toolbar"><span class="spacer"></span><button class="dc-btn primary" onclick="vfOpenAddExpense()">+ บันทึกรายจ่าย</button></div>';
+  var summaryHtml=vfSummaryBar(displayBills,totalAmt,fixedAmt,varAmt,isMock);
+  var toolbarHtml='<div class="dc-toolbar"><span class="spacer"></span><button class="dc-btn primary" onclick="vfBtnAddExpense()">+ บันทึกรายจ่าย</button></div>';
   var mockHeaderHtml=isMock
     ?'<div class="stk-warn-row" style="margin-bottom:10px"><span class="stk-warn-row-title" style="text-transform:none;color:var(--text-muted)">🎭 ตัวอย่างระบบ (mockup) — จะปิดเองเมื่อมีรายจ่ายจริง</span></div>'
     :'';
   var billsHtml=displayBills.length===0
     ?'<div class="ov-tile ov-soon"><div class="ov-soon-emoji">📋</div><div class="ov-soon-sub">ยังไม่มีรายจ่ายในช่วงนี้</div></div>'
     :displayBills.map(function(b) { return vfReceiptCard(b); }).join('');
-  root.innerHTML=tabsHtml+kpiHtml+toolbarHtml+mockHeaderHtml+'<div class="vf-bills">'+billsHtml+'</div>';
+  root.innerHTML=tabsHtml+summaryHtml+toolbarHtml+mockHeaderHtml+'<div class="vf-bills">'+billsHtml+'</div>';
   var upEl=document.getElementById('vf-updated');
   if (upEl) upEl.textContent=vfFmtDate(vfTodayISO());
   applyRoast();
@@ -4207,6 +4267,13 @@ function vfUpdateColor() {
   var opt=sel.options[sel.selectedIndex];
   if (opt) cInp.value=opt.getAttribute('data-color')||'#607d8b';
 }
+function vfBtnAddExpense() {
+  if (!dcEdit) {
+    dcOpenPwModal('🔒 ปลดล็อกก่อนบันทึก','ใส่รหัสเพื่อบันทึกรายจ่าย',function() {
+      dcEdit=true; showToast('ปลดล็อกแล้ว ✓'); vfOpenAddExpense();
+    });
+  } else { vfOpenAddExpense(); }
+}
 function vfOpenAddExpense() {
   var html='<div class="dc-modal-head"><h3>📋 บันทึกรายจ่าย</h3><button class="dc-x" onclick="dcCloseModal()" aria-label="ปิด">✕</button></div>'
     +'<div class="dc-modal-scroll">'
@@ -4221,6 +4288,12 @@ function vfOpenAddExpense() {
     +'<div class="dc-field"><label>รายการ</label><input class="dc-inp" id="vf-e-label" type="text" placeholder="เช่น ค่าเช่าร้าน มิถุนายน 2569"></div>'
     +'<div class="dc-field"><label>จำนวนเงิน (฿)</label><input class="dc-inp" id="vf-e-amount" type="number" min="0" step="0.01" placeholder="0"></div>'
     +'<div class="dc-field"><label>สี (แสดงในบิล)</label><input class="dc-inp" id="vf-e-color" type="color" value="#e53935" style="height:40px;padding:4px 6px;cursor:pointer"></div>'
+    +'<div style="display:flex;gap:10px;flex-wrap:wrap">'
+    +'<div class="dc-field" style="flex:1;min-width:110px"><label>วิธีจ่าย</label>'
+    +'<select class="dc-inp" id="vf-e-pay"><option value="cash">💵 เงินสด</option><option value="transfer">🏦 โอน</option></select></div>'
+    +'<div class="dc-field" style="flex:2;min-width:150px"><label>🏪 ร้าน/ผู้รับเงิน (ไม่บังคับ)</label>'
+    +'<input class="dc-inp" id="vf-e-vendor" type="text" placeholder="—"></div>'
+    +'</div>'
     +'<div class="dc-field"><label>หมายเหตุ (ถ้ามี)</label><input class="dc-inp" id="vf-e-note" type="text" placeholder="—"></div>'
     +'</div>'
     +'<div class="dc-modal-foot"><span class="spacer"></span>'
@@ -4236,12 +4309,14 @@ function vfSaveExpense() {
   var label=((document.getElementById('vf-e-label')||{}).value||'').trim();
   var amount=parseFloat((document.getElementById('vf-e-amount')||{}).value||'');
   var color=(document.getElementById('vf-e-color')||{}).value||'#607d8b';
+  var pay=(document.getElementById('vf-e-pay')||{}).value||'cash';
+  var vendor=((document.getElementById('vf-e-vendor')||{}).value||'').trim();
   var note=((document.getElementById('vf-e-note')||{}).value||'').trim();
   if (!label) { showToast('ใส่ชื่อรายการก่อน'); return; }
   if (!(amount>0)) { showToast('ใส่จำนวนเงินก่อน'); return; }
   var doSave=function() {
     var exp={id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),
-      date:date,group:group,category:category,label:label,amount:amount,color:color,slip:'',note:note};
+      date:date,group:group,category:category,label:label,amount:amount,color:color,slip:'',note:note,pay:pay,vendor:vendor};
     DCS.expenses.push(exp);
     dcAfterChange(); dcCloseModal(); renderVarfixView(); showToast('บันทึกรายจ่ายแล้ว ✓');
   };
