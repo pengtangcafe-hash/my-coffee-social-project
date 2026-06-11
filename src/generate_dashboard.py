@@ -2558,10 +2558,12 @@ HTML_TEMPLATE = """\
     .vf-receipt-foot {{ padding:6px 14px 12px; border-top:1px dashed var(--card-border); margin-top:4px;
       display:flex; align-items:center; justify-content:space-between; }}
     .vf-receipt-total {{ font-size:1.15rem; font-weight:900; color:var(--text); font-variant-numeric:tabular-nums; }}
-    .vf-slip-btn {{ font-size:.72rem!important; padding:4px 10px!important; opacity:.5; cursor:not-allowed!important; }}
+    .vf-slip-btn {{ font-size:.72rem!important; padding:4px 10px!important; }}
+    .vf-slip-thumb {{ width:60px; height:45px; object-fit:cover; border-radius:6px; cursor:pointer; margin-right:6px; border:1px solid var(--card-border); vertical-align:middle; }}
   </style>
 </head>
 <body style="font-family: 'Prompt', system-ui, sans-serif" class="text-slate-800">
+<input type="file" id="vf-slip-file-input" accept="image/*" capture="environment" style="display:none" onchange="vfSlipFileSelected(this)">
 
 <!-- Mobile top bar -->
 <div id="mobile-topbar" class="items-center justify-between px-4 py-3">
@@ -4555,6 +4557,7 @@ function dcNormalize(s) {{
   s.stock.par = s.stock.par || {{}};
   s.stock.images = s.stock.images || {{}};
   s.expenses = s.expenses || [];
+  s.expense_slips = s.expense_slips || {{}};
   return s;
 }}
 function dcLoadState() {{
@@ -5943,7 +5946,8 @@ function vfPurchaseBills() {{
     var safeKey=key.replace('|','_');
     return {{id:'stock-'+safeKey,date:g.date,time:g.time,vendor:g.vendor,pay:g.pay,
       group:'variable',category:'ingredient',label:'ซื้อเข้าสต็อก',amount:total,
-      color:'#1e88e5',slip:'',note:'',items:g.items,readonly:true}};
+      color:'#1e88e5',slip:'',note:'',items:g.items,readonly:true,
+      _vslipKey:'V|'+g.date+'|'+(g.vendor||'')}};
   }});
 }}
 function vfLineTable(items) {{
@@ -5972,7 +5976,15 @@ function vfReceiptCard(b) {{
   var vendorHtml=b.vendor?'<div class="vf-vendor">🏪 '+escapeHtml(b.vendor)+'</div>':'';
   var linesHtml=(b.items&&b.items.length)?vfLineTable(b.items):'';
   var noteHtml=b.note&&!b.readonly?'<div class="vf-receipt-note">📝 '+escapeHtml(b.note)+'</div>':'';
-  var slipBtn=b.readonly?'':"<button class='vf-slip-btn dc-btn' disabled>📎 แนบสลิป (เร็วๆ นี้)</button>";
+  var _vsk=b.readonly?(b._vslipKey||''):(b.id||'');
+  var _viv=b.readonly?1:0;
+  var _vsu=b.readonly?((DCS.expense_slips||{{}})[b._vslipKey||'']||''):(b.slip||'');
+  var _vvu=vfThumbToView(_vsu);
+  var slipBtn=_vsk?(_vsu
+    ?('<a href="'+escapeHtml(_vvu)+'" target="_blank" rel="noopener"><img class="vf-slip-thumb" src="'+escapeHtml(_vsu)+'" alt="สลิป"></a>'
+     +'<button class="vf-slip-btn dc-btn" data-slipkey="'+escapeHtml(_vsk)+'" data-isvar="'+_viv+'" onclick="vfAttachSlip(this)">🔄 เปลี่ยนสลิป</button>')
+    :'<button class="vf-slip-btn dc-btn" data-slipkey="'+escapeHtml(_vsk)+'" data-isvar="'+_viv+'" onclick="vfAttachSlip(this)">📎 แนบสลิป</button>')
+    :'';
   return '<div class="vf-receipt-card">'
     +headHtml
     +'<div class="vf-receipt-body">'
@@ -5984,6 +5996,58 @@ function vfReceiptCard(b) {{
     +slipBtn
     +'</div>'
     +'</div>';
+}}
+function vfThumbToView(thumb) {{
+  if (!thumb) return '#';
+  var m=thumb.match(/[?&]id=([^&]+)/);
+  return m?'https://drive.google.com/file/d/'+m[1]+'/view':thumb;
+}}
+var _vfSlipCtx=null;
+function vfAttachSlip(btn) {{
+  if (!saIsUnlocked()) {{ dcRequestEdit(); return; }}
+  if (!dcGsUrl()) {{ showToast('เชื่อม Google Sheet ก่อน — ไปที่เมนู "เชื่อม Sheet"'); return; }}
+  _vfSlipCtx={{key:btn.dataset.slipkey,isVar:btn.dataset.isvar==='1'}};
+  document.getElementById('vf-slip-file-input').click();
+}}
+function vfSlipFileSelected(input) {{
+  if (!input.files||!input.files[0]||!_vfSlipCtx) return;
+  var file=input.files[0];
+  var ctx=_vfSlipCtx; _vfSlipCtx=null;
+  input.value='';
+  var btn=document.querySelector('[data-slipkey="'+ctx.key+'"]');
+  if (btn) {{ btn.textContent='⏳ กำลังอัป...'; btn.disabled=true; }}
+  var reader=new FileReader();
+  reader.onload=function(ev) {{
+    var img=new Image();
+    img.onload=function() {{
+      var MAX=1200,w=img.width,h=img.height;
+      if (w>MAX||h>MAX) {{ var sc=MAX/Math.max(w,h); w=Math.round(w*sc); h=Math.round(h*sc); }}
+      var cv=document.createElement('canvas'); cv.width=w; cv.height=h;
+      cv.getContext('2d').drawImage(img,0,0,w,h);
+      var b64=cv.toDataURL('image/jpeg',0.8).split(',')[1];
+      var fname=(file.name||'slip').replace(/\.[^.]+$/,'')+'.jpg';
+      fetch(dcGsUrl(),{{method:'POST',headers:{{'Content-Type':'text/plain;charset=utf-8'}},
+        body:JSON.stringify({{action:'uploadSlip',filename:fname,mime:'image/jpeg',data:b64}})}})
+      .then(function(r) {{ return r.json(); }})
+      .then(function(res) {{
+        if (!res||!res.ok) throw new Error(res&&res.error||'upload failed');
+        if (ctx.isVar) {{
+          if (!DCS.expense_slips) DCS.expense_slips={{}};
+          DCS.expense_slips[ctx.key]=res.thumb;
+        }} else {{
+          var exp=DCS.expenses.find(function(e) {{ return e.id===ctx.key; }});
+          if (exp) exp.slip=res.thumb;
+        }}
+        dcAfterChange(); renderVarfixView(); showToast('แนบสลิปแล้ว ✓');
+      }})
+      .catch(function() {{
+        if (btn) {{ btn.textContent='📎 แนบสลิป'; btn.disabled=false; }}
+        showToast('อัปไม่สำเร็จ — ตรวจว่า re-deploy Apps Script + อนุญาต Drive แล้ว');
+      }});
+    }};
+    img.src=ev.target.result;
+  }};
+  reader.readAsDataURL(file);
 }}
 function vfMockBills() {{
   var t=vfTodayISO();

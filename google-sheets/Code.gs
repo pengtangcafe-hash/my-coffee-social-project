@@ -16,7 +16,7 @@
 var SH = { cat: 'วัตถุดิบ', menu: 'เมนู', recipe: 'สูตร', settings: 'ตั้งค่า',
            buyLogs: 'สต็อก-ซื้อเข้า', salesLogs: 'สต็อก-ยอดขาย',
            parSheet: 'สต็อก-par', imgSheet: 'สต็อก-รูป',
-           expenses: 'รายจ่าย' };
+           expenses: 'รายจ่าย', slipBills: 'สลิป-บิล' };
 
 function doGet(e) {
   return json_(buildData_());
@@ -25,8 +25,25 @@ function doGet(e) {
 function doPost(e) {
   try {
     var data = JSON.parse(e.postData.contents);
+    if (data.action === 'uploadSlip') return handleUploadSlip_(data);
     writeData_(data);
     return json_({ ok: true, menus: (data.menus || []).length });
+  } catch (err) {
+    return json_({ ok: false, error: String(err) });
+  }
+}
+
+function handleUploadSlip_(data) {
+  try {
+    var blob = Utilities.newBlob(Utilities.base64Decode(data.data), data.mime, data.filename);
+    var folders = DriveApp.getFoldersByName('ร้านกาแฟ-สลิป');
+    var folder = folders.hasNext() ? folders.next() : DriveApp.createFolder('ร้านกาแฟ-สลิป');
+    var file = folder.createFile(blob);
+    file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
+    var id = file.getId();
+    return json_({ ok: true, id: id,
+      thumb: 'https://drive.google.com/thumbnail?id=' + id + '&sz=w800',
+      view: 'https://drive.google.com/file/d/' + id + '/view' });
   } catch (err) {
     return json_({ ok: false, error: String(err) });
   }
@@ -169,10 +186,17 @@ function buildData_() {
       pay: String(r[9] || 'cash').trim(), vendor: String(r[10] || '').trim() });
   }
 
+  var expSlips = {};
+  var slv = rows_(SH.slipBills);
+  for (var i = 1; i < slv.length; i++) {
+    var sk = String(slv[i][0] || '').trim(), su = String(slv[i][1] || '').trim();
+    if (sk && su) expSlips[sk] = su;
+  }
   return { source: 'Google Sheet', parsed_at: new Date().toISOString(),
            assumptions: asm, catalog: catalog, menus: menus,
            purchases: purchases, sales: sales, expenses: expenses,
-           stock: { threshold_pct: stock_thr, par: par, images: images } };
+           stock: { threshold_pct: stock_thr, par: par, images: images },
+           expense_slips: expSlips };
 }
 
 // ── เขียนทับทุกแท็บจาก JSON ที่ dashboard ส่งมา ──
@@ -245,6 +269,12 @@ function writeData_(data) {
     erows.push([e.id||'', e.date||'', e.group||'fixed', e.category||'', e.label||'', e.amount||0, e.color||'', e.slip||'', e.note||'', e.pay||'cash', e.vendor||'']);
   });
   writeSheet_(SH.expenses, erows);
+
+  // สลิป-บิล [คีย์, ลิงก์]
+  var expSlips = data.expense_slips || {};
+  var slrows = [['คีย์', 'ลิงก์']];
+  Object.keys(expSlips).forEach(function(k) { if (expSlips[k]) slrows.push([k, expSlips[k]]); });
+  writeSheet_(SH.slipBills, slrows);
 }
 
 function blank_(v) { return (v == null) ? '' : v; }

@@ -43,6 +43,14 @@
 | **สต็อก-par** | วัตถุดิบ · จำนวน · หน่วย · ปริมาณต่อหน่วย |
 | **สต็อก-รูป** | วัตถุดิบ · url |
 | **รายจ่าย** | id · วันที่ · กลุ่ม (fixed/variable) · หมวด · รายการ · จำนวนเงิน · สี · สลิป · หมายเหตุ · วิธีจ่าย · ร้าน/ผู้รับเงิน |
+| **สลิป-บิล** | คีย์ · ลิงก์ (Drive thumbnail URL) — สร้างอัตโนมัติเมื่อแนบสลิปครั้งแรก |
+
+> ⚠️ **ระบบแนบสลิป — ต้อง re-deploy + อนุญาต Drive:**
+> Code.gs เวอร์ชันนี้ใช้ `DriveApp` (อัปโหลดภาพสลิปไปยัง Google Drive) ซึ่งต้องการ scope ใหม่
+> **ขั้นตอน:** Deploy → Manage deployments → ✏️ → Version: New version → Deploy
+> ระหว่าง Deploy จะขอสิทธิ์ใหม่ → เลือกบัญชี → **Advanced → Go to (unsafe) → Allow**
+> (ต้องอนุญาต scope "See, edit, create, and delete only the specific Google Drive files you use with this app")
+> ถ้าไม่ re-deploy: ปุ่ม "📎 แนบสลิป" จะขึ้น toast "อัปไม่สำเร็จ" เพราะ Apps Script รันโค้ดเก่า
 
 > ⚠️ **Schema เปลี่ยน — ต้อง re-deploy Apps Script:** หลังอัปเดต Code.gs ครั้งนี้ (เพิ่มคอลัมน์ **ร้าน · เวลา · วิธีจ่าย** ใน สต็อก-ซื้อเข้า และ **วิธีจ่าย · ร้าน/ผู้รับเงิน** ใน รายจ่าย) ต้อง **Deploy → Manage deployments → ✏️ → Version: New version → Deploy** 1 ครั้ง มิฉะนั้น URL เดิมยังรันโค้ดเก่าที่ไม่รู้จัก column ใหม่
 
