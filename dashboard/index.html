@@ -746,6 +746,41 @@
     .log-cat.intel { background: #f59e0b22; color: #d97706; }
     .log-detail { font-size: .78rem; color: var(--text-muted); margin-top: 3px; padding-left: 12px;
       border-left: 2px solid var(--card-border); }
+
+    /* ── ต้นทุนผันแปรและคงที่ (Varfix) ── */
+    .vf-kpi-row { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:18px; }
+    .vf-kpi-card { background:var(--card); border:1px solid var(--card-border); border-radius:14px;
+      padding:12px 16px; flex:1 1 130px; min-width:0; }
+    .vf-kpi-label { font-size:.72rem; color:var(--text-muted); font-weight:700; text-transform:uppercase;
+      letter-spacing:.05em; margin-bottom:2px; }
+    .vf-kpi-val { font-size:1.22rem; font-weight:900; color:var(--text); font-variant-numeric:tabular-nums;
+      overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .vf-kpi-fixed .vf-kpi-val { color:#e53935; }
+    .vf-kpi-var   .vf-kpi-val { color:#1e88e5; }
+    .vf-kpi-cat { font-size:.88rem!important; }
+    .vf-bills { display:flex; flex-direction:column; gap:12px; }
+    .vf-receipt-card { background:var(--card); border:1px solid var(--card-border); border-radius:16px;
+      overflow:hidden; }
+    .vf-receipt-head { padding:10px 14px; display:flex; align-items:center; gap:8px; flex-wrap:wrap;
+      min-height:38px; border-radius:14px 14px 0 0; }
+    .vf-receipt-chip { background:rgba(255,255,255,.22); color:#fff; font-size:.72rem; font-weight:800;
+      padding:3px 9px; border-radius:999px; white-space:nowrap; }
+    .vf-receipt-group { font-size:.7rem; color:rgba(255,255,255,.82); margin-left:auto; white-space:nowrap; }
+    .vf-receipt-date  { font-size:.7rem; color:rgba(255,255,255,.88); font-weight:700; white-space:nowrap; }
+    .vf-receipt-body { padding:12px 16px 14px; font-feature-settings:"tnum"; }
+    .vf-receipt-label { font-weight:700; font-size:.92rem; color:var(--text); margin-bottom:6px;
+      display:flex; align-items:center; flex-wrap:wrap; gap:4px; }
+    .vf-readonly-badge { font-size:.66rem; color:var(--text-muted); background:var(--nav-active);
+      border-radius:6px; padding:2px 7px; font-weight:600; }
+    .vf-receipt-lines { font-size:.78rem; color:var(--text-muted); margin:4px 0 4px; }
+    .vf-receipt-line { padding:2px 0; border-bottom:1px dashed var(--card-border); }
+    .vf-receipt-line:last-child { border-bottom:none; }
+    .vf-receipt-dashes { font-size:.7rem; color:var(--card-border); letter-spacing:3px; margin:8px 0 6px;
+      overflow:hidden; white-space:nowrap; }
+    .vf-receipt-amount { font-size:1.4rem; font-weight:900; color:var(--text); margin:4px 0 6px;
+      font-variant-numeric:tabular-nums; }
+    .vf-receipt-note { font-size:.75rem; color:var(--text-muted); margin-bottom:8px; }
+    .vf-slip-btn { font-size:.72rem!important; padding:4px 10px!important; opacity:.5; cursor:not-allowed!important; }
   </style>
 </head>
 <body style="font-family: 'Prompt', system-ui, sans-serif" class="text-slate-800">
@@ -1295,17 +1330,11 @@
         <h1 class="ov-h1">ต้นทุนผันแปรและคงที่</h1>
         <p class="ov-sub-h">Variable &amp; Fixed Cost — บันทึกค่าใช้จ่ายรวมร้านแบบแยกประเภท เห็นรายจ่ายประจำ/รายจ่ายจริง รายวัน/สัปดาห์/เดือน/ปี</p>
         <div class="bb-status-bar">
-          <span class="bb-status-pill soon"><span class="dot"></span>🟡 เร็วๆ นี้</span>
-          <span class="bb-status-meta">ใช้งานล่าสุด: <b>—</b></span>
-          <span class="bb-status-meta">อัปเดตข้อมูลล่าสุด: <b>—</b></span>
+          <span class="bb-status-pill live"><span class="dot"></span>🟢 ใช้งานอยู่</span>
+          <span class="bb-status-meta">อัปเดตข้อมูลล่าสุด: <b id="vf-updated">—</b></span>
         </div>
       </div>
-      <div class="ov-tile ov-soon">
-        <div class="ov-soon-emoji">📊</div>
-        <div class="ov-soon-title">Launching soon..</div>
-        <div class="ov-soon-sub">Variable &amp; Fixed Cost — บันทึกค่าใช้จ่ายรวมร้านแบบแยกประเภท เห็นรายจ่ายประจำ/รายจ่ายจริง รายวัน/สัปดาห์/เดือน/ปี</div>
-        <span class="ov-soon-badge"><span class="ov-soon-dot"></span>อยู่ระหว่างพัฒนา</span>
-      </div>
+      <div id="vf-root"></div>
     </div>
 
     <!-- ── Backbar: บันทึกข้อมูลนำเข้า POS (Launching soon) ── -->
@@ -1453,7 +1482,8 @@ function initCharts(viewId) {
   if (viewId === 'view-tracker') { try { renderTrackerView(); } catch(e) { console.error('renderTrackerView', e); } return; }
   if (viewId === 'view-cost-drinks') { try { renderDrinkCosts(); } catch(e) { console.error('renderDrinkCosts', e); } return; }
   if (viewId === 'view-bb-stock') { try { renderStockView(); } catch(e) { console.error('renderStockView', e); } return; }
-  if (viewId === 'view-bb-armory' || viewId === 'view-bb-varfix' || viewId === 'view-bb-posimport') { return; }
+  if (viewId === 'view-bb-varfix') { try { renderVarfixView(); } catch(e) { console.error('renderVarfixView', e); } return; }
+  if (viewId === 'view-bb-armory' || viewId === 'view-bb-posimport') { return; }
   const platform = viewId.replace('view-', '');
   if (!DATA[platform]) return;
   try { initLineChart(platform); } catch(e) { console.error('initLineChart', e); }
@@ -2716,6 +2746,7 @@ function dcNormalize(s) {
   if (s.stock.threshold_pct == null) s.stock.threshold_pct = 60;
   s.stock.par = s.stock.par || {};
   s.stock.images = s.stock.images || {};
+  s.expenses = s.expenses || [];
   return s;
 }
 function dcLoadState() {
@@ -4010,6 +4041,216 @@ function applyRoast(){ ['.ov-mtab','.intel-tab','.pricing-tab','.trk-tab'].forEa
 }); }
 var _roastTimer=null;
 new MutationObserver(function(){ clearTimeout(_roastTimer); _roastTimer=setTimeout(applyRoast,60); }).observe(document.body,{childList:true,subtree:true});
+
+// ── ต้นทุนผันแปรและคงที่ (Varfix) ──
+var vfRange='month';
+var EXP_CATS={
+  fixed:[
+    {cat:'rent',label:'ค่าเช่าร้าน',color:'#e53935'},
+    {cat:'salary',label:'เงินเดือนพนักงาน',color:'#8e24aa'},
+    {cat:'utility',label:'ค่าน้ำ-ไฟ',color:'#fb8c00'},
+    {cat:'internet',label:'อินเทอร์เน็ต',color:'#00897b'},
+    {cat:'fixed_other',label:'อื่นๆ (คงที่)',color:'#607d8b'}
+  ],
+  variable:[
+    {cat:'ingredient',label:'วัตถุดิบ',color:'#1e88e5'},
+    {cat:'packaging',label:'บรรจุภัณฑ์',color:'#3949ab'},
+    {cat:'delivery',label:'ค่าขนส่ง',color:'#00acc1'},
+    {cat:'marketing',label:'การตลาด',color:'#d81b60'},
+    {cat:'var_other',label:'อื่นๆ (ผันแปร)',color:'#546e7a'}
+  ]
+};
+function vfCatLabel(cat) {
+  var all=EXP_CATS.fixed.concat(EXP_CATS.variable);
+  var found=all.filter(function(c) { return c.cat===cat; })[0];
+  return found?found.label:cat;
+}
+function vfCatColor(cat) {
+  var all=EXP_CATS.fixed.concat(EXP_CATS.variable);
+  var found=all.filter(function(c) { return c.cat===cat; })[0];
+  return found?found.color:'#607d8b';
+}
+function vfTodayISO() { var d=new Date(); return d.toISOString().slice(0,10); }
+function vfFmtDate(iso) {
+  if (!iso) return '—';
+  try { var d=new Date(iso+'T00:00:00'); return d.toLocaleDateString('th-TH',{year:'numeric',month:'short',day:'numeric'}); }
+  catch(e) { return iso; }
+}
+function vfFmtMoney(n) { return '฿'+(n||0).toLocaleString('en-US',{maximumFractionDigits:2}); }
+function vfInRange(dateStr,range) {
+  if (!dateStr) return false;
+  var today=vfTodayISO();
+  if (range==='day') return dateStr===today;
+  if (range==='year') return dateStr.slice(0,4)===today.slice(0,4);
+  if (range==='month') return dateStr.slice(0,7)===today.slice(0,7);
+  if (range==='week') {
+    var d0=new Date(today+'T00:00:00'); d0.setDate(d0.getDate()-6);
+    var dI=new Date(dateStr+'T00:00:00'); return dI>=d0;
+  }
+  return true;
+}
+function vfSetRange(r) { vfRange=r; renderVarfixView(); }
+function vfPurchaseBills() {
+  var byDate={};
+  (DCS.purchases||[]).forEach(function(p) {
+    var d=p.date||''; if (!d) return;
+    if (!byDate[d]) byDate[d]=[];
+    byDate[d].push(p);
+  });
+  return Object.keys(byDate).map(function(date) {
+    var items=byDate[date];
+    var total=items.reduce(function(s,p) { return s+(p.qty&&p.price?p.qty*p.price:0); },0);
+    return {id:'stock-'+date,date:date,group:'variable',category:'ingredient',label:'ซื้อเข้าสต็อก',amount:total,color:'#1e88e5',slip:'',note:'',items:items,readonly:true};
+  });
+}
+function vfReceiptCard(b) {
+  var color=b.color||'#607d8b';
+  var catLabel=vfCatLabel(b.category);
+  var groupLabel=b.group==='fixed'?'📌 Fixed':'📦 Variable';
+  var headHtml='<div class="vf-receipt-head" style="background:'+escapeHtml(color)+'">'
+    +'<span class="vf-receipt-chip">'+escapeHtml(catLabel)+'</span>'
+    +'<span class="vf-receipt-group">'+groupLabel+'</span>'
+    +'<span class="vf-receipt-date">'+vfFmtDate(b.date)+'</span>'
+    +'</div>';
+  var linesHtml='';
+  if (b.items&&b.items.length) {
+    var lineRows=b.items.map(function(p) {
+      var lineAmt=p.qty&&p.price?p.qty*p.price:null;
+      return '<div class="vf-receipt-line">'+escapeHtml(p.ing||'')
+        +(p.qty?' · '+p.qty+(p.unit?' '+p.unit:''):'')
+        +(lineAmt?' · '+vfFmtMoney(lineAmt):'')+'</div>';
+    }).join('');
+    linesHtml='<div class="vf-receipt-lines">'+lineRows+'</div>';
+  }
+  var readonlyBadge=b.readonly?'<span class="vf-readonly-badge">จากซื้อเข้าสต็อก</span>':'';
+  var noteHtml=b.note&&!b.readonly?'<div class="vf-receipt-note">📝 '+escapeHtml(b.note)+'</div>':'';
+  var slipBtn=b.readonly?'':"<button class='vf-slip-btn dc-btn' disabled>📎 แนบสลิป (เร็วๆ นี้)</button>";
+  return '<div class="vf-receipt-card">'
+    +headHtml
+    +'<div class="vf-receipt-body">'
+    +'<div class="vf-receipt-label">'+escapeHtml(b.label||'')+(readonlyBadge?' '+readonlyBadge:'')+'</div>'
+    +linesHtml
+    +'<div class="vf-receipt-dashes">- - - - - - - - - - - - - - - - - - - -</div>'
+    +'<div class="vf-receipt-amount">'+vfFmtMoney(b.amount||0)+'</div>'
+    +noteHtml
+    +slipBtn
+    +'</div></div>';
+}
+function vfMockBills() {
+  var t=vfTodayISO();
+  return [
+    {id:'mock1',date:t,group:'fixed',category:'rent',label:'ค่าเช่าร้าน (ตัวอย่าง)',amount:8000,color:'#e53935',slip:'',note:'',readonly:true},
+    {id:'mock2',date:t,group:'fixed',category:'utility',label:'ค่าน้ำ-ไฟ (ตัวอย่าง)',amount:1200,color:'#fb8c00',slip:'',note:'',readonly:true},
+    {id:'mock3',date:t,group:'variable',category:'ingredient',label:'ซื้อเข้าสต็อก (ตัวอย่าง)',amount:3500,color:'#1e88e5',slip:'',note:'',readonly:true,
+      items:[
+        {ing:'นมสด (ตัวอย่าง)',qty:10,unit:'ลิตร',price:150},
+        {ing:'เมล็ดกาแฟ (ตัวอย่าง)',qty:2,unit:'กก.',price:1000},
+        {ing:'ไซรัป (ตัวอย่าง)',qty:1,unit:'ขวด',price:350}
+      ]},
+    {id:'mock4',date:t,group:'variable',category:'packaging',label:'บรรจุภัณฑ์ (ตัวอย่าง)',amount:850,color:'#3949ab',slip:'',note:'',readonly:true}
+  ];
+}
+function renderVarfixView() {
+  var root=document.getElementById('vf-root');
+  if (!root) return;
+  var manualBills=(DCS.expenses||[]).map(function(e) { return Object.assign({},e,{readonly:false}); });
+  var stockBills=vfPurchaseBills();
+  var allBills=manualBills.concat(stockBills);
+  allBills.sort(function(a,b) { return (b.date||'').localeCompare(a.date||''); });
+  var isMock=allBills.length===0;
+  var displayBills=isMock?vfMockBills():allBills.filter(function(b) { return vfInRange(b.date,vfRange); });
+  var totalAmt=displayBills.reduce(function(s,b) { return s+(b.amount||0); },0);
+  var fixedAmt=displayBills.filter(function(b) { return b.group==='fixed'; }).reduce(function(s,b) { return s+(b.amount||0); },0);
+  var varAmt=displayBills.filter(function(b) { return b.group==='variable'; }).reduce(function(s,b) { return s+(b.amount||0); },0);
+  var catTotals={};
+  displayBills.forEach(function(b) { catTotals[b.category]=(catTotals[b.category]||0)+(b.amount||0); });
+  var topCat=Object.keys(catTotals).sort(function(a,b) { return catTotals[b]-catTotals[a]; })[0];
+  var topCatLabel=topCat?vfCatLabel(topCat):'—';
+  var ranges=[['day','วันนี้'],['week','7 วัน'],['month','เดือนนี้'],['year','ปีนี้']];
+  var tabsHtml='<div class="stk-gtab-row">'
+    +ranges.map(function(rg) {
+      return '<button class="ov-mtab'+(vfRange===rg[0]?' active':'')+'" onclick="vfSetRange(\''+rg[0]+'\')">'+rg[1]+'</button>';
+    }).join('')+'</div>';
+  var kpiHtml='<div class="vf-kpi-row">'
+    +'<div class="vf-kpi-card"><div class="vf-kpi-label">รวมรายจ่าย</div><div class="vf-kpi-val">'+vfFmtMoney(totalAmt)+'</div></div>'
+    +'<div class="vf-kpi-card vf-kpi-fixed"><div class="vf-kpi-label">Fixed</div><div class="vf-kpi-val">'+vfFmtMoney(fixedAmt)+'</div></div>'
+    +'<div class="vf-kpi-card vf-kpi-var"><div class="vf-kpi-label">Variable</div><div class="vf-kpi-val">'+vfFmtMoney(varAmt)+'</div></div>'
+    +'<div class="vf-kpi-card"><div class="vf-kpi-label">จ่ายมากสุด</div><div class="vf-kpi-val vf-kpi-cat">'+escapeHtml(topCatLabel)+'</div></div>'
+    +'</div>';
+  var toolbarHtml='<div class="dc-toolbar"><span class="spacer"></span><button class="dc-btn primary" onclick="vfOpenAddExpense()">+ บันทึกรายจ่าย</button></div>';
+  var mockHeaderHtml=isMock
+    ?'<div class="stk-warn-row" style="margin-bottom:10px"><span class="stk-warn-row-title" style="text-transform:none;color:var(--text-muted)">🎭 ตัวอย่างระบบ (mockup) — จะปิดเองเมื่อมีรายจ่ายจริง</span></div>'
+    :'';
+  var billsHtml=displayBills.length===0
+    ?'<div class="ov-tile ov-soon"><div class="ov-soon-emoji">📋</div><div class="ov-soon-sub">ยังไม่มีรายจ่ายในช่วงนี้</div></div>'
+    :displayBills.map(function(b) { return vfReceiptCard(b); }).join('');
+  root.innerHTML=tabsHtml+kpiHtml+toolbarHtml+mockHeaderHtml+'<div class="vf-bills">'+billsHtml+'</div>';
+  var upEl=document.getElementById('vf-updated');
+  if (upEl) upEl.textContent=vfFmtDate(vfTodayISO());
+  applyRoast();
+}
+function vfCatOpts(group) {
+  var cats=EXP_CATS[group]||[];
+  return cats.map(function(c) {
+    return '<option value="'+escapeHtml(c.cat)+'" data-color="'+escapeHtml(c.color)+'">'+escapeHtml(c.label)+'</option>';
+  }).join('');
+}
+function vfUpdateCatOpts() {
+  var grp=(document.getElementById('vf-e-group')||{}).value||'fixed';
+  var sel=document.getElementById('vf-e-cat');
+  if (sel) { sel.innerHTML=vfCatOpts(grp); vfUpdateColor(); }
+}
+function vfUpdateColor() {
+  var sel=document.getElementById('vf-e-cat');
+  var cInp=document.getElementById('vf-e-color');
+  if (!sel||!cInp) return;
+  var opt=sel.options[sel.selectedIndex];
+  if (opt) cInp.value=opt.getAttribute('data-color')||'#607d8b';
+}
+function vfOpenAddExpense() {
+  var html='<div class="dc-modal-head"><h3>📋 บันทึกรายจ่าย</h3><button class="dc-x" onclick="dcCloseModal()" aria-label="ปิด">✕</button></div>'
+    +'<div class="dc-modal-scroll">'
+    +'<div class="dc-field"><label>📅 วันที่</label><input class="dc-inp" id="vf-e-date" type="date" value="'+vfTodayISO()+'"></div>'
+    +'<div class="dc-field"><label>กลุ่ม</label>'
+    +'<select class="dc-inp" id="vf-e-group" onchange="vfUpdateCatOpts()">'
+    +'<option value="fixed">Fixed (ต้นทุนคงที่)</option>'
+    +'<option value="variable">Variable (ต้นทุนผันแปร)</option>'
+    +'</select></div>'
+    +'<div class="dc-field"><label>หมวด</label>'
+    +'<select class="dc-inp" id="vf-e-cat" onchange="vfUpdateColor()">'+vfCatOpts('fixed')+'</select></div>'
+    +'<div class="dc-field"><label>รายการ</label><input class="dc-inp" id="vf-e-label" type="text" placeholder="เช่น ค่าเช่าร้าน มิถุนายน 2569"></div>'
+    +'<div class="dc-field"><label>จำนวนเงิน (฿)</label><input class="dc-inp" id="vf-e-amount" type="number" min="0" step="0.01" placeholder="0"></div>'
+    +'<div class="dc-field"><label>สี (แสดงในบิล)</label><input class="dc-inp" id="vf-e-color" type="color" value="#e53935" style="height:40px;padding:4px 6px;cursor:pointer"></div>'
+    +'<div class="dc-field"><label>หมายเหตุ (ถ้ามี)</label><input class="dc-inp" id="vf-e-note" type="text" placeholder="—"></div>'
+    +'</div>'
+    +'<div class="dc-modal-foot"><span class="spacer"></span>'
+    +'<button class="dc-btn ghost" onclick="dcCloseModal()">ยกเลิก</button>'
+    +'<button class="dc-btn primary" onclick="vfSaveExpense()">💾 บันทึก</button>'
+    +'</div>';
+  dcSetModalBody(html);
+}
+function vfSaveExpense() {
+  var date=(document.getElementById('vf-e-date')||{}).value||vfTodayISO();
+  var group=(document.getElementById('vf-e-group')||{}).value||'fixed';
+  var category=(document.getElementById('vf-e-cat')||{}).value||'fixed_other';
+  var label=((document.getElementById('vf-e-label')||{}).value||'').trim();
+  var amount=parseFloat((document.getElementById('vf-e-amount')||{}).value||'');
+  var color=(document.getElementById('vf-e-color')||{}).value||'#607d8b';
+  var note=((document.getElementById('vf-e-note')||{}).value||'').trim();
+  if (!label) { showToast('ใส่ชื่อรายการก่อน'); return; }
+  if (!(amount>0)) { showToast('ใส่จำนวนเงินก่อน'); return; }
+  var doSave=function() {
+    var exp={id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),
+      date:date,group:group,category:category,label:label,amount:amount,color:color,slip:'',note:note};
+    DCS.expenses.push(exp);
+    dcAfterChange(); dcCloseModal(); renderVarfixView(); showToast('บันทึกรายจ่ายแล้ว ✓');
+  };
+  if (!dcEdit) {
+    dcOpenPwModal('🔒 ปลดล็อกบันทึกรายจ่าย','ใส่รหัสเพื่อบันทึกรายจ่าย',function() { dcEdit=true; doSave(); });
+  } else {
+    doSave();
+  }
+}
 
 // ── Boot ──
 applyStoredTheme();

@@ -15,7 +15,8 @@
 
 var SH = { cat: 'วัตถุดิบ', menu: 'เมนู', recipe: 'สูตร', settings: 'ตั้งค่า',
            buyLogs: 'สต็อก-ซื้อเข้า', salesLogs: 'สต็อก-ยอดขาย',
-           parSheet: 'สต็อก-par', imgSheet: 'สต็อก-รูป' };
+           parSheet: 'สต็อก-par', imgSheet: 'สต็อก-รูป',
+           expenses: 'รายจ่าย' };
 
 function doGet(e) {
   return json_(buildData_());
@@ -151,9 +152,22 @@ function buildData_() {
     });
   }
 
+  // รายจ่าย
+  var expenses = [];
+  var ev = rows_(SH.expenses);
+  for (var i = 1; i < ev.length; i++) {
+    var r = ev[i];
+    var eid = String(r[0] || '').trim(), edate = String(r[1] || '').trim();
+    if (!eid || !edate) continue;
+    expenses.push({ id: eid, date: edate, group: String(r[2] || 'fixed').trim(),
+      category: String(r[3] || '').trim(), label: String(r[4] || '').trim(),
+      amount: Number(r[5]) || 0, color: String(r[6] || '#607d8b').trim(),
+      slip: String(r[7] || '').trim(), note: String(r[8] || '').trim() });
+  }
+
   return { source: 'Google Sheet', parsed_at: new Date().toISOString(),
            assumptions: asm, catalog: catalog, menus: menus,
-           purchases: purchases, sales: sales,
+           purchases: purchases, sales: sales, expenses: expenses,
            stock: { threshold_pct: stock_thr, par: par, images: images } };
 }
 
@@ -220,6 +234,13 @@ function writeData_(data) {
   var irows = [['วัตถุดิบ', 'url']];
   Object.keys(images).forEach(function(k) { if (images[k]) irows.push([k, images[k]]); });
   writeSheet_(SH.imgSheet, irows);
+
+  // รายจ่าย
+  var erows = [['id', 'วันที่', 'กลุ่ม', 'หมวด', 'รายการ', 'จำนวนเงิน', 'สี', 'สลิป', 'หมายเหตุ']];
+  (data.expenses || []).forEach(function(e) {
+    erows.push([e.id||'', e.date||'', e.group||'fixed', e.category||'', e.label||'', e.amount||0, e.color||'', e.slip||'', e.note||'']);
+  });
+  writeSheet_(SH.expenses, erows);
 }
 
 function blank_(v) { return (v == null) ? '' : v; }
