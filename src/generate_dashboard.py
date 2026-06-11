@@ -2533,7 +2533,7 @@ HTML_TEMPLATE = """\
     .vf-legend-item {{ display:flex; align-items:center; gap:5px; font-size:.75rem; color:var(--text-muted); }}
     .vf-legend-dot {{ width:8px; height:8px; border-radius:999px; flex-shrink:0; }}
     .vf-legend-pct {{ font-weight:700; color:var(--text); }}
-    .vf-bills {{ display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:14px; align-items:start; }}
+    .vf-bills {{ display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,400px)); gap:14px; align-items:start; justify-content:start; }}
     .vf-receipt-card {{ background:var(--card); border:1px solid var(--card-border); border-radius:16px;
       overflow:hidden; }}
     .vf-receipt-head {{ padding:10px 14px; display:flex; align-items:center; gap:8px; flex-wrap:wrap;
@@ -4974,7 +4974,7 @@ function dcDetail(m, fixed) {{
 
 // ── Modal infra ──
 function dcEscClose(e) {{ if (e.key === 'Escape') dcCloseModal(); }}
-function dcCloseModal() {{ dcAcClose(false); _vfNewSlip=null; var p = document.getElementById('dc-acpanel'); if (p) p.remove(); var b = document.getElementById('dc-modal-bd'); if (b) b.remove(); document.removeEventListener('keydown', dcEscClose); }}
+function dcCloseModal() {{ dcAcClose(false); _vfNewSlip=null; _vfEditId=null; var p = document.getElementById('dc-acpanel'); if (p) p.remove(); var b = document.getElementById('dc-modal-bd'); if (b) b.remove(); document.removeEventListener('keydown', dcEscClose); }}
 function dcSetModalBody(html) {{
   var inner = document.querySelector('#dc-modal-bd .dc-modal');
   if (inner) {{ inner.innerHTML = html; return; }}
@@ -5985,6 +5985,10 @@ function vfReceiptCard(b) {{
      +'<button class="vf-slip-btn dc-btn" data-slipkey="'+escapeHtml(_vsk)+'" data-isvar="'+_viv+'" onclick="vfAttachSlip(this)">🔄 เปลี่ยนสลิป</button>')
     :'<button class="vf-slip-btn dc-btn" data-slipkey="'+escapeHtml(_vsk)+'" data-isvar="'+_viv+'" onclick="vfAttachSlip(this)">📎 แนบสลิป</button>')
     :'';
+  var editBtns=(!b.readonly&&b.id)
+    ?'<button class="vf-slip-btn dc-btn" data-expid="'+escapeHtml(b.id)+'" onclick="vfEditExpenseBtn(this)" title="แก้ไขรายจ่าย">✏️ แก้ไข</button>'
+     +'<button class="vf-slip-btn dc-btn" data-expid="'+escapeHtml(b.id)+'" onclick="vfDeleteExpenseBtn(this)" style="color:#ef4444" title="ลบรายจ่าย">🗑️ ลบ</button>'
+    :'';
   return '<div class="vf-receipt-card">'
     +headHtml
     +'<div class="vf-receipt-body">'
@@ -5993,7 +5997,7 @@ function vfReceiptCard(b) {{
     +'</div>'
     +'<div class="vf-receipt-foot">'
     +'<span class="vf-receipt-total">'+vfFmtMoney(b.amount||0)+'</span>'
-    +slipBtn
+    +slipBtn+editBtns
     +'</div>'
     +'</div>';
 }}
@@ -6004,6 +6008,7 @@ function vfThumbToView(thumb) {{
 }}
 var _vfSlipCtx=null;
 var _vfNewSlip=null;
+var _vfEditId=null;
 function vfAttachSlip(btn) {{
   if (!saIsUnlocked()) {{ dcRequestEdit(); return; }}
   if (!dcGsUrl()) {{ showToast('เชื่อม Google Sheet ก่อน — ไปที่เมนู "เชื่อม Sheet"'); return; }}
@@ -6154,10 +6159,10 @@ function renderVarfixView() {{
   if (upEl) upEl.textContent=vfFmtDate(vfTodayISO());
   applyRoast();
 }}
-function vfCatOpts(group) {{
+function vfCatOpts(group,selCat) {{
   var cats=EXP_CATS[group]||[];
   return cats.map(function(c) {{
-    return '<option value="'+escapeHtml(c.cat)+'" data-color="'+escapeHtml(c.color)+'">'+escapeHtml(c.label)+'</option>';
+    return '<option value="'+escapeHtml(c.cat)+'"'+(selCat===c.cat?' selected':'')+' data-color="'+escapeHtml(c.color)+'">'+escapeHtml(c.label)+'</option>';
   }}).join('');
 }}
 function vfUpdateCatOpts() {{
@@ -6174,41 +6179,71 @@ function vfUpdateColor() {{
 }}
 function vfBtnAddExpense() {{
   if (!dcEdit) {{
-    if (saIsUnlocked()) {{ dcEdit=true; vfOpenAddExpense(); return; }}
+    if (saIsUnlocked()) {{ dcEdit=true; vfOpenExpense(); return; }}
     dcOpenPwModal('🔒 ปลดล็อกก่อนบันทึก','ใส่รหัสเพื่อบันทึกรายจ่าย',function() {{
-      dcEdit=true; saUnlock(); showToast('ปลดล็อกแล้ว ✓'); vfOpenAddExpense();
+      dcEdit=true; saUnlock(); showToast('ปลดล็อกแล้ว ✓'); vfOpenExpense();
     }});
-  }} else {{ vfOpenAddExpense(); }}
+  }} else {{ vfOpenExpense(); }}
 }}
-function vfOpenAddExpense() {{
-  var html='<div class="dc-modal-head"><h3>📋 บันทึกรายจ่าย</h3><button class="dc-x" onclick="dcCloseModal()" aria-label="ปิด">✕</button></div>'
+function vfEditExpenseBtn(btn) {{
+  var id=btn.dataset.expid;
+  if (!saIsUnlocked()) {{ dcRequestEdit(); return; }}
+  vfOpenExpense(id);
+}}
+function vfDeleteExpenseBtn(btn) {{
+  var id=btn.dataset.expid;
+  vfDeleteExpense(id);
+}}
+function vfDeleteExpense(id) {{
+  if (!saIsUnlocked()) {{ dcRequestEdit(); return; }}
+  var exp=(DCS.expenses||[]).filter(function(e) {{ return e.id===id; }})[0];
+  if (!exp) return;
+  if (!confirm('ลบรายจ่าย "'+exp.label+'" จำนวน '+vfFmtMoney(exp.amount||0)+'?\\nกดตกลงเพื่อยืนยัน')) return;
+  DCS.expenses=DCS.expenses.filter(function(e) {{ return e.id!==id; }});
+  dcAfterChange(); renderVarfixView(); showToast('ลบรายจ่ายแล้ว ✓');
+}}
+function vfOpenExpense(id) {{
+  var exp=id?(DCS.expenses||[]).filter(function(e) {{ return e.id===id; }})[0]:null;
+  _vfEditId=exp?id:null;
+  var defGroup=exp?(exp.group||'fixed'):'fixed';
+  var defSlip=exp?(exp.slip||''):'';
+  if (exp) _vfNewSlip=defSlip;
+  var title=exp?'✏️ แก้ไขรายจ่าย':'📋 บันทึกรายจ่าย';
+  var saveLabel=exp?'💾 อัปเดต':'💾 บันทึก';
+  var groupOpts='<option value="fixed"'+(defGroup==='fixed'?' selected':'')+'>Fixed (ต้นทุนคงที่)</option>'
+    +'<option value="variable"'+(defGroup==='variable'?' selected':'')+'>Variable (ต้นทุนผันแปร)</option>';
+  var slipPrev=defSlip
+    ?('<a href="'+escapeHtml(vfThumbToView(defSlip))+'" target="_blank" rel="noopener"><img class="vf-slip-thumb" src="'+escapeHtml(defSlip)+'" alt="สลิป"></a>'
+      +'<span style="color:#22c55e;font-size:.8rem;font-weight:600">แนบแล้ว ✓</span>'
+      +'<button class="dc-btn ghost" onclick="vfAttachSlipModal()" style="font-size:.75rem">🔄 เปลี่ยน</button>'
+      +'<button class="dc-btn ghost" onclick="vfRemoveModalSlip()" style="font-size:.75rem">✕ ลบ</button>')
+    :'<button class="dc-btn ghost" onclick="vfAttachSlipModal()" style="font-size:.8rem">📎 แนบสลิป</button>';
+  var html='<div class="dc-modal-head"><h3>'+title+'</h3><button class="dc-x" onclick="dcCloseModal()" aria-label="ปิด">✕</button></div>'
     +'<div class="dc-modal-scroll">'
-    +'<div class="dc-field"><label>📅 วันที่</label><input class="dc-inp" id="vf-e-date" type="date" value="'+vfTodayISO()+'"></div>'
+    +'<div class="dc-field"><label>📅 วันที่</label><input class="dc-inp" id="vf-e-date" type="date" value="'+(exp?escapeHtml(exp.date||''):vfTodayISO())+'"></div>'
     +'<div class="dc-field"><label>กลุ่ม</label>'
-    +'<select class="dc-inp" id="vf-e-group" onchange="vfUpdateCatOpts()">'
-    +'<option value="fixed">Fixed (ต้นทุนคงที่)</option>'
-    +'<option value="variable">Variable (ต้นทุนผันแปร)</option>'
-    +'</select></div>'
+    +'<select class="dc-inp" id="vf-e-group" onchange="vfUpdateCatOpts()">'+groupOpts+'</select></div>'
     +'<div class="dc-field"><label>หมวด</label>'
-    +'<select class="dc-inp" id="vf-e-cat" onchange="vfUpdateColor()">'+vfCatOpts('fixed')+'</select></div>'
-    +'<div class="dc-field"><label>รายการ</label><input class="dc-inp" id="vf-e-label" type="text" placeholder="เช่น ค่าเช่าร้าน มิถุนายน 2569"></div>'
-    +'<div class="dc-field"><label>จำนวนเงิน (฿)</label><input class="dc-inp" id="vf-e-amount" type="number" min="0" step="0.01" placeholder="0"></div>'
-    +'<div class="dc-field"><label>สี (แสดงในบิล)</label><input class="dc-inp" id="vf-e-color" type="color" value="#e53935" style="height:40px;padding:4px 6px;cursor:pointer"></div>'
+    +'<select class="dc-inp" id="vf-e-cat" onchange="vfUpdateColor()">'+vfCatOpts(defGroup,exp&&exp.category)+'</select></div>'
+    +'<div class="dc-field"><label>รายการ</label><input class="dc-inp" id="vf-e-label" type="text" placeholder="เช่น ค่าเช่าร้าน มิถุนายน 2569" value="'+(exp?escapeHtml(exp.label||''):'')+'"></div>'
+    +'<div class="dc-field"><label>จำนวนเงิน (฿)</label><input class="dc-inp" id="vf-e-amount" type="number" min="0" step="0.01" placeholder="0" value="'+(exp&&exp.amount?exp.amount:'')+'"></div>'
+    +'<div class="dc-field"><label>สี (แสดงในบิล)</label><input class="dc-inp" id="vf-e-color" type="color" value="'+(exp?escapeHtml(exp.color||'#e53935'):'#e53935')+'" style="height:40px;padding:4px 6px;cursor:pointer"></div>'
     +'<div style="display:flex;gap:10px;flex-wrap:wrap">'
     +'<div class="dc-field" style="flex:1;min-width:110px"><label>วิธีจ่าย</label>'
-    +'<select class="dc-inp" id="vf-e-pay"><option value="cash">💵 เงินสด</option><option value="transfer">🏦 โอน</option></select></div>'
+    +'<select class="dc-inp" id="vf-e-pay">'
+    +'<option value="cash"'+(!exp||exp.pay!=="transfer"?' selected':'')+'>💵 เงินสด</option>'
+    +'<option value="transfer"'+(exp&&exp.pay==="transfer"?' selected':'')+'>🏦 โอน</option>'
+    +'</select></div>'
     +'<div class="dc-field" style="flex:2;min-width:150px"><label>🏪 ร้าน/ผู้รับเงิน (ไม่บังคับ)</label>'
-    +'<input class="dc-inp" id="vf-e-vendor" type="text" placeholder="—"></div>'
+    +'<input class="dc-inp" id="vf-e-vendor" type="text" placeholder="—" value="'+(exp?escapeHtml(exp.vendor||''):'')+'"></div>'
     +'</div>'
-    +'<div class="dc-field"><label>หมายเหตุ (ถ้ามี)</label><input class="dc-inp" id="vf-e-note" type="text" placeholder="—"></div>'
+    +'<div class="dc-field"><label>หมายเหตุ (ถ้ามี)</label><input class="dc-inp" id="vf-e-note" type="text" placeholder="—" value="'+(exp?escapeHtml(exp.note||''):'')+'"></div>'
     +'<div class="dc-field"><label>สลิปใบเสร็จ</label>'
-    +'<div id="vf-e-slip-preview" style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">'
-    +'<button class="dc-btn ghost" onclick="vfAttachSlipModal()" style="font-size:.8rem">📎 แนบสลิป</button>'
-    +'</div></div>'
+    +'<div id="vf-e-slip-preview" style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">'+slipPrev+'</div></div>'
     +'</div>'
     +'<div class="dc-modal-foot"><span class="spacer"></span>'
     +'<button class="dc-btn ghost" onclick="dcCloseModal()">ยกเลิก</button>'
-    +'<button class="dc-btn primary" onclick="vfSaveExpense()">💾 บันทึก</button>'
+    +'<button class="dc-btn primary" onclick="vfSaveExpense()">'+saveLabel+'</button>'
     +'</div>';
   dcSetModalBody(html);
 }}
@@ -6225,11 +6260,23 @@ function vfSaveExpense() {{
   if (!label) {{ showToast('ใส่ชื่อรายการก่อน'); return; }}
   if (!(amount>0)) {{ showToast('ใส่จำนวนเงินก่อน'); return; }}
   var doSave=function() {{
-    var exp={{id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),
-      date:date,group:group,category:category,label:label,amount:amount,color:color,slip:_vfNewSlip||'',note:note,pay:pay,vendor:vendor}};
-    _vfNewSlip=null;
-    DCS.expenses.push(exp);
-    dcAfterChange(); dcCloseModal(); renderVarfixView(); showToast('บันทึกรายจ่ายแล้ว ✓');
+    if (_vfEditId) {{
+      var found=(DCS.expenses||[]).filter(function(e) {{ return e.id===_vfEditId; }})[0];
+      var capturedSlip=_vfNewSlip;
+      _vfNewSlip=null; _vfEditId=null;
+      if (found) {{
+        found.date=date; found.group=group; found.category=category; found.label=label;
+        found.amount=amount; found.color=color; found.slip=capturedSlip||'';
+        found.note=note; found.pay=pay; found.vendor=vendor;
+      }}
+      dcAfterChange(); dcCloseModal(); renderVarfixView(); showToast('อัปเดตรายจ่ายแล้ว ✓');
+    }} else {{
+      var exp={{id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),
+        date:date,group:group,category:category,label:label,amount:amount,color:color,slip:_vfNewSlip||'',note:note,pay:pay,vendor:vendor}};
+      _vfNewSlip=null;
+      DCS.expenses.push(exp);
+      dcAfterChange(); dcCloseModal(); renderVarfixView(); showToast('บันทึกรายจ่ายแล้ว ✓');
+    }}
   }};
   if (!dcEdit) {{
     if (saIsUnlocked()) {{ dcEdit=true; doSave(); return; }}
