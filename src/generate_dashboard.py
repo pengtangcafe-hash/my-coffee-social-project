@@ -2173,9 +2173,9 @@ HTML_TEMPLATE = """\
     .stk-card-img img {{ width:100%; height:100%; object-fit:cover; border-radius:10px; }}
     .stk-card-body {{ flex:1; min-width:0; }}
     .stk-top {{ display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin-bottom:4px; }}
-    .stk-name {{ font-weight:700; font-size:.92rem; color:var(--text); }}
+    .stk-name {{ font-weight:700; font-size:.92rem; color:var(--text); flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }}
     .stk-badge {{ display:inline-flex; align-items:center; padding:3px 10px; border-radius:999px;
-      font-size:.72rem; font-weight:700; }}
+      font-size:.72rem; font-weight:700; flex-shrink:0; }}
     .stk-badge.warn {{ background:rgba(194,65,12,.12); color:var(--dc-warn); }}
     .stk-badge.muted {{ background:var(--nav-active); color:var(--text-muted); }}
     .stk-nums {{ display:flex; flex-wrap:wrap; gap:3px 16px; font-size:.78rem; color:var(--text-muted); margin-bottom:8px; }}
@@ -2197,7 +2197,7 @@ HTML_TEMPLATE = """\
     .stk-par-item:last-child {{ border-bottom:none; }}
     .stk-par-head {{ display:flex; align-items:center; justify-content:space-between; gap:8px;
       margin-bottom:6px; flex-wrap:wrap; }}
-    .stk-par-ingname {{ font-weight:700; font-size:.88rem; color:var(--text); }}
+    .stk-par-ingname {{ font-weight:700; font-size:.88rem; color:var(--text); flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }}
     .stk-par-fields {{ display:flex; flex-wrap:wrap; gap:6px 10px; align-items:flex-end; }}
     .stk-par-field {{ display:flex; flex-direction:column; gap:3px; }}
     .stk-par-field label {{ font-size:.7rem; color:var(--text-muted); font-weight:600; }}
@@ -2211,6 +2211,12 @@ HTML_TEMPLATE = """\
     .stk-usage-ings {{ padding:4px 0; }}
     .stk-usage-ing {{ font-size:.78rem; color:var(--text-muted); padding:2px 0; }}
     .stk-usage-ing b {{ color:var(--text); }}
+    .stk-hide {{ display:none!important; }}
+    .stk-modal-tabs {{ display:flex; flex-wrap:wrap; gap:6px; padding:0 24px 12px;
+      border-bottom:1px solid var(--card-border); flex-shrink:0; }}
+    .stk-tab-badge {{ display:inline-block; min-width:16px; height:16px; padding:0 4px;
+      border-radius:999px; background:var(--dc-profit); color:#fff; font-size:.62rem;
+      font-weight:800; line-height:16px; text-align:center; margin-left:3px; vertical-align:middle; }}
 
     /* ── KPI tiles (Pricing) — โทนเดียวกัน ไม่ใช่สีรุ้ง ── */
     .ov-kpi {{ padding: 18px 20px; }}
@@ -5373,6 +5379,21 @@ function renderStockView() {{
 function stkSetTab(t) {{ stkTab=t; renderStockView(); }}
 function stkSetIgrp(g) {{ stkIgrpTab=g; renderStockView(); }}
 function stkRefreshIfActive() {{ var v=document.getElementById('view-bb-stock'); if (v&&v.classList.contains('active')) renderStockView(); }}
+function stkSalesFilter(cat) {{
+  document.querySelectorAll('[data-scat]').forEach(function(b) {{ b.classList.toggle('active',b.getAttribute('data-scat')===cat); }});
+  document.querySelectorAll('.stk-sales-group').forEach(function(g) {{ g.classList.toggle('stk-hide',cat!=='all'&&g.getAttribute('data-cat')!==cat); }});
+}}
+function stkSalesBadge() {{
+  var n=0;
+  document.querySelectorAll('.stk-sales-qty').forEach(function(inp) {{ if (parseFloat(inp.value||'')>0) n++; }});
+  var bdg=document.getElementById('stk-sales-bdg');
+  if (!bdg) return;
+  bdg.textContent=n; bdg.style.display=n?'':'none';
+}}
+function stkParFilter(igrp) {{
+  document.querySelectorAll('[data-pigrp]').forEach(function(b) {{ b.classList.toggle('active',b.getAttribute('data-pigrp')===igrp); }});
+  document.querySelectorAll('.stk-par-group').forEach(function(g) {{ g.classList.toggle('stk-hide',igrp!=='all'&&g.getAttribute('data-igrp')!==igrp); }});
+}}
 
 // ---- Phase B: warning cards ----
 function stkRenderWarnCards() {{
@@ -5563,30 +5584,43 @@ function stkSavePurchase() {{
 }}
 
 function stkOpenSales() {{
-  var rows='';
+  var rows=''; var catsWithMenus=[];
   DC_CATS.forEach(function(cat) {{
     var catMs=(DCS.menus||[]).filter(function(m) {{ return dcCategoryOf(m)===cat; }});
     if (!catMs.length) return;
+    catsWithMenus.push(cat);
+    rows+='<div class="stk-sales-group" data-cat="'+cat+'">';
     rows+='<div class="stk-modal-group-label">'+(DC_CAT_ICON[cat]||'')+' '+(DC_CAT_LABEL[cat]||cat)+'</div>';
     rows+=catMs.map(function(m) {{
       var sid='ss'+Math.random().toString(36).slice(2,8);
-      return '<div class="stk-sales-row">'
-        +'<label class="stk-sales-name" for="'+sid+'">'+escapeHtml(m.name)+'</label>'
-        +'<input class="dc-inp stk-sales-qty" id="'+sid+'" type="number" min="0" step="1" placeholder="0" data-mname="'+escapeHtml(m.name)+'"></div>';
+      var nm=escapeHtml(m.name);
+      return '<div class="stk-sales-row" title="'+nm+'">'
+        +'<label class="stk-sales-name" for="'+sid+'">'+nm+'</label>'
+        +'<input class="dc-inp stk-sales-qty" id="'+sid+'" type="number" min="0" step="1"'
+        +' placeholder="0" data-mname="'+nm+'" oninput="stkSalesBadge()"></div>';
     }}).join('');
+    rows+='</div>';
   }});
+  var tabBar='<div class="stk-gtab-row">'
+    +'<button class="ov-mtab active" data-scat="all" onclick="stkSalesFilter(\\'all\\')">ทั้งหมด'
+    +' <span class="stk-tab-badge" id="stk-sales-bdg" style="display:none">0</span></button>'
+    +catsWithMenus.map(function(cat) {{
+      return '<button class="ov-mtab" data-scat="'+cat+'" onclick="stkSalesFilter(\\''+cat+'\\')">'+
+        (DC_CAT_ICON[cat]||'')+' '+(DC_CAT_LABEL[cat]||cat)+'</button>';
+    }}).join('')
+    +'</div>';
   var html='<div class="dc-modal-head"><h3>🧾 บันทึกยอดขาย</h3>'
     +'<button class="dc-x" onclick="dcCloseModal()" aria-label="ปิด">✕</button></div>'
     +'<div class="dc-modal-scroll">'
+    +tabBar
     +'<div class="dc-field"><label>📅 วันที่</label>'
     +'<input class="dc-inp" id="stk-s-date" type="date" value="'+stkTodayISO()+'"></div>'
-    +'<div class="dc-field" style="margin-bottom:4px"><label>ยอดขาย (แก้ว) ต่อเมนู — กรอกเฉพาะที่ขาย</label></div>'
     +'<div>'+rows+'</div>'
     +'</div>'
     +'<div class="dc-modal-foot"><span class="spacer"></span>'
     +'<button class="dc-btn ghost" onclick="dcCloseModal()">ยกเลิก</button>'
     +'<button class="dc-btn primary" onclick="stkSaveSales()">💾 บันทึก</button></div>';
-  dcSetModalBody(html);
+  dcSetModalBody(html); applyRoast();
 }}
 function stkSaveSales() {{
   var date=(document.getElementById('stk-s-date')||{{}}).value||stkTodayISO();
@@ -5609,10 +5643,12 @@ function stkOpenPar() {{
   var thr=DCS.stock.threshold_pct||60;
   var par=DCS.stock.par||{{}};
   var imgs=DCS.stock.images||{{}};
-  var rows='';
+  var rows=''; var igrpsWithIngs=[];
   DC_IGROUPS.forEach(function(g) {{
     var gIngs=Object.keys(DCS.catalog).filter(function(k) {{ return dcIngGroup(k)===g[0]; }});
     if (!gIngs.length) return;
+    igrpsWithIngs.push(g);
+    rows+='<div class="stk-par-group" data-igrp="'+g[0]+'">';
     rows+='<div class="stk-modal-group-label">'+g[1]+'</div>';
     rows+=gIngs.map(function(k) {{
       var pObj=par[k]; var count='',pUnit='แพ็ค',pSize='';
@@ -5621,26 +5657,35 @@ function stkOpenPar() {{
         else {{ count=pObj; var c2=DCS.catalog[k]; pSize=c2?(c2.qty||''):''; }}
       }}
       var imgUrl=imgs[k]||'';
+      var kEsc=escapeHtml(k);
       return '<div class="stk-par-item">'
-        +'<div class="stk-par-head">'
-        +'<span class="stk-par-ingname">'+escapeHtml(k)+'</span>'
+        +'<div class="stk-par-head" title="'+kEsc+'">'
+        +'<span class="stk-par-ingname">'+kEsc+'</span>'
         +'<div class="stk-par-field"><label>🖼 URL รูป</label>'
-        +'<input class="dc-inp url-inp stk-par-img" type="url" placeholder="https://..." value="'+escapeHtml(imgUrl)+'" data-ing="'+escapeHtml(k)+'"></div>'
+        +'<input class="dc-inp url-inp stk-par-img" type="url" placeholder="https://..." value="'+escapeHtml(imgUrl)+'" data-ing="'+kEsc+'"></div>'
         +'</div>'
         +'<div class="stk-par-fields">'
         +'<div class="stk-par-field"><label>จำนวน</label>'
-        +'<input class="dc-inp stk-par-count" type="number" min="0" step="any" value="'+(count||'')+'" placeholder="—" data-ing="'+escapeHtml(k)+'"></div>'
+        +'<input class="dc-inp stk-par-count" type="number" min="0" step="any" value="'+(count||'')+'" placeholder="—" data-ing="'+kEsc+'"></div>'
         +'<div class="stk-par-field"><label>หน่วย</label>'
-        +'<select class="dc-inp stk-par-unit" data-ing="'+escapeHtml(k)+'"><option value="">—</option>'+stkUnitOpts(pUnit)+'</select></div>'
+        +'<select class="dc-inp stk-par-unit" data-ing="'+kEsc+'"><option value="">—</option>'+stkUnitOpts(pUnit)+'</select></div>'
         +'<div class="stk-par-field"><label>ปริมาณ/หน่วย</label>'
-        +'<input class="dc-inp stk-par-size" type="number" min="0" step="any" value="'+(pSize||'')+'" placeholder="—" data-ing="'+escapeHtml(k)+'"></div>'
+        +'<input class="dc-inp stk-par-size" type="number" min="0" step="any" value="'+(pSize||'')+'" placeholder="—" data-ing="'+kEsc+'"></div>'
         +'<span class="stk-par-bu">'+stkBaseUnit(k)+'</span>'
         +'</div></div>';
     }}).join('');
+    rows+='</div>';
   }});
+  var tabBar='<div class="stk-gtab-row">'
+    +'<button class="ov-mtab active" data-pigrp="all" onclick="stkParFilter(\\'all\\')">ทั้งหมด</button>'
+    +igrpsWithIngs.map(function(g) {{
+      return '<button class="ov-mtab" data-pigrp="'+g[0]+'" onclick="stkParFilter(\\''+g[0]+'\\')">'+g[1]+'</button>';
+    }}).join('')
+    +'</div>';
   var html='<div class="dc-modal-head"><h3>⚙️ ตั้งสต็อกเต็ม</h3>'
     +'<button class="dc-x" onclick="dcCloseModal()" aria-label="ปิด">✕</button></div>'
     +'<div class="dc-modal-scroll">'
+    +tabBar
     +'<div class="dc-field" style="margin-bottom:16px"><label>🔔 เตือนเมื่อเหลือต่ำกว่า (%)</label>'
     +'<input class="dc-inp" id="stk-par-thr" type="number" min="1" max="99" step="1" value="'+thr+'"></div>'
     +'<div>'+rows+'</div>'
@@ -5648,7 +5693,7 @@ function stkOpenPar() {{
     +'<div class="dc-modal-foot"><span class="spacer"></span>'
     +'<button class="dc-btn ghost" onclick="dcCloseModal()">ยกเลิก</button>'
     +'<button class="dc-btn primary" onclick="stkSavePar()">💾 บันทึก</button></div>';
-  dcSetModalBody(html);
+  dcSetModalBody(html); applyRoast();
 }}
 function stkSavePar() {{
   var thr=parseFloat((document.getElementById('stk-par-thr')||{{}}).value||'');
