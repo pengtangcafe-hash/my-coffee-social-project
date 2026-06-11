@@ -5286,6 +5286,30 @@ function stkGetDismissed() {{
 }}
 function stkSaveDismissed(d) {{ try {{ localStorage.setItem(STK_DISMISSED_KEY,JSON.stringify(d)); }} catch(e) {{}} }}
 function stkDismiss(ing) {{ var d=stkGetDismissed(); d[ing]=true; stkSaveDismissed(d); renderStockView(); }}
+function stkDismissMock(btn) {{ var card=btn.closest('.stk-warn-card'); card.classList.add('dismissed'); btn.style.display='none'; }}
+function stkWarnCardHTML(o) {{
+  var pct=Math.max(0,o.pct||0);
+  var col='hsl('+(pct*1.2)+',80%,45%)';
+  var thr=(DCS.stock&&DCS.stock.threshold_pct)||60;
+  var dur=(0.5+(pct/thr)*1.1).toFixed(2);
+  var isDis=!!o.isDis;
+  var animSt=isDis?'':'animation:stkBeat '+dur+'s ease-in-out infinite,stkAura '+dur+'s ease-in-out infinite;';
+  var disBtn=isDis?'':
+    o.mock
+      ? "<button class='stk-warn-ack' onclick='stkDismissMock(this)'>✓ ทราบแล้ว (ตัวอย่าง)</button>"
+      : "<button class='stk-warn-ack' onclick='stkDismiss(&quot;"+escapeHtml(o.name)+"&quot;)'>✓ ทราบแล้ว</button>";
+  var imgBit=o.imgBit||'';
+  return '<div class="stk-warn-card'+(isDis?' dismissed':'')+'" style="'+animSt+'">'
+    +'<div class="stk-thermo-wrap">'
+    +'<div class="stk-thermo"><div class="stk-thermo-fill" style="height:'+Math.min(100,pct)+'%;background:'+col+'"></div></div>'
+    +'<span class="stk-thermo-pct">'+Math.round(pct)+'%</span>'
+    +'</div>'
+    +'<div class="stk-warn-info">'
+    +'<div class="stk-warn-name">'+imgBit+escapeHtml(o.name)+'</div>'
+    +'<div class="stk-warn-qty">คงเหลือ <b>'+o.remainText+'</b></div>'
+    +disBtn
+    +'</div></div>';
+}}
 function stkAutoUnDismiss() {{
   var d=stkGetDismissed(); var ch=false;
   Object.keys(d).forEach(function(ing) {{
@@ -5402,31 +5426,32 @@ function stkRenderWarnCards() {{
   var lowIngs=ings.filter(function(k) {{ var p=stkPct(k); return p!==null&&p<thr; }});
   lowIngs.sort(function(a,b) {{ return (stkPct(a)||0)-(stkPct(b)||0); }});
   var top4=lowIngs.slice(0,4);
-  if (!top4.length) return '<div class="stk-warn-section"><span class="stk-ok-note">✅ สต็อกโอเค — ทุกรายการยังพอ</span></div>';
-  var dismissed=stkGetDismissed();
-  var cards=top4.map(function(ing) {{
-    var pct=Math.max(0,stkPct(ing)||0);
-    var parB=stkParBase(ing); var rem=stkRemainBase(ing); var bu=stkBaseUnit(ing);
-    var col='hsl('+(pct*1.2)+',80%,45%)';
-    var dur=(0.5+(pct/thr)*1.1).toFixed(2);
-    var isDis=!!dismissed[ing];
-    var animSt=isDis?'':'animation:stkBeat '+dur+'s ease-in-out infinite,stkAura '+dur+'s ease-in-out infinite;';
-    var imgUrl=(DCS.stock.images||{{}})[ing]||'';
-    var imgBit=imgUrl?'<img src="'+escapeHtml(imgUrl)+'" style="width:16px;height:16px;border-radius:3px;object-fit:cover;vertical-align:middle;margin-right:4px" onerror="this.style.display=\\'none\\'">':'';
-    var disBtn=isDis?'':"<button class='stk-warn-ack' onclick='stkDismiss(&quot;"+escapeHtml(ing)+"&quot;)'>✓ ทราบแล้ว</button>";
-    return '<div class="stk-warn-card'+(isDis?' dismissed':'')+'" style="'+animSt+'">'
-      +'<div class="stk-thermo-wrap">'
-      +'<div class="stk-thermo"><div class="stk-thermo-fill" style="height:'+Math.min(100,pct)+'%;background:'+col+'"></div></div>'
-      +'<span class="stk-thermo-pct">'+Math.round(pct)+'%</span>'
-      +'</div>'
-      +'<div class="stk-warn-info">'
-      +'<div class="stk-warn-name">'+imgBit+escapeHtml(ing)+'</div>'
-      +'<div class="stk-warn-qty">คงเหลือ <b>'+fmtQty(rem,bu)+'</b> / '+fmtQty(parB,bu)+'</div>'
-      +disBtn
-      +'</div></div>';
+  if (top4.length) {{
+    var dismissed=stkGetDismissed();
+    var cards=top4.map(function(ing) {{
+      var pct=Math.max(0,stkPct(ing)||0);
+      var parB=stkParBase(ing); var rem=stkRemainBase(ing); var bu=stkBaseUnit(ing);
+      var isDis=!!dismissed[ing];
+      var imgUrl=(DCS.stock.images||{{}})[ing]||'';
+      var imgBit=imgUrl?'<img src="'+escapeHtml(imgUrl)+'" style="width:16px;height:16px;border-radius:3px;object-fit:cover;vertical-align:middle;margin-right:4px" onerror="this.style.display=\\'none\\'">':'';
+      return stkWarnCardHTML({{name:ing,pct:pct,remainText:fmtQty(rem,bu)+' / '+fmtQty(parB,bu),mock:false,isDis:isDis,imgBit:imgBit}});
+    }}).join('');
+    return '<div class="stk-warn-section">'
+      +'<div class="stk-warn-row"><span class="stk-warn-row-title">⚠️ ใกล้หมด ('+top4.length+' รายการ)</span></div>'
+      +'<div class="stk-warn-grid">'+cards+'</div>'
+      +'</div>';
+  }}
+  var mockItems=[
+    {{name:'นมสด (ตัวอย่าง)',pct:14,remainText:'0.7 / 5.0 ลิตร'}},
+    {{name:'เมล็ดกาแฟคั่วเข้ม (ตัวอย่าง)',pct:33,remainText:'1.0 / 3.0 กก.'}},
+    {{name:'ไซรัปคาราเมล (ตัวอย่าง)',pct:49,remainText:'490 / 1,000 มล.'}},
+    {{name:'แก้ว 16oz (ตัวอย่าง)',pct:58,remainText:'116 / 200 ชิ้น'}}
+  ];
+  var cards=mockItems.map(function(m) {{
+    return stkWarnCardHTML({{name:m.name,pct:m.pct,remainText:m.remainText,mock:true,isDis:false,imgBit:''}});
   }}).join('');
   return '<div class="stk-warn-section">'
-    +'<div class="stk-warn-row"><span class="stk-warn-row-title">⚠️ ใกล้หมด ('+top4.length+' รายการ)</span></div>'
+    +'<div class="stk-warn-row"><span class="stk-warn-row-title" style="text-transform:none">🎭 ตัวอย่างระบบเตือน (mockup) — จะปิดเองอัตโนมัติเมื่อมีวัตถุดิบจริงต่ำกว่าเกณฑ์</span></div>'
     +'<div class="stk-warn-grid">'+cards+'</div>'
     +'</div>';
 }}
