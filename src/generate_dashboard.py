@@ -3035,8 +3035,14 @@ HTML_TEMPLATE = """\
     <!-- ── Backbar: สต็อกหลังบ้าน (Launching soon) ── -->
     <div id="view-bb-stock" class="view">
       <div class="mb-6">
-        <h1 class="ov-h1">สต็อกหลังบ้าน</h1>
-        <p class="ov-sub-h">วัตถุดิบคงเหลือ · ซื้อเข้า-ใช้จริง · เตือนเมื่อใกล้หมด</p>
+        <div class="ov-h1-row">
+          <img class="app-logo-img" src="assets/stock-anim.gif" alt="" aria-hidden="true"
+               style="width:56px;height:56px">
+          <div>
+            <h1 class="ov-h1" style="margin:0">สต็อกหลังบ้าน</h1>
+            <p class="ov-sub-h" style="margin:0">วัตถุดิบคงเหลือ · ซื้อเข้า-ใช้จริง · เตือนเมื่อใกล้หมด</p>
+          </div>
+        </div>
         <div class="bb-status-bar">
           <span class="bb-status-pill live"><span class="dot"></span>🟢 ใช้งานอยู่</span>
           <span class="bb-status-meta">อัปเดตข้อมูลล่าสุด: <b id="stk-updated">—</b></span>
