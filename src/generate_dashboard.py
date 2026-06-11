@@ -2137,8 +2137,8 @@ HTML_TEMPLATE = """\
 
     /* ── Backbar: สต็อกหลังบ้าน ── */
     @keyframes stkBeat {{ 0%,100%{{transform:scale(1)}} 14%{{transform:scale(1.04)}} 28%{{transform:scale(1)}} 42%{{transform:scale(1.03)}} 56%{{transform:scale(1)}} }}
-    @keyframes stkAura {{ 0%,100%{{box-shadow:0 0 0 0 rgba(220,40,40,0)}} 50%{{box-shadow:0 0 22px 5px rgba(220,40,40,.55)}} }}
-    @media (prefers-reduced-motion:reduce) {{ .stk-warn-card:not(.dismissed) {{ animation:none!important;outline:2px solid rgba(220,40,40,.45);background:rgba(220,40,40,.06); }} }}
+    @keyframes stkAura {{ 0%,100%{{box-shadow:0 0 0 0 transparent}} 50%{{box-shadow:0 0 22px 5px var(--stk-glow,rgba(220,40,40,.55))}} }}
+    @media (prefers-reduced-motion:reduce) {{ .stk-warn-card:not(.dismissed) {{ animation:none!important;outline:2px solid var(--stk-glow,rgba(220,40,40,.45));background:var(--stk-bg,rgba(220,40,40,.06)); }} }}
     .stk-warn-section {{ margin-bottom:20px; }}
     .stk-warn-row {{ display:flex; align-items:center; gap:10px; margin-bottom:10px; }}
     .stk-warn-row-title {{ font-size:.75rem; font-weight:800; color:var(--dc-warn); text-transform:uppercase; letter-spacing:.06em; }}
@@ -5373,17 +5373,19 @@ function stkDismiss(ing) {{ var d=stkGetDismissed(); d[ing]=true; stkSaveDismiss
 function stkDismissMock(btn) {{ var card=btn.closest('.stk-warn-card'); card.classList.add('dismissed'); btn.style.display='none'; }}
 function stkWarnCardHTML(o) {{
   var pct=Math.max(0,o.pct||0);
-  var col='hsl('+(pct*1.2)+',80%,45%)';
+  var h=(pct*1.2).toFixed(1);
+  var col='hsl('+h+',80%,45%)';
   var thr=(DCS.stock&&DCS.stock.threshold_pct)||60;
   var dur=(0.5+(pct/thr)*1.1).toFixed(2);
   var isDis=!!o.isDis;
   var animSt=isDis?'':'animation:stkBeat '+dur+'s ease-in-out infinite,stkAura '+dur+'s ease-in-out infinite;';
+  var varSt='--stk-glow:hsla('+h+',80%,45%,.55);--stk-bg:hsla('+h+',80%,45%,.06);border-color:hsla('+h+',80%,45%,.32);';
   var disBtn=isDis?'':
     o.mock
       ? "<button class='stk-warn-ack' onclick='stkDismissMock(this)'>✓ ทราบแล้ว (ตัวอย่าง)</button>"
       : "<button class='stk-warn-ack' onclick='stkDismiss(&quot;"+escapeHtml(o.name)+"&quot;)'>✓ ทราบแล้ว</button>";
   var imgBit=o.imgBit||'';
-  return '<div class="stk-warn-card'+(isDis?' dismissed':'')+'" style="'+animSt+'">'
+  return '<div class="stk-warn-card'+(isDis?' dismissed':'')+'" style="'+varSt+animSt+'">'
     +'<div class="stk-thermo-wrap">'
     +'<div class="stk-thermo"><div class="stk-thermo-fill" style="height:'+Math.min(100,pct)+'%;background:'+col+'"></div></div>'
     +'<span class="stk-thermo-pct">'+Math.round(pct)+'%</span>'
