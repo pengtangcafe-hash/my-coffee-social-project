@@ -3797,7 +3797,7 @@ function stkSavePurchase() {
 function stkOpenSales() {
   var rows='';
   DC_CATS.forEach(function(cat) {
-    var catMs=(DCS.menus||[]).filter(function(m) { return m.category===cat; });
+    var catMs=(DCS.menus||[]).filter(function(m) { return dcCategoryOf(m)===cat; });
     if (!catMs.length) return;
     rows+='<div class="stk-modal-group-label">'+(DC_CAT_ICON[cat]||'')+' '+(DC_CAT_LABEL[cat]||cat)+'</div>';
     rows+=catMs.map(function(m) {
