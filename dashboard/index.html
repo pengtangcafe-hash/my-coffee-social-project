@@ -362,27 +362,78 @@
     .bb-status-meta b { color:var(--text); font-weight:800; }
 
     /* ── Backbar: สต็อกหลังบ้าน ── */
-    .stk-item { background:var(--card); border:1px solid var(--card-border); border-radius:14px;
-      padding:12px 16px; margin-bottom:8px; }
-    .stk-item.low { border-color:rgba(194,65,12,.3); }
-    .stk-top { display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin-bottom:6px; }
+    @keyframes stkBeat { 0%,100%{transform:scale(1)} 14%{transform:scale(1.04)} 28%{transform:scale(1)} 42%{transform:scale(1.03)} 56%{transform:scale(1)} }
+    @keyframes stkAura { 0%,100%{box-shadow:0 0 0 0 rgba(220,40,40,0)} 50%{box-shadow:0 0 22px 5px rgba(220,40,40,.55)} }
+    @media (prefers-reduced-motion:reduce) { .stk-warn-card:not(.dismissed) { animation:none!important;outline:2px solid rgba(220,40,40,.45);background:rgba(220,40,40,.06); } }
+    .stk-warn-section { margin-bottom:20px; }
+    .stk-warn-row { display:flex; align-items:center; gap:10px; margin-bottom:10px; }
+    .stk-warn-row-title { font-size:.75rem; font-weight:800; color:var(--dc-warn); text-transform:uppercase; letter-spacing:.06em; }
+    .stk-ok-note { font-size:.82rem; color:var(--dc-profit); font-weight:700; padding:8px 14px;
+      background:rgba(21,128,61,.06); border:1px solid rgba(21,128,61,.18); border-radius:12px; display:inline-block; }
+    .stk-warn-grid { display:flex; flex-wrap:wrap; gap:10px; }
+    .stk-warn-card { background:var(--card); border:1.5px solid rgba(220,40,40,.28); border-radius:16px;
+      padding:12px 14px 10px; display:flex; align-items:center; gap:12px; flex:1 1 140px; max-width:240px; }
+    .stk-warn-card.dismissed { border-color:var(--card-border)!important; opacity:.72; animation:none!important; box-shadow:none!important; }
+    .stk-thermo-wrap { display:flex; flex-direction:column; align-items:center; gap:4px; flex-shrink:0; }
+    .stk-thermo { width:18px; height:68px; border-radius:999px; background:var(--nav-active);
+      border:1.5px solid rgba(0,0,0,.1); position:relative; overflow:hidden; }
+    .stk-thermo-fill { position:absolute; bottom:0; left:0; right:0; border-radius:999px;
+      transition:height .6s cubic-bezier(.22,1,.36,1); }
+    .stk-thermo-pct { font-size:.68rem; font-weight:800; color:var(--text-muted); }
+    .stk-warn-info { flex:1; min-width:0; }
+    .stk-warn-name { font-weight:700; font-size:.85rem; color:var(--text); margin-bottom:2px;
+      overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .stk-warn-qty { font-size:.75rem; color:var(--text-muted); margin-bottom:7px; }
+    .stk-warn-qty b { color:var(--text); }
+    .stk-warn-ack { font-size:.72rem; padding:4px 9px; border-radius:8px;
+      border:1px solid var(--card-border); background:transparent; color:var(--text-muted);
+      cursor:pointer; white-space:nowrap; }
+    .stk-warn-ack:hover { background:var(--nav-active); }
+    .stk-gtab-row { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:12px; }
+    .stk-card { background:var(--card); border:1px solid var(--card-border); border-radius:14px;
+      padding:12px 14px; display:flex; gap:12px; align-items:flex-start; margin-bottom:8px; }
+    .stk-card.low { border-color:rgba(194,65,12,.3); }
+    .stk-card-img { width:52px; height:52px; border-radius:10px; flex-shrink:0;
+      background:var(--nav-active); display:flex; align-items:center; justify-content:center;
+      font-size:1.4rem; overflow:hidden; }
+    .stk-card-img img { width:100%; height:100%; object-fit:cover; border-radius:10px; }
+    .stk-card-body { flex:1; min-width:0; }
+    .stk-top { display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin-bottom:4px; }
     .stk-name { font-weight:700; font-size:.92rem; color:var(--text); }
     .stk-badge { display:inline-flex; align-items:center; padding:3px 10px; border-radius:999px;
       font-size:.72rem; font-weight:700; }
     .stk-badge.warn { background:rgba(194,65,12,.12); color:var(--dc-warn); }
     .stk-badge.muted { background:var(--nav-active); color:var(--text-muted); }
-    .stk-nums { display:flex; flex-wrap:wrap; gap:4px 18px; font-size:.78rem; color:var(--text-muted);
-      margin-bottom:8px; }
+    .stk-nums { display:flex; flex-wrap:wrap; gap:3px 16px; font-size:.78rem; color:var(--text-muted); margin-bottom:8px; }
     .stk-nums b { color:var(--text); }
-    .stk-bar-wrap { height:8px; border-radius:999px; background:var(--nav-active); overflow:hidden; margin-bottom:4px; }
+    .stk-bar-wrap { height:8px; border-radius:999px; background:var(--nav-active); overflow:hidden; margin-bottom:3px; }
     .stk-bar-fill { height:100%; border-radius:999px; transition:width .6s cubic-bezier(.22,1,.36,1); }
     .stk-bar-lbl { font-size:.74rem; font-weight:700; color:var(--text-muted); text-align:right; }
+    .stk-modal-group-label { font-size:.72rem; font-weight:800; color:var(--text-muted);
+      text-transform:uppercase; letter-spacing:.06em; padding:10px 0 4px;
+      margin-top:8px; border-top:1px solid var(--card-border); }
+    .stk-modal-group-label:first-child { border-top:none; margin-top:0; padding-top:0; }
     .stk-sales-row { display:flex; align-items:center; gap:10px; padding:7px 0;
       border-bottom:1px solid var(--card-border); }
     .stk-sales-row:last-child { border-bottom:none; }
     .stk-sales-name { flex:1; font-size:.84rem; color:var(--text); min-width:0;
       overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
     .stk-sales-row .dc-inp { width:90px; flex-shrink:0; }
+    .stk-par-item { padding:10px 0; border-bottom:1px solid var(--card-border); }
+    .stk-par-item:last-child { border-bottom:none; }
+    .stk-par-head { display:flex; align-items:center; justify-content:space-between; gap:8px;
+      margin-bottom:6px; flex-wrap:wrap; }
+    .stk-par-ingname { font-weight:700; font-size:.88rem; color:var(--text); }
+    .stk-par-fields { display:flex; flex-wrap:wrap; gap:6px 10px; align-items:flex-end; }
+    .stk-par-field { display:flex; flex-direction:column; gap:3px; }
+    .stk-par-field label { font-size:.7rem; color:var(--text-muted); font-weight:600; }
+    .stk-par-field .dc-inp { width:82px; }
+    .stk-par-field .url-inp { min-width:180px; width:100%; font-size:.78rem; }
+    .stk-par-bu { font-size:.72rem; color:var(--text-muted); padding:2px 6px;
+      align-self:flex-end; margin-bottom:7px; }
+    .stk-preview { font-size:.8rem; color:var(--text-muted); padding:8px 12px;
+      background:var(--nav-active); border-radius:10px; margin-top:8px; min-height:32px; }
+    .stk-preview b { color:var(--text); }
     .stk-usage-ings { padding:4px 0; }
     .stk-usage-ing { font-size:.78rem; color:var(--text-muted); padding:2px 0; }
     .stk-usage-ing b { color:var(--text); }
@@ -2644,8 +2695,9 @@ function dcNormalize(s) {
   s.purchases = s.purchases || [];
   s.sales = s.sales || [];
   s.stock = s.stock || {};
-  if (s.stock.threshold_pct == null) s.stock.threshold_pct = 55;
+  if (s.stock.threshold_pct == null) s.stock.threshold_pct = 60;
   s.stock.par = s.stock.par || {};
+  s.stock.images = s.stock.images || {};
   return s;
 }
 function dcLoadState() {
@@ -3450,213 +3502,410 @@ function dcConnectPush() { dcSetGsUrl(document.getElementById('dc-gs-url').value
 
 // ── Backbar: สต็อกหลังบ้าน ──
 var stkTab = 'remain';
+var stkIgrpTab = 'all';
+var STK_DISMISSED_KEY = 'pengtang_stk_dismissed';
+var STK_UNITS = ['ชิ้น','อัน','ซอง','ขวด','แกลลอน','กล่อง','แพ็ค','ลัง','โหล','อื่นๆ'];
+
+// ---- dismissed (localStorage แยก, ไม่ sync) ----
+function stkGetDismissed() {
+  try { var r=localStorage.getItem(STK_DISMISSED_KEY); return r?JSON.parse(r):{};} catch(e) { return {}; }
+}
+function stkSaveDismissed(d) { try { localStorage.setItem(STK_DISMISSED_KEY,JSON.stringify(d)); } catch(e) {} }
+function stkDismiss(ing) { var d=stkGetDismissed(); d[ing]=true; stkSaveDismissed(d); renderStockView(); }
+function stkAutoUnDismiss() {
+  var d=stkGetDismissed(); var ch=false;
+  Object.keys(d).forEach(function(ing) {
+    var p=stkPct(ing);
+    if (p!==null && p>=(DCS.stock.threshold_pct||60)) { delete d[ing]; ch=true; }
+  });
+  if (ch) stkSaveDismissed(d);
+}
 
 // ---- compute ----
-function stkQty(ing) { var c = DCS.catalog[ing]; return (c && parseFloat(c.qty) > 0) ? parseFloat(c.qty) : 1; }
-function stkBoughtPacks(ing) {
-  return (DCS.purchases || []).reduce(function(s,p) { return s + (p.ing === ing ? (parseFloat(p.packs)||0) : 0); }, 0);
+function stkRecordBase(p) {
+  if (p.qty!=null) return (parseFloat(p.qty)||0)*(parseFloat(p.size)||1);
+  if (p.packs!=null) { var c=DCS.catalog[p.ing]; return (parseFloat(p.packs)||0)*(c&&parseFloat(c.qty)>0?parseFloat(c.qty):1); }
+  return 0;
+}
+function stkBoughtBase(ing) {
+  return (DCS.purchases||[]).reduce(function(s,p) { return s+(p.ing===ing?stkRecordBase(p):0); },0);
 }
 function stkCupsForMenu(menuName) {
-  return (DCS.sales || []).reduce(function(s,r) { return s + (r.menu === menuName ? (parseFloat(r.cups)||0) : 0); }, 0);
+  return (DCS.sales||[]).reduce(function(s,r) { return s+(r.menu===menuName?(parseFloat(r.cups)||0):0); },0);
 }
 function stkUsedBase(ing) {
-  var total = 0;
-  (DCS.menus || []).forEach(function(m) {
-    var cups = stkCupsForMenu(m.name);
-    if (!cups) return;
-    (m.recipe || []).forEach(function(l) { if (l.ing === ing) total += cups * (parseFloat(l.qty)||0); });
+  var total=0;
+  (DCS.menus||[]).forEach(function(m) {
+    var cups=stkCupsForMenu(m.name); if (!cups) return;
+    (m.recipe||[]).forEach(function(l) { if (l.ing===ing) total+=cups*(parseFloat(l.qty)||0); });
   });
   return total;
 }
-function stkRemainBase(ing) { return stkBoughtPacks(ing) * stkQty(ing) - stkUsedBase(ing); }
-function stkRemainPacks(ing) { return stkRemainBase(ing) / stkQty(ing); }
-function stkPct(ing) {
-  var par = (DCS.stock.par || {})[ing];
-  if (!par || par <= 0) return null;
-  return stkRemainPacks(ing) / par * 100;
+function stkRemainBase(ing) { return stkBoughtBase(ing)-stkUsedBase(ing); }
+function stkParBase(ing) {
+  var p=(DCS.stock.par||{})[ing];
+  if (p==null) return 0;
+  if (typeof p==='object') return (parseFloat(p.count)||0)*(parseFloat(p.size)||1);
+  var c=DCS.catalog[ing]; return (parseFloat(p)||0)*(c&&parseFloat(c.qty)>0?parseFloat(c.qty):1);
 }
-function stkLow(ing) { var p = stkPct(ing); return p !== null && p < (DCS.stock.threshold_pct || 55); }
+function stkPct(ing) { var pb=stkParBase(ing); if (!(pb>0)) return null; return stkRemainBase(ing)/pb*100; }
+function stkLow(ing) { var p=stkPct(ing); return p!==null&&p<(DCS.stock.threshold_pct||60); }
+function stkBaseUnit(ing) { var c=DCS.catalog[ing]; return (c&&c.unit)?c.unit:'กรัม/มล.'; }
+function fmtQty(base,baseUnit) {
+  var u=baseUnit||'กรัม/มล.';
+  if (u==='กรัม/มล.'&&base>=1000) return dcF1(base/1000)+' ลิตร/กก.';
+  return dcF1(base)+' '+u;
+}
+function stkLastPPB(ing) {
+  var last=null;
+  (DCS.purchases||[]).forEach(function(p) {
+    if (p.ing!==ing) return;
+    var pr=parseFloat(p.price||''); var sz=parseFloat(p.size||'')||1;
+    if (pr>0) last=pr/sz;
+  });
+  return last||0;
+}
+function stkTotalValue() {
+  return Object.keys(DCS.catalog).reduce(function(s,k) {
+    var r=stkRemainBase(k); if (!(r>0)) return s; return s+r*stkLastPPB(k);
+  },0);
+}
+function stkIngIcon(ing) {
+  var icons={bean:'☕',milk:'🥛',cocoa:'🍫',tea:'🍵',sweet:'🍯',syrup:'🧴',pack:'📦',other:'🫙'};
+  return icons[dcIngGroup(ing)]||'🫙';
+}
+function stkUnitOpts(val) {
+  return STK_UNITS.map(function(u){ return '<option value="'+u+'"'+(u===val?' selected':'')+'>'+u+'</option>'; }).join('');
+}
 
 // ---- render ----
 function renderStockView() {
-  dcLoadState();
-  var root = document.getElementById('stk-root'); if (!root) return;
-  var updEl = document.getElementById('stk-updated');
-  if (updEl && DCS.parsed_at) {
-    try { var d = new Date(DCS.parsed_at); updEl.textContent = d.toLocaleDateString('th-TH',{year:'numeric',month:'short',day:'numeric'}); } catch(e) { updEl.textContent = DCS.parsed_at.slice(0,10); }
-  }
-  var ings = Object.keys(DCS.catalog);
-  var lowCount = ings.filter(stkLow).length;
-  var totalVal = ings.reduce(function(s,k) { var c=DCS.catalog[k]||{}; var rp=stkRemainPacks(k); return s+(rp>0?rp*(c.price||0):0); }, 0);
-  var kpi = '<div class="dc-stats-row" style="margin-bottom:14px">'
-    + '<div class="dc-stat"><span class="dc-st-lab">วัตถุดิบที่ติดตาม</span><span class="dc-st-val">' + ings.length + '</span></div>'
-    + '<div class="dc-stat"><span class="dc-st-lab">⚠️ ใกล้หมด</span><span class="dc-st-val" style="color:' + (lowCount?'var(--dc-warn)':'var(--dc-profit)') + '">' + lowCount + '</span></div>'
-    + '<div class="dc-stat"><span class="dc-st-lab">มูลค่าคงเหลือ</span><span class="dc-st-val">฿' + dcMoney(totalVal) + '</span></div>'
-    + '</div>';
-  var toolbar = '<div class="dc-toolbar" style="margin-bottom:12px">'
-    + '<button class="dc-btn primary" onclick="stkOpenPurchase()">+ ซื้อเข้า</button>'
-    + '<button class="dc-btn" onclick="stkOpenSales()">+ ยอดขาย</button>'
-    + '<button class="dc-btn" onclick="stkOpenPar()">⚙️ ตั้งสต็อกเต็ม</button>'
-    + (dcGsUrl() ? '<button class="dc-btn" onclick="dcSyncPull()">🔄 ซิงก์</button>' : '')
-    + '</div>';
-  var tabs = '<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px">'
-    + '<button class="ov-mtab' + (stkTab==='remain'?' active':'') + '" onclick="stkSetTab(\'remain\')">สต็อกคงเหลือ</button>'
-    + '<button class="ov-mtab' + (stkTab==='usage'?' active':'') + '" onclick="stkSetTab(\'usage\')">การใช้ต่อเมนู</button>'
-    + '</div>';
-  root.innerHTML = kpi + toolbar + tabs + '<div>' + (stkTab==='remain'?stkRenderRemain():stkRenderUsage()) + '</div>';
+  dcLoadState(); stkAutoUnDismiss();
+  var root=document.getElementById('stk-root'); if (!root) return;
+  var ings=Object.keys(DCS.catalog);
+  var lowCount=ings.filter(stkLow).length;
+  var totalVal=stkTotalValue();
+  var kpi='<div class="dc-stats-row" style="margin-bottom:14px">'
+    +'<div class="dc-stat"><span class="dc-st-lab">วัตถุดิบที่ติดตาม</span><span class="dc-st-val">'+ings.length+'</span></div>'
+    +'<div class="dc-stat"><span class="dc-st-lab">⚠️ ใกล้หมด</span><span class="dc-st-val" style="color:'+(lowCount?'var(--dc-warn)':'var(--dc-profit)')+'">'+lowCount+'</span></div>'
+    +'<div class="dc-stat"><span class="dc-st-lab">มูลค่าคงเหลือ</span><span class="dc-st-val">฿'+dcMoney(totalVal)+'</span></div>'
+    +'</div>';
+  var toolbar='<div class="dc-toolbar" style="margin-bottom:12px">'
+    +'<button class="dc-btn primary" onclick="stkOpenPurchase()">📦 ซื้อเข้า</button>'
+    +'<button class="dc-btn" onclick="stkOpenSales()">🧾 ยอดขาย</button>'
+    +'<button class="dc-btn" onclick="stkOpenPar()">⚙️ ตั้งสต็อกเต็ม</button>'
+    +(dcGsUrl()?'<button class="dc-btn" onclick="dcSyncPull()">🔄 ซิงก์</button>':'')
+    +'</div>';
+  var tabs='<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px">'
+    +'<button class="ov-mtab'+(stkTab==='remain'?' active':'')+'" onclick="stkSetTab(\'remain\')">สต็อกคงเหลือ</button>'
+    +'<button class="ov-mtab'+(stkTab==='usage'?' active':'')+'" onclick="stkSetTab(\'usage\')">การใช้ต่อเมนู</button>'
+    +'</div>';
+  root.innerHTML=kpi+toolbar+stkRenderWarnCards()+tabs+'<div>'+(stkTab==='remain'?stkRenderRemain():stkRenderUsage())+'</div>';
 }
-function stkSetTab(t) { stkTab = t; renderStockView(); }
+function stkSetTab(t) { stkTab=t; renderStockView(); }
+function stkSetIgrp(g) { stkIgrpTab=g; renderStockView(); }
 function stkRefreshIfActive() { var v=document.getElementById('view-bb-stock'); if (v&&v.classList.contains('active')) renderStockView(); }
 
-function stkRenderRemain() {
-  var ings = Object.keys(DCS.catalog);
-  if (!ings.length) return '<div class="ov-tile ov-soon"><div class="ov-soon-emoji">📦</div><div class="ov-soon-sub">ยังไม่มีวัตถุดิบ — ตั้งค่าที่หน้า ต้นทุนเครื่องดื่ม</div></div>';
-  var withPar = ings.filter(function(k) { return stkPct(k)!==null; });
-  var noPar   = ings.filter(function(k) { return stkPct(k)===null; });
-  withPar.sort(function(a,b) { return stkPct(a)-stkPct(b); });
-  noPar.sort(function(a,b) { return a.localeCompare(b,'th'); });
-  return withPar.concat(noPar).map(function(k) {
-    var c = DCS.catalog[k]||{};
-    var qty = stkQty(k); var unit = c.unit||'กรัม/มล.';
-    var bought = stkBoughtPacks(k);
-    var usedBase = stkUsedBase(k);
-    var remainBase = stkRemainBase(k);
-    var remainPacks = stkRemainPacks(k);
-    var pct = stkPct(k); var low = stkLow(k);
-    var par = (DCS.stock.par||{})[k];
-    var barColor = pct===null?'var(--text-muted)':pct>=85?'var(--dc-profit)':pct>=55?'var(--ov-caramel)':'var(--dc-warn)';
-    var barW = pct===null?0:Math.min(100,Math.max(0,pct));
-    var badge = low?'<span class="stk-badge warn">⚠️ ควร restock</span>':pct===null?'<span class="stk-badge muted">ตั้งสต็อกเต็มก่อน</span>':'';
-    return '<div class="stk-item'+(low?' low':'') + '">'
-      + '<div class="stk-top"><span class="stk-name">' + escapeHtml(k) + '</span>' + badge + '</div>'
-      + '<div class="stk-nums">'
-      + '<span>ซื้อเข้า <b>' + dcF1(bought) + '</b> แพ็ค</span>'
-      + '<span>ใช้ไป <b>' + dcF1(usedBase/qty) + '</b> แพ็ค (<b>' + dcF1(usedBase) + '</b> ' + unit + ')</span>'
-      + '<span>คงเหลือ <b>' + dcF1(remainPacks) + '</b> แพ็ค (<b>' + dcF1(remainBase) + '</b> ' + unit + ')</span>'
-      + (par?'<span>สต็อกเต็ม <b>'+par+'</b> แพ็ค</span>':'')
-      + '</div>'
-      + '<div class="stk-bar-wrap"><div class="stk-bar-fill" style="width:' + barW + '%;background:' + barColor + '"></div></div>'
-      + '<div class="stk-bar-lbl">' + (pct!==null?dcF1(pct)+'%':'—') + '</div>'
-      + '</div>';
+// ---- Phase B: warning cards ----
+function stkRenderWarnCards() {
+  var ings=Object.keys(DCS.catalog);
+  var thr=DCS.stock.threshold_pct||60;
+  var lowIngs=ings.filter(function(k) { var p=stkPct(k); return p!==null&&p<thr; });
+  lowIngs.sort(function(a,b) { return (stkPct(a)||0)-(stkPct(b)||0); });
+  var top4=lowIngs.slice(0,4);
+  if (!top4.length) return '<div class="stk-warn-section"><span class="stk-ok-note">✅ สต็อกโอเค — ทุกรายการยังพอ</span></div>';
+  var dismissed=stkGetDismissed();
+  var cards=top4.map(function(ing) {
+    var pct=Math.max(0,stkPct(ing)||0);
+    var parB=stkParBase(ing); var rem=stkRemainBase(ing); var bu=stkBaseUnit(ing);
+    var col='hsl('+(pct*1.2)+',80%,45%)';
+    var dur=(0.5+(pct/thr)*1.1).toFixed(2);
+    var isDis=!!dismissed[ing];
+    var animSt=isDis?'':'animation:stkBeat '+dur+'s ease-in-out infinite,stkAura '+dur+'s ease-in-out infinite;';
+    var imgUrl=(DCS.stock.images||{})[ing]||'';
+    var imgBit=imgUrl?'<img src="'+escapeHtml(imgUrl)+'" style="width:16px;height:16px;border-radius:3px;object-fit:cover;vertical-align:middle;margin-right:4px" onerror="this.style.display=\'none\'">':'';
+    var disBtn=isDis?'':"<button class='stk-warn-ack' onclick='stkDismiss(&quot;"+escapeHtml(ing)+"&quot;)'>✓ ทราบแล้ว</button>";
+    return '<div class="stk-warn-card'+(isDis?' dismissed':'')+'" style="'+animSt+'">'
+      +'<div class="stk-thermo-wrap">'
+      +'<div class="stk-thermo"><div class="stk-thermo-fill" style="height:'+Math.min(100,pct)+'%;background:'+col+'"></div></div>'
+      +'<span class="stk-thermo-pct">'+Math.round(pct)+'%</span>'
+      +'</div>'
+      +'<div class="stk-warn-info">'
+      +'<div class="stk-warn-name">'+imgBit+escapeHtml(ing)+'</div>'
+      +'<div class="stk-warn-qty">คงเหลือ <b>'+fmtQty(rem,bu)+'</b> / '+fmtQty(parB,bu)+'</div>'
+      +disBtn
+      +'</div></div>';
   }).join('');
+  return '<div class="stk-warn-section">'
+    +'<div class="stk-warn-row"><span class="stk-warn-row-title">⚠️ ใกล้หมด ('+top4.length+' รายการ)</span></div>'
+    +'<div class="stk-warn-grid">'+cards+'</div>'
+    +'</div>';
 }
+
+// ---- tab: สต็อกคงเหลือ ----
+function stkRenderRemain() {
+  var ings=Object.keys(DCS.catalog);
+  if (!ings.length) return '<div class="ov-tile ov-soon"><div class="ov-soon-emoji">📦</div><div class="ov-soon-sub">ยังไม่มีวัตถุดิบ — ตั้งค่าที่หน้า ต้นทุนเครื่องดื่ม</div></div>';
+  var grpTabs='<div class="stk-gtab-row">'
+    +'<button class="ov-mtab'+(stkIgrpTab==='all'?' active':'')+'" onclick="stkSetIgrp(\'all\')">ทั้งหมด</button>'
+    +DC_IGROUPS.map(function(g) { return '<button class="ov-mtab'+(stkIgrpTab===g[0]?' active':'')+'" onclick="stkSetIgrp(\''+g[0]+'\')" >'+g[1]+'</button>'; }).join('')
+    +'</div>';
+  var filtered=stkIgrpTab==='all'?ings:ings.filter(function(k) { return dcIngGroup(k)===stkIgrpTab; });
+  if (!filtered.length) return grpTabs+'<div class="ov-tile ov-soon"><div class="ov-soon-emoji">📦</div><div class="ov-soon-sub">ไม่มีวัตถุดิบในหมวดนี้</div></div>';
+  var withPar=filtered.filter(function(k) { return stkPct(k)!==null; });
+  var noPar=filtered.filter(function(k) { return stkPct(k)===null; });
+  withPar.sort(function(a,b) { return (stkPct(a)||0)-(stkPct(b)||0); });
+  noPar.sort(function(a,b) { return a.localeCompare(b,'th'); });
+  var cards=withPar.concat(noPar).map(function(k) {
+    var bu=stkBaseUnit(k);
+    var bought=stkBoughtBase(k); var usedB=stkUsedBase(k);
+    var rem=stkRemainBase(k); var parB=stkParBase(k);
+    var pct=stkPct(k); var low=stkLow(k);
+    var barC=pct===null?'var(--text-muted)':pct>=85?'var(--dc-profit)':pct>=60?'var(--ov-caramel)':'var(--dc-warn)';
+    var barW=pct===null?0:Math.min(100,Math.max(0,pct));
+    var badge=low?'<span class="stk-badge warn">⚠️ ควร restock</span>':pct===null?'<span class="stk-badge muted">ตั้งสต็อกเต็มก่อน</span>':'';
+    var imgUrl=(DCS.stock.images||{})[k]||'';
+    var icon=stkIngIcon(k);
+    var imgEl=imgUrl
+      ?'<div class="stk-card-img"><img src="'+escapeHtml(imgUrl)+'" alt="" onerror="this.parentElement.textContent=\''+icon+'\'"></div>'
+      :'<div class="stk-card-img">'+icon+'</div>';
+    return '<div class="stk-card'+(low?' low':'')+'">'
+      +imgEl
+      +'<div class="stk-card-body">'
+      +'<div class="stk-top"><span class="stk-name">'+escapeHtml(k)+'</span>'+badge+'</div>'
+      +'<div class="stk-nums">'
+      +'<span>ซื้อเข้า <b>'+fmtQty(bought,bu)+'</b></span>'
+      +'<span>ใช้ไป <b>'+fmtQty(usedB,bu)+'</b></span>'
+      +'<span>คงเหลือ <b>'+fmtQty(rem,bu)+'</b></span>'
+      +(parB>0?'<span>สต็อกเต็ม <b>'+fmtQty(parB,bu)+'</b></span>':'')
+      +'</div>'
+      +'<div class="stk-bar-wrap"><div class="stk-bar-fill" style="width:'+barW+'%;background:'+barC+'"></div></div>'
+      +'<div class="stk-bar-lbl">'+(pct!==null?Math.round(pct)+'%':'—')+'</div>'
+      +'</div></div>';
+  }).join('');
+  return grpTabs+cards;
+}
+
+// ---- tab: การใช้ต่อเมนู ----
 function stkRenderUsage() {
-  var sold = (DCS.menus||[]).filter(function(m) { return stkCupsForMenu(m.name)>0; });
-  if (!sold.length) return '<div class="ov-tile ov-soon"><div class="ov-soon-emoji">🧾</div><div class="ov-soon-sub">ยังไม่มียอดขาย — กดปุ่ม "+ ยอดขาย" เพื่อบันทึก</div></div>';
+  var sold=(DCS.menus||[]).filter(function(m) { return stkCupsForMenu(m.name)>0; });
+  if (!sold.length) return '<div class="ov-tile ov-soon"><div class="ov-soon-emoji">🧾</div><div class="ov-soon-sub">ยังไม่มียอดขาย — กดปุ่ม 🧾 ยอดขาย เพื่อบันทึก</div></div>';
   return sold.map(function(m) {
-    var cups = stkCupsForMenu(m.name);
-    var ings = (m.recipe||[]).map(function(l) {
-      var totalBase = cups*(parseFloat(l.qty)||0);
-      var c = DCS.catalog[l.ing]||{};
-      return '<div class="stk-usage-ing">'+escapeHtml(l.ing)+': <b>'+dcF1(totalBase)+'</b> '+(c.unit||'')+' ('+dcF1(totalBase/(c.qty||1))+' แพ็ค)</div>';
+    var cups=stkCupsForMenu(m.name);
+    var ir=(m.recipe||[]).map(function(l) {
+      var tb=cups*(parseFloat(l.qty)||0);
+      var c=DCS.catalog[l.ing]||{};
+      return '<div class="stk-usage-ing">'+escapeHtml(l.ing)+': <b>'+fmtQty(tb,c.unit||'กรัม/มล.')+'</b> ('+dcF1(cups)+' แก้ว)</div>';
     }).join('');
-    return '<div class="stk-item"><div class="stk-top"><span class="stk-name">'+escapeHtml(m.name)+'</span>'
-      + '<span class="stk-badge muted">'+dcF1(cups)+' แก้ว</span></div>'
-      + (ings?'<div class="stk-usage-ings">'+ings+'</div>':'<div class="stk-nums">ยังไม่มีสูตรเมนูนี้</div>')
-      + '</div>';
+    return '<div class="stk-card"><div class="stk-card-body"><div class="stk-top"><span class="stk-name">'+escapeHtml(m.name)+'</span>'
+      +'<span class="stk-badge muted">'+dcF1(cups)+' แก้ว</span></div>'
+      +(ir?'<div class="stk-usage-ings">'+ir+'</div>':'<div class="stk-nums">ยังไม่มีสูตรเมนูนี้</div>')
+      +'</div></div>';
   }).join('');
 }
 
 // ---- modals ----
 function stkTodayISO() { return new Date().toISOString().slice(0,10); }
-function stkAcOpenPurch(inp) { dcAcOpen(inp,null); dcAcCtx.onSelect = function() {}; }
+function stkAcOpenPurch(inp) { dcAcOpen(inp,null); dcAcCtx.onSelect=stkOnIngSelect; }
+function stkOnIngSelect(name) {
+  var c=DCS.catalog[name]||{};
+  var sEl=document.getElementById('stk-p-size');
+  if (sEl&&!sEl.value&&c.qty) sEl.value=c.qty;
+  var buEl=document.getElementById('stk-p-bu');
+  if (buEl) buEl.textContent='('+(c.unit||'กรัม/มล.')+')';
+  stkPurchPreview();
+}
+function stkPurchPreview() {
+  var ingEl=document.getElementById('stk-p-ing');
+  var ing=ingEl?(ingEl.getAttribute('data-ing')||ingEl.value||'').trim():'';
+  var qty=parseFloat((document.getElementById('stk-p-qty')||{}).value||'')||0;
+  var size=parseFloat((document.getElementById('stk-p-size')||{}).value||'')||0;
+  var price=parseFloat((document.getElementById('stk-p-price')||{}).value||'')||0;
+  var pr=document.getElementById('stk-p-preview'); if (!pr) return;
+  var base=qty*size;
+  var c=ing?(DCS.catalog[ing]||{}):{};
+  var bu=c.unit||'กรัม/มล.';
+  var val=price*qty;
+  pr.innerHTML=base>0?'รวม: <b>'+fmtQty(base,bu)+'</b>'+(val>0?' · มูลค่า <b>฿'+dcMoney(val)+'</b>':''):'กรอกจำนวนและปริมาณ/หน่วย';
+}
+function stkUnitChange() {
+  var sel=document.getElementById('stk-p-unit');
+  var cu=document.getElementById('stk-p-unit-custom');
+  if (!sel||!cu) return;
+  cu.style.display=sel.value==='อื่นๆ'?'':'none';
+}
 
 function stkOpenPurchase() {
-  var html = '<div class="dc-modal-head"><h3>📦 บันทึกซื้อเข้า</h3><button class="dc-x" onclick="dcCloseModal()" aria-label="ปิด">✕</button></div>'
-    + '<div class="dc-modal-scroll">'
-    + '<div class="dc-field"><label>วัตถุดิบ</label>'
-    + '<input class="dc-inp dc-ring" id="stk-p-ing" placeholder="ค้นหาวัตถุดิบ..." autocomplete="off"'
-    + ' oninput="dcAcFilter(this)" onfocus="stkAcOpenPurch(this)" onkeydown="dcAcKey(event,this)" data-ing=""></div>'
-    + '<div class="dc-field"><label>จำนวนแพ็ค</label>'
-    + '<input class="dc-inp" id="stk-p-packs" type="number" min="0.01" step="any" placeholder="เช่น 2"></div>'
-    + '<div class="dc-field"><label>วันที่</label>'
-    + '<input class="dc-inp" id="stk-p-date" type="date" value="' + stkTodayISO() + '"></div>'
-    + '<div class="dc-field"><label>หมายเหตุ (ไม่บังคับ)</label>'
-    + '<input class="dc-inp" id="stk-p-note" placeholder="เช่น ซื้อจากโลตัส"></div>'
-    + '</div>'
-    + '<div class="dc-modal-foot"><span class="spacer"></span>'
-    + '<button class="dc-btn ghost" onclick="dcCloseModal()">ยกเลิก</button>'
-    + '<button class="dc-btn primary" onclick="stkSavePurchase()">บันทึก</button></div>';
+  var html='<div class="dc-modal-head"><h3>📦 บันทึกซื้อเข้า</h3>'
+    +'<button class="dc-x" onclick="dcCloseModal()" aria-label="ปิด">✕</button></div>'
+    +'<div class="dc-modal-scroll">'
+    +'<div class="dc-field"><label>🥛 วัตถุดิบ</label>'
+    +'<input class="dc-inp dc-ring" id="stk-p-ing" placeholder="ค้นหาวัตถุดิบ..." autocomplete="off"'
+    +' oninput="dcAcFilter(this)" onfocus="stkAcOpenPurch(this)" onkeydown="dcAcKey(event,this)" data-ing=""></div>'
+    +'<div style="display:flex;gap:10px;flex-wrap:wrap">'
+    +'<div class="dc-field" style="flex:1;min-width:100px"><label>จำนวน</label>'
+    +'<input class="dc-inp" id="stk-p-qty" type="number" min="0.01" step="any" placeholder="เช่น 8" oninput="stkPurchPreview()"></div>'
+    +'<div class="dc-field" style="flex:1;min-width:120px"><label>หน่วย</label>'
+    +'<select class="dc-inp" id="stk-p-unit" onchange="stkUnitChange()"><option value="">—เลือกหน่วย—</option>'+stkUnitOpts('แพ็ค')+'</select>'
+    +'<input class="dc-inp" id="stk-p-unit-custom" placeholder="พิมพ์หน่วย..." style="display:none;margin-top:4px"></div>'
+    +'</div>'
+    +'<div style="display:flex;gap:10px;flex-wrap:wrap">'
+    +'<div class="dc-field" style="flex:1;min-width:110px"><label>ปริมาณ/หน่วย <span id="stk-p-bu" style="color:var(--text-muted)">(กรัม/มล.)</span></label>'
+    +'<input class="dc-inp" id="stk-p-size" type="number" min="0.01" step="any" placeholder="เช่น 2000" oninput="stkPurchPreview()"></div>'
+    +'<div class="dc-field" style="flex:1;min-width:110px"><label>💰 ราคา/หน่วย (฿)</label>'
+    +'<input class="dc-inp" id="stk-p-price" type="number" min="0" step="any" placeholder="บาท" oninput="stkPurchPreview()"></div>'
+    +'</div>'
+    +'<div style="display:flex;gap:10px;flex-wrap:wrap">'
+    +'<div class="dc-field" style="flex:1;min-width:130px"><label>📅 วันที่</label>'
+    +'<input class="dc-inp" id="stk-p-date" type="date" value="'+stkTodayISO()+'"></div>'
+    +'<div class="dc-field" style="flex:2;min-width:150px"><label>หมายเหตุ</label>'
+    +'<input class="dc-inp" id="stk-p-note" placeholder="เช่น ซื้อจากโลตัส"></div>'
+    +'</div>'
+    +'<div class="stk-preview" id="stk-p-preview">กรอกจำนวนและปริมาณ/หน่วย</div>'
+    +'</div>'
+    +'<div class="dc-modal-foot"><span class="spacer"></span>'
+    +'<button class="dc-btn ghost" onclick="dcCloseModal()">ยกเลิก</button>'
+    +'<button class="dc-btn primary" onclick="stkSavePurchase()">💾 บันทึก</button></div>';
   dcSetModalBody(html);
 }
 function stkSavePurchase() {
-  var ingEl = document.getElementById('stk-p-ing');
-  var ing = ingEl ? (ingEl.getAttribute('data-ing')||ingEl.value||'').trim() : '';
-  var packs = parseFloat((document.getElementById('stk-p-packs')||{}).value||'');
-  var date  = (document.getElementById('stk-p-date')||{}).value || stkTodayISO();
-  var note  = ((document.getElementById('stk-p-note')||{}).value||'').trim();
+  var ingEl=document.getElementById('stk-p-ing');
+  var ing=ingEl?(ingEl.getAttribute('data-ing')||ingEl.value||'').trim():'';
+  var qty=parseFloat((document.getElementById('stk-p-qty')||{}).value||'');
+  var unitEl=document.getElementById('stk-p-unit');
+  var cuEl=document.getElementById('stk-p-unit-custom');
+  var unit=unitEl?unitEl.value:'แพ็ค';
+  if (unit==='อื่นๆ'&&cuEl) unit=cuEl.value.trim()||'อื่นๆ';
+  var size=parseFloat((document.getElementById('stk-p-size')||{}).value||'');
+  var prRaw=((document.getElementById('stk-p-price')||{}).value||'').trim();
+  var price=prRaw===''?null:(parseFloat(prRaw)||null);
+  var date=(document.getElementById('stk-p-date')||{}).value||stkTodayISO();
+  var note=((document.getElementById('stk-p-note')||{}).value||'').trim();
   if (!ing) { showToast('เลือกวัตถุดิบก่อน'); return; }
-  if (!(packs>0)) { showToast('ใส่จำนวนแพ็คให้ถูกต้อง'); return; }
-  DCS.purchases.push({date:date, ing:ing, packs:packs, note:note});
-  dcAfterChange(); dcCloseModal(); renderStockView();
-  showToast('บันทึกซื้อ '+escapeHtml(ing)+' '+packs+' แพ็ค ✓');
+  if (!(qty>0)) { showToast('ใส่จำนวนให้ถูกต้อง'); return; }
+  if (!(size>0)) { showToast('ใส่ปริมาณ/หน่วยให้ถูกต้อง'); return; }
+  var rec={date:date,ing:ing,qty:qty,unit:unit,size:size,price:price,note:note};
+  var doSave=function() {
+    DCS.purchases.push(rec);
+    dcAfterChange(); dcCloseModal(); renderStockView();
+    showToast('บันทึกซื้อ '+escapeHtml(ing)+' '+qty+' '+unit+' ✓');
+  };
+  if (!dcEdit) { dcOpenPwModal('🔒 ปลดล็อกก่อนบันทึก','ใส่รหัสเพื่อแก้ไขข้อมูลสต็อก',function() { dcEdit=true; showToast('ปลดล็อกแล้ว ✓'); doSave(); }); }
+  else { doSave(); }
 }
 
 function stkOpenSales() {
-  var rows = (DCS.menus||[]).map(function(m,i) {
-    return '<div class="stk-sales-row">'
-      + '<label class="stk-sales-name" for="stk-s-m'+i+'">'+escapeHtml(m.name)+'</label>'
-      + '<input class="dc-inp stk-sales-qty" id="stk-s-m'+i+'" type="number" min="0" step="1"'
-      + ' placeholder="0" data-mname="'+escapeHtml(m.name)+'"></div>';
-  }).join('');
-  var html = '<div class="dc-modal-head"><h3>🧾 บันทึกยอดขาย</h3><button class="dc-x" onclick="dcCloseModal()" aria-label="ปิด">✕</button></div>'
-    + '<div class="dc-modal-scroll">'
-    + '<div class="dc-field"><label>วันที่</label><input class="dc-inp" id="stk-s-date" type="date" value="'+stkTodayISO()+'"></div>'
-    + '<div class="dc-field" style="margin-bottom:4px"><label>ยอดขาย (แก้ว) ต่อเมนู — กรอกเฉพาะที่ขาย</label></div>'
-    + '<div id="stk-s-rows">'+rows+'</div>'
-    + '</div>'
-    + '<div class="dc-modal-foot"><span class="spacer"></span>'
-    + '<button class="dc-btn ghost" onclick="dcCloseModal()">ยกเลิก</button>'
-    + '<button class="dc-btn primary" onclick="stkSaveSales()">บันทึก</button></div>';
+  var rows='';
+  DC_CATS.forEach(function(cat) {
+    var catMs=(DCS.menus||[]).filter(function(m) { return m.category===cat; });
+    if (!catMs.length) return;
+    rows+='<div class="stk-modal-group-label">'+(DC_CAT_ICON[cat]||'')+' '+(DC_CAT_LABEL[cat]||cat)+'</div>';
+    rows+=catMs.map(function(m) {
+      var sid='ss'+Math.random().toString(36).slice(2,8);
+      return '<div class="stk-sales-row">'
+        +'<label class="stk-sales-name" for="'+sid+'">'+escapeHtml(m.name)+'</label>'
+        +'<input class="dc-inp stk-sales-qty" id="'+sid+'" type="number" min="0" step="1" placeholder="0" data-mname="'+escapeHtml(m.name)+'"></div>';
+    }).join('');
+  });
+  var html='<div class="dc-modal-head"><h3>🧾 บันทึกยอดขาย</h3>'
+    +'<button class="dc-x" onclick="dcCloseModal()" aria-label="ปิด">✕</button></div>'
+    +'<div class="dc-modal-scroll">'
+    +'<div class="dc-field"><label>📅 วันที่</label>'
+    +'<input class="dc-inp" id="stk-s-date" type="date" value="'+stkTodayISO()+'"></div>'
+    +'<div class="dc-field" style="margin-bottom:4px"><label>ยอดขาย (แก้ว) ต่อเมนู — กรอกเฉพาะที่ขาย</label></div>'
+    +'<div>'+rows+'</div>'
+    +'</div>'
+    +'<div class="dc-modal-foot"><span class="spacer"></span>'
+    +'<button class="dc-btn ghost" onclick="dcCloseModal()">ยกเลิก</button>'
+    +'<button class="dc-btn primary" onclick="stkSaveSales()">💾 บันทึก</button></div>';
   dcSetModalBody(html);
 }
 function stkSaveSales() {
-  var date = (document.getElementById('stk-s-date')||{}).value || stkTodayISO();
-  var added = 0;
+  var date=(document.getElementById('stk-s-date')||{}).value||stkTodayISO();
+  var entries=[];
   document.querySelectorAll('.stk-sales-qty').forEach(function(inp) {
-    var cups = parseFloat(inp.value||'');
-    if (!(cups>0)) return;
-    DCS.sales.push({date:date, menu:inp.getAttribute('data-mname'), cups:cups});
-    added++;
+    var cups=parseFloat(inp.value||'');
+    if (cups>0) entries.push({date:date,menu:inp.getAttribute('data-mname'),cups:cups});
   });
-  if (!added) { showToast('ใส่ยอดขายอย่างน้อย 1 เมนู'); return; }
-  dcAfterChange(); dcCloseModal(); renderStockView();
-  showToast('บันทึกยอดขาย '+added+' เมนู ✓');
+  if (!entries.length) { showToast('ใส่ยอดขายอย่างน้อย 1 เมนู'); return; }
+  var doSave=function() {
+    entries.forEach(function(e) { DCS.sales.push(e); });
+    dcAfterChange(); dcCloseModal(); renderStockView();
+    showToast('บันทึกยอดขาย '+entries.length+' เมนู ✓');
+  };
+  if (!dcEdit) { dcOpenPwModal('🔒 ปลดล็อกก่อนบันทึก','ใส่รหัสเพื่อแก้ไขข้อมูลสต็อก',function() { dcEdit=true; showToast('ปลดล็อกแล้ว ✓'); doSave(); }); }
+  else { doSave(); }
 }
 
 function stkOpenPar() {
-  var ings = Object.keys(DCS.catalog).sort(function(a,b) { return a.localeCompare(b,'th'); });
-  var thr = DCS.stock.threshold_pct || 55;
-  var rows = ings.map(function(k) {
-    var par = (DCS.stock.par||{})[k]||'';
-    return '<div class="stk-sales-row">'
-      + '<label class="stk-sales-name">'+escapeHtml(k)+'</label>'
-      + '<input class="dc-inp stk-par-inp" type="number" min="0" step="any" value="'+par+'"'
-      + ' placeholder="แพ็ค" data-ing="'+escapeHtml(k)+'"></div>';
-  }).join('');
-  var html = '<div class="dc-modal-head"><h3>⚙️ ตั้งสต็อกเต็ม</h3><button class="dc-x" onclick="dcCloseModal()" aria-label="ปิด">✕</button></div>'
-    + '<div class="dc-modal-scroll">'
-    + '<div class="dc-field"><label>เตือน restock เมื่อเหลือต่ำกว่า (%)</label>'
-    + '<input class="dc-inp" id="stk-par-thr" type="number" min="1" max="99" step="1" value="'+thr+'"></div>'
-    + '<div class="dc-field" style="margin-bottom:4px"><label>สต็อกเต็ม (แพ็ค) ต่อวัตถุดิบ</label></div>'
-    + '<div>'+rows+'</div>'
-    + '</div>'
-    + '<div class="dc-modal-foot"><span class="spacer"></span>'
-    + '<button class="dc-btn ghost" onclick="dcCloseModal()">ยกเลิก</button>'
-    + '<button class="dc-btn primary" onclick="stkSavePar()">บันทึก</button></div>';
+  var thr=DCS.stock.threshold_pct||60;
+  var par=DCS.stock.par||{};
+  var imgs=DCS.stock.images||{};
+  var rows='';
+  DC_IGROUPS.forEach(function(g) {
+    var gIngs=Object.keys(DCS.catalog).filter(function(k) { return dcIngGroup(k)===g[0]; });
+    if (!gIngs.length) return;
+    rows+='<div class="stk-modal-group-label">'+g[1]+'</div>';
+    rows+=gIngs.map(function(k) {
+      var pObj=par[k]; var count='',pUnit='แพ็ค',pSize='';
+      if (pObj!=null) {
+        if (typeof pObj==='object') { count=pObj.count||''; pUnit=pObj.unit||'แพ็ค'; pSize=pObj.size||''; }
+        else { count=pObj; var c2=DCS.catalog[k]; pSize=c2?(c2.qty||''):''; }
+      }
+      var imgUrl=imgs[k]||'';
+      return '<div class="stk-par-item">'
+        +'<div class="stk-par-head">'
+        +'<span class="stk-par-ingname">'+escapeHtml(k)+'</span>'
+        +'<div class="stk-par-field"><label>🖼 URL รูป</label>'
+        +'<input class="dc-inp url-inp stk-par-img" type="url" placeholder="https://..." value="'+escapeHtml(imgUrl)+'" data-ing="'+escapeHtml(k)+'"></div>'
+        +'</div>'
+        +'<div class="stk-par-fields">'
+        +'<div class="stk-par-field"><label>จำนวน</label>'
+        +'<input class="dc-inp stk-par-count" type="number" min="0" step="any" value="'+(count||'')+'" placeholder="—" data-ing="'+escapeHtml(k)+'"></div>'
+        +'<div class="stk-par-field"><label>หน่วย</label>'
+        +'<select class="dc-inp stk-par-unit" data-ing="'+escapeHtml(k)+'"><option value="">—</option>'+stkUnitOpts(pUnit)+'</select></div>'
+        +'<div class="stk-par-field"><label>ปริมาณ/หน่วย</label>'
+        +'<input class="dc-inp stk-par-size" type="number" min="0" step="any" value="'+(pSize||'')+'" placeholder="—" data-ing="'+escapeHtml(k)+'"></div>'
+        +'<span class="stk-par-bu">'+stkBaseUnit(k)+'</span>'
+        +'</div></div>';
+    }).join('');
+  });
+  var html='<div class="dc-modal-head"><h3>⚙️ ตั้งสต็อกเต็ม</h3>'
+    +'<button class="dc-x" onclick="dcCloseModal()" aria-label="ปิด">✕</button></div>'
+    +'<div class="dc-modal-scroll">'
+    +'<div class="dc-field" style="margin-bottom:16px"><label>🔔 เตือนเมื่อเหลือต่ำกว่า (%)</label>'
+    +'<input class="dc-inp" id="stk-par-thr" type="number" min="1" max="99" step="1" value="'+thr+'"></div>'
+    +'<div>'+rows+'</div>'
+    +'</div>'
+    +'<div class="dc-modal-foot"><span class="spacer"></span>'
+    +'<button class="dc-btn ghost" onclick="dcCloseModal()">ยกเลิก</button>'
+    +'<button class="dc-btn primary" onclick="stkSavePar()">💾 บันทึก</button></div>';
   dcSetModalBody(html);
 }
 function stkSavePar() {
-  var thr = parseFloat((document.getElementById('stk-par-thr')||{}).value||'');
+  var thr=parseFloat((document.getElementById('stk-par-thr')||{}).value||'');
   if (!(thr>=1&&thr<=99)) { showToast('ใส่เกณฑ์เตือน 1–99%'); return; }
-  DCS.stock.threshold_pct = thr;
-  DCS.stock.par = DCS.stock.par || {};
-  document.querySelectorAll('.stk-par-inp').forEach(function(inp) {
-    var ing = inp.getAttribute('data-ing'); var v = parseFloat(inp.value||'');
-    if (v>0) DCS.stock.par[ing] = v; else delete DCS.stock.par[ing];
+  var newPar={}, newImgs={};
+  document.querySelectorAll('.stk-par-count').forEach(function(inp) {
+    var ing=inp.getAttribute('data-ing');
+    var cnt=parseFloat(inp.value||''); if (!(cnt>0)) return;
+    var uEl=document.querySelector('.stk-par-unit[data-ing="'+ing+'"]');
+    var sEl=document.querySelector('.stk-par-size[data-ing="'+ing+'"]');
+    var unit=uEl?(uEl.value||'แพ็ค'):'แพ็ค';
+    var size=parseFloat(sEl?(sEl.value||''):'')||1;
+    newPar[ing]={count:cnt,unit:unit,size:size};
   });
-  dcAfterChange(); dcCloseModal(); renderStockView();
-  showToast('บันทึกการตั้งค่าสต็อกแล้ว ✓');
+  document.querySelectorAll('.stk-par-img').forEach(function(inp) {
+    var ing=inp.getAttribute('data-ing');
+    var url=(inp.value||'').trim(); if (url) newImgs[ing]=url;
+  });
+  var doSave=function() {
+    DCS.stock.threshold_pct=thr; DCS.stock.par=newPar; DCS.stock.images=newImgs;
+    dcAfterChange(); dcCloseModal(); renderStockView();
+    showToast('บันทึกการตั้งค่าสต็อกแล้ว ✓');
+  };
+  if (!dcEdit) { dcOpenPwModal('🔒 ปลดล็อกก่อนบันทึก','ใส่รหัสเพื่อแก้ไขข้อมูลสต็อก',function() { dcEdit=true; showToast('ปลดล็อกแล้ว ✓'); doSave(); }); }
+  else { doSave(); }
 }
 
 // ── Roast palette (ไล่เฉด อ่อน→เข้ม) ──

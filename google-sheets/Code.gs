@@ -14,7 +14,8 @@
  */
 
 var SH = { cat: 'วัตถุดิบ', menu: 'เมนู', recipe: 'สูตร', settings: 'ตั้งค่า',
-           buyLogs: 'สต็อก-ซื้อเข้า', salesLogs: 'สต็อก-ยอดขาย', parSheet: 'สต็อก-par' };
+           buyLogs: 'สต็อก-ซื้อเข้า', salesLogs: 'สต็อก-ยอดขาย',
+           parSheet: 'สต็อก-par', imgSheet: 'สต็อก-รูป' };
 
 function doGet(e) {
   return json_(buildData_());
@@ -84,14 +85,19 @@ function buildData_() {
   if (sm.vat_grab !== undefined && sm.vat_grab !== '') asm.channels.grab.vat = Number(sm.vat_grab);
   if (sm.stock_threshold_pct !== undefined && sm.stock_threshold_pct !== '') asm.stock_threshold_pct = Number(sm.stock_threshold_pct);
 
-  // สต็อก-ซื้อเข้า
+  // สต็อก-ซื้อเข้า (schema ใหม่: วันที่,วัตถุดิบ,จำนวน,หน่วย,ปริมาณต่อหน่วย,ราคา/หน่วย,หมายเหตุ)
   var purchases = [];
   var bv = rows_(SH.buyLogs);
   for (var i = 1; i < bv.length; i++) {
     var r = bv[i];
     var date = String(r[0] || '').trim(), ing = String(r[1] || '').trim();
     if (!date || !ing) continue;
-    purchases.push({ date: date, ing: ing, packs: Number(r[2]) || 0, note: String(r[3] || '').trim() });
+    var qty = r[2] !== '' && r[2] != null ? Number(r[2]) : null;
+    var unit = String(r[3] || '').trim() || 'แพ็ค';
+    var size = r[4] !== '' && r[4] != null ? Number(r[4]) : null;
+    var price = r[5] !== '' && r[5] != null ? Number(r[5]) : null;
+    var note = String(r[6] || '').trim();
+    purchases.push({ date: date, ing: ing, qty: qty, unit: unit, size: size, price: price, note: note });
   }
 
   // สต็อก-ยอดขาย
@@ -104,12 +110,21 @@ function buildData_() {
     sales.push({ date: date, menu: menu, cups: Number(r[2]) || 0 });
   }
 
-  // สต็อก-par
-  var par = {}, stock_thr = Number(sm.stock_threshold_pct) || 55;
+  // สต็อก-par (schema ใหม่: วัตถุดิบ,จำนวน,หน่วย,ปริมาณต่อหน่วย)
+  var par = {}, stock_thr = Number(sm.stock_threshold_pct) || 60;
   var pv = rows_(SH.parSheet);
   for (var i = 1; i < pv.length; i++) {
     var k = String(pv[i][0] || '').trim(); if (!k) continue;
-    var v = Number(pv[i][1]); if (v > 0) par[k] = v;
+    var cnt = Number(pv[i][1]); if (!(cnt > 0)) continue;
+    par[k] = { count: cnt, unit: String(pv[i][2] || 'แพ็ค').trim(), size: Number(pv[i][3]) || 1 };
+  }
+
+  // สต็อก-รูป
+  var images = {};
+  var iv = rows_(SH.imgSheet);
+  for (var i = 1; i < iv.length; i++) {
+    var k = String(iv[i][0] || '').trim(), url = String(iv[i][1] || '').trim();
+    if (k && url) images[k] = url;
   }
 
   // สูตร (จับกลุ่มตามชื่อเมนู)
@@ -139,7 +154,7 @@ function buildData_() {
   return { source: 'Google Sheet', parsed_at: new Date().toISOString(),
            assumptions: asm, catalog: catalog, menus: menus,
            purchases: purchases, sales: sales,
-           stock: { threshold_pct: stock_thr, par: par } };
+           stock: { threshold_pct: stock_thr, par: par, images: images } };
 }
 
 // ── เขียนทับทุกแท็บจาก JSON ที่ dashboard ส่งมา ──
@@ -178,9 +193,11 @@ function writeData_(data) {
     ['stock_threshold_pct', stk.threshold_pct != null ? stk.threshold_pct : 55]];
   writeSheet_(SH.settings, srows);
 
-  // สต็อก-ซื้อเข้า
-  var brows = [['วันที่', 'วัตถุดิบ', 'จำนวนแพ็ค', 'หมายเหตุ']];
-  (data.purchases || []).forEach(function(p) { brows.push([p.date || '', p.ing || '', p.packs || 0, p.note || '']); });
+  // สต็อก-ซื้อเข้า (schema ใหม่ 7 คอลัมน์)
+  var brows = [['วันที่', 'วัตถุดิบ', 'จำนวน', 'หน่วย', 'ปริมาณต่อหน่วย', 'ราคา/หน่วย', 'หมายเหตุ']];
+  (data.purchases || []).forEach(function(p) {
+    brows.push([p.date || '', p.ing || '', blank_(p.qty), p.unit || 'แพ็ค', blank_(p.size), blank_(p.price), p.note || '']);
+  });
   writeSheet_(SH.buyLogs, brows);
 
   // สต็อก-ยอดขาย
@@ -188,11 +205,21 @@ function writeData_(data) {
   (data.sales || []).forEach(function(s) { salrows.push([s.date || '', s.menu || '', s.cups || 0]); });
   writeSheet_(SH.salesLogs, salrows);
 
-  // สต็อก-par
-  var par = (stk.par) || {};
-  var prows = [['วัตถุดิบ', 'สต็อกเต็มแพ็ค']];
-  Object.keys(par).forEach(function(k) { prows.push([k, par[k]]); });
+  // สต็อก-par (schema ใหม่ 4 คอลัมน์)
+  var par = stk.par || {};
+  var prows = [['วัตถุดิบ', 'จำนวน', 'หน่วย', 'ปริมาณต่อหน่วย']];
+  Object.keys(par).forEach(function(k) {
+    var p = par[k];
+    if (typeof p === 'object') { prows.push([k, p.count || 0, p.unit || 'แพ็ค', p.size || 1]); }
+    else { prows.push([k, p, 'แพ็ค', 1]); }
+  });
   writeSheet_(SH.parSheet, prows);
+
+  // สต็อก-รูป
+  var images = stk.images || {};
+  var irows = [['วัตถุดิบ', 'url']];
+  Object.keys(images).forEach(function(k) { if (images[k]) irows.push([k, images[k]]); });
+  writeSheet_(SH.imgSheet, irows);
 }
 
 function blank_(v) { return (v == null) ? '' : v; }

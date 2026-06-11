@@ -38,11 +38,12 @@
 | **เมนู** | ชื่อ · หมวด (signature/coffee/tea/milk/soda) · หน้าร้าน · Lineman · Shoppee · Grab · ต้นทุนตั้งต้น · รูปภาพ (URL) |
 | **สูตร** | เมนู (ชื่อตรงกับแท็บเมนู) · วัตถุดิบ (ชื่อตรงกับคลัง) · ปริมาณ |
 | **ตั้งค่า** | คีย์ · ค่า (overhead, margin_factor, fixed_cost_monthly, days_per_month, gp_lineman, vat_lineman, gp_shoppee, vat_shoppee, gp_grab, vat_grab, **stock_threshold_pct**) |
-| **สต็อก-ซื้อเข้า** | วันที่ · วัตถุดิบ · จำนวนแพ็ค · หมายเหตุ |
+| **สต็อก-ซื้อเข้า** | วันที่ · วัตถุดิบ · จำนวน · หน่วย · ปริมาณต่อหน่วย · ราคา/หน่วย · หมายเหตุ |
 | **สต็อก-ยอดขาย** | วันที่ · เมนู · จำนวนแก้ว |
-| **สต็อก-par** | วัตถุดิบ · สต็อกเต็มแพ็ค |
+| **สต็อก-par** | วัตถุดิบ · จำนวน · หน่วย · ปริมาณต่อหน่วย |
+| **สต็อก-รูป** | วัตถุดิบ · url |
 
-> ⚠️ **หลังอัปเดต Code.gs** (เพิ่ม 3 แท็บสต็อก + stock_threshold_pct) ต้อง **Deploy → Manage deployments → ✏️ → Version: New version → Deploy** 1 ครั้ง มิฉะนั้น URL เดิมยังรันโค้ดเก่าที่ไม่รู้จักแท็บใหม่
+> ⚠️ **Schema เปลี่ยน — ต้อง re-deploy Apps Script:** หลังอัปเดต Code.gs ครั้งนี้ (เพิ่มแท็บ สต็อก-รูป + ปรับ schema สต็อก-ซื้อเข้า/สต็อก-par) ต้อง **Deploy → Manage deployments → ✏️ → Version: New version → Deploy** 1 ครั้ง มิฉะนั้น URL เดิมยังรันโค้ดเก่าที่ไม่รู้จัก schema ใหม่
 
 ต้นทุน/แก้ว = Σ(ราคา÷ปริมาณ × ปริมาณที่ใช้) × (1 + overhead) · เดลิเวอรีหัก GP + VAT ของช่องทางนั้น
 
