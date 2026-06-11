@@ -6126,6 +6126,7 @@ function vfSummaryBar(displayBills,totalAmt,fixedAmt,varAmt,isMock) {{
 function renderVarfixView() {{
   var root=document.getElementById('vf-root');
   if (!root) return;
+  if (!DCS) dcLoadState();
   var manualBills=(DCS.expenses||[]).map(function(e) {{ return Object.assign({{}},e,{{readonly:false}}); }});
   var stockBills=vfPurchaseBills();
   var allBills=manualBills.concat(stockBills);
