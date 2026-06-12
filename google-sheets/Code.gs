@@ -172,19 +172,23 @@ function buildData_() {
     });
   }
 
-  // รายจ่าย (schema 11 คอลัมน์: id,วันที่,กลุ่ม,หมวด,รายการ,จำนวนเงิน,สี,สลิป,หมายเหตุ,วิธีจ่าย,ร้าน/ผู้รับเงิน)
+  // รายจ่าย — อ่านจากแท็บรายเดือน (รายจ่าย-YYYY-MM); fallback แท็บเดิมถ้ายังไม่มี
   var expenses = [];
-  var ev = rows_(SH.expenses);
-  for (var i = 1; i < ev.length; i++) {
-    var r = ev[i];
-    var eid = String(r[0] || '').trim(), edate = String(r[1] || '').trim();
-    if (!eid || !edate) continue;
-    expenses.push({ id: eid, date: edate, group: String(r[2] || 'fixed').trim(),
-      category: String(r[3] || '').trim(), label: String(r[4] || '').trim(),
-      amount: Number(r[5]) || 0, color: String(r[6] || '#607d8b').trim(),
-      slip: String(r[7] || '').trim(), note: String(r[8] || '').trim(),
-      pay: String(r[9] || 'cash').trim(), vendor: String(r[10] || '').trim() });
-  }
+  var expSheets = ss_().getSheets().filter(function(sh) { return /^รายจ่าย-\d{4}-\d{2}$/.test(sh.getName()); });
+  var expSrc = expSheets.length > 0 ? expSheets : [ss_().getSheetByName(SH.expenses)].filter(Boolean);
+  expSrc.forEach(function(sh) {
+    var ev = sh.getDataRange().getValues();
+    for (var i = 1; i < ev.length; i++) {
+      var r = ev[i];
+      var eid = String(r[0] || '').trim(), edate = String(r[1] || '').trim();
+      if (!eid || !edate) continue;
+      expenses.push({ id: eid, date: edate, group: String(r[2] || 'fixed').trim(),
+        category: String(r[3] || '').trim(), label: String(r[4] || '').trim(),
+        amount: Number(r[5]) || 0, color: String(r[6] || '#607d8b').trim(),
+        slip: String(r[7] || '').trim(), note: String(r[8] || '').trim(),
+        pay: String(r[9] || 'cash').trim(), vendor: String(r[10] || '').trim() });
+    }
+  });
 
   var expSlips = {};
   var slv = rows_(SH.slipBills);
@@ -263,12 +267,31 @@ function writeData_(data) {
   Object.keys(images).forEach(function(k) { if (images[k]) irows.push([k, images[k]]); });
   writeSheet_(SH.imgSheet, irows);
 
-  // รายจ่าย (schema 11 คอลัมน์)
-  var erows = [['id', 'วันที่', 'กลุ่ม', 'หมวด', 'รายการ', 'จำนวนเงิน', 'สี', 'สลิป', 'หมายเหตุ', 'วิธีจ่าย', 'ร้าน/ผู้รับเงิน']];
+  // รายจ่าย — เขียนแยกแท็บรายเดือน (รายจ่าย-YYYY-MM)
+  var EXP_HDR = ['id', 'วันที่', 'กลุ่ม', 'หมวด', 'รายการ', 'จำนวนเงิน', 'สี', 'สลิป', 'หมายเหตุ', 'วิธีจ่าย', 'ร้าน/ผู้รับเงิน'];
+  var expByMonth = {};
   (data.expenses || []).forEach(function(e) {
-    erows.push([e.id||'', e.date||'', e.group||'fixed', e.category||'', e.label||'', e.amount||0, e.color||'', e.slip||'', e.note||'', e.pay||'cash', e.vendor||'']);
+    var ym = String(e.date || '').slice(0, 7);
+    if (!/^\d{4}-\d{2}$/.test(ym)) return;
+    (expByMonth[ym] = expByMonth[ym] || []).push(e);
   });
-  writeSheet_(SH.expenses, erows);
+  var existingMonthTabs = ss_().getSheets()
+    .filter(function(sh) { return /^รายจ่าย-\d{4}-\d{2}$/.test(sh.getName()); })
+    .map(function(sh) { return sh.getName(); });
+  Object.keys(expByMonth).forEach(function(ym) {
+    var rows = [EXP_HDR];
+    expByMonth[ym].forEach(function(e) {
+      rows.push([e.id||'', e.date||'', e.group||'fixed', e.category||'', e.label||'', e.amount||0, e.color||'', e.slip||'', e.note||'', e.pay||'cash', e.vendor||'']);
+    });
+    writeSheet_('รายจ่าย-'+ym, rows);
+  });
+  existingMonthTabs.forEach(function(tabName) {
+    var ym = tabName.replace('รายจ่าย-', '');
+    if (!expByMonth[ym]) {
+      var sh = sheet_(tabName); sh.clearContents();
+      sh.getRange(1, 1, 1, EXP_HDR.length).setValues([EXP_HDR]);
+    }
+  });
 
   // สลิป-บิล [คีย์, ลิงก์]
   var expSlips = data.expense_slips || {};

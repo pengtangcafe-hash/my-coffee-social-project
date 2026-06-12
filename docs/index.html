@@ -786,6 +786,27 @@
     .vf-receipt-total { font-size:1.15rem; font-weight:900; color:var(--text); font-variant-numeric:tabular-nums; }
     .vf-slip-btn { font-size:.72rem!important; padding:4px 10px!important; }
     .vf-slip-thumb { width:60px; height:45px; object-fit:cover; border-radius:6px; cursor:pointer; margin-right:6px; border:1px solid var(--card-border); vertical-align:middle; }
+    /* ── varfix history card ── */
+    .vf-history-card { background:var(--card); border:1px solid var(--card-border); border-radius:16px; margin-top:22px; overflow:hidden; }
+    .vf-history-hdr { display:flex; align-items:center; justify-content:space-between; padding:12px 16px; cursor:pointer; user-select:none; font-weight:700; font-size:.9rem; color:var(--text); }
+    .vf-history-hdr:hover { background:var(--nav-hover); }
+    .vf-history-body { padding:16px; }
+    .vf-cmp-toolbar { display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:12px; font-size:.82rem; color:var(--text-muted); }
+    .vf-cmp-sel { background:var(--card); border:1px solid var(--card-border); color:var(--text); border-radius:8px; padding:5px 10px; font-size:.82rem; cursor:pointer; }
+    .vf-cmp-wrap { overflow-x:auto; -webkit-overflow-scrolling:touch; }
+    .vf-cmp-tbl { width:100%; border-collapse:collapse; font-size:.8rem; min-width:360px; }
+    .vf-cmp-tbl th { text-align:right; padding:6px 8px; color:var(--text-muted); font-weight:700; border-bottom:2px solid var(--card-border); white-space:nowrap; }
+    .vf-cmp-tbl th:first-child { text-align:left; }
+    .vf-cmp-tbl td { text-align:right; padding:5px 8px; border-bottom:1px solid var(--card-border); font-variant-numeric:tabular-nums; white-space:nowrap; }
+    .vf-cmp-tbl td:first-child { text-align:left; color:var(--text); }
+    .vf-cmp-tbl tfoot td { font-weight:800; background:var(--nav-active); border-bottom:none; padding:7px 8px; }
+    .vf-diff-up { color:#ef4444; font-weight:700; }
+    .vf-diff-dn { color:#22c55e; font-weight:700; }
+    .vf-diff-nu { color:var(--text-muted); }
+    .vf-trend-wrap { margin-top:20px; }
+    .vf-trend-title { font-size:.82rem; font-weight:700; color:var(--text-muted); margin-bottom:10px; }
+    .vf-trend-canvas-wrap { position:relative; height:200px; }
+    .vf-history-empty { color:var(--text-muted); font-size:.82rem; text-align:center; padding:20px 0; }
   </style>
 </head>
 <body style="font-family: 'Prompt', system-ui, sans-serif" class="text-slate-800">
@@ -4118,6 +4139,9 @@ new MutationObserver(function(){ clearTimeout(_roastTimer); _roastTimer=setTimeo
 
 // ── ต้นทุนผันแปรและคงที่ (Varfix) ──
 var vfRange='month';
+var vfTrendChart=null;
+var vfHistoryCmpMonth=null;
+var vfHistoryOpen=true;
 var EXP_CATS={
   fixed:[
     {cat:'rent',label:'ค่าเช่าร้าน',color:'#e53935'},
@@ -4169,6 +4193,41 @@ function vfInRange(dateStr,range) {
   return true;
 }
 function vfSetRange(r) { vfRange=r; renderVarfixView(); }
+function vfMonthTH(yyyymm) {
+  if (!yyyymm||yyyymm.length<7) return '—';
+  var p=yyyymm.split('-'); var y=parseInt(p[0]||'0'); var m=parseInt(p[1]||'0');
+  var names=['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+  return (names[m-1]||'?')+' '+(y+543);
+}
+function vfMonthsWithData() {
+  var seen={};
+  (DCS.expenses||[]).forEach(function(e) { if (e.date) seen[e.date.slice(0,7)]=true; });
+  return Object.keys(seen).sort();
+}
+function vfCatTotalsMonth(yyyymm) {
+  var t={};
+  (DCS.expenses||[]).forEach(function(e) {
+    if (!e.date||e.date.slice(0,7)!==yyyymm) return;
+    t[e.category]=(t[e.category]||0)+(e.amount||0);
+  });
+  return t;
+}
+function vf6MonthsBack() {
+  var now=new Date(); var months=[];
+  for (var i=5;i>=0;i--) {
+    var d=new Date(now.getFullYear(),now.getMonth()-i,1);
+    var mo=d.getMonth()+1;
+    months.push(d.getFullYear()+'-'+(mo<10?'0':'')+mo);
+  }
+  return months;
+}
+function vfFmtDiff(diff,base) {
+  if (diff===0) return {txt:'—',cls:'vf-diff-nu'};
+  var sign=diff>0?'+':'';
+  var pctTxt=base===0?(diff>0?' (ใหม่)':''):(' ('+sign+(diff/base*100).toFixed(1)+'%)');
+  if (diff>0) return {txt:'↑'+vfFmtMoney(diff)+pctTxt,cls:'vf-diff-up'};
+  return {txt:'↓'+vfFmtMoney(-diff)+pctTxt,cls:'vf-diff-dn'};
+}
 function vfPurchaseBills() {
   var byKey={};
   (DCS.purchases||[]).forEach(function(p) {
@@ -4370,6 +4429,139 @@ function vfSummaryBar(displayBills,totalAmt,fixedAmt,varAmt,isMock) {
     +'<div class="vf-legend">'+legendHtml+'</div>'
     +'</div>';
 }
+function vfBuildCmpTable(cmpYM) {
+  if (!DCS) dcLoadState();
+  if (!cmpYM) return '<div class="vf-history-empty">ยังไม่มีข้อมูลเดือนก่อนให้เทียบ</div>';
+  var todayYM=vfTodayISO().slice(0,7);
+  var cmpTotals=vfCatTotalsMonth(cmpYM);
+  var thisTotals=vfCatTotalsMonth(todayYM);
+  var allCatDefs=EXP_CATS.fixed.concat(EXP_CATS.variable);
+  var seen={};
+  Object.keys(cmpTotals).forEach(function(c) { seen[c]=true; });
+  Object.keys(thisTotals).forEach(function(c) { seen[c]=true; });
+  var rows='';
+  var cmpFixed=0,thisFixed=0,cmpVar=0,thisVar=0;
+  (DCS.expenses||[]).forEach(function(e) {
+    if (!e.date) return;
+    var ym=e.date.slice(0,7), amt=e.amount||0;
+    if (ym===cmpYM) { if (e.group==='fixed') cmpFixed+=amt; else cmpVar+=amt; }
+    else if (ym===todayYM) { if (e.group==='fixed') thisFixed+=amt; else thisVar+=amt; }
+  });
+  allCatDefs.forEach(function(c) {
+    if (!seen[c.cat]) return;
+    var cAmt=cmpTotals[c.cat]||0,tAmt=thisTotals[c.cat]||0;
+    if (cAmt===0&&tAmt===0) return;
+    var d=vfFmtDiff(tAmt-cAmt,cAmt);
+    var dot='<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:'+escapeHtml(c.color)+';vertical-align:middle;margin-right:5px"></span>';
+    rows+='<tr><td>'+dot+escapeHtml(c.label)+'</td><td>'+(cAmt?vfFmtMoney(cAmt):'—')+'</td><td>'+(tAmt?vfFmtMoney(tAmt):'—')+'</td><td class="'+d.cls+'">'+d.txt+'</td></tr>';
+  });
+  Object.keys(seen).forEach(function(cat) {
+    if (allCatDefs.some(function(x) { return x.cat===cat; })) return;
+    var cAmt=cmpTotals[cat]||0,tAmt=thisTotals[cat]||0;
+    if (cAmt===0&&tAmt===0) return;
+    var d=vfFmtDiff(tAmt-cAmt,cAmt);
+    rows+='<tr><td>'+escapeHtml(cat)+'</td><td>'+(cAmt?vfFmtMoney(cAmt):'—')+'</td><td>'+(tAmt?vfFmtMoney(tAmt):'—')+'</td><td class="'+d.cls+'">'+d.txt+'</td></tr>';
+  });
+  if (!rows) return '<div class="vf-history-empty">ไม่มีรายจ่ายทั้งสองเดือนที่เลือก</div>';
+  function sumRow(lbl,cA,tA) {
+    var d=vfFmtDiff(tA-cA,cA);
+    return '<tr><td>'+lbl+'</td><td>'+vfFmtMoney(cA)+'</td><td>'+vfFmtMoney(tA)+'</td><td class="'+d.cls+'">'+d.txt+'</td></tr>';
+  }
+  var foot=sumRow('📌 รวม Fixed',cmpFixed,thisFixed)+sumRow('📦 รวม Variable',cmpVar,thisVar)+sumRow('💰 รวมทั้งหมด',cmpFixed+cmpVar,thisFixed+thisVar);
+  return '<div class="vf-cmp-wrap"><table class="vf-cmp-tbl">'
+    +'<thead><tr><th>หมวด</th><th>'+escapeHtml(vfMonthTH(cmpYM))+'</th><th>เดือนนี้ ('+escapeHtml(vfMonthTH(todayYM))+')</th><th>ผลต่าง</th></tr></thead>'
+    +'<tbody>'+rows+'</tbody>'
+    +'<tfoot>'+foot+'</tfoot>'
+    +'</table></div>';
+}
+function vfBuildHistoryCard() {
+  if (!DCS) dcLoadState();
+  var todayYM=vfTodayISO().slice(0,7);
+  var allMonths=vfMonthsWithData();
+  var prevMonths=allMonths.filter(function(m) { return m<todayYM; });
+  if (!vfHistoryCmpMonth||allMonths.indexOf(vfHistoryCmpMonth)===-1) {
+    vfHistoryCmpMonth=prevMonths.length?prevMonths[prevMonths.length-1]:null;
+  }
+  var chevron=vfHistoryOpen?'▲':'▼';
+  var selectOpts=prevMonths.length===0
+    ?'<option value="">ไม่มีข้อมูลเดือนก่อน</option>'
+    :prevMonths.map(function(m) {
+      return '<option value="'+m+'"'+(m===vfHistoryCmpMonth?' selected':'')+'>'+escapeHtml(vfMonthTH(m))+'</option>';
+    }).join('');
+  var cmpHtml=prevMonths.length===0
+    ?'<div class="vf-history-empty">ยังไม่มีข้อมูลเดือนก่อน กรุณาบันทึกรายจ่ายอย่างน้อยสองเดือน</div>'
+    :vfBuildCmpTable(vfHistoryCmpMonth);
+  var trendHtml='<div class="vf-trend-wrap">'
+    +'<div class="vf-trend-title">📊 เทรนด์ 6 เดือนย้อนหลัง (Fixed vs Variable)</div>'
+    +'<div class="vf-trend-canvas-wrap"><canvas id="vf-trend-canvas"></canvas></div>'
+    +'</div>';
+  return '<div class="vf-history-card">'
+    +'<div class="vf-history-hdr" onclick="vfToggleHistory()">'
+    +'<span>📊 ประวัติ &amp; เปรียบเทียบย้อนหลัง</span>'
+    +'<span id="vf-history-chevron">'+chevron+'</span>'
+    +'</div>'
+    +'<div id="vf-hist-body" class="vf-history-body">'
+    +'<div class="vf-cmp-toolbar">'
+    +'<label style="font-weight:700;color:var(--text)">เทียบกับ:</label>'
+    +'<select class="vf-cmp-sel" onchange="vfCmpMonthChange(this.value)">'+selectOpts+'</select>'
+    +'<span>vs เดือนนี้ ('+escapeHtml(vfMonthTH(todayYM))+')</span>'
+    +'</div>'
+    +'<div id="vf-cmp-body">'+cmpHtml+'</div>'
+    +trendHtml
+    +'</div>'
+    +'</div>';
+}
+function vfInitTrendChart() {
+  if (vfTrendChart) { try { vfTrendChart.destroy(); } catch(e) {} vfTrendChart=null; }
+  var canvas=document.getElementById('vf-trend-canvas');
+  if (!canvas||typeof Chart==='undefined') return;
+  if (!DCS) dcLoadState();
+  var months=vf6MonthsBack();
+  var fixedData=months.map(function(ym) {
+    return (DCS.expenses||[]).filter(function(e) { return e.date&&e.date.slice(0,7)===ym&&e.group==='fixed'; }).reduce(function(s,e) { return s+(e.amount||0); },0);
+  });
+  var varData=months.map(function(ym) {
+    return (DCS.expenses||[]).filter(function(e) { return e.date&&e.date.slice(0,7)===ym&&e.group==='variable'; }).reduce(function(s,e) { return s+(e.amount||0); },0);
+  });
+  var labels=months.map(vfMonthTH);
+  var tc=getThemeChartCfg();
+  vfTrendChart=new Chart(canvas,{
+    type:'bar',
+    data:{
+      labels:labels,
+      datasets:[
+        {label:'Fixed',data:fixedData,backgroundColor:'rgba(229,57,53,.75)',borderColor:'#e53935',borderWidth:1,stack:'s'},
+        {label:'Variable',data:varData,backgroundColor:'rgba(30,136,229,.75)',borderColor:'#1e88e5',borderWidth:1,stack:'s'}
+      ]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{
+        legend:{labels:{color:tc.tick,font:{size:11}}},
+        tooltip:{backgroundColor:tc.tooltipBg,titleColor:tc.tooltipText,bodyColor:tc.tooltipText,
+          callbacks:{label:function(ctx) { return ctx.dataset.label+': ฿'+ctx.parsed.y.toLocaleString('en-US',{maximumFractionDigits:2}); }}}
+      },
+      scales:{
+        x:{stacked:true,grid:{color:tc.grid},ticks:{color:tc.tick,font:{size:10}}},
+        y:{stacked:true,grid:{color:tc.grid},ticks:{color:tc.tick,font:{size:10},callback:function(v) { return '฿'+Number(v).toLocaleString('en-US'); }}}
+      }
+    }
+  });
+}
+function vfToggleHistory() {
+  vfHistoryOpen=!vfHistoryOpen;
+  var bodyEl=document.getElementById('vf-hist-body');
+  var chevEl=document.getElementById('vf-history-chevron');
+  if (bodyEl) bodyEl.style.display=vfHistoryOpen?'':'none';
+  if (chevEl) chevEl.textContent=vfHistoryOpen?'▲':'▼';
+  if (vfHistoryOpen) { vfInitTrendChart(); }
+  else { if (vfTrendChart) { try { vfTrendChart.destroy(); } catch(e) {} vfTrendChart=null; } }
+}
+function vfCmpMonthChange(ym) {
+  vfHistoryCmpMonth=ym;
+  var el=document.getElementById('vf-cmp-body');
+  if (el) el.innerHTML=vfBuildCmpTable(ym);
+}
 function renderVarfixView() {
   var root=document.getElementById('vf-root');
   if (!root) return;
@@ -4401,7 +4593,10 @@ function renderVarfixView() {
   var billsHtml=displayBills.length===0
     ?'<div class="ov-tile ov-soon"><div class="ov-soon-emoji">📋</div><div class="ov-soon-sub">ยังไม่มีรายจ่ายในช่วงนี้</div></div>'
     :displayBills.map(function(b) { return vfReceiptCard(b); }).join('');
-  root.innerHTML=tabsHtml+summaryHtml+toolbarHtml+mockHeaderHtml+'<div class="vf-bills">'+billsHtml+'</div>';
+  root.innerHTML=tabsHtml+summaryHtml+toolbarHtml+mockHeaderHtml+'<div class="vf-bills">'+billsHtml+'</div>'+vfBuildHistoryCard();
+  var histBody=document.getElementById('vf-hist-body');
+  if (histBody&&!vfHistoryOpen) histBody.style.display='none';
+  if (vfHistoryOpen) vfInitTrendChart();
   var upEl=document.getElementById('vf-updated');
   if (upEl) upEl.textContent=vfFmtDate(vfTodayISO());
   applyRoast();
