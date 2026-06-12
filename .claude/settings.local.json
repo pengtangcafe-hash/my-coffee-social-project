@@ -85,7 +85,8 @@
       "Bash(echo \"Checksum result: $?\")",
       "Bash(cp dashboard/index.html docs/index.html)",
       "Bash(git commit -q -m 'feat: ปุ่มเชื่อม/ซิงก์ Sheet บนหน้าต้นทุนผันแปรฯ + เตือนดันก่อนดึง กันข้อมูลหาย *)",
-      "Bash(grep *)"
+      "Bash(grep *)",
+      "Bash(git commit -q -m 'fix: การ์ดประวัติชนปุ่มด้านล่าง — เพิ่ม margin-bottom 22px *)"
     ]
   }
 }
