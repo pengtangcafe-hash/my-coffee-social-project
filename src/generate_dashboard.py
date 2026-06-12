@@ -2581,6 +2581,26 @@ HTML_TEMPLATE = """\
     .vf-trend-title {{ font-size:.82rem; font-weight:700; color:var(--text-muted); margin-bottom:10px; }}
     .vf-trend-canvas-wrap {{ position:relative; height:200px; }}
     .vf-history-empty {{ color:var(--text-muted); font-size:.82rem; text-align:center; padding:20px 0; }}
+    /* ── POS Import ── */
+    .pos-card-row {{ display:flex; gap:12px; flex-wrap:wrap; margin:12px 0; }}
+    .pos-card {{ flex:1; min-width:140px; background:var(--tile-bg); border-radius:12px; padding:14px 16px; border:1px solid var(--card-border); }}
+    .pos-card.refund .pos-card-val {{ color:#ef4444; }}
+    .pos-card.net .pos-card-val {{ color:#22c55e; }}
+    .pos-card.net-neg .pos-card-val {{ color:#ef4444; }}
+    .pos-card-label {{ font-size:.8rem; color:var(--text-muted); margin-bottom:4px; }}
+    .pos-card-val {{ font-size:1.4rem; font-weight:800; }}
+    .pos-card-sub {{ font-size:.75rem; color:var(--text-muted); margin-top:2px; }}
+    .pos-section {{ margin:18px 0; }}
+    .pos-section-title {{ font-size:1rem; font-weight:700; margin-bottom:10px; }}
+    .pos-diag {{ background:var(--tile-bg); border-radius:12px; padding:16px; border:1px solid var(--card-border); }}
+    .pos-diag-row {{ font-size:.875rem; margin-bottom:8px; line-height:1.6; }}
+    .pos-cat-chip {{ display:inline-block; background:var(--nav-active); padding:2px 8px; border-radius:20px; font-size:.8rem; margin:2px; }}
+    .pos-cat-chip.ok {{ background:rgba(34,197,94,.15); color:#16a34a; }}
+    .pos-cat-chip.warn {{ background:rgba(245,158,11,.15); color:#b45309; }}
+    .pos-best-row td {{ background:rgba(34,197,94,.06); }}
+    .pos-custom-row {{ display:flex; gap:12px; flex-wrap:wrap; align-items:center; margin:8px 0; font-size:.875rem; }}
+    .pos-custom-row label {{ display:flex; align-items:center; gap:6px; }}
+    .pos-custom-row input[type=date] {{ border:1px solid var(--border); border-radius:8px; padding:4px 8px; background:var(--bg); color:var(--text); font-size:.875rem; }}
   </style>
 </head>
 <body style="font-family: 'Prompt', system-ui, sans-serif" class="text-slate-800">
@@ -3141,23 +3161,17 @@ HTML_TEMPLATE = """\
       <div id="vf-root"></div>
     </div>
 
-    <!-- ── Backbar: บันทึกข้อมูลนำเข้า POS (Launching soon) ── -->
+    <!-- ── Backbar: บันทึกข้อมูลนำเข้า POS ── -->
     <div id="view-bb-posimport" class="view">
       <div class="mb-6">
         <h1 class="ov-h1">บันทึกข้อมูลนำเข้า POS</h1>
-        <p class="ov-sub-h">บันทึก/ประวัติการนำเข้าข้อมูลจาก POS (คล้ายระบบบันทึกอัปเดต)</p>
+        <p class="ov-sub-h">ดึงยอดขายจาก Loyverse POS · วิเคราะห์เมนู · diagnostic ชื่อเมนู</p>
         <div class="bb-status-bar">
-          <span class="bb-status-pill soon"><span class="dot"></span>🟡 เร็วๆ นี้</span>
-          <span class="bb-status-meta">ใช้งานล่าสุด: <b>—</b></span>
-          <span class="bb-status-meta">อัปเดตข้อมูลล่าสุด: <b>—</b></span>
+          <span class="bb-status-pill live"><span class="dot"></span>🟢 ใช้งานอยู่</span>
+          <span class="bb-status-meta">ดึงล่าสุด: <b id="pos-updated">—</b></span>
         </div>
       </div>
-      <div class="ov-tile ov-soon">
-        <div class="ov-soon-emoji">📤</div>
-        <div class="ov-soon-title">Launching soon..</div>
-        <div class="ov-soon-sub">บันทึก/ประวัติการนำเข้าข้อมูลจาก POS (คล้ายระบบบันทึกอัปเดต)</div>
-        <span class="ov-soon-badge"><span class="ov-soon-dot"></span>อยู่ระหว่างพัฒนา</span>
-      </div>
+      <div id="pos-root"></div>
     </div>
 
   </main>
@@ -3287,7 +3301,8 @@ function initCharts(viewId) {{
   if (viewId === 'view-cost-drinks') {{ try {{ renderDrinkCosts(); }} catch(e) {{ console.error('renderDrinkCosts', e); }} return; }}
   if (viewId === 'view-bb-stock') {{ try {{ renderStockView(); }} catch(e) {{ console.error('renderStockView', e); }} return; }}
   if (viewId === 'view-bb-varfix') {{ try {{ renderVarfixView(); }} catch(e) {{ console.error('renderVarfixView', e); }} return; }}
-  if (viewId === 'view-bb-armory' || viewId === 'view-bb-posimport') {{ return; }}
+  if (viewId === 'view-bb-posimport') {{ try {{ renderPosImportView(); }} catch(e) {{ console.error('renderPosImportView', e); }} return; }}
+  if (viewId === 'view-bb-armory') {{ return; }}
   const platform = viewId.replace('view-', '');
   if (!DATA[platform]) return;
   try {{ initLineChart(platform); }} catch(e) {{ console.error('initLineChart', e); }}
@@ -4545,7 +4560,8 @@ function renderActiveBackbar() {{
   var viewMap={{
     'view-cost-drinks':renderDrinkCosts,
     'view-bb-stock':renderStockView,
-    'view-bb-varfix':renderVarfixView
+    'view-bb-varfix':renderVarfixView,
+    'view-bb-posimport':renderPosImportView
   }};
   Object.keys(viewMap).forEach(function(id) {{
     var v=document.getElementById(id);
@@ -4579,6 +4595,8 @@ function dcNormalize(s) {{
   s.stock.images = s.stock.images || {{}};
   s.expenses = s.expenses || [];
   s.expense_slips = s.expense_slips || {{}};
+  // posLast เก็บเฉพาะใน browser — Sheet sync ไม่มีฟิลด์นี้
+  if (s.posLast === undefined) s.posLast = null;
   return s;
 }}
 function dcLoadState() {{
@@ -5348,7 +5366,9 @@ function dcSyncPull(silent) {{
     .then(function(r) {{ return r.json(); }})
     .then(function(obj) {{
       if (!obj || !obj.menus) throw new Error('bad');
-      DCS = dcNormalize(obj); dcSave(); renderDrinkCosts(); stkRefreshIfActive(); vfRefreshIfActive();
+      var prevPosLast = DCS ? DCS.posLast : null;
+      DCS = dcNormalize(obj); DCS.posLast = prevPosLast;
+      dcSave(); renderDrinkCosts(); stkRefreshIfActive(); vfRefreshIfActive();
       if (!silent) showToast('ซิงก์จาก Google Sheet แล้ว (' + DCS.menus.length + ' เมนู)');
     }})
     .catch(function(e) {{ if (!silent) showToast('ดึงข้อมูลไม่สำเร็จ — ตรวจ URL / สิทธิ์ Anyone'); }});
@@ -6494,6 +6514,266 @@ function vfSaveExpense() {{
   }} else {{
     doSave();
   }}
+}}
+
+// ── POS Import (Loyverse) ──────────────────────────────────────────────────
+var posRange = 'today';
+var posFromDate = '';
+var posToDate = '';
+
+function posSetRange(r) {{ posRange = r; renderPosImportView(); }}
+
+function posTodayTH() {{
+  var now = new Date();
+  var d = new Date(now.getTime() + 7 * 3600000);
+  var y = d.getUTCFullYear(), m = d.getUTCMonth() + 1, dd = d.getUTCDate();
+  return y + '-' + (m < 10 ? '0' : '') + m + '-' + (dd < 10 ? '0' : '') + dd;
+}}
+
+// แปลง TH date string → UTC ISO (addDay=true → วันถัดไป เพื่อ exclusive end boundary)
+function posThToUtcIso(dateStr, addDay) {{
+  var p = dateStr.split('-');
+  var ms = Date.UTC(+p[0], +p[1] - 1, +p[2], 0, 0, 0) - 7 * 3600000;
+  if (addDay) ms += 86400000;
+  return new Date(ms).toISOString();
+}}
+
+function posGetRange() {{
+  var today = posTodayTH();
+  if (posRange === 'today') {{
+    return {{ from: posThToUtcIso(today, false), to: posThToUtcIso(today, true) }};
+  }} else if (posRange === 'month') {{
+    var p = today.split('-'); var y = +p[0], m = +p[1];
+    var first = y + '-' + (m < 10 ? '0' : '') + m + '-01';
+    var nm = m + 1, ny = y; if (nm > 12) {{ nm = 1; ny++; }}
+    var nextM = ny + '-' + (nm < 10 ? '0' : '') + nm + '-01';
+    return {{ from: posThToUtcIso(first, false), to: posThToUtcIso(nextM, false) }};
+  }} else {{
+    var fd = posFromDate || today, td = posToDate || today;
+    return {{ from: posThToUtcIso(fd, false), to: posThToUtcIso(td, true) }};
+  }}
+}}
+
+function posFmt(n) {{ return Number(n||0).toLocaleString('th-TH',{{minimumFractionDigits:2,maximumFractionDigits:2}}); }}
+function posInt(n) {{ return Math.round(Number(n||0)).toLocaleString('th-TH'); }}
+
+function renderPosImportView() {{
+  if (!DCS) dcLoadState();
+  var root = document.getElementById('pos-root');
+  if (!root) return;
+  var gsUrl = dcGsUrl();
+  if (!gsUrl) {{
+    root.innerHTML = '<div class="ov-tile ov-soon">'
+      + '<div class="ov-soon-emoji">🔗</div>'
+      + '<div class="ov-soon-title">ยังไม่ได้เชื่อม Google Sheet</div>'
+      + '<div class="ov-soon-sub">กด "เชื่อม Sheet" ในหน้าต้นทุนเครื่องดื่ม หรือต้นทุนผันแปร แล้วใส่ Web App URL ของ Apps Script ที่ Deploy แล้ว</div>'
+      + '<button class="dc-btn" style="margin-top:12px" onclick="dcOpenConnect()">🔗 เชื่อม Google Sheet</button>'
+      + '</div>';
+    return;
+  }}
+  var ranges = [['today','วันนี้'],['month','เดือนนี้'],['custom','ช่วงเอง']];
+  var tabsHtml = '<div class="stk-gtab-row">'
+    + ranges.map(function(rg) {{
+      return '<button class="ov-mtab'+(posRange===rg[0]?' active':'')+'" onclick="posSetRange(\\''+rg[0]+'\\')">'+rg[1]+'</button>';
+    }}).join('') + '</div>';
+  var today = posTodayTH();
+  if (!posFromDate) posFromDate = today;
+  if (!posToDate)   posToDate   = today;
+  var customHtml = posRange === 'custom'
+    ? '<div class="pos-custom-row"><label>จาก'
+      + ' <input type="date" id="pos-from" value="'+posFromDate+'" onchange="posFromDate=this.value"></label>'
+      + '<label>ถึง'
+      + ' <input type="date" id="pos-to" value="'+posToDate+'" onchange="posToDate=this.value"></label>'
+      + '</div>'
+    : '';
+  var fetchBtn = '<div style="margin:14px 0 10px">'
+    + '<button class="dc-btn primary" id="pos-fetch-btn" onclick="posFetch()">📥 ดึงยอดขายจาก POS</button>'
+    + '</div>';
+  root.innerHTML = tabsHtml + customHtml + fetchBtn + '<div id="pos-result"></div>';
+  if (DCS.posLast && DCS.posLast.data) posRenderResult(DCS.posLast.data, true);
+  var upEl = document.getElementById('pos-updated');
+  if (upEl && DCS.posLast && DCS.posLast.fetchedAt) {{
+    upEl.textContent = new Date(DCS.posLast.fetchedAt).toLocaleString('th-TH');
+  }}
+}}
+
+function posRenderResult(data, fromCache) {{
+  var el = document.getElementById('pos-result');
+  if (!el) return;
+  if (!data.ok) {{
+    var errMsg = data.error === 'no_token'
+      ? '⚠️ ยังไม่ได้ตั้ง LOYVERSE_TOKEN ใน Apps Script<br>'
+        + '<small style="font-weight:400">Apps Script → ⚙️ Project Settings → Script Properties'
+        + ' → เพิ่ม key: <code>LOYVERSE_TOKEN</code> = token จาก Loyverse Back Office</small>'
+      : '❌ ดึงข้อมูลไม่สำเร็จ: ' + escapeHtml(String(data.error));
+    el.innerHTML = '<div class="stk-warn-row" style="padding:16px;border-radius:10px">'+errMsg+'</div>';
+    return;
+  }}
+  var receipts  = data.receipts   || [];
+  var items     = data.items      || [];
+  var categories= data.categories || [];
+
+  // lookup maps
+  var catMap = {{}};
+  categories.forEach(function(c) {{ catMap[c.id||''] = c.name || ''; }});
+  var itemCatMap = {{}};
+  items.forEach(function(it) {{ itemCatMap[it.id||''] = catMap[it.category_id||''] || ''; }});
+
+  var sales   = receipts.filter(function(r) {{ return r.receipt_type === 'SALE'; }});
+  var refunds = receipts.filter(function(r) {{ return r.receipt_type === 'REFUND'; }});
+  var salesAmt  = sales.reduce(function(s,r) {{ return s + Number(r.total_money||0); }}, 0);
+  var refundAmt = refunds.reduce(function(s,r) {{ return s + Math.abs(Number(r.total_money||0)); }}, 0);
+  var netAmt    = salesAmt - refundAmt;
+
+  // per-category: SALE adds, REFUND subtracts
+  var catTotals = {{}};
+  function addCatLine(lines, sign) {{
+    lines.forEach(function(li) {{
+      var cat = itemCatMap[li.item_id||''] || '(ไม่มีหมวด)';
+      if (!catTotals[cat]) catTotals[cat] = {{cups:0, amt:0}};
+      catTotals[cat].cups += sign * Math.abs(Number(li.quantity||0));
+      catTotals[cat].amt  += sign * Math.abs(Number(li.total_money||0));
+    }});
+  }}
+  sales.forEach(function(r)   {{ addCatLine(r.line_items||[], +1); }});
+  refunds.forEach(function(r) {{ addCatLine(r.line_items||[], -1); }});
+
+  // per-menu
+  var menuTotals = {{}};
+  function addMenuLine(lines, sign) {{
+    lines.forEach(function(li) {{
+      var mn  = li.item_name || li.item_id || '?';
+      var cat = itemCatMap[li.item_id||''] || '(ไม่มีหมวด)';
+      if (!menuTotals[mn]) menuTotals[mn] = {{cat:cat, cups:0, amt:0}};
+      menuTotals[mn].cups += sign * Math.abs(Number(li.quantity||0));
+      menuTotals[mn].amt  += sign * Math.abs(Number(li.total_money||0));
+    }});
+  }}
+  sales.forEach(function(r)   {{ addMenuLine(r.line_items||[], +1); }});
+  refunds.forEach(function(r) {{ addMenuLine(r.line_items||[], -1); }});
+
+  var catKeys  = Object.keys(catTotals).sort(function(a,b) {{ return catTotals[b].amt - catTotals[a].amt; }});
+  var menuKeys = Object.keys(menuTotals).sort(function(a,b) {{ return menuTotals[b].amt - menuTotals[a].amt; }});
+  var bestCat  = catKeys.length ? catKeys[0] : '';
+
+  // name-match
+  var dcsNames = (DCS && DCS.menus ? DCS.menus : [])
+    .map(function(m) {{ return (m.name||'').trim().toLowerCase(); }});
+  var lvNames  = items.map(function(it) {{ return (it.item_name||'').trim(); }});
+  var matched = [], unmatched = [];
+  lvNames.forEach(function(n) {{
+    (dcsNames.indexOf(n.toLowerCase()) >= 0 ? matched : unmatched).push(n);
+  }});
+
+  if (receipts.length === 0) {{
+    el.innerHTML = '<div class="ov-tile ov-soon" style="margin-top:12px">'
+      + '<div class="ov-soon-emoji">📭</div>'
+      + '<div class="ov-soon-sub">ไม่มียอดขายในช่วงที่เลือก</div></div>';
+    return;
+  }}
+
+  var cacheHtml = fromCache
+    ? '<div style="color:var(--text-muted);font-size:.8rem;margin-bottom:8px">⏱ แสดง cache — กด ดึงยอดขาย เพื่ออัปเดต</div>'
+    : '';
+  var noCatWarn = catKeys.indexOf('(ไม่มีหมวด)') >= 0
+    ? '<div class="stk-warn-row" style="margin-bottom:8px">⚠️ มีเมนูที่ยังไม่ตั้งหมวดหมู่ใน Loyverse — แนะนำตั้ง กาแฟ / ชา / นม / โซดา</div>'
+    : '';
+
+  var cardsHtml = '<div class="pos-card-row">'
+    + '<div class="pos-card"><div class="pos-card-label">ยอดขาย</div>'
+    +   '<div class="pos-card-val">฿'+posFmt(salesAmt)+'</div>'
+    +   '<div class="pos-card-sub">'+sales.length+' บิล</div></div>'
+    + '<div class="pos-card refund"><div class="pos-card-label">คืนเงิน</div>'
+    +   '<div class="pos-card-val">฿'+posFmt(refundAmt)+'</div>'
+    +   '<div class="pos-card-sub">'+refunds.length+' บิล</div></div>'
+    + '<div class="pos-card '+(netAmt >= 0 ? 'net' : 'net-neg')+'">'
+    +   '<div class="pos-card-label">ยอดสุทธิ</div>'
+    +   '<div class="pos-card-val">฿'+posFmt(netAmt)+'</div>'
+    +   '<div class="pos-card-sub">API '+data.pages+' หน้า</div></div>'
+    + '</div>';
+
+  var catRowsHtml = catKeys.map(function(cat) {{
+    var isBest = cat === bestCat;
+    return '<tr'+(isBest?' class="pos-best-row"':'')+'>'+
+      '<td>'+(isBest?'🏆 ':'')+(cat==='(ไม่มีหมวด)'?'<span style="color:var(--text-muted)">'+cat+'</span>':escapeHtml(cat))+'</td>'+
+      '<td style="text-align:right">'+posInt(catTotals[cat].cups)+'</td>'+
+      '<td style="text-align:right">'+posFmt(catTotals[cat].amt)+'</td></tr>';
+  }}).join('');
+  var catTableHtml = '<div class="pos-section"><h3 class="pos-section-title">ยอดขายตามหมวดหมู่</h3>'
+    + (catKeys.length
+      ? '<table class="dc-table" style="width:100%"><thead><tr><th>หมวด</th><th style="text-align:right">แก้ว</th><th style="text-align:right">ยอด (฿)</th></tr></thead><tbody>'+catRowsHtml+'</tbody></table>'
+      : '<div class="ov-soon-sub">ยังไม่มีหมวดหมู่ใน Loyverse</div>')
+    + '</div>';
+
+  var menuShow = menuKeys.slice(0, 30);
+  var menuRowsHtml = menuShow.map(function(mn) {{
+    var t = menuTotals[mn];
+    return '<tr><td>'+escapeHtml(mn)+'</td>'
+      +'<td style="color:var(--text-muted);font-size:.85em">'+escapeHtml(t.cat)+'</td>'
+      +'<td style="text-align:right">'+posInt(t.cups)+'</td>'
+      +'<td style="text-align:right">'+posFmt(t.amt)+'</td></tr>';
+  }}).join('');
+  var moreRowHtml = menuKeys.length > 30
+    ? '<tr><td colspan="4" style="color:var(--text-muted);text-align:center;font-size:.85em">... และอีก '+(menuKeys.length-30)+' รายการ</td></tr>'
+    : '';
+  var menuTableHtml = '<div class="pos-section">'
+    + '<h3 class="pos-section-title">ยอดขายตามเมนู ('+menuKeys.length+' รายการ)</h3>'
+    + (menuShow.length
+      ? '<table class="dc-table" style="width:100%"><thead><tr><th>เมนู</th><th>หมวด</th><th style="text-align:right">แก้ว</th><th style="text-align:right">ยอด (฿)</th></tr></thead><tbody>'+menuRowsHtml+moreRowHtml+'</tbody></table>'
+      : '')
+    + '</div>';
+
+  var catChipsHtml = categories.length
+    ? categories.map(function(c) {{ return '<span class="pos-cat-chip">'+escapeHtml(c.name)+'</span>'; }}).join(' ')
+    : '<span style="color:#f59e0b;font-weight:600">ยังไม่มีหมวดหมู่ — ตั้งค่าใน Loyverse POS ก่อน</span>';
+  var matchHtml = ''
+    + (matched.length
+      ? '<div class="pos-diag-row">✅ จับคู่กับเมนูร้านได้ ('+matched.length+'): '
+        +matched.map(function(n) {{ return '<span class="pos-cat-chip ok">'+escapeHtml(n)+'</span>'; }}).join(' ')+'</div>'
+      : '')
+    + (unmatched.length
+      ? '<div class="pos-diag-row">⚠️ ชื่อยังไม่ตรงกับเมนูร้าน ('+unmatched.length+'): '
+        +unmatched.map(function(n) {{ return '<span class="pos-cat-chip warn">'+escapeHtml(n)+'</span>'; }}).join(' ')+'</div>'
+      : '');
+  var diagHtml = '<div class="pos-section pos-diag">'
+    + '<h3 class="pos-section-title">🔍 Diagnostic</h3>'
+    + '<div class="pos-diag-row">ดึงมา <b>'+receipts.length+'</b> บิล'
+    +   ' (SALE: <b>'+sales.length+'</b> · REFUND: <b>'+refunds.length+'</b>)'
+    +   ' · ใช้ <b>'+data.pages+'</b> หน้า API</div>'
+    + '<div class="pos-diag-row">หมวดหมู่ใน Loyverse: '+catChipsHtml+'</div>'
+    + '<div class="pos-diag-row">เมนูใน Loyverse: <b>'+lvNames.length+'</b> รายการ'
+    +   ' · จับคู่กับเมนูร้านได้: <b>'+matched.length+'</b> / '+lvNames.length+'</div>'
+    + matchHtml
+    + '</div>';
+
+  el.innerHTML = cacheHtml + noCatWarn + cardsHtml + catTableHtml + menuTableHtml + diagHtml;
+}}
+
+function posFetch() {{
+  if (!DCS) dcLoadState();
+  var url = dcGsUrl();
+  if (!url) {{ showToast('เชื่อม Google Sheet ก่อน'); return; }}
+  var btn = document.getElementById('pos-fetch-btn');
+  if (btn) {{ btn.disabled = true; btn.textContent = '⏳ กำลังดึง...'; }}
+  var resEl = document.getElementById('pos-result');
+  if (resEl) resEl.innerHTML = '<div style="padding:20px;text-align:center;color:var(--text-muted)">⏳ กำลังดึงข้อมูลจาก Loyverse...</div>';
+  var rng = posGetRange();
+  var fetchUrl = url + '?action=loyverse&from=' + encodeURIComponent(rng.from) + '&to=' + encodeURIComponent(rng.to);
+  fetch(fetchUrl)
+    .then(function(r) {{ return r.json(); }})
+    .then(function(data) {{
+      if (btn) {{ btn.disabled = false; btn.textContent = '📥 ดึงยอดขายจาก POS'; }}
+      DCS.posLast = {{ range: posRange, fromDate: posFromDate, toDate: posToDate,
+                       data: data, fetchedAt: new Date().toISOString() }};
+      dcSave();
+      posRenderResult(data, false);
+      var upEl = document.getElementById('pos-updated');
+      if (upEl) upEl.textContent = new Date(DCS.posLast.fetchedAt).toLocaleString('th-TH');
+    }})
+    .catch(function(err) {{
+      if (btn) {{ btn.disabled = false; btn.textContent = '📥 ดึงยอดขายจาก POS'; }}
+      if (resEl) resEl.innerHTML = '<div class="stk-warn-row">❌ เชื่อมต่อไม่ได้: '+escapeHtml(String(err))+'</div>';
+    }});
 }}
 
 // ── Boot ──

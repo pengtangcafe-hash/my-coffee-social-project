@@ -19,7 +19,86 @@ var SH = { cat: 'วัตถุดิบ', menu: 'เมนู', recipe: 'ส�
            expenses: 'รายจ่าย', slipBills: 'สลิป-บิล' };
 
 function doGet(e) {
+  if (e.parameter.action === 'loyverse') return loyverseProxy_(e.parameter);
   return json_(buildData_());
+}
+
+// ── Loyverse POS proxy ──────────────────────────────────────────────────────
+// token เก็บใน: Project Settings → Script Properties → key LOYVERSE_TOKEN
+// ห้ามเขียน token ในโค้ด (web นี้ public)
+function loyverseProxy_(params) {
+  var token = PropertiesService.getScriptProperties().getProperty('LOYVERSE_TOKEN');
+  if (!token) return json_({ok: false, error: 'no_token'});
+  try {
+    var cats  = lvFetchAll_('categories', token);
+    var items = lvFetchAll_('items',      token);
+    var rec   = lvFetchReceipts_(token, params.from || '', params.to || '');
+    if (rec.fetchErr) return json_({ok: false, error: String(rec.fetchErr)});
+    return json_({
+      ok:         true,
+      receipts:   rec.list.map(function(r) {
+        return {
+          receipt_type: r.receipt_type,
+          receipt_date: r.receipt_date,
+          total_money:  r.total_money,
+          line_items:   (r.line_items || []).map(function(li) {
+            return {item_id: li.item_id, item_name: li.item_name,
+                    quantity: li.quantity, total_money: li.total_money};
+          })
+        };
+      }),
+      items:      items.map(function(it) {
+        return {id: it.id, item_name: it.item_name, category_id: it.category_id};
+      }),
+      categories: cats.map(function(c) { return {id: c.id, name: c.name}; }),
+      count:      rec.list.length,
+      pages:      rec.pages
+    });
+  } catch (err) {
+    return json_({ok: false, error: String(err)});
+  }
+}
+
+// ดึงทั้งหมดจาก endpoint ที่ไม่ต้องการ date filter (items, categories)
+function lvFetchAll_(key, token) {
+  var all = [], cursor = null;
+  do {
+    var qs = 'limit=250' + (cursor ? '&cursor=' + encodeURIComponent(cursor) : '');
+    var resp = UrlFetchApp.fetch('https://api.loyverse.com/v1.0/' + key + '?' + qs, {
+      headers: {Authorization: 'Bearer ' + token}, muteHttpExceptions: true
+    });
+    if (resp.getResponseCode() !== 200) break;
+    var data = JSON.parse(resp.getContentText());
+    var batch = data[key] || [];
+    for (var i = 0; i < batch.length; i++) all.push(batch[i]);
+    cursor = data.cursor || null;
+  } while (cursor && all.length < 5000);
+  return all;
+}
+
+// ดึง receipts แบบ cursor pagination (date filter เฉพาะหน้าแรก)
+function lvFetchReceipts_(token, from, to) {
+  var all = [], cursor = null, pages = 0;
+  do {
+    var qs = 'limit=250';
+    if (!cursor) {
+      if (from) qs += '&created_at_min=' + encodeURIComponent(from);
+      if (to)   qs += '&created_at_max=' + encodeURIComponent(to);
+    } else {
+      qs += '&cursor=' + encodeURIComponent(cursor);
+    }
+    var resp = UrlFetchApp.fetch('https://api.loyverse.com/v1.0/receipts?' + qs, {
+      headers: {Authorization: 'Bearer ' + token}, muteHttpExceptions: true
+    });
+    var code = resp.getResponseCode();
+    if (code !== 200) return {list: all, pages: pages, fetchErr: code};
+    var data = JSON.parse(resp.getContentText());
+    var batch = data.receipts || [];
+    for (var i = 0; i < batch.length; i++) all.push(batch[i]);
+    cursor = data.cursor || null;
+    pages++;
+  } while (cursor && all.length < 10000);
+  return {list: all, pages: pages};
 }
 
 function doPost(e) {
