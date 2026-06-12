@@ -5327,7 +5327,7 @@ function dcSyncPull(silent) {{
     .then(function(r) {{ return r.json(); }})
     .then(function(obj) {{
       if (!obj || !obj.menus) throw new Error('bad');
-      DCS = dcNormalize(obj); dcSave(); renderDrinkCosts(); stkRefreshIfActive();
+      DCS = dcNormalize(obj); dcSave(); renderDrinkCosts(); stkRefreshIfActive(); vfRefreshIfActive();
       if (!silent) showToast('ซิงก์จาก Google Sheet แล้ว (' + DCS.menus.length + ' เมนู)');
     }})
     .catch(function(e) {{ if (!silent) showToast('ดึงข้อมูลไม่สำเร็จ — ตรวจ URL / สิทธิ์ Anyone'); }});
@@ -5348,17 +5348,26 @@ function dcOpenConnect() {{
     + '<div class="dc-field"><label>Google Apps Script — Web app URL</label>'
     + '<input class="dc-inp" id="dc-gs-url" placeholder="https://script.google.com/macros/s/.../exec" value="' + escapeHtml(url) + '"></div>'
     + '<div class="dc-edithint">วาง URL จากการ Deploy เป็น Web app (วิธีทำดูไฟล์ google-sheets/README.md) · '
-    + 'URL เก็บในเบราว์เซอร์นี้เท่านั้น ไม่ฝังในเว็บสาธารณะ · ครั้งแรกให้กด "ดันข้อมูลขึ้น Sheet" เพื่อเอาเมนูปัจจุบันขึ้นไป</div>'
+    + 'URL เก็บในเบราว์เซอร์นี้เท่านั้น ไม่ฝังในเว็บสาธารณะ</div>'
+    + '<div style="margin-top:12px;padding:11px 13px;border-radius:10px;background:rgba(229,57,53,.12);border:1px solid rgba(229,57,53,.45);font-size:13px;line-height:1.55;color:var(--text)">'
+    + '<b style="color:#e53935">⚠️ ครั้งแรก: ดันก่อนดึงเสมอ</b><br>'
+    + 'กด <b>⬆️ ดันข้อมูลขึ้น Sheet</b> ก่อน เพื่อเอารายจ่าย·สต็อก·เมนู ในเครื่องขึ้นไปเก็บบน Sheet<br>'
+    + 'ปุ่ม <b>🔄 ดึงข้อมูล</b> จะ<b>เขียนทับข้อมูลในเครื่องทั้งหมด</b>ด้วยข้อมูลจาก Sheet — ถ้าดึงก่อนดัน ข้อมูลในเครื่องจะหาย'
+    + '</div>'
     + '</div>'
     + '<div class="dc-modal-foot">'
     + '<button class="dc-btn ghost spacer" onclick="dcConnectTest()">🔄 ทดสอบ + ดึงข้อมูล</button>'
-    + '<button class="dc-btn" onclick="dcConnectPush()">⬆️ ดันข้อมูลขึ้น Sheet</button>'
-    + '<button class="dc-btn primary" onclick="dcConnectSave()">บันทึก URL</button>'
+    + '<button class="dc-btn primary" onclick="dcConnectPush()">⬆️ ดันข้อมูลขึ้น Sheet</button>'
+    + '<button class="dc-btn" onclick="dcConnectSave()">💾 บันทึก URL</button>'
     + '</div>';
   dcSetModalBody(html);
 }}
-function dcConnectSave() {{ var u = document.getElementById('dc-gs-url').value.trim(); dcSetGsUrl(u); dcCloseModal(); renderDrinkCosts(); showToast(u ? 'เชื่อม Google Sheet แล้ว' : 'ยกเลิกการเชื่อมต่อแล้ว'); }}
-function dcConnectTest() {{ dcSetGsUrl(document.getElementById('dc-gs-url').value.trim()); dcSyncPull(); }}
+function dcConnectSave() {{ var u = document.getElementById('dc-gs-url').value.trim(); dcSetGsUrl(u); dcCloseModal(); renderDrinkCosts(); stkRefreshIfActive(); vfRefreshIfActive(); showToast(u ? 'เชื่อม Google Sheet แล้ว' : 'ยกเลิกการเชื่อมต่อแล้ว'); }}
+function dcConnectTest() {{
+  dcSetGsUrl(document.getElementById('dc-gs-url').value.trim());
+  if (!confirm('⚠️ การดึงข้อมูลจะเขียนทับข้อมูลในเครื่องนี้ทั้งหมดด้วยข้อมูลจาก Sheet\\n\\nถ้ายังไม่เคยกด "ดันข้อมูลขึ้น Sheet" รายจ่าย/สต็อกในเครื่องอาจหาย\\n\\nยืนยันการดึง?')) return;
+  dcSyncPull();
+}}
 function dcConnectPush() {{ dcSetGsUrl(document.getElementById('dc-gs-url').value.trim()); dcSyncPush(); }}
 
 // ── Backbar: สต็อกหลังบ้าน ──
@@ -5492,6 +5501,7 @@ function renderStockView() {{
 function stkSetTab(t) {{ stkTab=t; renderStockView(); }}
 function stkSetIgrp(g) {{ stkIgrpTab=g; renderStockView(); }}
 function stkRefreshIfActive() {{ var v=document.getElementById('view-bb-stock'); if (v&&v.classList.contains('active')) renderStockView(); }}
+function vfRefreshIfActive() {{ var v=document.getElementById('view-bb-varfix'); if (v&&v.classList.contains('active')) renderVarfixView(); }}
 function stkSalesFilter(cat) {{
   document.querySelectorAll('[data-scat]').forEach(function(b) {{ b.classList.toggle('active',b.getAttribute('data-scat')===cat); }});
   document.querySelectorAll('.stk-sales-group').forEach(function(g) {{ g.classList.toggle('stk-hide',cat!=='all'&&g.getAttribute('data-cat')!==cat); }});
@@ -6147,7 +6157,12 @@ function renderVarfixView() {{
       return '<button class="ov-mtab'+(vfRange===rg[0]?' active':'')+'" onclick="vfSetRange(\\''+rg[0]+'\\')">'+rg[1]+'</button>';
     }}).join('')+'</div>';
   var summaryHtml=vfSummaryBar(displayBills,totalAmt,fixedAmt,varAmt,isMock);
-  var toolbarHtml='<div class="dc-toolbar"><span class="spacer"></span><button class="dc-btn primary" onclick="vfBtnAddExpense()">+ บันทึกรายจ่าย</button></div>';
+  var vfConnected=!!dcGsUrl();
+  var toolbarHtml='<div class="dc-toolbar">'
+    +'<button class="dc-btn" onclick="dcOpenConnect()">🔗 '+(vfConnected?'Google Sheet ✓':'เชื่อม Sheet')+'</button>'
+    +(vfConnected?'<button class="dc-btn" onclick="dcSyncPull()">🔄 ซิงก์</button>':'')
+    +'<span class="spacer"></span>'
+    +'<button class="dc-btn primary" onclick="vfBtnAddExpense()">+ บันทึกรายจ่าย</button></div>';
   var mockHeaderHtml=isMock
     ?'<div class="stk-warn-row" style="margin-bottom:10px"><span class="stk-warn-row-title" style="text-transform:none;color:var(--text-muted)">🎭 ตัวอย่างระบบ (mockup) — จะปิดเองเมื่อมีรายจ่ายจริง</span></div>'
     :'';
