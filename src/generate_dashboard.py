@@ -5980,9 +5980,9 @@ function vfCatTotalsMonth(yyyymm) {{
   }});
   return t;
 }}
-function vf6MonthsBack() {{
+function vfTrendMonths() {{
   var now=new Date(); var months=[];
-  for (var i=5;i>=0;i--) {{
+  for (var i=2;i>=0;i--) {{
     var d=new Date(now.getFullYear(),now.getMonth()-i,1);
     var mo=d.getMonth()+1;
     months.push(d.getFullYear()+'-'+(mo<10?'0':'')+mo);
@@ -6260,7 +6260,7 @@ function vfBuildHistoryCard() {{
     ?'<div class="vf-history-empty">ยังไม่มีข้อมูลเดือนก่อน กรุณาบันทึกรายจ่ายอย่างน้อยสองเดือน</div>'
     :vfBuildCmpTable(vfHistoryCmpMonth);
   var trendHtml='<div class="vf-trend-wrap">'
-    +'<div class="vf-trend-title">📊 เทรนด์ 6 เดือนย้อนหลัง (Fixed vs Variable)</div>'
+    +'<div class="vf-trend-title">📊 เทรนด์ 3 เดือนย้อนหลัง (Fixed vs Variable)</div>'
     +'<div class="vf-trend-canvas-wrap"><canvas id="vf-trend-canvas"></canvas></div>'
     +'</div>';
   return '<div class="vf-history-card">'
@@ -6284,7 +6284,7 @@ function vfInitTrendChart() {{
   var canvas=document.getElementById('vf-trend-canvas');
   if (!canvas||typeof Chart==='undefined') return;
   if (!DCS) dcLoadState();
-  var months=vf6MonthsBack();
+  var months=vfTrendMonths();
   var fixedData=months.map(function(ym) {{
     return (DCS.expenses||[]).filter(function(e) {{ return e.date&&e.date.slice(0,7)===ym&&e.group==='fixed'; }}).reduce(function(s,e) {{ return s+(e.amount||0); }},0);
   }});
@@ -6361,7 +6361,7 @@ function renderVarfixView() {{
   var billsHtml=displayBills.length===0
     ?'<div class="ov-tile ov-soon"><div class="ov-soon-emoji">📋</div><div class="ov-soon-sub">ยังไม่มีรายจ่ายในช่วงนี้</div></div>'
     :displayBills.map(function(b) {{ return vfReceiptCard(b); }}).join('');
-  root.innerHTML=tabsHtml+summaryHtml+toolbarHtml+mockHeaderHtml+'<div class="vf-bills">'+billsHtml+'</div>'+vfBuildHistoryCard();
+  root.innerHTML=tabsHtml+summaryHtml+vfBuildHistoryCard()+toolbarHtml+mockHeaderHtml+'<div class="vf-bills">'+billsHtml+'</div>';
   var histBody=document.getElementById('vf-hist-body');
   if (histBody&&!vfHistoryOpen) histBody.style.display='none';
   if (vfHistoryOpen) vfInitTrendChart();

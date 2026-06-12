@@ -84,7 +84,8 @@
       "PowerShell(Remove-Item *)",
       "Bash(echo \"Checksum result: $?\")",
       "Bash(cp dashboard/index.html docs/index.html)",
-      "Bash(git commit -q -m 'feat: ปุ่มเชื่อม/ซิงก์ Sheet บนหน้าต้นทุนผันแปรฯ + เตือนดันก่อนดึง กันข้อมูลหาย *)"
+      "Bash(git commit -q -m 'feat: ปุ่มเชื่อม/ซิงก์ Sheet บนหน้าต้นทุนผันแปรฯ + เตือนดันก่อนดึง กันข้อมูลหาย *)",
+      "Bash(grep *)"
     ]
   }
 }
