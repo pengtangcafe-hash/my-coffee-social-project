@@ -6954,6 +6954,7 @@ var DEFAULT_ACHS_SEED = [
 // ── Quest helpers ──
 var qstActiveTab = 'quest';
 var qstCatFilter = 'all';
+var qstAchCatFilter = 'all';
 var _qstPushTimer = null;
 
 function qstToday() {{ return new Date().toISOString().slice(0,10); }}
@@ -7000,6 +7001,11 @@ function qstShowTab(tab) {{
 
 function qstSetCatFilter(cat) {{
   qstCatFilter = cat;
+  var root = document.getElementById('qst-root');
+  if (root) renderQuestView();
+}}
+function qstSetAchCatFilter(cat) {{
+  qstAchCatFilter = cat;
   var root = document.getElementById('qst-root');
   if (root) renderQuestView();
 }}
@@ -7155,8 +7161,25 @@ function qstRenderAchPanel() {{
     + '<button onclick="qstOpenAchForm(null)" style="background:var(--ov-accent-ink);color:#fff;border:none;border-radius:10px;padding:8px 16px;font-size:13px;cursor:pointer;font-weight:600">+ เพิ่มความสำเร็จ</button>'
     + '</div>';
 
-  // Achievement list sorted by day
-  var sorted = achs.slice().sort(function(a,b){{return (a.day||0)-(b.day||0);}});
+  // Category filter chips
+  var achChips = '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px">'
+    + '<button onclick="qstSetAchCatFilter(\\'all\\')" style="padding:4px 12px;border-radius:20px;border:1px solid var(--card-border);cursor:pointer;font-size:12px;'
+    + (qstAchCatFilter==='all' ? 'background:var(--ov-accent-ink);color:#fff;border-color:var(--ov-accent-ink);' : 'background:var(--card);color:var(--text-muted);')
+    + '">ทั้งหมด ('+achs.length+')</button>';
+  Object.keys(ACH_CAT).forEach(function(k) {{
+    var c = ACH_CAT[k];
+    var cnt = achs.filter(function(a){{return a.cat===k;}}).length;
+    if (!cnt) return;
+    var active = qstAchCatFilter === k;
+    achChips += '<button onclick="qstSetAchCatFilter(\\''+k+'\\')" style="padding:4px 12px;border-radius:20px;border:1px solid var(--card-border);cursor:pointer;font-size:12px;'
+      + (active ? 'background:var(--ov-accent-ink);color:#fff;border-color:var(--ov-accent-ink);' : 'background:var(--card);color:var(--text);')
+      + '">' + c.icon + ' ' + c.label + ' (' + cnt + ')</button>';
+  }});
+  achChips += '</div>';
+
+  // Achievement list (filtered) sorted by day
+  var filteredAchs = qstAchCatFilter==='all' ? achs : achs.filter(function(a){{return a.cat===qstAchCatFilter;}});
+  var sorted = filteredAchs.slice().sort(function(a,b){{return (a.day||0)-(b.day||0);}});
   var cards = '';
   sorted.forEach(function(a) {{
     var overdue = !a.done && a.day < day;
@@ -7182,9 +7205,9 @@ function qstRenderAchPanel() {{
       + '</div>'
       + '</div>';
   }});
-  if (!sorted.length) cards = '<div style="text-align:center;padding:40px;color:var(--text-muted)">ยังไม่มีความสำเร็จ</div>';
+  if (!sorted.length) cards = '<div style="text-align:center;padding:40px;color:var(--text-muted)">'+(qstAchCatFilter==='all'?'ยังไม่มีความสำเร็จ':'ยังไม่มีความสำเร็จในหมวดนี้')+'</div>';
 
-  return summary + addBtn + cards;
+  return summary + achChips + addBtn + cards;
 }}
 
 // ── Quest CRUD ──
