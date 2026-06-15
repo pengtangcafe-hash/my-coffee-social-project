@@ -888,6 +888,16 @@
         ภาพรวม
       </button>
 
+      <button onclick="showView('view-quest')" id="nav-quest"
+        class="nav-btn w-full text-left px-4 py-2.5 rounded-xl flex items-center gap-3
+               text-slate-600 hover:bg-slate-50 transition-colors text-sm">
+        <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/>
+        </svg>
+        90 Days Quest
+      </button>
+
       <div class="pt-2 pb-1">
         <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest px-4">Platforms</p>
       </div>
@@ -1041,7 +1051,7 @@
         <button class="theme-btn" id="theme-dark"  onclick="setTheme('dark')"   title="Dark Mode">🌙</button>
         <button class="theme-btn" id="theme-fancy" onclick="setTheme('fancy')"  title="Fancy Mode">✨</button>
       </div>
-      <div class="text-[10px] text-slate-400 uppercase tracking-widest text-center">สร้างเมื่อ 12 June 2026</div>
+      <div class="text-[10px] text-slate-400 uppercase tracking-widest text-center">สร้างเมื่อ 16 June 2026</div>
     </div>
 
   </aside>
@@ -1406,6 +1416,15 @@
       <div id="pos-root"></div>
     </div>
 
+    <!-- Quest & Achievement -->
+    <div id="view-quest" class="view">
+      <div class="mb-4">
+        <h1 class="ov-h1">90 Days Quest</h1>
+        <p class="ov-sub-h">ภารกิจและความสำเร็จ 90 วัน สู่การเปิด PENGTANG CAFE</p>
+      </div>
+      <div id="qst-root"></div>
+    </div>
+
   </main>
 </div>
 
@@ -1534,6 +1553,7 @@ function initCharts(viewId) {
   if (viewId === 'view-bb-stock') { try { renderStockView(); } catch(e) { console.error('renderStockView', e); } return; }
   if (viewId === 'view-bb-varfix') { try { renderVarfixView(); } catch(e) { console.error('renderVarfixView', e); } return; }
   if (viewId === 'view-bb-posimport') { try { renderPosImportView(); } catch(e) { console.error('renderPosImportView', e); } return; }
+  if (viewId === 'view-quest') { try { renderQuestView(); } catch(e) { console.error('renderQuestView', e); } return; }
   if (viewId === 'view-bb-armory') { return; }
   const platform = viewId.replace('view-', '');
   if (!DATA[platform]) return;
@@ -2829,6 +2849,14 @@ function dcNormalize(s) {
   s.expense_slips = s.expense_slips || {};
   // posLast เก็บเฉพาะใน browser — Sheet sync ไม่มีฟิลด์นี้
   if (s.posLast === undefined) s.posLast = null;
+  // Quest & Achievement — seed สำหรับ user ใหม่ที่ยังไม่มีข้อมูล
+  if (s.quests === undefined) s.quests = dcClone(DEFAULT_QUESTS_SEED);
+  if (s.achievements === undefined) s.achievements = dcClone(DEFAULT_ACHS_SEED);
+  if (s.plans === undefined) s.plans = { daily: [], weekly: [], monthly: [] };
+  if (s.loops === undefined) s.loops = [];
+  if (s.questLog === undefined) s.questLog = {};
+  if (s.questHistory === undefined) s.questHistory = [];
+  if (s.questMeta === undefined) s.questMeta = { startDate: '2026-05-31', totalDays: 90, targetOpenDay: 30 };
   return s;
 }
 function dcLoadState() {
@@ -3598,8 +3626,13 @@ function dcSyncPull(silent) {
     .then(function(r) { return r.json(); })
     .then(function(obj) {
       if (!obj || !obj.menus) throw new Error('bad');
-      var prevPosLast = DCS ? DCS.posLast : null;
-      DCS = dcNormalize(obj); DCS.posLast = prevPosLast;
+      var prev = DCS ? dcClone(DCS) : {};
+      DCS = dcNormalize(obj);
+      // posLast + quest keys: ถ้า Sheet ยังไม่มี (obj ไม่มี key) ให้เก็บของ local ไว้
+      DCS.posLast = prev.posLast !== undefined ? prev.posLast : null;
+      ['quests','achievements','plans','loops','questLog','questHistory','questMeta'].forEach(function(k) {
+        if (obj[k] === undefined) DCS[k] = prev[k] !== undefined ? prev[k] : DCS[k];
+      });
       dcSave(); renderDrinkCosts(); stkRefreshIfActive(); vfRefreshIfActive();
       if (!silent) showToast('ซิงก์จาก Google Sheet แล้ว (' + DCS.menus.length + ' เมนู)');
     })
@@ -5006,6 +5039,613 @@ function posFetch() {
       if (btn) { btn.disabled = false; btn.textContent = '📥 ดึงยอดขายจาก POS'; }
       if (resEl) resEl.innerHTML = '<div class="stk-warn-row">❌ เชื่อมต่อไม่ได้: '+escapeHtml(String(err))+'</div>';
     });
+}
+
+// ════════════════════════════════════
+//  Quest & Achievement (90 Days)
+// ════════════════════════════════════
+
+var MOTIVATIONS = [
+  '"วันนี้ดีกว่าเมื่อวาน — แค่นี้ก็พอ"',
+  '"กาแฟดีทำจากความพิถีพิถัน — ธุรกิจดีก็เช่นกัน"',
+  '"ทุกวันที่ลงมือทำ คือก้าวที่เข้าใกล้ฝันมากขึ้น"',
+  '"อย่ารอให้พร้อม — เริ่มแล้วค่อยพร้อม"',
+  '"ร้านกาแฟไม่ได้สร้างในวันเดียว แต่สร้างทีละวัน"',
+  '"ความสม่ำเสมอคือพลังที่ยิ่งใหญ่กว่าแรงบันดาลใจ"',
+  '"Focus on the process, not just the goal"',
+  '"เจ้าของร้านกาแฟที่ดี คือคนที่ไม่หยุดเรียนรู้"',
+  '"ทำทีละอย่าง แต่ทำให้ดี"',
+  '"ลูกค้าคนแรกอาจเปลี่ยนชีวิตเราได้"',
+  '"ทุก ขอบคุณ จากลูกค้า คือพลังงานที่เติมให้เราสู้ต่อ"',
+  '"ธุรกิจที่ดีเริ่มจากการแก้ปัญหาให้คนอื่น"',
+  '"วันที่ยากที่สุด มักเป็นวันที่สอนเราได้มากที่สุด"',
+  '"Plan the work — Work the plan"',
+  '"ร้านกาแฟคือพื้นที่แห่งความสุขของชุมชน"',
+  '"คนที่ประสบความสำเร็จทำสิ่งที่คนอื่นไม่อยากทำ"',
+  '"เริ่มต้นดี มีชัยไปกว่าครึ่ง"',
+  '"ทำในสิ่งที่รัก รักในสิ่งที่ทำ"',
+  '"ความสำเร็จไม่ได้มาในวันเดียว แต่ทุกวันที่ทำ คือการสร้างความสำเร็จ"',
+  '"จงเป็นกาแฟที่ดีที่สุดในสกลนคร"',
+  '"อุปสรรคคือโอกาสที่ยังไม่ได้เปิด"',
+  '"เปิดร้านกาแฟ ≠ ขายกาแฟ — คือสร้างประสบการณ์"',
+  '"คนที่รอจะไม่มีวันพร้อม — คนที่เริ่มจะค่อยๆ พร้อม"',
+  '"ทบทวนทุกวัน เติบโตทุกสัปดาห์"',
+  '"90 วัน = 90 โอกาสที่จะดีกว่าเดิม"',
+  '"ร้านที่ดีไม่ใช่แค่รสชาติ — แต่คือความรู้สึก"',
+  '"เป็นผู้ประกอบการ คือกล้าที่จะผิดพลาดและเรียนรู้"',
+  '"ทุกเมนูที่ชงออกไป คือตัวแทนของความตั้งใจเรา"',
+  '"สกลนครจะรู้จัก PENGTANG CAFE — เริ่มตั้งแต่วันนี้"',
+  '"วันที่ 90 คือแค่จุดเริ่มต้น — ก้าวต่อไปไม่มีที่สิ้นสุด"'
+];
+
+var BUFFS = [
+  '💪 Focus Mode — ปิด Noti ทำงานลึก 90 นาที',
+  '🎵 Buff เพลง — เปิดเพลย์ลิสต์ที่ชอบแล้วลงมือทำ',
+  '📝 Brain Dump — เขียนทุกอย่างที่ค้างในหัวออกมาก่อน',
+  '🚶 Walk & Think — เดิน 10 นาที แล้วกลับมาตัดสินใจ',
+  '☕ Coffee First — ชงกาแฟแก้วโปรด แล้วค่อยเริ่ม',
+  '🧹 2-Minute Rule — งานไหนทำได้ใน 2 นาที ทำเลย',
+  '📸 Document Day — ถ่ายรูป/วิดีโอ progress วันนี้',
+  '🤝 Ask for Help — วันนี้ถามคนที่รู้มากกว่า 1 คน',
+  '📊 Review Numbers — เช็คตัวเลขต้นทุนและรายรับวันนี้',
+  '🎯 One Thing — เลือก 1 งานที่สำคัญที่สุด ทำให้เสร็จก่อน',
+  '🌱 Learn Mode — อ่านหรือดูคอนเทนต์เกี่ยวกับร้านกาแฟ 15 นาที',
+  '💬 Customer Story — คุยกับลูกค้า/คนรู้จัก เก็บ feedback',
+  '🔧 Fix One Thing — แก้ปัญหาเล็กๆ ที่ค้างมาสักพัก',
+  '📱 Content Day — สร้าง content ร้านอย่างน้อย 1 ชิ้น',
+  '🧠 Strategy Hour — นั่งคิดแผน 1 ชั่วโมงโดยไม่มีสิ่งรบกวน',
+  '💡 Idea Dump — เขียนไอเดียใหม่ๆ ออกมา 10 ข้อ',
+  '🏃 Energy Boost — ออกกำลังกาย/ยืดเส้น 15 นาทีก่อนเริ่มงาน',
+  '🗓️ Plan Tomorrow — วางแผนวันพรุ่งนี้ตั้งแต่คืนนี้',
+  '🙏 Gratitude Mode — จด 3 สิ่งที่ขอบคุณวันนี้ก่อนนอน',
+  '⚡ Sprint Day — ตั้งเวลา 25 นาที ทำงานไม่หยุด × 4 รอบ'
+];
+
+var QUEST_CAT = {
+  site:       {icon:'🏗️', label:'หน้างาน'},
+  think:      {icon:'🧠', label:'คิด/วางแผน'},
+  content:    {icon:'📱', label:'คอนเทนต์'},
+  plan:       {icon:'📋', label:'แผนงาน'},
+  cost:       {icon:'💰', label:'ต้นทุน'},
+  system:     {icon:'🔧', label:'ระบบ'},
+  legal:      {icon:'📜', label:'กฎหมาย'},
+  brand:      {icon:'🎨', label:'แบรนด์'},
+  supply:     {icon:'🛒', label:'วัตถุดิบ'},
+  marketing:  {icon:'📣', label:'การตลาด'},
+  hygiene:    {icon:'🧼', label:'สุขลักษณะ'},
+  experience: {icon:'🪑', label:'ประสบการณ์'}
+};
+
+var ACH_CAT = {
+  milestone: {icon:'🎯', label:'Milestone'},
+  planning:  {icon:'📋', label:'วางแผน'},
+  setup:     {icon:'🏗️', label:'ติดตั้ง'},
+  legal:     {icon:'📜', label:'กฎหมาย'},
+  brand:     {icon:'🎨', label:'แบรนด์'},
+  system:    {icon:'🔧', label:'ระบบ'},
+  marketing: {icon:'📣', label:'การตลาด'},
+  launch:    {icon:'🚀', label:'เปิดร้าน'},
+  financial: {icon:'💰', label:'การเงิน'}
+};
+
+var DEFAULT_QUESTS_SEED = [
+  {id:'q01',title:'สำรวจร้านและถ่ายรูปสภาพปัจจุบัน',cat:'site',time:'🌅 เช้า',place:'หน้างานร้าน',pri:'high',repeat:'once',note:''},
+  {id:'q02',title:'วัดขนาดพื้นที่และร่างแปลนจัดวาง',cat:'site',time:'🌅 เช้า',place:'หน้างานร้าน',pri:'high',repeat:'once',note:'Counter + โต๊ะ + ทางเดิน'},
+  {id:'q03',title:'บันทึก 3 สิ่งที่ทำได้วันนี้',cat:'think',time:'🌙 ดึก',place:'บ้าน / ไหนก็ได้',pri:'med',repeat:'daily',note:'Progress Journal'},
+  {id:'q04',title:'ทบทวนและอัปเดต Loop ที่กำลังทำ',cat:'think',time:'🌆 เย็น',place:'บ้าน / ไหนก็ได้',pri:'low',repeat:'daily',note:''},
+  {id:'q05',title:'โพสต์ content ร้านกาแฟ 1 ชิ้น',cat:'content',time:'🌆 เย็น',place:'ออนไลน์',pri:'med',repeat:'daily',note:'TikTok / Facebook / IG'},
+  {id:'q06',title:'ถ่ายรูป/วิดีโอ behind-the-scenes ร้าน',cat:'content',time:'🌅 เช้า',place:'หน้างานร้าน',pri:'low',repeat:'weekly',note:''},
+  {id:'q07',title:'เช็ค Achievement ที่ต้องทำวันนี้',cat:'plan',time:'🌅 เช้า',place:'บ้าน / ไหนก็ได้',pri:'high',repeat:'daily',note:'ดูใน Tab ความสำเร็จ'},
+  {id:'q08',title:'วางแผนงานสัปดาห์ถัดไป',cat:'plan',time:'🌙 ดึก',place:'บ้าน / ไหนก็ได้',pri:'med',repeat:'weekly',note:''},
+  {id:'q09',title:'บันทึกรายจ่ายวันนี้',cat:'cost',time:'🌙 ดึก',place:'บ้าน / ไหนก็ได้',pri:'high',repeat:'daily',note:''},
+  {id:'q10',title:'ตรวจสอบต้นทุนเมนูใหม่',cat:'cost',time:'🌆 เย็น',place:'บ้าน / ไหนก็ได้',pri:'med',repeat:'once',note:'ใช้หน้าต้นทุนเครื่องดื่ม'},
+  {id:'q11',title:'Setup Loyverse POS — สร้าง account + เมนู',cat:'system',time:'🌙 ดึก',place:'ออนไลน์',pri:'high',repeat:'once',note:''},
+  {id:'q12',title:'ทดสอบระบบ POS ก่อนเปิดร้าน',cat:'system',time:'🌅 เช้า',place:'หน้างานร้าน',pri:'high',repeat:'once',note:''},
+  {id:'q13',title:'ตรวจสอบใบอนุญาตประกอบการที่ต้องมี',cat:'legal',time:'🌅 เช้า',place:'บ้าน / ไหนก็ได้',pri:'high',repeat:'once',note:''},
+  {id:'q14',title:'ยื่นขอใบอนุญาตจำหน่ายอาหาร',cat:'legal',time:'🌅 เช้า',place:'อำเภอ/เทศบาล',pri:'high',repeat:'once',note:''},
+  {id:'q15',title:'กำหนด Brand Identity — ชื่อ สี โลโก้',cat:'brand',time:'🌙 ดึก',place:'บ้าน / ไหนก็ได้',pri:'high',repeat:'once',note:''},
+  {id:'q16',title:'ออกแบบ/สั่งทำป้ายร้านและบรรจุภัณฑ์',cat:'brand',time:'🌆 เย็น',place:'ออนไลน์',pri:'med',repeat:'once',note:''},
+  {id:'q17',title:'ติดต่อซัพพลายเออร์วัตถุดิบหลัก',cat:'supply',time:'🌅 เช้า',place:'ออนไลน์/โทรศัพท์',pri:'high',repeat:'once',note:'เมล็ดกาแฟ นม ไซรัป'},
+  {id:'q18',title:'เช็คสต็อกวัตถุดิบและสั่งเติม',cat:'supply',time:'🌆 เย็น',place:'หน้างานร้าน',pri:'med',repeat:'weekly',note:''},
+  {id:'q19',title:'สร้างโปรโมชั่นเปิดร้านใหม่',cat:'marketing',time:'🌙 ดึก',place:'ออนไลน์',pri:'high',repeat:'once',note:''},
+  {id:'q20',title:'แจกใบปลิว/โปรโมทในละแวกร้าน',cat:'marketing',time:'🌅 เช้า',place:'ในละแวกร้าน',pri:'med',repeat:'weekly',note:''},
+  {id:'q21',title:'ทำความสะอาดอุปกรณ์และเครื่องทำกาแฟ',cat:'hygiene',time:'🌆 เย็น',place:'หน้างานร้าน',pri:'high',repeat:'daily',note:''},
+  {id:'q22',title:'เช็ค SOP ความสะอาดและจัดเก็บอาหาร',cat:'hygiene',time:'🌅 เช้า',place:'หน้างานร้าน',pri:'med',repeat:'weekly',note:''},
+  {id:'q23',title:'ทดสอบชง + ชิมสูตรใหม่',cat:'experience',time:'🌅 เช้า',place:'หน้างานร้าน',pri:'med',repeat:'once',note:''},
+  {id:'q24',title:'รับ Feedback จากลูกค้า/คนรู้จัก',cat:'experience',time:'🌆 เย็น',place:'หน้างานร้าน',pri:'low',repeat:'weekly',note:''}
+];
+
+var DEFAULT_ACHS_SEED = [
+  {id:'a01',title:'เจรจาและเซ็นสัญญาเช่าร้าน',cat:'milestone',day:7,icon:'📝',desc:'ตกลงเงื่อนไข ราคา ระยะเวลาเช่า',done:false,doneDate:'',doneNote:''},
+  {id:'a02',title:'กำหนด Brand Identity ครบถ้วน',cat:'brand',day:10,icon:'🎨',desc:'ชื่อร้าน สี โลโก้ Font Tagline',done:false,doneDate:'',doneNote:''},
+  {id:'a03',title:'วางแผนเมนูหลักและราคาทุกช่องทาง',cat:'planning',day:12,icon:'📋',desc:'เมนูทุกรายการ ราคา หน้าร้าน/Lineman/Shoppee',done:false,doneDate:'',doneNote:''},
+  {id:'a04',title:'ยื่นขอใบอนุญาตจำหน่ายอาหาร',cat:'legal',day:14,icon:'📜',desc:'ยื่นเอกสารที่อำเภอ/เทศบาล',done:false,doneDate:'',doneNote:''},
+  {id:'a05',title:'ซื้อ/เช่าเครื่องทำกาแฟและอุปกรณ์หลัก',cat:'setup',day:14,icon:'☕',desc:'เครื่อง espresso, grinder, เครื่องมือ',done:false,doneDate:'',doneNote:''},
+  {id:'a06',title:'ติดต่อซัพพลายเออร์ครบทุกรายการ',cat:'setup',day:18,icon:'🛒',desc:'เมล็ดกาแฟ นม ไซรัป บรรจุภัณฑ์',done:false,doneDate:'',doneNote:''},
+  {id:'a07',title:'ปรับปรุงตกแต่งร้านแล้วเสร็จ',cat:'setup',day:20,icon:'🏗️',desc:'สี ป้าย เฟอร์นิเจอร์ แสงไฟ',done:false,doneDate:'',doneNote:''},
+  {id:'a08',title:'Setup Loyverse POS สมบูรณ์',cat:'system',day:20,icon:'📱',desc:'เมนูครบ ราคาถูกต้อง พนักงานเข้าได้',done:false,doneDate:'',doneNote:''},
+  {id:'a09',title:'ออกแบบและสั่งทำบรรจุภัณฑ์ครบ',cat:'brand',day:22,icon:'🎁',desc:'แก้ว ถุง สติกเกอร์ ป้าย',done:false,doneDate:'',doneNote:''},
+  {id:'a10',title:'ทดสอบสูตรเมนูทุกรายการ',cat:'setup',day:24,icon:'🧪',desc:'ชิม ปรับ อนุมัติสูตรสุดท้าย',done:false,doneDate:'',doneNote:''},
+  {id:'a11',title:'ฝึกอบรมพนักงาน (ถ้ามี)',cat:'system',day:26,icon:'👥',desc:'SOP การชง บริการ POS ความสะอาด',done:false,doneDate:'',doneNote:''},
+  {id:'a12',title:'ทดสอบ Soft Run — ชงให้คนรู้จัก',cat:'launch',day:27,icon:'🧑‍🍳',desc:'ทดสอบจริงก่อนเปิดสาธารณะ',done:false,doneDate:'',doneNote:''},
+  {id:'a13',title:'สร้าง Social Media ครบทุก Platform',cat:'marketing',day:28,icon:'📣',desc:'Facebook Page, Instagram, TikTok',done:false,doneDate:'',doneNote:''},
+  {id:'a14',title:'ได้รับใบอนุญาตประกอบการ',cat:'legal',day:28,icon:'✅',desc:'ใบอนุญาตถูกต้อง พร้อมเปิดร้าน',done:false,doneDate:'',doneNote:''},
+  {id:'a15',title:'🚀 SOFT LAUNCH — เปิดร้านครั้งแรก!',cat:'launch',day:30,icon:'🚀',desc:'วันเปิดร้านอย่างเป็นทางการ PENGTANG CAFE',done:false,doneDate:'',doneNote:''},
+  {id:'a16',title:'มีรายได้วันแรก > 0 บาท',cat:'financial',day:30,icon:'💰',desc:'มีรายได้จริงในวันเปิดร้าน',done:false,doneDate:'',doneNote:''},
+  {id:'a17',title:'ติด Google Maps และ Facebook Check-in',cat:'marketing',day:35,icon:'📍',desc:'ลูกค้า check-in ได้ถูกต้อง',done:false,doneDate:'',doneNote:''},
+  {id:'a18',title:'ระบบสต็อกและ PAR level ครบ',cat:'system',day:40,icon:'🔧',desc:'ระดับสต็อกต่ำสุด สั่งซื้อระบบ',done:false,doneDate:'',doneNote:''},
+  {id:'a19',title:'มีลูกค้าประจำ 10 คนแรก',cat:'milestone',day:45,icon:'👑',desc:'ลูกค้าที่กลับมาซื้อมากกว่า 1 ครั้ง',done:false,doneDate:'',doneNote:''},
+  {id:'a20',title:'ยอดขาย TikTok/Reel แตะ 1,000 views',cat:'marketing',day:45,icon:'🎬',desc:'คอนเทนต์ร้านไวรัลครั้งแรก',done:false,doneDate:'',doneNote:''},
+  {id:'a21',title:'มีรีวิวบน Google Maps 5 รีวิวขึ้นไป',cat:'marketing',day:50,icon:'⭐',desc:'คะแนนและรีวิวจากลูกค้าจริง',done:false,doneDate:'',doneNote:''},
+  {id:'a22',title:'Review และปรับแผน 90 วัน',cat:'planning',day:60,icon:'🔄',desc:'ทบทวนสิ่งที่เรียนรู้ ปรับ SOP',done:false,doneDate:'',doneNote:''},
+  {id:'a23',title:'ยอดขาย 30 วันหลังเปิด — รายได้ > ต้นทุนผันแปร',cat:'financial',day:60,icon:'📈',desc:'สัญญาณว่าร้านอยู่ได้',done:false,doneDate:'',doneNote:''},
+  {id:'a24',title:'กำไรสุทธิเดือนแรกเป็นบวก',cat:'financial',day:75,icon:'💸',desc:'หลังหักต้นทุนคงที่และผันแปรทั้งหมด',done:false,doneDate:'',doneNote:''},
+  {id:'a25',title:'👑 ครบ 90 วัน — PENGTANG CAFE พร้อมสู้!',cat:'launch',day:90,icon:'👑',desc:'ผ่าน 90 วันแรก ร้านมั่นคง ระบบพร้อม',done:false,doneDate:'',doneNote:''}
+];
+
+// ── Quest helpers ──
+var qstActiveTab = 'quest';
+var qstCatFilter = 'all';
+var _qstPushTimer = null;
+
+function qstToday() { return new Date().toISOString().slice(0,10); }
+function qstGenId() { return 'q'+Date.now().toString(36)+Math.random().toString(36).slice(2,5); }
+function qstFmtDate(d) {
+  if (!d) return '';
+  var dt = new Date(d); if (isNaN(dt)) return d;
+  return dt.toLocaleDateString('th-TH', {day:'numeric',month:'short',year:'numeric'});
+}
+function qstDayNum() {
+  if (!DCS || !DCS.questMeta) return 1;
+  var s = new Date(DCS.questMeta.startDate), n = new Date();
+  return Math.max(1, Math.min(Math.floor((n-s)/864e5)+1, 999));
+}
+function qstStreak() {
+  if (!DCS || !DCS.questLog) return 0;
+  var streak = 0, d = new Date();
+  d.setHours(0,0,0,0);
+  for (;;) {
+    var key = d.toISOString().slice(0,10);
+    var day = DCS.questLog[key];
+    if (!day || Object.keys(day).length === 0) break;
+    streak++;
+    d.setDate(d.getDate()-1);
+  }
+  return streak;
+}
+function qstIsDoneToday(qid) {
+  if (!DCS || !DCS.questLog) return false;
+  var day = DCS.questLog[qstToday()];
+  return !!(day && day[qid]);
+}
+function qstDebouncePush() {
+  if (_qstPushTimer) clearTimeout(_qstPushTimer);
+  _qstPushTimer = setTimeout(function() { if (dcGsUrl()) dcSyncPush(); }, 2000);
+}
+function qstAfterChange() { dcSave(); qstDebouncePush(); }
+
+function qstShowTab(tab) {
+  qstActiveTab = tab;
+  var root = document.getElementById('qst-root');
+  if (root) renderQuestView();
+}
+
+function qstSetCatFilter(cat) {
+  qstCatFilter = cat;
+  var root = document.getElementById('qst-root');
+  if (root) renderQuestView();
+}
+
+// ── renderQuestView ──
+function renderQuestView() {
+  if (!DCS) dcLoadState();
+  var root = document.getElementById('qst-root');
+  if (!root) return;
+  var meta = DCS.questMeta || {};
+  var day = qstDayNum();
+  var total = meta.totalDays || 90;
+  var pct = Math.min(Math.round(day/total*100),100);
+  var streak = qstStreak();
+  var moti = MOTIVATIONS[day % MOTIVATIONS.length];
+  var buff = BUFFS[day % BUFFS.length];
+
+  // Gamification header
+  var headerHtml = '<div style="background:var(--card);border:1px solid var(--card-border);border-radius:16px;padding:18px 20px;margin-bottom:16px">'
+    + '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">'
+    + '<div style="display:flex;align-items:center;gap:12px">'
+    + '<div style="background:var(--ov-accent-ink);color:#fff;border-radius:12px;padding:6px 14px;font-weight:800;font-size:15px">Day ' + day + '</div>'
+    + (streak>0?'<div style="color:var(--ov-accent-ink);font-weight:700;font-size:15px">🔥 ' + streak + ' วัน</div>':'')
+    + '</div>'
+    + '<button onclick="qstEditMeta()" style="background:none;border:1px solid var(--card-border);border-radius:8px;padding:4px 10px;font-size:12px;cursor:pointer;color:var(--text-muted)">✏️ แก้ค่า</button>'
+    + '</div>'
+    + '<div style="background:var(--card-border,#e2e8f0);border-radius:8px;height:10px;margin-bottom:8px;overflow:hidden">'
+    + '<div style="height:100%;width:'+pct+'%;background:var(--ov-accent-ink);border-radius:8px;transition:width .5s"></div>'
+    + '</div>'
+    + '<div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text-muted);margin-bottom:12px">'
+    + '<span>Day ' + day + ' / ' + total + '</span><span>' + pct + '%</span>'
+    + '</div>'
+    + '<div style="background:rgba(139,69,19,0.07);border-radius:10px;padding:10px 14px;font-size:13px;color:var(--text);margin-bottom:8px;line-height:1.5">'
+    + '💬 ' + escapeHtml(moti) + '</div>'
+    + '<div style="background:rgba(139,69,19,0.05);border-radius:10px;padding:8px 14px;font-size:12px;color:var(--text-muted)">'
+    + '⚡ ' + escapeHtml(buff) + '</div>'
+    + '</div>';
+
+  // Sub-tabs
+  var tabsHtml = '<div style="display:flex;gap:8px;margin-bottom:16px">'
+    + '<button onclick="qstShowTab(\'quest\')" style="padding:8px 18px;border-radius:10px;border:none;cursor:pointer;font-size:13px;font-weight:600;'
+    + (qstActiveTab==='quest' ? 'background:var(--ov-accent-ink);color:#fff;' : 'background:var(--card);border:1px solid var(--card-border);color:var(--text);')
+    + '">⚔️ เควส</button>'
+    + '<button onclick="qstShowTab(\'ach\')" style="padding:8px 18px;border-radius:10px;border:none;cursor:pointer;font-size:13px;font-weight:600;'
+    + (qstActiveTab==='ach' ? 'background:var(--ov-accent-ink);color:#fff;' : 'background:var(--card);border:1px solid var(--card-border);color:var(--text);')
+    + '">🏆 ความสำเร็จ</button>'
+    + '</div>';
+
+  var panelHtml = '';
+  if (qstActiveTab === 'quest') {
+    panelHtml = qstRenderQuestPanel();
+  } else {
+    panelHtml = qstRenderAchPanel();
+  }
+
+  root.innerHTML = headerHtml + tabsHtml + panelHtml;
+}
+
+// ── Quest panel ──
+function qstRenderQuestPanel() {
+  var quests = DCS.quests || [];
+
+  // Category filter chips
+  var chips = '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px">'
+    + '<button onclick="qstSetCatFilter(\'all\')" style="padding:4px 12px;border-radius:20px;border:1px solid var(--card-border);cursor:pointer;font-size:12px;'
+    + (qstCatFilter==='all' ? 'background:var(--ov-accent-ink);color:#fff;border-color:var(--ov-accent-ink);' : 'background:var(--card);color:var(--text-muted);')
+    + '">ทั้งหมด ('+quests.length+')</button>';
+  Object.keys(QUEST_CAT).forEach(function(k) {
+    var c = QUEST_CAT[k];
+    var cnt = quests.filter(function(q){return q.cat===k;}).length;
+    if (!cnt) return;
+    var active = qstCatFilter === k;
+    chips += '<button onclick="qstSetCatFilter(\''+k+'\')" style="padding:4px 12px;border-radius:20px;border:1px solid var(--card-border);cursor:pointer;font-size:12px;'
+      + (active ? 'background:var(--ov-accent-ink);color:#fff;border-color:var(--ov-accent-ink);' : 'background:var(--card);color:var(--text);')
+      + '">' + c.icon + ' ' + c.label + ' (' + cnt + ')</button>';
+  });
+  chips += '</div>';
+
+  // Add button
+  var addBtn = '<div style="margin-bottom:12px">'
+    + '<button onclick="qstOpenForm(null)" style="background:var(--ov-accent-ink);color:#fff;border:none;border-radius:10px;padding:8px 16px;font-size:13px;cursor:pointer;font-weight:600">+ เพิ่มเควส</button>'
+    + '</div>';
+
+  // Quest list
+  var filtered = qstCatFilter==='all' ? quests : quests.filter(function(q){return q.cat===qstCatFilter;});
+  var today = qstToday();
+  var cards = '';
+  if (!filtered.length) {
+    cards = '<div style="text-align:center;padding:40px 20px;color:var(--text-muted);font-size:14px">ยังไม่มีเควสในหมวดนี้</div>';
+  } else {
+    filtered.forEach(function(q) {
+      var cat = QUEST_CAT[q.cat] || {icon:'📌',label:q.cat};
+      var doneToday = qstIsDoneToday(q.id);
+      var priColor = q.pri==='high' ? 'var(--dc-warn,#e53935)' : q.pri==='med' ? 'var(--ov-accent-ink,#8B4513)' : 'var(--text-muted)';
+      var priLabel = q.pri==='high' ? '🔴 สำคัญมาก' : q.pri==='med' ? '🟡 ปานกลาง' : '🟢 ต่ำ';
+      cards += '<div style="background:var(--card);border:1px solid var(--card-border);border-radius:14px;padding:14px 16px;margin-bottom:10px;display:flex;align-items:flex-start;gap:12px">'
+        + '<button onclick="qstToggleToday(\''+q.id+'\')" title="'+(doneToday?'ยกเลิก':'ทำแล้ววันนี้')+'" style="flex-shrink:0;width:28px;height:28px;border-radius:50%;border:2px solid '+(doneToday?'var(--ov-accent-ink)':'var(--card-border)')+';background:'+(doneToday?'var(--ov-accent-ink)':'transparent')+';cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;color:'+(doneToday?'#fff':'var(--text-muted)')+'">'+( doneToday?'✓':'')+'</button>'
+        + '<div style="flex:1;min-width:0">'
+        + '<div style="font-weight:600;font-size:14px;color:var(--text);margin-bottom:4px">' + cat.icon + ' ' + escapeHtml(q.title) + '</div>'
+        + '<div style="font-size:12px;color:var(--text-muted);display:flex;flex-wrap:wrap;gap:6px">'
+        + '<span>' + escapeHtml(q.time) + '</span>'
+        + (q.place ? '<span>📍 ' + escapeHtml(q.place) + '</span>' : '')
+        + '<span style="color:'+priColor+'">'+priLabel+'</span>'
+        + (q.repeat==='daily'?'<span style="background:rgba(139,69,19,0.1);border-radius:8px;padding:1px 8px">🔄 รายวัน</span>':q.repeat==='weekly'?'<span style="background:rgba(139,69,19,0.07);border-radius:8px;padding:1px 8px">📅 รายสัปดาห์</span>':'')
+        + '</div>'
+        + (q.note ? '<div style="font-size:12px;color:var(--text-muted);margin-top:4px">💬 '+escapeHtml(q.note)+'</div>' : '')
+        + '</div>'
+        + '<div style="display:flex;gap:6px;flex-shrink:0">'
+        + '<button onclick="qstOpenForm(\''+q.id+'\')" style="background:none;border:none;cursor:pointer;padding:4px;color:var(--text-muted);font-size:15px" title="แก้ไข">✏️</button>'
+        + '<button onclick="qstDelete(\''+q.id+'\')" style="background:none;border:none;cursor:pointer;padding:4px;color:var(--text-muted);font-size:15px" title="ลบ">🗑️</button>'
+        + '</div>'
+        + '</div>';
+    });
+  }
+
+  return chips + addBtn + cards;
+}
+
+// ── Achievement panel ──
+function qstRenderAchPanel() {
+  var achs = DCS.achievements || [];
+  var day = qstDayNum();
+  var done = achs.filter(function(a){return a.done;}).length;
+  var total = achs.length;
+
+  // summary
+  var summary = '<div style="display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap">';
+  var statItems = [
+    {label:'ทั้งหมด',val:total,col:'var(--text)'},
+    {label:'สำเร็จแล้ว',val:done,col:'var(--dc-profit,#2e7d32)'},
+    {label:'เหลืออยู่',val:total-done,col:'var(--ov-accent-ink,#8B4513)'},
+    {label:'เลยกำหนด',val:achs.filter(function(a){return !a.done && a.day < day;}).length,col:'var(--dc-warn,#e53935)'}
+  ];
+  statItems.forEach(function(s) {
+    summary += '<div style="background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:10px 16px;min-width:80px;text-align:center">'
+      + '<div style="font-size:20px;font-weight:800;color:'+s.col+'">'+s.val+'</div>'
+      + '<div style="font-size:11px;color:var(--text-muted)">'+s.label+'</div>'
+      + '</div>';
+  });
+  summary += '</div>';
+
+  // progress bar
+  var pct = total ? Math.round(done/total*100) : 0;
+  summary += '<div style="margin-bottom:14px">'
+    + '<div style="font-size:12px;color:var(--text-muted);margin-bottom:4px">ความสำเร็จ '+done+'/'+total+' ('+pct+'%)</div>'
+    + '<div style="background:var(--card-border,#e2e8f0);border-radius:8px;height:8px;overflow:hidden">'
+    + '<div style="height:100%;width:'+pct+'%;background:var(--ov-accent-ink);border-radius:8px;transition:width .5s"></div>'
+    + '</div>'
+    + '</div>';
+
+  // Add button
+  var addBtn = '<div style="margin-bottom:12px">'
+    + '<button onclick="qstOpenAchForm(null)" style="background:var(--ov-accent-ink);color:#fff;border:none;border-radius:10px;padding:8px 16px;font-size:13px;cursor:pointer;font-weight:600">+ เพิ่มความสำเร็จ</button>'
+    + '</div>';
+
+  // Achievement list sorted by day
+  var sorted = achs.slice().sort(function(a,b){return (a.day||0)-(b.day||0);});
+  var cards = '';
+  sorted.forEach(function(a) {
+    var overdue = !a.done && a.day < day;
+    var ontime = a.done && a.day >= day;
+    var early = a.done && a.day > day;
+    var late = a.done && a.day < day;
+    var statusColor = a.done ? 'var(--dc-profit,#2e7d32)' : overdue ? 'var(--dc-warn,#e53935)' : 'var(--text-muted)';
+    var statusLabel = a.done ? (early?'✅ สำเร็จก่อนกำหนด':late?'✅ สำเร็จ (หลังกำหนด)':'✅ สำเร็จ') : overdue ? '⚠️ เลยกำหนดแล้ว' : '⏳ Day '+a.day;
+    cards += '<div style="background:var(--card);border:1px solid '+(a.done?'rgba(46,125,50,0.3)':overdue?'rgba(229,57,53,0.3)':'var(--card-border)')+';border-radius:14px;padding:14px 16px;margin-bottom:10px;display:flex;gap:12px;align-items:flex-start">'
+      + '<button onclick="qstTickAch(\''+a.id+'\')" title="'+(a.done?'ยกเลิก':'ทำสำเร็จแล้ว')+'" style="flex-shrink:0;width:32px;height:32px;border-radius:50%;border:2px solid '+(a.done?'var(--dc-profit,#2e7d32)':'var(--card-border)')+';background:'+(a.done?'var(--dc-profit,#2e7d32)':'transparent')+';cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;color:'+(a.done?'#fff':'var(--text-muted)')+'">'+a.icon+'</button>'
+      + '<div style="flex:1;min-width:0">'
+      + '<div style="font-weight:700;font-size:14px;color:var(--text)">'+escapeHtml(a.title)+'</div>'
+      + '<div style="font-size:12px;margin-top:3px;display:flex;flex-wrap:wrap;gap:8px">'
+      + '<span style="color:'+statusColor+'">'+statusLabel+'</span>'
+      + (a.doneDate ? '<span style="color:var(--text-muted)">'+qstFmtDate(a.doneDate)+'</span>' : '')
+      + (a.desc ? '<span style="color:var(--text-muted)">'+escapeHtml(a.desc)+'</span>' : '')
+      + '</div>'
+      + (a.doneNote ? '<div style="font-size:12px;color:var(--text-muted);margin-top:4px;font-style:italic">💬 '+escapeHtml(a.doneNote)+'</div>' : '')
+      + '</div>'
+      + '<div style="display:flex;gap:6px;flex-shrink:0">'
+      + '<button onclick="qstOpenAchForm(\''+a.id+'\')" style="background:none;border:none;cursor:pointer;padding:4px;color:var(--text-muted);font-size:15px" title="แก้ไข">✏️</button>'
+      + '<button onclick="qstDeleteAch(\''+a.id+'\')" style="background:none;border:none;cursor:pointer;padding:4px;color:var(--text-muted);font-size:15px" title="ลบ">🗑️</button>'
+      + '</div>'
+      + '</div>';
+  });
+  if (!sorted.length) cards = '<div style="text-align:center;padding:40px;color:var(--text-muted)">ยังไม่มีความสำเร็จ</div>';
+
+  return summary + addBtn + cards;
+}
+
+// ── Quest CRUD ──
+function qstToggleToday(qid) {
+  if (!saIsUnlocked()) {
+    dcOpenPwModal('🔒 ยืนยันตัวตน','กรอกรหัสเพื่อบันทึกเควส',function(){saUnlock();qstToggleToday(qid);});
+    return;
+  }
+  if (!DCS.questLog) DCS.questLog = {};
+  var today = qstToday();
+  if (!DCS.questLog[today]) DCS.questLog[today] = {};
+  if (DCS.questLog[today][qid]) {
+    delete DCS.questLog[today][qid];
+    if (!Object.keys(DCS.questLog[today]).length) delete DCS.questLog[today];
+  } else {
+    DCS.questLog[today][qid] = true;
+  }
+  qstAfterChange(); renderQuestView();
+}
+
+function qstOpenForm(id) {
+  if (!saIsUnlocked()) {
+    dcOpenPwModal('🔒 ยืนยันตัวตน','กรอกรหัสเพื่อแก้ไขเควส',function(){saUnlock();qstOpenForm(id);});
+    return;
+  }
+  var q = id ? (DCS.quests||[]).find(function(x){return x.id===id;}) : null;
+  var catOpts = Object.keys(QUEST_CAT).map(function(k){
+    return '<option value="'+k+'"'+(q&&q.cat===k?' selected':'')+'>'+QUEST_CAT[k].icon+' '+QUEST_CAT[k].label+'</option>';
+  }).join('');
+  var html = '<div class="dc-modal-head"><h3>'+(q?'แก้ไขเควส':'เพิ่มเควสใหม่')+'</h3><button class="dc-x" onclick="dcCloseModal()" aria-label="ปิด">✕</button></div>'
+    + '<div class="dc-modal-scroll">'
+    + '<div class="dc-field"><label>ชื่อภารกิจ</label><input class="dc-inp" id="qf-title" value="'+escapeHtml(q?q.title:'')+'"></div>'
+    + '<div class="dc-field"><label>หมวด</label><select class="dc-inp" id="qf-cat">'+catOpts+'</select></div>'
+    + '<div class="dc-field"><label>ช่วงเวลา</label><select class="dc-inp" id="qf-time">'
+    + ['🌅 เช้า','🌞 กลางวัน','🌆 เย็น','🌙 ดึก'].map(function(t){return '<option'+(q&&q.time===t?' selected':'')+'>'+t+'</option>';}).join('')
+    + '</select></div>'
+    + '<div class="dc-field"><label>สถานที่</label><input class="dc-inp" id="qf-place" value="'+escapeHtml(q?q.place:'')+'"></div>'
+    + '<div class="dc-field"><label>ความสำคัญ</label><select class="dc-inp" id="qf-pri">'
+    + [{v:'high',l:'🔴 สำคัญมาก'},{v:'med',l:'🟡 ปานกลาง'},{v:'low',l:'🟢 ต่ำ'}].map(function(o){return '<option value="'+o.v+'"'+(q&&q.pri===o.v?' selected':'')+'>'+o.l+'</option>';}).join('')
+    + '</select></div>'
+    + '<div class="dc-field"><label>ทำซ้ำ</label><select class="dc-inp" id="qf-repeat">'
+    + [{v:'once',l:'ครั้งเดียว'},{v:'daily',l:'🔄 รายวัน'},{v:'weekly',l:'📅 รายสัปดาห์'}].map(function(o){return '<option value="'+o.v+'"'+(q&&q.repeat===o.v?' selected':'')+'>'+o.l+'</option>';}).join('')
+    + '</select></div>'
+    + '<div class="dc-field"><label>หมายเหตุ</label><input class="dc-inp" id="qf-note" value="'+escapeHtml(q?q.note:'')+'"></div>'
+    + '</div>'
+    + '<div class="dc-modal-foot">'
+    + '<button class="dc-btn ghost" onclick="dcCloseModal()">ยกเลิก</button>'
+    + '<button class="dc-btn primary" onclick="qstSaveForm(\''+( q?q.id:'')+'\')" >💾 บันทึก</button>'
+    + '</div>';
+  dcSetModalBody(html);
+  setTimeout(function(){ var el=document.getElementById('qf-title'); if(el) el.focus(); }, 100);
+}
+
+function qstSaveForm(id) {
+  var title = (document.getElementById('qf-title')||{}).value||'';
+  if (!title.trim()) { showToast('กรอกชื่อภารกิจด้วย'); return; }
+  if (!DCS.quests) DCS.quests = [];
+  if (id) {
+    var idx = DCS.quests.findIndex(function(x){return x.id===id;});
+    if (idx>=0) {
+      DCS.quests[idx].title  = title.trim();
+      DCS.quests[idx].cat    = document.getElementById('qf-cat').value;
+      DCS.quests[idx].time   = document.getElementById('qf-time').value;
+      DCS.quests[idx].place  = document.getElementById('qf-place').value.trim();
+      DCS.quests[idx].pri    = document.getElementById('qf-pri').value;
+      DCS.quests[idx].repeat = document.getElementById('qf-repeat').value;
+      DCS.quests[idx].note   = document.getElementById('qf-note').value.trim();
+    }
+  } else {
+    DCS.quests.push({
+      id: qstGenId(), title: title.trim(),
+      cat:    document.getElementById('qf-cat').value,
+      time:   document.getElementById('qf-time').value,
+      place:  document.getElementById('qf-place').value.trim(),
+      pri:    document.getElementById('qf-pri').value,
+      repeat: document.getElementById('qf-repeat').value,
+      note:   document.getElementById('qf-note').value.trim()
+    });
+  }
+  dcCloseModal(); qstAfterChange(); renderQuestView();
+  showToast(id ? 'อัปเดตเควสแล้ว' : 'เพิ่มเควสใหม่แล้ว');
+}
+
+function qstDelete(id) {
+  if (!saIsUnlocked()) {
+    dcOpenPwModal('🔒 ยืนยันตัวตน','กรอกรหัสเพื่อลบเควส',function(){saUnlock();qstDelete(id);});
+    return;
+  }
+  if (!confirm('ลบเควสนี้?')) return;
+  DCS.quests = (DCS.quests||[]).filter(function(q){return q.id!==id;});
+  qstAfterChange(); renderQuestView();
+  showToast('ลบเควสแล้ว');
+}
+
+// ── Achievement CRUD ──
+function qstTickAch(id) {
+  if (!saIsUnlocked()) {
+    dcOpenPwModal('🔒 ยืนยันตัวตน','กรอกรหัสเพื่อบันทึกความสำเร็จ',function(){saUnlock();qstTickAch(id);});
+    return;
+  }
+  var a = (DCS.achievements||[]).find(function(x){return x.id===id;});
+  if (!a) return;
+  if (a.done) {
+    // undo
+    a.done = false; a.doneDate = ''; a.doneNote = '';
+    qstAfterChange(); renderQuestView();
+    showToast('ยกเลิกความสำเร็จแล้ว');
+    return;
+  }
+  // mark done — ask for note
+  var html = '<div class="dc-modal-head"><h3>🏆 บันทึกความสำเร็จ</h3><button class="dc-x" onclick="dcCloseModal()">✕</button></div>'
+    + '<div class="dc-modal-scroll">'
+    + '<div style="text-align:center;font-size:24px;margin:12px 0">' + a.icon + '</div>'
+    + '<div style="font-weight:700;text-align:center;color:var(--text);margin-bottom:16px">' + escapeHtml(a.title) + '</div>'
+    + '<div class="dc-field"><label>วันที่สำเร็จ</label><input class="dc-inp" type="date" id="atick-date" value="' + qstToday() + '"></div>'
+    + '<div class="dc-field"><label>บันทึกเพิ่มเติม (ถ้ามี)</label><textarea class="dc-inp" id="atick-note" rows="3" placeholder="ความรู้สึก สิ่งที่เรียนรู้..."></textarea></div>'
+    + '</div>'
+    + '<div class="dc-modal-foot">'
+    + '<button class="dc-btn ghost" onclick="dcCloseModal()">ยกเลิก</button>'
+    + '<button class="dc-btn primary" onclick="qstSaveTickAch(\''+id+'\')" >✅ บันทึก</button>'
+    + '</div>';
+  dcSetModalBody(html);
+}
+
+function qstSaveTickAch(id) {
+  var a = (DCS.achievements||[]).find(function(x){return x.id===id;});
+  if (!a) return;
+  a.done = true;
+  a.doneDate = (document.getElementById('atick-date')||{}).value || qstToday();
+  a.doneNote = ((document.getElementById('atick-note')||{}).value||'').trim();
+  if (!DCS.questHistory) DCS.questHistory = [];
+  DCS.questHistory.push({
+    id: 'h'+Date.now().toString(36), type: 'achievement',
+    title: a.title, date: a.doneDate, note: a.doneNote
+  });
+  dcCloseModal(); qstAfterChange(); renderQuestView();
+  showToast('🏆 บันทึกความสำเร็จแล้ว!');
+}
+
+function qstOpenAchForm(id) {
+  if (!saIsUnlocked()) {
+    dcOpenPwModal('🔒 ยืนยันตัวตน','กรอกรหัสเพื่อแก้ไขความสำเร็จ',function(){saUnlock();qstOpenAchForm(id);});
+    return;
+  }
+  var a = id ? (DCS.achievements||[]).find(function(x){return x.id===id;}) : null;
+  var catOpts = Object.keys(ACH_CAT).map(function(k){
+    return '<option value="'+k+'"'+(a&&a.cat===k?' selected':'')+'>'+ACH_CAT[k].icon+' '+ACH_CAT[k].label+'</option>';
+  }).join('');
+  var html = '<div class="dc-modal-head"><h3>'+(a?'แก้ไขความสำเร็จ':'เพิ่มความสำเร็จ')+'</h3><button class="dc-x" onclick="dcCloseModal()">✕</button></div>'
+    + '<div class="dc-modal-scroll">'
+    + '<div class="dc-field"><label>ชื่อ</label><input class="dc-inp" id="af-title" value="'+escapeHtml(a?a.title:'')+'"></div>'
+    + '<div class="dc-field"><label>หมวด</label><select class="dc-inp" id="af-cat">'+catOpts+'</select></div>'
+    + '<div class="dc-field"><label>เป้าหมาย Day</label><input class="dc-inp" type="number" id="af-day" value="'+(a?a.day:30)+'" min="1" max="999"></div>'
+    + '<div class="dc-field"><label>ไอคอน (emoji)</label><input class="dc-inp" id="af-icon" value="'+(a?a.icon:'🎯')+'" style="font-size:20px"></div>'
+    + '<div class="dc-field"><label>รายละเอียด</label><input class="dc-inp" id="af-desc" value="'+escapeHtml(a?a.desc:'')+'"></div>'
+    + '</div>'
+    + '<div class="dc-modal-foot">'
+    + '<button class="dc-btn ghost" onclick="dcCloseModal()">ยกเลิก</button>'
+    + '<button class="dc-btn primary" onclick="qstSaveAchForm(\''+( a?a.id:'')+'\')" >💾 บันทึก</button>'
+    + '</div>';
+  dcSetModalBody(html);
+  setTimeout(function(){ var el=document.getElementById('af-title'); if(el) el.focus(); }, 100);
+}
+
+function qstSaveAchForm(id) {
+  var title = ((document.getElementById('af-title')||{}).value||'').trim();
+  if (!title) { showToast('กรอกชื่อด้วย'); return; }
+  if (!DCS.achievements) DCS.achievements = [];
+  if (id) {
+    var idx = DCS.achievements.findIndex(function(x){return x.id===id;});
+    if (idx>=0) {
+      DCS.achievements[idx].title = title;
+      DCS.achievements[idx].cat   = document.getElementById('af-cat').value;
+      DCS.achievements[idx].day   = parseInt(document.getElementById('af-day').value)||30;
+      DCS.achievements[idx].icon  = document.getElementById('af-icon').value.trim()||'🎯';
+      DCS.achievements[idx].desc  = ((document.getElementById('af-desc')||{}).value||'').trim();
+    }
+  } else {
+    DCS.achievements.push({
+      id: 'a'+Date.now().toString(36), title: title,
+      cat: document.getElementById('af-cat').value,
+      day: parseInt(document.getElementById('af-day').value)||30,
+      icon: document.getElementById('af-icon').value.trim()||'🎯',
+      desc: ((document.getElementById('af-desc')||{}).value||'').trim(),
+      done: false, doneDate: '', doneNote: ''
+    });
+  }
+  dcCloseModal(); qstAfterChange(); renderQuestView();
+  showToast(id ? 'อัปเดตแล้ว' : 'เพิ่มความสำเร็จแล้ว');
+}
+
+function qstDeleteAch(id) {
+  if (!saIsUnlocked()) {
+    dcOpenPwModal('🔒 ยืนยันตัวตน','กรอกรหัสเพื่อลบ',function(){saUnlock();qstDeleteAch(id);});
+    return;
+  }
+  if (!confirm('ลบรายการนี้?')) return;
+  DCS.achievements = (DCS.achievements||[]).filter(function(a){return a.id!==id;});
+  qstAfterChange(); renderQuestView();
+  showToast('ลบแล้ว');
+}
+
+// ── Edit questMeta (password-gated) ──
+function qstEditMeta() {
+  if (!saIsUnlocked()) {
+    dcOpenPwModal('🔒 ยืนยันตัวตน','กรอกรหัสเพื่อแก้ค่า',function(){saUnlock();qstEditMeta();});
+    return;
+  }
+  var m = DCS.questMeta || {};
+  var html = '<div class="dc-modal-head"><h3>⚙️ ตั้งค่า 90 วัน</h3><button class="dc-x" onclick="dcCloseModal()">✕</button></div>'
+    + '<div class="dc-modal-scroll">'
+    + '<div class="dc-field"><label>วันเริ่มต้น (YYYY-MM-DD)</label><input class="dc-inp" type="date" id="qm-start" value="'+(m.startDate||'2026-05-31')+'"></div>'
+    + '<div class="dc-field"><label>จำนวนวันทั้งหมด</label><input class="dc-inp" type="number" id="qm-total" value="'+(m.totalDays||90)+'" min="1" max="365"></div>'
+    + '<div class="dc-field"><label>เป้าหมายเปิดร้าน (Day)</label><input class="dc-inp" type="number" id="qm-open" value="'+(m.targetOpenDay||30)+'" min="1"></div>'
+    + '</div>'
+    + '<div class="dc-modal-foot">'
+    + '<button class="dc-btn ghost" onclick="dcCloseModal()">ยกเลิก</button>'
+    + '<button class="dc-btn primary" onclick="qstSaveMeta()">💾 บันทึก</button>'
+    + '</div>';
+  dcSetModalBody(html);
+}
+
+function qstSaveMeta() {
+  if (!DCS.questMeta) DCS.questMeta = {};
+  DCS.questMeta.startDate     = (document.getElementById('qm-start')||{}).value || '2026-05-31';
+  DCS.questMeta.totalDays     = parseInt((document.getElementById('qm-total')||{}).value)||90;
+  DCS.questMeta.targetOpenDay = parseInt((document.getElementById('qm-open')||{}).value)||30;
+  dcCloseModal(); qstAfterChange(); renderQuestView();
+  showToast('บันทึกค่าแล้ว');
 }
 
 // ── Boot ──

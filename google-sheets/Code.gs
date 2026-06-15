@@ -16,7 +16,10 @@
 var SH = { cat: 'วัตถุดิบ', menu: 'เมนู', recipe: 'สูตร', settings: 'ตั้งค่า',
            buyLogs: 'สต็อก-ซื้อเข้า', salesLogs: 'สต็อก-ยอดขาย',
            parSheet: 'สต็อก-par', imgSheet: 'สต็อก-รูป',
-           expenses: 'รายจ่าย', slipBills: 'สลิป-บิล' };
+           expenses: 'รายจ่าย', slipBills: 'สลิป-บิล',
+           quests: 'เควส', achievements: 'ความสำเร็จ',
+           plans: 'แผนงาน', loops: 'ลูป',
+           questLog: 'บันทึกเควสรายวัน', questHistory: 'ประวัติเควส' };
 
 function doGet(e) {
   if (e.parameter.action === 'loyverse') return loyverseProxy_(e.parameter);
@@ -275,11 +278,87 @@ function buildData_() {
     var sk = String(slv[i][0] || '').trim(), su = String(slv[i][1] || '').trim();
     if (sk && su) expSlips[sk] = su;
   }
+  // เควส
+  var quests = [];
+  var qv = rows_(SH.quests);
+  for (var i = 1; i < qv.length; i++) {
+    var r = qv[i], qid = String(r[0] || '').trim();
+    if (!qid) continue;
+    quests.push({ id: qid, title: String(r[1]||''), cat: String(r[2]||'plan'),
+      time: String(r[3]||''), place: String(r[4]||''), pri: String(r[5]||'med'),
+      repeat: String(r[6]||'once'), note: String(r[7]||'') });
+  }
+
+  // ความสำเร็จ
+  var achievements = [];
+  var av = rows_(SH.achievements);
+  for (var i = 1; i < av.length; i++) {
+    var r = av[i], aid = String(r[0] || '').trim();
+    if (!aid) continue;
+    var adone = (r[6]===true||r[6]==='TRUE'||r[6]==='true'||r[6]===1||r[6]==='1');
+    achievements.push({ id: aid, title: String(r[1]||''), cat: String(r[2]||'milestone'),
+      day: Number(r[3]) || 0, icon: String(r[4]||'🎯'), desc: String(r[5]||''),
+      done: adone, doneDate: dateStr_(r[7]), doneNote: String(r[8]||'') });
+  }
+
+  // แผนงาน (flat rows: id, ประเภท, รายการ, ความสำคัญ, สำเร็จ) → nested object
+  var plans = { daily: [], weekly: [], monthly: [] };
+  var plv = rows_(SH.plans);
+  for (var i = 1; i < plv.length; i++) {
+    var r = plv[i], pid = String(r[0]||'').trim();
+    if (!pid) continue;
+    var ptype = String(r[1]||'daily').trim();
+    var pdone = (r[4]===true||r[4]==='TRUE'||r[4]==='true'||r[4]===1||r[4]==='1');
+    var item = { id: pid, text: String(r[2]||''), pri: String(r[3]||'med'), done: pdone };
+    if (ptype === 'weekly') plans.weekly.push(item);
+    else if (ptype === 'monthly') plans.monthly.push(item);
+    else plans.daily.push(item);
+  }
+
+  // ลูป
+  var loops = [];
+  var lv = rows_(SH.loops);
+  for (var i = 1; i < lv.length; i++) {
+    var r = lv[i], lid = String(r[0]||'').trim();
+    if (!lid) continue;
+    loops.push({ id: lid, title: String(r[1]||''), stage: String(r[2]||''), note: String(r[3]||''), updatedAt: String(r[4]||'') });
+  }
+
+  // บันทึกเควสรายวัน: (วันที่, questId, สำเร็จ) → {"YYYY-MM-DD": {questId: true}}
+  var questLog = {};
+  var qlv = rows_(SH.questLog);
+  for (var i = 1; i < qlv.length; i++) {
+    var qldate = dateStr_(qlv[i][0]), qlqid = String(qlv[i][1]||'').trim();
+    var qldone = (qlv[i][2]===true||qlv[i][2]==='TRUE'||qlv[i][2]==='true'||qlv[i][2]===1||qlv[i][2]==='1');
+    if (qldate && qlqid && qldone) {
+      if (!questLog[qldate]) questLog[qldate] = {};
+      questLog[qldate][qlqid] = true;
+    }
+  }
+
+  // ประวัติเควส
+  var questHistory = [];
+  var qhv = rows_(SH.questHistory);
+  for (var i = 1; i < qhv.length; i++) {
+    var r = qhv[i], hid = String(r[0]||'').trim();
+    if (!hid) continue;
+    questHistory.push({ id: hid, type: String(r[1]||''), title: String(r[2]||''), date: String(r[3]||''), note: String(r[4]||'') });
+  }
+
+  // meta จาก ตั้งค่า
+  var questMeta = {
+    startDate:      sm.quest_start_date    ? String(sm.quest_start_date)    : '2026-05-31',
+    totalDays:      sm.quest_total_days    ? Number(sm.quest_total_days)    : 90,
+    targetOpenDay:  sm.quest_target_open_day ? Number(sm.quest_target_open_day) : 30
+  };
+
   return { source: 'Google Sheet', parsed_at: new Date().toISOString(),
            assumptions: asm, catalog: catalog, menus: menus,
            purchases: purchases, sales: sales, expenses: expenses,
            stock: { threshold_pct: stock_thr, par: par, images: images },
-           expense_slips: expSlips };
+           expense_slips: expSlips,
+           quests: quests, achievements: achievements, plans: plans, loops: loops,
+           questLog: questLog, questHistory: questHistory, questMeta: questMeta };
 }
 
 // ── เขียนทับทุกแท็บจาก JSON ที่ dashboard ส่งมา ──
@@ -304,6 +383,7 @@ function writeData_(data) {
   writeSheet_(SH.recipe, rrows);
 
   var a = data.assumptions || {}, ch = a.channels || {}, stk = data.stock || {};
+  var qm = data.questMeta || {};
   var srows = [['คีย์', 'ค่า'],
     ['overhead', a.overhead == null ? 0.3 : a.overhead],
     ['margin_factor', a.margin_factor || 1.6],
@@ -315,7 +395,10 @@ function writeData_(data) {
     ['vat_shoppee', (ch.shoppee || {}).vat || 0],
     ['gp_grab', (ch.grab || {}).gp || 0],
     ['vat_grab', (ch.grab || {}).vat || 0],
-    ['stock_threshold_pct', stk.threshold_pct != null ? stk.threshold_pct : 55]];
+    ['stock_threshold_pct', stk.threshold_pct != null ? stk.threshold_pct : 55],
+    ['quest_start_date', qm.startDate || '2026-05-31'],
+    ['quest_total_days', qm.totalDays != null ? qm.totalDays : 90],
+    ['quest_target_open_day', qm.targetOpenDay != null ? qm.targetOpenDay : 30]];
   writeSheet_(SH.settings, srows);
 
   // สต็อก-ซื้อเข้า (schema 10 คอลัมน์)
@@ -377,9 +460,67 @@ function writeData_(data) {
   var slrows = [['คีย์', 'ลิงก์']];
   Object.keys(expSlips).forEach(function(k) { if (expSlips[k]) slrows.push([k, expSlips[k]]); });
   writeSheet_(SH.slipBills, slrows);
+
+  // เควส
+  var qrows = [['id','ชื่อ','หมวด','ช่วงเวลา','สถานที่','ความสำคัญ','ทำซ้ำ','หมายเหตุ']];
+  (data.quests || []).forEach(function(q) {
+    qrows.push([q.id||'', q.title||'', q.cat||'', q.time||'', q.place||'', q.pri||'', q.repeat||'', q.note||'']);
+  });
+  writeSheet_(SH.quests, qrows);
+
+  // ความสำเร็จ
+  var arows = [['id','ชื่อ','หมวด','เป้าหมายวัน','ไอคอน','รายละเอียด','สำเร็จ','วันที่สำเร็จ','บันทึก']];
+  (data.achievements || []).forEach(function(a) {
+    arows.push([a.id||'', a.title||'', a.cat||'', a.day||0, a.icon||'🎯', a.desc||'', a.done?'TRUE':'FALSE', a.doneDate||'', a.doneNote||'']);
+  });
+  writeSheet_(SH.achievements, arows);
+
+  // แผนงาน (flat: id, ประเภท, รายการ, ความสำคัญ, สำเร็จ)
+  var plrows = [['id','ประเภท','รายการ','ความสำคัญ','สำเร็จ']];
+  var pldata = data.plans || {};
+  ['daily','weekly','monthly'].forEach(function(type) {
+    (pldata[type] || []).forEach(function(p) {
+      plrows.push([p.id||'', type, p.text||'', p.pri||'med', p.done?'TRUE':'FALSE']);
+    });
+  });
+  writeSheet_(SH.plans, plrows);
+
+  // ลูป
+  var lrows = [['id','หัวข้อ','ขั้นตอน','บันทึก','อัปเดตเมื่อ']];
+  (data.loops || []).forEach(function(l) {
+    lrows.push([l.id||'', l.title||'', l.stage||'', l.note||'', l.updatedAt||'']);
+  });
+  writeSheet_(SH.loops, lrows);
+
+  // บันทึกเควสรายวัน (questLog → flat rows)
+  var qlrows = [['วันที่','questId','สำเร็จ']];
+  var ql = data.questLog || {};
+  Object.keys(ql).sort().forEach(function(date) {
+    var dayObj = ql[date] || {};
+    Object.keys(dayObj).forEach(function(qid) {
+      if (dayObj[qid]) qlrows.push([date, qid, 'TRUE']);
+    });
+  });
+  writeSheet_(SH.questLog, qlrows);
+
+  // ประวัติเควส
+  var qhrows = [['id','ประเภท','ชื่อ','วันที่','บันทึก']];
+  (data.questHistory || []).forEach(function(h) {
+    qhrows.push([h.id||'', h.type||'', h.title||'', h.date||'', h.note||'']);
+  });
+  writeSheet_(SH.questHistory, qhrows);
 }
 
 function blank_(v) { return (v == null) ? '' : v; }
+
+// แปลง Date object (จาก getValues) เป็น YYYY-MM-DD โดยใช้ local date ไม่ใช่ UTC
+function dateStr_(v) {
+  if (v instanceof Date) {
+    var y = v.getFullYear(), m = v.getMonth()+1, d = v.getDate();
+    return y + '-' + (m<10?'0':'') + m + '-' + (d<10?'0':'') + d;
+  }
+  return String(v||'').trim();
+}
 
 function writeSheet_(name, rows) {
   var sh = sheet_(name);
