@@ -5128,6 +5128,13 @@ var ACH_CAT = {
   financial: {icon:'💰', label:'การเงิน'}
 };
 
+var LOOP_STG = {
+  learn:   {icon:'📚', label:'หาความรู้'},
+  do:      {icon:'🔨', label:'ลงมือทำ'},
+  improve: {icon:'🔍', label:'ปรับปรุง'},
+  repeat:  {icon:'♻️', label:'ทำซ้ำ'}
+};
+
 var DEFAULT_QUESTS_SEED = [
   {id:'q01',title:'สำรวจร้านและถ่ายรูปสภาพปัจจุบัน',cat:'site',time:'🌅 เช้า',place:'หน้างานร้าน',pri:'high',repeat:'once',note:''},
   {id:'q02',title:'วัดขนาดพื้นที่และร่างแปลนจัดวาง',cat:'site',time:'🌅 เช้า',place:'หน้างานร้าน',pri:'high',repeat:'once',note:'Counter + โต๊ะ + ทางเดิน'},
@@ -5187,6 +5194,8 @@ var DEFAULT_ACHS_SEED = [
 var qstActiveTab = 'quest';
 var qstCatFilter = 'all';
 var qstAchCatFilter = 'all';
+var qstPlanType = 'daily';
+var qstHistFilter = 'all';
 var _qstPushTimer = null;
 
 function qstToday() { return new Date().toISOString().slice(0,10); }
@@ -5241,6 +5250,16 @@ function qstSetAchCatFilter(cat) {
   var root = document.getElementById('qst-root');
   if (root) renderQuestView();
 }
+function qstSetPlanType(type) {
+  qstPlanType = type;
+  var root = document.getElementById('qst-root');
+  if (root) renderQuestView();
+}
+function qstSetHistFilter(f) {
+  qstHistFilter = f;
+  var root = document.getElementById('qst-root');
+  if (root) renderQuestView();
+}
 
 // ── renderQuestView ──
 function renderQuestView() {
@@ -5276,21 +5295,36 @@ function renderQuestView() {
     + '⚡ ' + escapeHtml(buff) + '</div>'
     + '</div>';
 
-  // Sub-tabs
-  var tabsHtml = '<div style="display:flex;gap:8px;margin-bottom:16px">'
-    + '<button onclick="qstShowTab(\'quest\')" style="padding:8px 18px;border-radius:10px;border:none;cursor:pointer;font-size:13px;font-weight:600;'
+  // Sub-tabs (5 tabs, flex-wrap for small screens)
+  var tabsHtml = '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px">'
+    + '<button onclick="qstShowTab(\'quest\')" style="padding:7px 13px;border-radius:10px;border:none;cursor:pointer;font-size:13px;font-weight:600;'
     + (qstActiveTab==='quest' ? 'background:var(--ov-accent-ink);color:#fff;' : 'background:var(--card);border:1px solid var(--card-border);color:var(--text);')
     + '">⚔️ เควส</button>'
-    + '<button onclick="qstShowTab(\'ach\')" style="padding:8px 18px;border-radius:10px;border:none;cursor:pointer;font-size:13px;font-weight:600;'
+    + '<button onclick="qstShowTab(\'ach\')" style="padding:7px 13px;border-radius:10px;border:none;cursor:pointer;font-size:13px;font-weight:600;'
     + (qstActiveTab==='ach' ? 'background:var(--ov-accent-ink);color:#fff;' : 'background:var(--card);border:1px solid var(--card-border);color:var(--text);')
     + '">🏆 ความสำเร็จ</button>'
+    + '<button onclick="qstShowTab(\'plans\')" style="padding:7px 13px;border-radius:10px;border:none;cursor:pointer;font-size:13px;font-weight:600;'
+    + (qstActiveTab==='plans' ? 'background:var(--ov-accent-ink);color:#fff;' : 'background:var(--card);border:1px solid var(--card-border);color:var(--text);')
+    + '">📋 แผน</button>'
+    + '<button onclick="qstShowTab(\'loops\')" style="padding:7px 13px;border-radius:10px;border:none;cursor:pointer;font-size:13px;font-weight:600;'
+    + (qstActiveTab==='loops' ? 'background:var(--ov-accent-ink);color:#fff;' : 'background:var(--card);border:1px solid var(--card-border);color:var(--text);')
+    + '">🔄 Loop</button>'
+    + '<button onclick="qstShowTab(\'history\')" style="padding:7px 13px;border-radius:10px;border:none;cursor:pointer;font-size:13px;font-weight:600;'
+    + (qstActiveTab==='history' ? 'background:var(--ov-accent-ink);color:#fff;' : 'background:var(--card);border:1px solid var(--card-border);color:var(--text);')
+    + '">📜 ประวัติ</button>'
     + '</div>';
 
   var panelHtml = '';
   if (qstActiveTab === 'quest') {
     panelHtml = qstRenderQuestPanel();
-  } else {
+  } else if (qstActiveTab === 'ach') {
     panelHtml = qstRenderAchPanel();
+  } else if (qstActiveTab === 'plans') {
+    panelHtml = qstRenderPlansPanel();
+  } else if (qstActiveTab === 'loops') {
+    panelHtml = qstRenderLoopsPanel();
+  } else {
+    panelHtml = qstRenderHistoryPanel();
   }
 
   root.innerHTML = headerHtml + tabsHtml + panelHtml;
@@ -5440,6 +5474,152 @@ function qstRenderAchPanel() {
   if (!sorted.length) cards = '<div style="text-align:center;padding:40px;color:var(--text-muted)">'+(qstAchCatFilter==='all'?'ยังไม่มีความสำเร็จ':'ยังไม่มีความสำเร็จในหมวดนี้')+'</div>';
 
   return summary + achChips + addBtn + cards;
+}
+
+// ── Plans panel ──
+function qstRenderPlansPanel() {
+  var plans = DCS.plans || {daily:[],weekly:[],monthly:[]};
+  var typeItems = [{t:'daily',l:'รายวัน'},{t:'weekly',l:'รายสัปดาห์'},{t:'monthly',l:'รายเดือน'}];
+
+  // Sub-filter
+  var subFilter = '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px">';
+  typeItems.forEach(function(ti) {
+    var active = qstPlanType === ti.t;
+    subFilter += '<button onclick="qstSetPlanType(\''+ti.t+'\')" style="padding:6px 14px;border-radius:10px;border:1px solid var(--card-border);cursor:pointer;font-size:13px;font-weight:600;'
+      + (active ? 'background:var(--ov-accent-ink);color:#fff;border-color:var(--ov-accent-ink);' : 'background:var(--card);color:var(--text);')
+      + '">'+ti.l+'</button>';
+  });
+  subFilter += '</div>';
+
+  // Add button
+  var addBtn = '<div style="margin-bottom:12px">'
+    + '<button onclick="qstOpenPlanForm(null)" style="background:var(--ov-accent-ink);color:#fff;border:none;border-radius:10px;padding:8px 16px;font-size:13px;cursor:pointer;font-weight:600">+ เพิ่มรายการ</button>'
+    + '</div>';
+
+  // List
+  var items = plans[qstPlanType] || [];
+  var cards = '';
+  if (!items.length) {
+    cards = '<div style="text-align:center;padding:40px 20px;color:var(--text-muted);font-size:14px">ยังไม่มีรายการ — กด + เพิ่มรายการ</div>';
+  } else {
+    items.forEach(function(p) {
+      var priColor = p.pri==='high' ? 'var(--dc-warn,#e53935)' : p.pri==='med' ? 'var(--ov-accent-ink)' : 'var(--text-muted)';
+      var priLabel = p.pri==='high' ? '🔴 สำคัญมาก' : p.pri==='med' ? '🟡 ปานกลาง' : '🟢 ต่ำ';
+      cards += '<div style="background:var(--card);border:1px solid '+(p.done?'rgba(46,125,50,0.3)':'var(--card-border)')+';border-radius:14px;padding:12px 16px;margin-bottom:8px;display:flex;align-items:center;gap:12px">'
+        + '<button onclick="qstTickPlan(\''+p.id+'\')" title="'+(p.done?'ยกเลิก':'ทำเสร็จแล้ว')+'" style="flex-shrink:0;width:26px;height:26px;border-radius:50%;border:2px solid '+(p.done?'var(--dc-profit,#2e7d32)':'var(--card-border)')+';background:'+(p.done?'var(--dc-profit,#2e7d32)':'transparent')+';cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;color:'+(p.done?'#fff':'var(--text-muted)')+'">'+( p.done?'✓':'')+'</button>'
+        + '<div style="flex:1;min-width:0">'
+        + '<div style="font-size:14px;color:var(--text);'+(p.done?'text-decoration:line-through;opacity:0.6;':'')+'font-weight:500">'+escapeHtml(p.text)+'</div>'
+        + '<div style="font-size:12px;margin-top:2px;color:'+priColor+'">'+priLabel+'</div>'
+        + '</div>'
+        + '<div style="display:flex;gap:4px;flex-shrink:0">'
+        + '<button onclick="qstOpenPlanForm(\''+p.id+'\')" style="background:none;border:none;cursor:pointer;padding:4px;color:var(--text-muted);font-size:15px" title="แก้ไข">✏️</button>'
+        + '<button onclick="qstDeletePlan(\''+p.id+'\')" style="background:none;border:none;cursor:pointer;padding:4px;color:var(--text-muted);font-size:15px" title="ลบ">🗑️</button>'
+        + '</div>'
+        + '</div>';
+    });
+  }
+  return subFilter + addBtn + cards;
+}
+
+// ── Loops panel ──
+function qstRenderLoopsPanel() {
+  var loops = DCS.loops || [];
+  var stgKeys = ['learn','do','improve','repeat'];
+
+  // Legend (hardcoded to avoid map in template)
+  var legend = '<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;background:var(--card);border:1px solid var(--card-border);border-radius:12px;padding:10px 14px">'
+    + '<span style="font-size:12px;color:var(--text-muted)">📚 <b style="color:var(--text)">หาความรู้</b></span>'
+    + '<span style="color:var(--card-border);margin:0 2px"> · </span>'
+    + '<span style="font-size:12px;color:var(--text-muted)">🔨 <b style="color:var(--text)">ลงมือทำ</b></span>'
+    + '<span style="color:var(--card-border);margin:0 2px"> · </span>'
+    + '<span style="font-size:12px;color:var(--text-muted)">🔍 <b style="color:var(--text)">ปรับปรุง</b></span>'
+    + '<span style="color:var(--card-border);margin:0 2px"> · </span>'
+    + '<span style="font-size:12px;color:var(--text-muted)">♻️ <b style="color:var(--text)">ทำซ้ำ</b></span>'
+    + '</div>';
+
+  // Add button
+  var addBtn = '<div style="margin-bottom:12px">'
+    + '<button onclick="qstOpenLoopForm(null)" style="background:var(--ov-accent-ink);color:#fff;border:none;border-radius:10px;padding:8px 16px;font-size:13px;cursor:pointer;font-weight:600">+ เพิ่ม Loop</button>'
+    + '</div>';
+
+  // Cards
+  var cards = '';
+  if (!loops.length) {
+    cards = '<div style="text-align:center;padding:40px 20px;color:var(--text-muted);font-size:14px">ยังไม่มี Loop — เพิ่มหัวข้อที่ต้องฝึกซ้ำ</div>';
+  } else {
+    loops.forEach(function(lp) {
+      var pills = '';
+      stgKeys.forEach(function(k) {
+        var s = LOOP_STG[k];
+        var active = lp.stage === k;
+        pills += '<button onclick="qstSetLoopStage(\''+lp.id+'\',\''+k+'\')" style="padding:4px 10px;border-radius:20px;border:none;cursor:pointer;font-size:12px;'
+          + (active ? 'background:var(--ov-accent-ink);color:#fff;font-weight:700;' : 'background:var(--card-border,#e2e8f0);color:var(--text);')
+          + '">'+s.icon+' '+s.label+'</button>';
+      });
+      cards += '<div style="background:var(--card);border:1px solid var(--card-border);border-radius:14px;padding:14px 16px;margin-bottom:10px">'
+        + '<div style="display:flex;align-items:flex-start;gap:12px;margin-bottom:10px">'
+        + '<div style="flex:1;min-width:0">'
+        + '<div style="font-weight:700;font-size:14px;color:var(--text);margin-bottom:8px">'+escapeHtml(lp.title)+'</div>'
+        + '<div style="display:flex;flex-wrap:wrap;gap:6px">'+pills+'</div>'
+        + '</div>'
+        + '<div style="display:flex;gap:4px;flex-shrink:0">'
+        + '<button onclick="qstOpenLoopForm(\''+lp.id+'\')" style="background:none;border:none;cursor:pointer;padding:4px;color:var(--text-muted);font-size:15px" title="แก้ไข">✏️</button>'
+        + '<button onclick="qstDeleteLoop(\''+lp.id+'\')" style="background:none;border:none;cursor:pointer;padding:4px;color:var(--text-muted);font-size:15px" title="ลบ">🗑️</button>'
+        + '</div>'
+        + '</div>'
+        + (lp.note ? '<div style="font-size:12px;color:var(--text-muted);margin-bottom:6px">💬 '+escapeHtml(lp.note)+'</div>' : '')
+        + '<div style="font-size:11px;color:var(--text-muted)">อัปเดตเมื่อ '+qstFmtDate(lp.updatedAt||'')+'</div>'
+        + '</div>';
+    });
+  }
+  return legend + addBtn + cards;
+}
+
+// ── History panel ──
+function qstRenderHistoryPanel() {
+  var history = (DCS.questHistory || []).slice().sort(function(a,b){return (b.date||'').localeCompare(a.date||'');});
+  var typeColor = {quest:'var(--ov-accent-ink)',achievement:'var(--dc-profit,#2e7d32)',plan:'#3b82f6',loop:'#a78bfa'};
+  var typeLabel = {quest:'⚔️ เควส',achievement:'🏆 ความสำเร็จ',plan:'📋 แผน',loop:'🔄 Loop'};
+
+  // Filter chips
+  var filterItems = [{f:'all',l:'ทั้งหมด'},{f:'quest',l:'⚔️ เควส'},{f:'achievement',l:'🏆 ความสำเร็จ'},{f:'plan',l:'📋 แผน'},{f:'loop',l:'🔄 Loop'}];
+  var chips = '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px">';
+  filterItems.forEach(function(fi) {
+    var active = qstHistFilter === fi.f;
+    chips += '<button onclick="qstSetHistFilter(\''+fi.f+'\')" style="padding:4px 12px;border-radius:20px;border:1px solid var(--card-border);cursor:pointer;font-size:12px;'
+      + (active ? 'background:var(--ov-accent-ink);color:#fff;border-color:var(--ov-accent-ink);' : 'background:var(--card);color:var(--text-muted);')
+      + '">'+fi.l+'</button>';
+  });
+  chips += '</div>';
+
+  // Clear button
+  var clearBtn = '<div style="margin-bottom:12px;text-align:right">'
+    + '<button onclick="qstClearHistory()" style="background:none;border:1px solid var(--card-border);border-radius:8px;padding:5px 12px;font-size:12px;cursor:pointer;color:var(--text-muted)">🗑 ล้างประวัติ</button>'
+    + '</div>';
+
+  // List
+  var filtered = qstHistFilter === 'all' ? history : history.filter(function(h){return h.type===qstHistFilter;});
+  var items = '';
+  if (!filtered.length) {
+    items = '<div style="text-align:center;padding:40px 20px;color:var(--text-muted);font-size:14px">ยังไม่มีประวัติ</div>';
+  } else {
+    filtered.forEach(function(h) {
+      var col = typeColor[h.type] || 'var(--text-muted)';
+      var lbl = typeLabel[h.type] || h.type;
+      items += '<div style="display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid var(--card-border)">'
+        + '<div style="flex-shrink:0;width:10px;height:10px;border-radius:50%;background:'+col+';margin-top:5px"></div>'
+        + '<div style="flex:1;min-width:0">'
+        + '<div style="font-size:14px;color:var(--text);font-weight:500">'+escapeHtml(h.title||'')+'</div>'
+        + '<div style="font-size:12px;color:var(--text-muted);display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:2px">'
+        + '<span style="background:var(--card-border,#e2e8f0);border-radius:6px;padding:1px 7px;font-size:11px">'+lbl+'</span>'
+        + '<span>'+qstFmtDate(h.date||'')+'</span>'
+        + (h.note ? '<span>💬 '+escapeHtml(h.note)+'</span>' : '')
+        + '</div>'
+        + '</div>'
+        + '</div>';
+    });
+  }
+  return chips + clearBtn + items;
 }
 
 // ── Quest CRUD ──
@@ -5640,6 +5820,194 @@ function qstDeleteAch(id) {
   DCS.achievements = (DCS.achievements||[]).filter(function(a){return a.id!==id;});
   qstAfterChange(); renderQuestView();
   showToast('ลบแล้ว');
+}
+
+// ── Plans CRUD ──
+function qstTickPlan(id) {
+  if (!saIsUnlocked()) {
+    dcOpenPwModal('🔒 ยืนยันตัวตน','กรอกรหัสเพื่อบันทึก',function(){saUnlock();qstTickPlan(id);});
+    return;
+  }
+  if (!DCS.plans) DCS.plans = {daily:[],weekly:[],monthly:[]};
+  var found = null;
+  ['daily','weekly','monthly'].forEach(function(t) {
+    (DCS.plans[t]||[]).forEach(function(p) {
+      if (p.id === id) found = p;
+    });
+  });
+  if (!found) return;
+  found.done = !found.done;
+  if (found.done) {
+    if (!DCS.questHistory) DCS.questHistory = [];
+    DCS.questHistory.push({id:'h'+Date.now().toString(36),type:'plan',title:found.text,date:qstToday(),note:''});
+  }
+  qstAfterChange(); renderQuestView();
+}
+
+function qstOpenPlanForm(id) {
+  if (!saIsUnlocked()) {
+    dcOpenPwModal('🔒 ยืนยันตัวตน','กรอกรหัสเพื่อแก้ไข',function(){saUnlock();qstOpenPlanForm(id);});
+    return;
+  }
+  if (!DCS.plans) DCS.plans = {daily:[],weekly:[],monthly:[]};
+  var p = null;
+  var foundType = qstPlanType;
+  if (id) {
+    ['daily','weekly','monthly'].forEach(function(t) {
+      (DCS.plans[t]||[]).forEach(function(x) {
+        if (x.id === id) { p = x; foundType = t; }
+      });
+    });
+  }
+  var html = '<div class="dc-modal-head"><h3>'+(p?'แก้ไขรายการ':'เพิ่มรายการใหม่')+'</h3><button class="dc-x" onclick="dcCloseModal()">✕</button></div>'
+    + '<div class="dc-modal-scroll">'
+    + '<div class="dc-field"><label>รายการ</label><input class="dc-inp" id="pf-text" value="'+escapeHtml(p?p.text:'')+'"></div>'
+    + '<div class="dc-field"><label>ความสำคัญ</label><select class="dc-inp" id="pf-pri">'
+    + '<option value="high"'+(p&&p.pri==='high'?' selected':'')+'>🔴 สำคัญมาก</option>'
+    + '<option value="med"'+(p&&p.pri==='med'?' selected':'')+'>🟡 ปานกลาง</option>'
+    + '<option value="low"'+(!p||p.pri==='low'?' selected':'')+'>🟢 ต่ำ</option>'
+    + '</select></div>'
+    + '<div class="dc-field"><label>ประเภท</label><select class="dc-inp" id="pf-type">'
+    + '<option value="daily"'+(foundType==='daily'?' selected':'')+'>รายวัน</option>'
+    + '<option value="weekly"'+(foundType==='weekly'?' selected':'')+'>รายสัปดาห์</option>'
+    + '<option value="monthly"'+(foundType==='monthly'?' selected':'')+'>รายเดือน</option>'
+    + '</select></div>'
+    + '</div>'
+    + '<div class="dc-modal-foot"><button class="dc-btn ghost" onclick="dcCloseModal()">ยกเลิก</button>'
+    + '<button class="dc-btn primary" onclick="qstSavePlanForm(\''+( p?p.id:'')+'\')" >💾 บันทึก</button></div>';
+  dcSetModalBody(html);
+  setTimeout(function(){ var el=document.getElementById('pf-text'); if(el) el.focus(); }, 100);
+}
+
+function qstSavePlanForm(id) {
+  var text = ((document.getElementById('pf-text')||{}).value||'').trim();
+  if (!text) { showToast('กรอกรายการด้วย'); return; }
+  var pri = (document.getElementById('pf-pri')||{}).value || 'low';
+  var newType = (document.getElementById('pf-type')||{}).value || 'daily';
+  if (!DCS.plans) DCS.plans = {daily:[],weekly:[],monthly:[]};
+  if (id) {
+    var oldType = null;
+    ['daily','weekly','monthly'].forEach(function(t) {
+      if ((DCS.plans[t]||[]).some(function(p){return p.id===id;})) oldType = t;
+    });
+    if (oldType) {
+      var item = (DCS.plans[oldType]||[]).find(function(p){return p.id===id;});
+      if (item) { item.text = text; item.pri = pri; }
+      if (oldType !== newType && item) {
+        DCS.plans[oldType] = DCS.plans[oldType].filter(function(p){return p.id!==id;});
+        if (!DCS.plans[newType]) DCS.plans[newType] = [];
+        DCS.plans[newType].push(item);
+      }
+    }
+  } else {
+    if (!DCS.plans[newType]) DCS.plans[newType] = [];
+    DCS.plans[newType].push({id:'p'+Date.now().toString(36), text:text, pri:pri, done:false});
+  }
+  qstPlanType = newType;
+  dcCloseModal(); qstAfterChange(); renderQuestView();
+  showToast(id?'อัปเดตแล้ว':'เพิ่มรายการแล้ว');
+}
+
+function qstDeletePlan(id) {
+  if (!saIsUnlocked()) {
+    dcOpenPwModal('🔒 ยืนยันตัวตน','กรอกรหัสเพื่อลบ',function(){saUnlock();qstDeletePlan(id);});
+    return;
+  }
+  if (!confirm('ลบรายการนี้?')) return;
+  if (!DCS.plans) return;
+  ['daily','weekly','monthly'].forEach(function(t) {
+    DCS.plans[t] = (DCS.plans[t]||[]).filter(function(p){return p.id!==id;});
+  });
+  qstAfterChange(); renderQuestView();
+  showToast('ลบแล้ว');
+}
+
+// ── Loops CRUD ──
+function qstSetLoopStage(id, stage) {
+  if (!saIsUnlocked()) {
+    dcOpenPwModal('🔒 ยืนยันตัวตน','กรอกรหัสเพื่ออัปเดต',function(){saUnlock();qstSetLoopStage(id,stage);});
+    return;
+  }
+  var lp = (DCS.loops||[]).find(function(x){return x.id===id;});
+  if (!lp) return;
+  lp.stage = stage;
+  lp.updatedAt = qstToday();
+  if (!DCS.questHistory) DCS.questHistory = [];
+  var s = LOOP_STG[stage] || {icon:'🔄', label:stage};
+  DCS.questHistory.push({
+    id:'h'+Date.now().toString(36), type:'loop',
+    title:lp.title+' → '+s.icon+' '+s.label,
+    date:lp.updatedAt, note:''
+  });
+  qstAfterChange(); renderQuestView();
+}
+
+function qstOpenLoopForm(id) {
+  if (!saIsUnlocked()) {
+    dcOpenPwModal('🔒 ยืนยันตัวตน','กรอกรหัสเพื่อแก้ไข',function(){saUnlock();qstOpenLoopForm(id);});
+    return;
+  }
+  var lp = id ? (DCS.loops||[]).find(function(x){return x.id===id;}) : null;
+  var stgOpts = ''
+    + '<option value="learn"'+(lp&&lp.stage==='learn'?' selected':'')+'>📚 หาความรู้</option>'
+    + '<option value="do"'+(lp&&lp.stage==='do'?' selected':'')+'>🔨 ลงมือทำ</option>'
+    + '<option value="improve"'+(lp&&lp.stage==='improve'?' selected':'')+'>🔍 ปรับปรุง</option>'
+    + '<option value="repeat"'+(lp&&lp.stage==='repeat'?' selected':'')+'>♻️ ทำซ้ำ</option>';
+  var html = '<div class="dc-modal-head"><h3>'+(lp?'แก้ไข Loop':'เพิ่ม Loop ใหม่')+'</h3><button class="dc-x" onclick="dcCloseModal()">✕</button></div>'
+    + '<div class="dc-modal-scroll">'
+    + '<div class="dc-field"><label>หัวข้อ</label><input class="dc-inp" id="lf-title" value="'+escapeHtml(lp?lp.title:'')+'"></div>'
+    + '<div class="dc-field"><label>Stage ปัจจุบัน</label><select class="dc-inp" id="lf-stage">'+stgOpts+'</select></div>'
+    + '<div class="dc-field"><label>บันทึก</label><textarea class="dc-inp" id="lf-note" rows="3" placeholder="สิ่งที่กำลังเรียนรู้ / ทำ...">'+escapeHtml(lp?lp.note||'':'')+'</textarea></div>'
+    + '</div>'
+    + '<div class="dc-modal-foot"><button class="dc-btn ghost" onclick="dcCloseModal()">ยกเลิก</button>'
+    + '<button class="dc-btn primary" onclick="qstSaveLoopForm(\''+( lp?lp.id:'')+'\')" >💾 บันทึก</button></div>';
+  dcSetModalBody(html);
+  setTimeout(function(){ var el=document.getElementById('lf-title'); if(el) el.focus(); }, 100);
+}
+
+function qstSaveLoopForm(id) {
+  var title = ((document.getElementById('lf-title')||{}).value||'').trim();
+  if (!title) { showToast('กรอกหัวข้อด้วย'); return; }
+  var stage = (document.getElementById('lf-stage')||{}).value || 'learn';
+  var note = ((document.getElementById('lf-note')||{}).value||'').trim();
+  if (!DCS.loops) DCS.loops = [];
+  if (id) {
+    var idx = DCS.loops.findIndex(function(x){return x.id===id;});
+    if (idx>=0) {
+      DCS.loops[idx].title = title;
+      DCS.loops[idx].stage = stage;
+      DCS.loops[idx].note  = note;
+      DCS.loops[idx].updatedAt = qstToday();
+    }
+  } else {
+    DCS.loops.push({id:'l'+Date.now().toString(36), title:title, stage:stage, note:note, updatedAt:qstToday()});
+  }
+  dcCloseModal(); qstAfterChange(); renderQuestView();
+  showToast(id?'อัปเดตแล้ว':'เพิ่ม Loop แล้ว');
+}
+
+function qstDeleteLoop(id) {
+  if (!saIsUnlocked()) {
+    dcOpenPwModal('🔒 ยืนยันตัวตน','กรอกรหัสเพื่อลบ',function(){saUnlock();qstDeleteLoop(id);});
+    return;
+  }
+  if (!confirm('ลบ Loop นี้?')) return;
+  DCS.loops = (DCS.loops||[]).filter(function(x){return x.id!==id;});
+  qstAfterChange(); renderQuestView();
+  showToast('ลบแล้ว');
+}
+
+// ── History CRUD ──
+function qstClearHistory() {
+  if (!saIsUnlocked()) {
+    dcOpenPwModal('🔒 ยืนยันตัวตน','กรอกรหัสเพื่อล้างประวัติ',function(){saUnlock();qstClearHistory();});
+    return;
+  }
+  var n = (DCS.questHistory||[]).length;
+  if (!n || !confirm('ล้างประวัติทั้งหมด '+n+' รายการ?')) return;
+  DCS.questHistory = [];
+  qstAfterChange(); renderQuestView();
+  showToast('ล้างประวัติแล้ว');
 }
 
 // ── Edit questMeta (password-gated) ──
