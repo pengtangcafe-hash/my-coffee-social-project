@@ -4320,6 +4320,12 @@ function vfInRange(dateStr,range) {
   if (range==='day') return dateStr===today;
   if (range==='year') return dateStr.slice(0,4)===today.slice(0,4);
   if (range==='month') return dateStr.slice(0,7)===today.slice(0,7);
+  if (range==='lastmonth') {
+    var dm=new Date(today+'T00:00:00'); dm.setDate(1); dm.setMonth(dm.getMonth()-1);
+    var mo=dm.getMonth()+1;
+    var ym=dm.getFullYear()+'-'+(mo<10?'0':'')+mo;
+    return dateStr.slice(0,7)===ym;
+  }
   if (range==='week') {
     var d0=new Date(today+'T00:00:00'); d0.setDate(d0.getDate()-6);
     var dI=new Date(dateStr+'T00:00:00'); return dI>=d0;
@@ -4753,7 +4759,7 @@ function renderVarfixView() {
   var totalAmt=displayBills.reduce(function(s,b) { return s+(b.amount||0); },0);
   var fixedAmt=displayBills.filter(function(b) { return b.group==='fixed'; }).reduce(function(s,b) { return s+(b.amount||0); },0);
   var varAmt=displayBills.filter(function(b) { return b.group==='variable'; }).reduce(function(s,b) { return s+(b.amount||0); },0);
-  var ranges=[['day','วันนี้'],['week','7 วัน'],['month','เดือนนี้'],['year','ปีนี้']];
+  var ranges=[['day','วันนี้'],['week','7 วัน'],['month','เดือนนี้'],['lastmonth','เดือนที่แล้ว'],['year','ปีนี้']];
   var tabsHtml='<div class="stk-gtab-row">'
     +ranges.map(function(rg) {
       return '<button class="ov-mtab'+(vfRange===rg[0]?' active':'')+'" onclick="vfSetRange(\''+rg[0]+'\')">'+rg[1]+'</button>';
