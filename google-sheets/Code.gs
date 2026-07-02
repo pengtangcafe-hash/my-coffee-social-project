@@ -206,7 +206,7 @@ function buildData_() {
   var bv = rows_(SH.buyLogs);
   for (var i = 1; i < bv.length; i++) {
     var r = bv[i];
-    var date = String(r[0] || '').trim(), ing = String(r[1] || '').trim();
+    var date = dateStr_(r[0]), ing = String(r[1] || '').trim();
     if (!date || !ing) continue;
     var qty = r[2] !== '' && r[2] != null ? Number(r[2]) : null;
     var unit = String(r[3] || '').trim() || 'แพ็ค';
@@ -224,7 +224,7 @@ function buildData_() {
   var salv = rows_(SH.salesLogs);
   for (var i = 1; i < salv.length; i++) {
     var r = salv[i];
-    var date = String(r[0] || '').trim(), menu = String(r[1] || '').trim();
+    var date = dateStr_(r[0]), menu = String(r[1] || '').trim();
     if (!date || !menu) continue;
     sales.push({ date: date, menu: menu, cups: Number(r[2]) || 0 });
   }
@@ -278,7 +278,7 @@ function buildData_() {
     var ev = sh.getDataRange().getValues();
     for (var i = 1; i < ev.length; i++) {
       var r = ev[i];
-      var eid = String(r[0] || '').trim(), edate = String(r[1] || '').trim();
+      var eid = String(r[0] || '').trim(), edate = dateStr_(r[1]);
       if (!eid || !edate) continue;
       expenses.push({ id: eid, date: edate, group: String(r[2] || 'fixed').trim(),
         category: String(r[3] || '').trim(), label: String(r[4] || '').trim(),
@@ -358,7 +358,7 @@ function buildData_() {
   for (var i = 1; i < qhv.length; i++) {
     var r = qhv[i], hid = String(r[0]||'').trim();
     if (!hid) continue;
-    questHistory.push({ id: hid, type: String(r[1]||''), title: String(r[2]||''), date: String(r[3]||''), note: String(r[4]||'') });
+    questHistory.push({ id: hid, type: String(r[1]||''), title: String(r[2]||''), date: dateStr_(r[3]), note: String(r[4]||'') });
   }
 
   // meta จาก ตั้งค่า

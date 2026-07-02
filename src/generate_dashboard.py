@@ -4601,6 +4601,17 @@ function dcDefaults() {{
   return {{ overhead: 0.30, margin_factor: 1.6, fixed_cost_monthly: 30000, days_per_month: 30,
     channels: {{ store: {{label:'หน้าร้าน',gp:0,vat:0}}, lineman: {{label:'Lineman',gp:0.30,vat:0.07}}, shoppee: {{label:'Shoppee',gp:0.32,vat:0.07}}, grab: {{label:'Grab',gp:0.251,vat:0.07}} }} }};
 }}
+function dcToISODate(v) {{
+  if (!v) return '';
+  var s = String(v);
+  if (/^\d{{4}}-\d{{2}}-\d{{2}}/.test(s)) return s.slice(0, 10);
+  var d = new Date(s);
+  if (!isNaN(d.getTime())) {{
+    var y = d.getFullYear(), m = d.getMonth()+1, dd = d.getDate();
+    return y + '-' + (m<10?'0':'') + m + '-' + (dd<10?'0':'') + dd;
+  }}
+  return s;
+}}
 function dcNormalize(s) {{
   s = s || {{}};
   s.catalog = s.catalog || {{}};
@@ -4625,6 +4636,10 @@ function dcNormalize(s) {{
   if (s.questLog === undefined) s.questLog = {{}};
   if (s.questHistory === undefined) s.questHistory = [];
   if (s.questMeta === undefined) s.questMeta = {{ startDate: '2026-05-31', totalDays: 90, targetOpenDay: 30 }};
+  // 🛡️ normalize วันที่เป็น ISO (กัน Google Sheets แปลงเป็น Date string ยาว → filter เดือนพัง)
+  (s.expenses||[]).forEach(function(e) {{ if (e) e.date = dcToISODate(e.date); }});
+  (s.purchases||[]).forEach(function(p) {{ if (p) p.date = dcToISODate(p.date); }});
+  (s.sales||[]).forEach(function(sl) {{ if (sl) sl.date = dcToISODate(sl.date); }});
   return s;
 }}
 function dcLoadState() {{
