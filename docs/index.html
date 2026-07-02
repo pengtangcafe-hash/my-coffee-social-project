@@ -1051,7 +1051,7 @@
         <button class="theme-btn" id="theme-dark"  onclick="setTheme('dark')"   title="Dark Mode">🌙</button>
         <button class="theme-btn" id="theme-fancy" onclick="setTheme('fancy')"  title="Fancy Mode">✨</button>
       </div>
-      <div class="text-[10px] text-slate-400 uppercase tracking-widest text-center">สร้างเมื่อ 16 June 2026</div>
+      <div class="text-[10px] text-slate-400 uppercase tracking-widest text-center">สร้างเมื่อ 02 July 2026</div>
     </div>
 
   </aside>
@@ -3617,7 +3617,7 @@ function dcImportFile(input) {
 var dcSyncedSession = false;
 function dcGsUrl() { try { return localStorage.getItem('pengtang_gs_url') || ''; } catch (e) { return ''; } }
 function dcSetGsUrl(u) { try { if (u) localStorage.setItem('pengtang_gs_url', u); else localStorage.removeItem('pengtang_gs_url'); } catch (e) {} }
-function dcAfterChange() { dcSave(); if (dcGsUrl()) dcSyncPush(); }
+function dcAfterChange() { dcSave(); dcMarkPending(); if (dcGsUrl()) dcSyncPush(); }
 
 function dcSyncPull(silent) {
   var url = dcGsUrl();
@@ -3643,8 +3643,33 @@ function dcSyncPush() {
   if (!url) return;
   fetch(url, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(DCS) })
     .then(function(r) { return r.json(); })
-    .then(function(res) { showToast((res && res.ok) ? 'บันทึกขึ้น Google Sheet แล้ว' : 'เขียน Sheet ไม่สำเร็จ'); })
+    .then(function(res) { if (res && res.ok) dcClearPending(); showToast((res && res.ok) ? 'บันทึกขึ้น Google Sheet แล้ว' : 'เขียน Sheet ไม่สำเร็จ'); })
     .catch(function(e) { showToast('เขียน Sheet ไม่สำเร็จ (เก็บในเครื่องแล้ว)'); });
+}
+// ── Auto-pull ตอนเปิดหน้า + ตัวกันข้อมูลค้างถูกทับ ──
+function dcMarkPending() { try { localStorage.setItem('pengtang_push_pending','1'); } catch(e) {} }
+function dcClearPending() { try { localStorage.removeItem('pengtang_push_pending'); } catch(e) {} }
+function dcHasPending() { try { return localStorage.getItem('pengtang_push_pending')==='1'; } catch(e) { return false; } }
+function dcAutoPullOnBoot() {
+  if (!dcGsUrl()) return;                       // ยังไม่เชื่อม Sheet = ไม่ทำ
+  if (dcHasPending()) { dcShowPendingWarn(); return; }  // มีของค้างยังไม่ซิงก์ = ไม่ดึงทับ
+  dcSyncPull(false);                            // สะอาด = ดึงข้อมูลล่าสุด
+}
+function dcShowPendingWarn() {
+  if (document.getElementById('dc-pending-warn')) return;
+  var b = document.createElement('div');
+  b.id = 'dc-pending-warn';
+  b.style.cssText = 'position:fixed;top:12px;left:50%;transform:translateX(-50%);z-index:3000;max-width:520px;width:calc(100% - 32px);background:rgba(229,57,53,.13);border:1px solid rgba(229,57,53,.5);color:var(--text);border-radius:12px;padding:13px 16px;font-size:13px;line-height:1.55;box-shadow:0 10px 30px rgba(0,0,0,.18)';
+  b.innerHTML = '<b style="color:#e53935">⚠️ มีข้อมูลในเครื่องนี้ที่ยังไม่ได้ซิงก์ขึ้น Sheet</b>'
+    + '<div style="margin-top:4px">ระบบยังไม่ดึงข้อมูลใหม่มาทับให้ (กันข้อมูลหาย) — แนะนำกด <b>⬆️ ดันข้อมูลขึ้น Sheet</b> ก่อน แล้วค่อยซิงก์</div>'
+    + '<div style="margin-top:9px;display:flex;gap:8px">'
+    + '<button id="dc-pw-go" style="background:#e53935;color:#fff;border:none;border-radius:8px;padding:6px 13px;font-size:12px;font-weight:600;cursor:pointer">🔗 ไปดันขึ้น Sheet</button>'
+    + '<button id="dc-pw-x" style="background:var(--card);border:1px solid var(--card-border);border-radius:8px;padding:6px 13px;font-size:12px;cursor:pointer;color:var(--text)">ปิด</button>'
+    + '</div>';
+  document.body.appendChild(b);
+  var go = document.getElementById('dc-pw-go'), x = document.getElementById('dc-pw-x');
+  if (go) go.onclick = function() { b.remove(); dcOpenConnect(); };
+  if (x) x.onclick = function() { b.remove(); };
 }
 
 function dcOpenConnect() {
@@ -3659,6 +3684,10 @@ function dcOpenConnect() {
     + '<b style="color:#e53935">⚠️ ครั้งแรก: ดันก่อนดึงเสมอ</b><br>'
     + 'กด <b>⬆️ ดันข้อมูลขึ้น Sheet</b> ก่อน เพื่อเอารายจ่าย·สต็อก·เมนู ในเครื่องขึ้นไปเก็บบน Sheet<br>'
     + 'ปุ่ม <b>🔄 ดึงข้อมูล</b> จะ<b>เขียนทับข้อมูลในเครื่องทั้งหมด</b>ด้วยข้อมูลจาก Sheet — ถ้าดึงก่อนดัน ข้อมูลในเครื่องจะหาย'
+    + '</div>'
+    + '<div style="margin-top:10px;padding:10px 13px;border-radius:10px;background:rgba(37,99,235,.10);border:1px solid rgba(37,99,235,.35);font-size:12.5px;line-height:1.55;color:var(--text)">'
+    + '<b>🔄 ซิงก์อัตโนมัติตอนเปิดหน้า:</b> ทุกครั้งที่เปิดเว็บใหม่ ระบบจะดึงข้อมูลล่าสุดจาก Sheet ให้เอง<br>'
+    + '<b>กันลืม:</b> ถ้าเครื่องนี้มีของแก้ที่ยังไม่ทันซิงก์ขึ้น ระบบจะ<b>ไม่ดึงมาทับ</b> + เตือนให้ดันขึ้นก่อน · แก้หลายเครื่องให้ "ดันขึ้น" ก่อนสลับเครื่องเสมอ'
     + '</div>'
     + '</div>'
     + '<div class="dc-modal-foot">'
@@ -5232,7 +5261,7 @@ function qstDebouncePush() {
   if (_qstPushTimer) clearTimeout(_qstPushTimer);
   _qstPushTimer = setTimeout(function() { if (dcGsUrl()) dcSyncPush(); }, 2000);
 }
-function qstAfterChange() { dcSave(); qstDebouncePush(); }
+function qstAfterChange() { dcSave(); dcMarkPending(); qstDebouncePush(); }
 
 function qstShowTab(tab) {
   qstActiveTab = tab;
@@ -6044,6 +6073,7 @@ applyStoredTheme();
 showView('view-home');
 applyRoast();
 saUpdateChip();
+dcAutoPullOnBoot();
 </script>
 
 </body>
