@@ -6132,7 +6132,7 @@ function vfReceiptCard(b) {{
   var _vsu=b.readonly?((DCS.expense_slips||{{}})[b._vslipKey||'']||''):(b.slip||'');
   var _vvu=vfThumbToView(_vsu);
   var slipBtn=_vsk?(_vsu
-    ?('<a href="'+escapeHtml(_vvu)+'" target="_blank" rel="noopener"><img class="vf-slip-thumb" src="'+escapeHtml(_vsu)+'" alt="สลิป"></a>'
+    ?('<a href="'+escapeHtml(_vvu)+'" target="_blank" rel="noopener"><img class="vf-slip-thumb" referrerpolicy="no-referrer" loading="lazy" src="'+escapeHtml(_vsu)+'" alt="สลิป" onerror="vfSlipImgErr(this)"></a>'
      +'<button class="vf-slip-btn dc-btn" data-slipkey="'+escapeHtml(_vsk)+'" data-isvar="'+_viv+'" onclick="vfAttachSlip(this)">🔄 เปลี่ยนสลิป</button>')
     :'<button class="vf-slip-btn dc-btn" data-slipkey="'+escapeHtml(_vsk)+'" data-isvar="'+_viv+'" onclick="vfAttachSlip(this)">📎 แนบสลิป</button>')
     :'';
@@ -6158,6 +6158,9 @@ function vfThumbToView(thumb) {{
   return m?'https://drive.google.com/file/d/'+m[1]+'/view':thumb;
 }}
 var _vfSlipCtx=null;
+function vfSlipImgErr(img) {{
+  try {{ var a=img.parentNode; img.remove(); if (a) a.textContent='🧾 ดูสลิป'; }} catch(e) {{}}
+}}
 var _vfNewSlip=null;
 var _vfEditId=null;
 function vfAttachSlip(btn) {{
@@ -6203,7 +6206,7 @@ function vfSlipFileSelected(input) {{
         if (isModal) {{
           _vfNewSlip=res.thumb;
           var prev=document.getElementById('vf-e-slip-preview');
-          if (prev) prev.innerHTML='<a href="'+escapeHtml(vfThumbToView(res.thumb))+'" target="_blank" rel="noopener"><img class="vf-slip-thumb" src="'+escapeHtml(res.thumb)+'" alt="สลิป"></a>'
+          if (prev) prev.innerHTML='<a href="'+escapeHtml(vfThumbToView(res.thumb))+'" target="_blank" rel="noopener"><img class="vf-slip-thumb" referrerpolicy="no-referrer" loading="lazy" src="'+escapeHtml(res.thumb)+'" alt="สลิป" onerror="vfSlipImgErr(this)"></a>'
             +'<span style="color:#22c55e;font-size:.8rem;font-weight:600">แนบแล้ว ✓</span>'
             +'<button class="dc-btn ghost" onclick="vfAttachSlipModal()" style="font-size:.75rem">🔄 เปลี่ยน</button>'
             +'<button class="dc-btn ghost" onclick="vfRemoveModalSlip()" style="font-size:.75rem">✕ ลบ</button>';
@@ -6505,7 +6508,7 @@ function vfOpenExpense(id) {{
   var groupOpts='<option value="fixed"'+(defGroup==='fixed'?' selected':'')+'>Fixed (ต้นทุนคงที่)</option>'
     +'<option value="variable"'+(defGroup==='variable'?' selected':'')+'>Variable (ต้นทุนผันแปร)</option>';
   var slipPrev=defSlip
-    ?('<a href="'+escapeHtml(vfThumbToView(defSlip))+'" target="_blank" rel="noopener"><img class="vf-slip-thumb" src="'+escapeHtml(defSlip)+'" alt="สลิป"></a>'
+    ?('<a href="'+escapeHtml(vfThumbToView(defSlip))+'" target="_blank" rel="noopener"><img class="vf-slip-thumb" referrerpolicy="no-referrer" loading="lazy" src="'+escapeHtml(defSlip)+'" alt="สลิป" onerror="vfSlipImgErr(this)"></a>'
       +'<span style="color:#22c55e;font-size:.8rem;font-weight:600">แนบแล้ว ✓</span>'
       +'<button class="dc-btn ghost" onclick="vfAttachSlipModal()" style="font-size:.75rem">🔄 เปลี่ยน</button>'
       +'<button class="dc-btn ghost" onclick="vfRemoveModalSlip()" style="font-size:.75rem">✕ ลบ</button>')
