@@ -760,6 +760,20 @@
     .vf-legend-dot { width:8px; height:8px; border-radius:999px; flex-shrink:0; }
     .vf-legend-pct { font-weight:700; color:var(--text); }
     .vf-bills { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,400px)); gap:14px; align-items:start; justify-content:start; }
+    .vf-hbars { display:flex; flex-direction:column; gap:7px; margin-top:12px; }
+    .vf-hbar-row { display:grid; grid-template-columns:minmax(78px,150px) 1fr auto; align-items:center; gap:10px; }
+    .vf-hbar-label { font-size:.82rem; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; display:flex; align-items:center; gap:6px; }
+    .vf-hbar-dot { width:9px; height:9px; border-radius:50%; flex-shrink:0; }
+    .vf-hbar-track { height:15px; background:var(--card-border); border-radius:8px; overflow:hidden; }
+    .vf-hbar-fill { height:100%; border-radius:8px; min-width:3px; transition:width .5s; }
+    .vf-hbar-val { font-size:.8rem; font-weight:700; color:var(--text); white-space:nowrap; }
+    .vf-hbar-pct { color:var(--text-muted); font-weight:600; font-size:.74rem; }
+    .vf-mgroup { margin-bottom:16px; }
+    .vf-mgroup-head { display:flex; align-items:center; gap:10px; padding:9px 14px; background:var(--card); border:1px solid var(--card-border); border-radius:12px; cursor:pointer; margin-bottom:10px; user-select:none; }
+    .vf-mgroup-head:hover { border-color:var(--ov-accent-ink,#8B4513); }
+    .vf-mgroup-chev { font-size:.85rem; color:var(--text-muted); width:14px; text-align:center; }
+    .vf-mgroup-title { font-weight:800; font-size:.95rem; color:var(--text); }
+    .vf-mgroup-meta { margin-left:auto; font-size:.82rem; color:var(--text-muted); font-weight:600; }
     .vf-receipt-card { background:var(--card); border:1px solid var(--card-border); border-radius:16px;
       overflow:hidden; }
     .vf-receipt-head { padding:10px 14px; display:flex; align-items:center; gap:8px; flex-wrap:wrap;
@@ -4537,23 +4551,18 @@ function vfSummaryBar(displayBills,totalAmt,fixedAmt,varAmt,isMock) {
   var segs=Object.keys(colorTotals).map(function(c) {
     return {color:c,amount:colorTotals[c]};
   }).sort(function(a,b) { return b.amount-a.amount; });
-  var barHtml=segs.map(function(s) {
-    var pct=(s.amount/totalAmt*100).toFixed(2);
-    return '<div class="vf-bar-seg" style="width:'+pct+'%;background:'+escapeHtml(s.color)+'"></div>';
-  }).join('');
-  var legendHtml=segs.map(function(s) {
-    var pct=Math.round(s.amount/totalAmt*100);
+  var maxAmt=segs[0].amount||1;
+  var rowsHtml=segs.map(function(s) {
+    var pctTotal=(s.amount/totalAmt*100);
+    var w=(s.amount/maxAmt*100).toFixed(1);
     var lbl=vfCatByColor(s.color);
-    return '<span class="vf-legend-item">'
-      +'<span class="vf-legend-dot" style="background:'+escapeHtml(s.color)+'"></span>'
-      +escapeHtml(lbl)+' <span class="vf-legend-pct">'+pct+'%</span> '+vfFmtMoney(s.amount)
-      +'</span>';
+    return '<div class="vf-hbar-row">'
+      +'<div class="vf-hbar-label" title="'+escapeHtml(lbl)+'"><span class="vf-hbar-dot" style="background:'+escapeHtml(s.color)+'"></span>'+escapeHtml(lbl)+'</div>'
+      +'<div class="vf-hbar-track"><div class="vf-hbar-fill" style="width:'+w+'%;background:'+escapeHtml(s.color)+'"></div></div>'
+      +'<div class="vf-hbar-val">'+vfFmtMoney(s.amount)+' <span class="vf-hbar-pct">'+pctTotal.toFixed(0)+'%</span></div>'
+      +'</div>';
   }).join('');
-  return '<div class="vf-summary">'
-    +headHtml
-    +'<div class="vf-bar-wrap">'+barHtml+'</div>'
-    +'<div class="vf-legend">'+legendHtml+'</div>'
-    +'</div>';
+  return '<div class="vf-summary">'+headHtml+'<div class="vf-hbars">'+rowsHtml+'</div></div>';
 }
 function vfBuildCmpTable(cmpYM) {
   if (!DCS) dcLoadState();
@@ -4688,6 +4697,39 @@ function vfCmpMonthChange(ym) {
   var el=document.getElementById('vf-cmp-body');
   if (el) el.innerHTML=vfBuildCmpTable(ym);
 }
+var vfCollapsedMonths={};
+function vfBillsGrouped(bills) {
+  if (!bills || !bills.length) return '<div class="ov-tile ov-soon"><div class="ov-soon-emoji">📋</div><div class="ov-soon-sub">ยังไม่มีรายจ่ายในช่วงนี้</div></div>';
+  var groups={};
+  bills.forEach(function(b) {
+    var ym=(b.date||'').slice(0,7); if (!/^\d{4}-\d{2}$/.test(ym)) ym='ไม่ระบุ';
+    (groups[ym]=groups[ym]||[]).push(b);
+  });
+  var keys=Object.keys(groups).sort(function(a,b) { return b.localeCompare(a); });
+  return keys.map(function(ym) {
+    var gb=groups[ym];
+    var sum=gb.reduce(function(s,b) { return s+(b.amount||0); },0);
+    var collapsed=!!vfCollapsedMonths[ym];
+    var title=ym==='ไม่ระบุ'?'ไม่ระบุเดือน':vfMonthTH(ym);
+    return '<div class="vf-mgroup">'
+      +'<div class="vf-mgroup-head" onclick="vfToggleMonth(\''+ym+'\')">'
+      +'<span class="vf-mgroup-chev">'+(collapsed?'▸':'▾')+'</span>'
+      +'<span class="vf-mgroup-title">'+escapeHtml(title)+'</span>'
+      +'<span class="vf-mgroup-meta">'+gb.length+' รายการ · '+vfFmtMoney(sum)+'</span>'
+      +'</div>'
+      +'<div class="vf-bills vf-mgroup-body" id="vf-mg-'+escapeHtml(ym)+'"'+(collapsed?' style="display:none"':'')+'>'
+      +gb.map(vfReceiptCard).join('')+'</div></div>';
+  }).join('');
+}
+function vfToggleMonth(ym) {
+  vfCollapsedMonths[ym]=!vfCollapsedMonths[ym];
+  var body=document.getElementById('vf-mg-'+ym);
+  if (body) {
+    body.style.display=vfCollapsedMonths[ym]?'none':'';
+    var head=body.previousElementSibling;
+    if (head) { var ch=head.querySelector('.vf-mgroup-chev'); if (ch) ch.textContent=vfCollapsedMonths[ym]?'▸':'▾'; }
+  }
+}
 function renderVarfixView() {
   var root=document.getElementById('vf-root');
   if (!root) return;
@@ -4716,10 +4758,8 @@ function renderVarfixView() {
   var mockHeaderHtml=isMock
     ?'<div class="stk-warn-row" style="margin-bottom:10px"><span class="stk-warn-row-title" style="text-transform:none;color:var(--text-muted)">🎭 ตัวอย่างระบบ (mockup) — จะปิดเองเมื่อมีรายจ่ายจริง</span></div>'
     :'';
-  var billsHtml=displayBills.length===0
-    ?'<div class="ov-tile ov-soon"><div class="ov-soon-emoji">📋</div><div class="ov-soon-sub">ยังไม่มีรายจ่ายในช่วงนี้</div></div>'
-    :displayBills.map(function(b) { return vfReceiptCard(b); }).join('');
-  root.innerHTML=tabsHtml+summaryHtml+vfBuildHistoryCard()+toolbarHtml+mockHeaderHtml+'<div class="vf-bills">'+billsHtml+'</div>';
+  var billsHtml=vfBillsGrouped(displayBills);
+  root.innerHTML=tabsHtml+summaryHtml+vfBuildHistoryCard()+toolbarHtml+mockHeaderHtml+billsHtml;
   var histBody=document.getElementById('vf-hist-body');
   if (histBody&&!vfHistoryOpen) histBody.style.display='none';
   if (vfHistoryOpen) vfInitTrendChart();
