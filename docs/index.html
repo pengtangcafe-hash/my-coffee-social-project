@@ -4543,21 +4543,31 @@ function vfSummaryBar(displayBills,totalAmt,fixedAmt,varAmt,isMock) {
     +'<span class="vf-summary-sub">Fixed '+vfFmtMoney(fixedAmt)+' · Variable '+vfFmtMoney(varAmt)+'</span>'
     +'</div>';
   if (totalAmt===0) return '<div class="vf-summary">'+headHtml+'</div>';
-  var colorTotals={};
+  // group: หมวดจริงรวมเป็นชื่อหมวด · "อื่นๆ" (fixed_other/var_other/ว่าง) แยกแสดงชื่อรายการจริง
+  var groupMap={};
   displayBills.forEach(function(b) {
-    var c=b.color||'#607d8b';
-    colorTotals[c]=(colorTotals[c]||0)+(b.amount||0);
+    var cat=b.category||'';
+    var isOther=(cat==='fixed_other'||cat==='var_other'||!cat);
+    var label,key,color;
+    if (isOther) {
+      label=((b.label||'').trim())||'อื่นๆ';
+      key='i:'+label;
+      color=b.color||'#607d8b';
+    } else {
+      label=vfCatLabel(cat);
+      key='c:'+cat;
+      color=b.color||vfCatColor(cat);
+    }
+    if (!groupMap[key]) groupMap[key]={label:label,color:color,amount:0};
+    groupMap[key].amount+=(b.amount||0);
   });
-  var segs=Object.keys(colorTotals).map(function(c) {
-    return {color:c,amount:colorTotals[c]};
-  }).sort(function(a,b) { return b.amount-a.amount; });
+  var segs=Object.keys(groupMap).map(function(k) { return groupMap[k]; }).sort(function(a,b) { return b.amount-a.amount; });
   var maxAmt=segs[0].amount||1;
   var rowsHtml=segs.map(function(s) {
     var pctTotal=(s.amount/totalAmt*100);
     var w=(s.amount/maxAmt*100).toFixed(1);
-    var lbl=vfCatByColor(s.color);
     return '<div class="vf-hbar-row">'
-      +'<div class="vf-hbar-label" title="'+escapeHtml(lbl)+'"><span class="vf-hbar-dot" style="background:'+escapeHtml(s.color)+'"></span>'+escapeHtml(lbl)+'</div>'
+      +'<div class="vf-hbar-label" title="'+escapeHtml(s.label)+'"><span class="vf-hbar-dot" style="background:'+escapeHtml(s.color)+'"></span>'+escapeHtml(s.label)+'</div>'
       +'<div class="vf-hbar-track"><div class="vf-hbar-fill" style="width:'+w+'%;background:'+escapeHtml(s.color)+'"></div></div>'
       +'<div class="vf-hbar-val">'+vfFmtMoney(s.amount)+' <span class="vf-hbar-pct">'+pctTotal.toFixed(0)+'%</span></div>'
       +'</div>';
