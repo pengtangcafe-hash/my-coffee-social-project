@@ -6221,8 +6221,11 @@ function vfSlipFileSelected(input) {{
       cv.getContext('2d').drawImage(img,0,0,w,h);
       var b64=cv.toDataURL('image/jpeg',0.8).split(',')[1];
       var fname=(file.name||'slip').replace(/\.[^.]+$/,'')+'.jpg';
+      var slipDate='';
+      if (isModal) {{ var _de=document.getElementById('vf-e-date'); slipDate=_de?_de.value:''; }}
+      else if (!ctx.isVar) {{ var _ex=(DCS.expenses||[]).filter(function(e) {{ return e.id===ctx.key; }})[0]; slipDate=_ex?_ex.date:''; }}
       fetch(dcGsUrl(),{{method:'POST',headers:{{'Content-Type':'text/plain;charset=utf-8'}},
-        body:JSON.stringify({{action:'uploadSlip',filename:fname,mime:'image/jpeg',data:b64}})}})
+        body:JSON.stringify({{action:'uploadSlip',filename:fname,mime:'image/jpeg',data:b64,date:slipDate}})}})
       .then(function(r) {{ return r.json(); }})
       .then(function(res) {{
         if (!res||!res.ok) throw new Error(res&&res.error||'upload failed');
