@@ -3622,10 +3622,17 @@ function dcAfterChange() { dcSave(); dcMarkPending(); if (dcGsUrl()) dcSyncPush(
 function dcSyncPull(silent) {
   var url = dcGsUrl();
   if (!url) { if (!silent) showToast('ยังไม่ได้เชื่อม Google Sheet'); return; }
+  if (!DCS) dcLoadState();
   fetch(url, { method: 'GET' })
     .then(function(r) { return r.json(); })
     .then(function(obj) {
       if (!obj || !obj.menus) throw new Error('bad');
+      // 🛡️ เกราะกันพลาด: Sheet ว่าง แต่ในเครื่องมีข้อมูล → ไม่ดึงมาทับ
+      if (dcDataScore(obj) === 0 && dcDataScore(DCS) > 0) {
+        if (!silent) showToast('Sheet ว่าง — ไม่ดึงมาทับข้อมูลในเครื่อง');
+        dcShowEmptySheetWarn();
+        return;
+      }
       var prev = DCS ? dcClone(DCS) : {};
       DCS = dcNormalize(obj);
       // posLast + quest keys: ถ้า Sheet ยังไม่มี (obj ไม่มี key) ให้เก็บของ local ไว้
@@ -3655,13 +3662,21 @@ function dcAutoPullOnBoot() {
   if (dcHasPending()) { dcShowPendingWarn(); return; }  // มีของค้างยังไม่ซิงก์ = ไม่ดึงทับ
   dcSyncPull(false);                            // สะอาด = ดึงข้อมูลล่าสุด
 }
-function dcShowPendingWarn() {
+function dcDataScore(o) {
+  if (!o) return 0;
+  var pl = o.plans || {};
+  return (o.menus||[]).length + Object.keys(o.catalog||{}).length
+    + (o.expenses||[]).length + (o.purchases||[]).length
+    + (o.quests||[]).length + (o.achievements||[]).length
+    + (o.loops||[]).length + (o.questHistory||[]).length
+    + (pl.daily||[]).length + (pl.weekly||[]).length + (pl.monthly||[]).length;
+}
+function dcSyncGuardBanner(msgHtml) {
   if (document.getElementById('dc-pending-warn')) return;
   var b = document.createElement('div');
   b.id = 'dc-pending-warn';
   b.style.cssText = 'position:fixed;top:12px;left:50%;transform:translateX(-50%);z-index:3000;max-width:520px;width:calc(100% - 32px);background:rgba(229,57,53,.13);border:1px solid rgba(229,57,53,.5);color:var(--text);border-radius:12px;padding:13px 16px;font-size:13px;line-height:1.55;box-shadow:0 10px 30px rgba(0,0,0,.18)';
-  b.innerHTML = '<b style="color:#e53935">⚠️ มีข้อมูลในเครื่องนี้ที่ยังไม่ได้ซิงก์ขึ้น Sheet</b>'
-    + '<div style="margin-top:4px">ระบบยังไม่ดึงข้อมูลใหม่มาทับให้ (กันข้อมูลหาย) — แนะนำกด <b>⬆️ ดันข้อมูลขึ้น Sheet</b> ก่อน แล้วค่อยซิงก์</div>'
+  b.innerHTML = msgHtml
     + '<div style="margin-top:9px;display:flex;gap:8px">'
     + '<button id="dc-pw-go" style="background:#e53935;color:#fff;border:none;border-radius:8px;padding:6px 13px;font-size:12px;font-weight:600;cursor:pointer">🔗 ไปดันขึ้น Sheet</button>'
     + '<button id="dc-pw-x" style="background:var(--card);border:1px solid var(--card-border);border-radius:8px;padding:6px 13px;font-size:12px;cursor:pointer;color:var(--text)">ปิด</button>'
@@ -3670,6 +3685,14 @@ function dcShowPendingWarn() {
   var go = document.getElementById('dc-pw-go'), x = document.getElementById('dc-pw-x');
   if (go) go.onclick = function() { b.remove(); dcOpenConnect(); };
   if (x) x.onclick = function() { b.remove(); };
+}
+function dcShowPendingWarn() {
+  dcSyncGuardBanner('<b style="color:#e53935">⚠️ มีข้อมูลในเครื่องนี้ที่ยังไม่ได้ซิงก์ขึ้น Sheet</b>'
+    + '<div style="margin-top:4px">ระบบยังไม่ดึงข้อมูลใหม่มาทับให้ (กันข้อมูลหาย) — แนะนำกด <b>⬆️ ดันข้อมูลขึ้น Sheet</b> ก่อน แล้วค่อยซิงก์</div>');
+}
+function dcShowEmptySheetWarn() {
+  dcSyncGuardBanner('<b style="color:#e53935">⚠️ Sheet ว่างเปล่า — ไม่ดึงข้อมูลมาทับ</b>'
+    + '<div style="margin-top:4px">ข้อมูลในเครื่องยังอยู่ครบ (ระบบกันไว้ให้) — ถ้าต้องการเติมข้อมูลขึ้น Sheet กด <b>⬆️ ดันข้อมูลขึ้น Sheet</b></div>');
 }
 
 function dcOpenConnect() {
