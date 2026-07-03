@@ -2548,6 +2548,10 @@ HTML_TEMPLATE = """\
     .vf-mgroup-chev {{ font-size:.85rem; color:var(--text-muted); width:14px; text-align:center; }}
     .vf-mgroup-title {{ font-weight:800; font-size:.95rem; color:var(--text); }}
     .vf-mgroup-meta {{ margin-left:auto; font-size:.82rem; color:var(--text-muted); font-weight:600; }}
+    body[data-sa-locked="1"] .sa-lockable.active {{ filter:blur(6px); pointer-events:none; user-select:none; transition:filter .25s; }}
+    #sa-lock-overlay {{ display:none; position:fixed; inset:0; z-index:1500; align-items:center; justify-content:center; pointer-events:none; }}
+    body[data-sa-locked="1"][data-sa-sensitive="1"] #sa-lock-overlay {{ display:flex; }}
+    #sa-lock-overlay .sa-lock-card {{ pointer-events:auto; background:var(--card); border:1px solid var(--card-border); border-radius:16px; padding:24px 28px; text-align:center; box-shadow:0 20px 50px rgba(0,0,0,.28); max-width:310px; }}
     .vf-receipt-card {{ background:var(--card); border:1px solid var(--card-border); border-radius:16px;
       overflow:hidden; }}
     .vf-receipt-head {{ padding:10px 14px; display:flex; align-items:center; gap:8px; flex-wrap:wrap;
@@ -3212,6 +3216,12 @@ HTML_TEMPLATE = """\
 
 <!-- Toast -->
 <div id="toast" class="toast"></div>
+<div id="sa-lock-overlay"><div class="sa-lock-card">
+  <div style="font-size:2.2rem">🔒</div>
+  <div style="font-weight:800;font-size:1.05rem;margin:8px 0 4px;color:var(--text)">ข้อมูลถูกซ่อนไว้</div>
+  <div style="font-size:.85rem;color:var(--text-muted);margin-bottom:14px;line-height:1.5">ใส่รหัสเพื่อดู/แก้ไขข้อมูลส่วนนี้</div>
+  <button class="dc-btn primary" onclick="saRequestUnlock()">🔓 ปลดล็อกเพื่อดู</button>
+</div></div>
 
 <script>
 // ── Injected data ──
@@ -3313,6 +3323,7 @@ function showView(id) {{
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   const target = document.getElementById(id);
   if (target) target.classList.add('active');
+  document.body.setAttribute('data-sa-sensitive', (typeof SA_LOCK_VIEWS!=='undefined' && SA_LOCK_VIEWS.indexOf(id)>=0) ? '1' : '0');
 
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
   const navId = 'nav-' + id.replace('view-', '');
@@ -4577,17 +4588,32 @@ function dcThumb(m, size) {{
 
 // ── สถานะปลดล็อกกลาง (sessionStorage: คงอยู่ตอนรีเฟรช, หายเมื่อปิดแท็บ) ──
 function saIsUnlocked() {{ return sessionStorage.getItem('pengtang_unlocked')==='1'; }}
+var SA_LOCK_VIEWS=['view-cost-drinks','view-pos-cost','view-bb-armory','view-bb-stock','view-bb-varfix','view-bb-posimport','view-quest'];
+function saMarkLockable() {{
+  SA_LOCK_VIEWS.forEach(function(id) {{ var v=document.getElementById(id); if (v) v.classList.add('sa-lockable'); }});
+}}
+function saUpdateLockUI() {{
+  document.body.setAttribute('data-sa-locked', saIsUnlocked()?'0':'1');
+  saUpdateChip();
+}}
 function saUpdateChip() {{
   var wrap=document.getElementById('sa-lock-wrap');
-  if (!wrap) return;
-  wrap.style.display=saIsUnlocked()?'':'none';
+  var chip=document.getElementById('sa-lock-chip');
+  if (wrap) wrap.style.display='';
+  if (chip) {{
+    if (saIsUnlocked()) {{ chip.textContent='🔓 ปลดล็อกแล้ว · กดเพื่อล็อก'; chip.onclick=saLock; }}
+    else {{ chip.textContent='🔒 ล็อกอยู่ · กดเพื่อดูข้อมูล'; chip.onclick=saRequestUnlock; }}
+  }}
 }}
-function saUnlock() {{ sessionStorage.setItem('pengtang_unlocked','1'); saUpdateChip(); }}
+function saRequestUnlock() {{
+  dcOpenPwModal('🔓 ปลดล็อกข้อมูล','ใส่รหัสเพื่อดู/แก้ไขข้อมูลส่วนนี้',function() {{ saUnlock(); }});
+}}
+function saUnlock() {{ sessionStorage.setItem('pengtang_unlocked','1'); dcEdit=true; saUpdateLockUI(); }}
 function saLock() {{
   sessionStorage.removeItem('pengtang_unlocked');
   dcEdit=false;
   try {{ dcCloseModal(); }} catch(e) {{}}
-  saUpdateChip();
+  saUpdateLockUI();
   renderActiveBackbar();
 }}
 function renderActiveBackbar() {{
@@ -7938,9 +7964,10 @@ function qstSaveMeta() {{
 
 // ── Boot ──
 applyStoredTheme();
+saMarkLockable();
 showView('view-home');
 applyRoast();
-saUpdateChip();
+saUpdateLockUI();
 dcAutoPullOnBoot();
 </script>
 
