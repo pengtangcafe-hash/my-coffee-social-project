@@ -1260,35 +1260,92 @@ INTEL_DATA_FALLBACK = [
         }
     },
     {
+        "id": "competitor-punfun",
+        "category": "competitor",
+        "title": "ปันฝัน โฮมการ์เด้น คาเฟ่ (Punfun Homegarden Cafe) สกลนคร",
+        "summary": "คาเฟ่ใหม่เปิด ม.ค. 2026 · บรรยากาศบ้านในสวน ฟีลฮีลใจ · กิจกรรม ATV · ครัวปันฝัน (อาหารครบ) · จ-อา 11:00-20:00 (ปิดจันทร์) · Facebook + TikTok @punfunhomegardencafe · รับจัดงานเลี้ยงทุกรูปแบบ",
+        "updated": "20 Jul 2026",
+        "source_url": "https://www.facebook.com/p/Punfun-Homegarden-Cafe-61585676722169/",
+        "thumbnail_url": "",
+        "tags": ["สกลนคร", "Local", "Independent", "New2026", "Garden", "Family", "Activity", "EventVenue"],
+        "relevance": "high",
+        "detail": "ปันฝัน โฮมการ์เด้น คาเฟ่ (Punfun Homegarden Cafe Co., Ltd.)\nซอยศักดิ์วิเศษ ตำบลธาตุนาเวง อ.เมืองสกลนคร สกลนคร 47000\nโทร: 096-414-8996\nเปิดให้บริการ: 15 มกราคม 2026 (จดทะเบียนบริษัท ธ.ค. 2025)\n\nConcept: 'บ้านสวนในฝัน' — บรรยากาศบ้านในสวน ฮีลใจ พื้นที่โปร่ง ร่มรื่น\nUSP: คาเฟ่ + ครัวปันฝัน (อาหารครบมื้อ) + กิจกรรม ATV + รับจัดงานเลี้ยงทุกรูปแบบ\n\nSocial (verified 20 Jul 2026):\n• Facebook: Punfun Homegarden Cafe (61585676722169) — active\n• TikTok: @punfunhomegardencafe — active (content บรรยากาศ + กิจกรรม)\n• Instagram: Reel พบ (DX_qWEzguzE) — active visual content\n• Threads: UGC active (@auksara_preawzz)\n\nHighlights:\n• ครัวปันฝัน — อาหารครบ ไม่ใช่แค่กาแฟ\n• กิจกรรม: ขี่ ATV, งานเลี้ยงแบบ all-in-one\n• รับจัดงานเลี้ยงทุกรูปแบบ = B2B + family event revenue\n• พื้นที่ในร้านกว้าง รองรับกลุ่มใหญ่\n• เปิดตั้งแต่ 11:00-20:00 (ปิดจันทร์เท่านั้น)\n\nจุดที่ต้องติดตาม:\n• เพิ่งเปิด ม.ค. 2026 — กำลังสร้างฐานลูกค้า\n• ยังไม่มีข้อมูล Wongnai/LINE MAN\n• คู่แข่งใกล้เคียง HOME UP Cafe ในแนวคิด nature/activity",
+        "pricing": {
+            "espresso": {"price": "ไม่ทราบ", "note": ""},
+            "americano": {"price": "ไม่ทราบ", "note": ""},
+            "latte": {"price": "ไม่ทราบ", "note": ""},
+            "cappuccino": {"price": "ไม่ทราบ", "note": ""},
+            "cold_brew": {"price": "ไม่ทราบ", "note": ""},
+            "frappe": {"price": "ไม่ทราบ", "note": ""},
+            "matcha": {"price": "ไม่ทราบ", "note": ""},
+            "signature_drink": {"price": "ไม่ทราบ", "note": "เครื่องดื่มในสวน"},
+            "food": {"price": "ไม่ทราบ", "note": "ครัวปันฝัน (อาหารครบมื้อ)"},
+            "other": [
+                {"name": "กิจกรรม ATV", "price": "ไม่ทราบ", "note": "unique activity"},
+                {"name": "รับจัดงานเลี้ยง", "price": "ไม่ทราบ", "note": "B2B event venue"}
+            ]
+        },
+        "strengths": [
+            "คาเฟ่ + อาหาร + กิจกรรม = all-in-one destination ไม่มีคู่แข่งทำครบแบบนี้",
+            "ATV activity = family/group attraction unique ในตลาด",
+            "รับจัดงานเลี้ยง = B2B revenue stream",
+            "Multi-platform social: Facebook + TikTok + Instagram active ตั้งแต่เปิด",
+            "เปิดถึง 20:00 (ปิดจันทร์) = capture evening market ดีกว่า Home Up Cafe"
+        ],
+        "promotions": [],
+        "weaknesses": [
+            "เปิดใหม่ ม.ค. 2026 — brand awareness ยังต่ำ",
+            "ยังไม่มีข้อมูล delivery platform",
+            "ราคาไม่เปิดเผยสาธารณะ",
+            "ทำเลในซอย — accessibility ต่ำกว่าร้านริมถนนใหญ่",
+            "ปิดจันทร์ = พลาดต้นสัปดาห์"
+        ],
+        "location": "ซอยศักดิ์วิเศษ ต.ธาตุนาเวง อ.เมืองสกลนคร สกลนคร 47000",
+        "hours": "อ-อา 11:00-20:00 (ปิดจันทร์)",
+        "social_trend": {
+            "primary_platform": "TikTok+Facebook",
+            "posting_frequency": "active (เปิดใหม่ content แรง)",
+            "content_style": "บ้านในสวน ฮีลใจ · กิจกรรม ATV · ครอบครัว · งานเลี้ยง · อาหาร+กาแฟ",
+            "engagement_level": "growing (เพิ่งเปิด — Threads UGC เริ่มมี)"
+        },
+        "delivery": {
+            "primary_app": "LINE MAN",
+            "apps": ["LINE MAN"],
+            "peak_hours": "ยังไม่มีข้อมูล",
+            "active_promos": [],
+            "notes": "ยังไม่พบบน Wongnai/LINE MAN/GrabFood/ShopeeFood — เพิ่งเปิด ม.ค. 2026 · น่าจะเน้น dine-in + event ก่อน delivery · ติดตามต่อ"
+        }
+    },
+    {
         "id": "delivery-apps-overview",
         "category": "delivery",
         "title": "Delivery Apps ร้านกาแฟ สกลนคร — ภาพรวม 2026",
         "summary": "LINE MAN เบอร์ 1 ไทย (44%) · GrabFood เบอร์ 2 (40%) · ShopeeFood 77 จังหวัด · Peak เช้า 07:00-11:00 และบ่าย 14:00-16:00 · เมนูขายดี: ชาไทย + อเมริกาโน่เย็น",
-        "updated": "21 May 2026",
+        "updated": "20 Jul 2026",
         "source_url": "", "thumbnail_url": "",
         "tags": ["delivery", "LINE MAN", "GrabFood", "ShopeeFood", "สกลนคร"],
         "relevance": "high",
         "detail": "ส่วนแบ่งตลาด Delivery ไทย 2024 (verified):\n• LINE MAN: 44% — เบอร์ 1 ของไทย ครอบคลุม local cafe สูงสุด เชื่อมกับ Wongnai\n• GrabFood: 40% — เบอร์ 2 เสถียรสำหรับ chain (Amazon/Inthanin) มี GrabUnlimited ส่งฟรีไม่จำกัด\n• ShopeeFood: ~10% — ครอบคลุม 77 จังหวัด เปิด 24 ชม. นักล่าโปร Flash Sale\n• Robinhood: 0% GP! (ธนาคารไทยพาณิชย์) — Foodpanda: รอบนอก ~30%\n\nค่าคอมมิชชัน GP (ข้อมูลจาก web):\n• LINE MAN: ~25-30%\n• GrabFood: ~15-30% (ขึ้นกับสัญญา)\n• ShopeeFood: ~30%\n• Robinhood: 0% (แต่พื้นที่จำกัด)\n⚠️ ยืนยันกับทีม sales โดยตรงก่อนสมัคร\n\nPeak Coffee Delivery ไทย 2026 (verified):\n• เช้า 07:00-11:00 น. — peak หลัก รายได้สูงสุดต่อวัน\n• บ่าย 14:00-16:00 น. — peak รอง Coffee Break\n• เมนูขายดีปี 2026: ชาไทย และ อเมริกาโน่เย็น\n• กลยุทธ์: bundle กาแฟ + เบเกอรี่ เพิ่มมูลค่าต่อบิล\n\nแนะนำ: เริ่ม LINE MAN ก่อน ตั้งราคา delivery บวก 10-15% จากราคาหน้าร้าน",
         "pricing": {"espresso":{"price":"","note":""},"americano":{"price":"","note":""},"latte":{"price":"","note":""},"cappuccino":{"price":"","note":""},"cold_brew":{"price":"","note":""},"frappe":{"price":"","note":""},"matcha":{"price":"","note":""},"signature_drink":{"price":"","note":""},"food":{"price":"","note":""},"other":[]},
         "strengths": ["LINE MAN เบอร์ 1 ไทย 44% market share", "GrabUnlimited ดึงลูกค้า chain", "Robinhood 0% GP (ถ้าพื้นที่รองรับ)", "ShopeeFood Flash Sale สร้าง traffic burst"],
-        "promotions": ["GrabFood x Café Amazon ลด 50-60 บาท โค้ด TRYAM60", "LINE MAN: ส่งฟรีครบ 150 บาท", "ShopeeFood: 30-50% off Payday/Flash Sale", "โครงการรัฐ: GP ลดเหลือ 7-9% ชั่วคราว (ตรวจสอบแคมเปญปัจจุบัน)"],
+        "promotions": ["GrabFood x Café Amazon ลด 50-60 บาท โค้ด TRYAM60", "LINE MAN Grand Sale 'ถูกสุดทุกวัน' (25 มิ.ย.-31 ก.ค. 2026) ส่วนลดสูงสุด 70% VIP / เริ่มต้น 1 บาท — ร้านที่อยู่บน LINE MAN ได้ประโยชน์ทันที", "ShopeeFood: 30-50% off Payday/Flash Sale", "โครงการรัฐ: GP ลดเหลือ 7-9% ชั่วคราว (ตรวจสอบแคมเปญปัจจุบัน)"],
         "weaknesses": ["ค่าคอม 25-30% กระทบ margin ร้าน", "เครื่องดื่มเย็นละลายระหว่างส่ง", "ต้องมี packaging ที่ดีเพิ่มต้นทุน"],
         "social_trend": {"primary_platform":"LINE MAN","posting_frequency":"","content_style":"","engagement_level":"high"}
     },
     {
         "id": "delivery-local-cafes",
         "category": "delivery",
-        "title": "ร้านกาแฟท้องถิ่นสกลนคร — สถานะ Delivery (Updated 24 May 2026)",
-        "summary": "WE HUG (LINE MAN+FoodPanda ✅) · CHANN (LINE MAN ✅) · SNIFF (LINE MAN ✅) · จุมพฏ (LINE MAN ✅ 2 สาขา) · Elemental Haus (LINE MAN ✅) · Rok 'n Road (LINE MAN ✅) · Alice (LINE MAN ✅) · FIKA (LINE MAN ✅) · ZMd (LINE MAN ✅) · BOONNAR (LINE MAN ✅) · A Cup of Joy (LINE MAN ✅) · MOKA FOX (LINE MAN ✅) · RAINTREE (Wongnai direct) · ป่านาคำหอม (❌) · มีสุข (❌) · All of KK (❌) · CANTO (ไม่ทราบ) · Chains: Amazon/Wawee/Inthanin (GrabFood ✅)",
-        "updated": "24 May 2026",
+        "title": "ร้านกาแฟท้องถิ่นสกลนคร — สถานะ Delivery (Updated 20 Jul 2026)",
+        "summary": "WE HUG (LINE MAN+FoodPanda ✅) · CHANN (LINE MAN ✅) · SNIFF (LINE MAN ✅) · จุมพฏ (LINE MAN ✅ 2 สาขา) · Elemental Haus (LINE MAN ✅) · Rok 'n Road (LINE MAN ✅) · Alice (LINE MAN ✅) · FIKA (LINE MAN ✅) · ZMd (LINE MAN ✅) · BOONNAR (LINE MAN ✅) · A Cup of Joy (LINE MAN ✅) · MOKA FOX (LINE MAN ✅) · RAINTREE (Wongnai direct) · ป่านาคำหอม (❌) · มีสุข (❌) · All of KK (❌) · CANTO (ไม่ทราบ) · ปันฝัน โฮมการ์เด้น (ใหม่ ม.ค.2026 🆕) · Chains: Amazon/Wawee/Inthanin (GrabFood ✅) | 🔥LINE MAN Grand Sale ถูกสุดทุกวัน ถึง 31 ก.ค. 2026",
+        "updated": "20 Jul 2026",
         "source_url": "https://www.wongnai.com/listings/sakonnakhon-coffee-cafe", "thumbnail_url": "",
         "tags": ["specialty", "local", "delivery", "สกลนคร", "Wongnai", "LINE MAN"],
         "relevance": "high",
         "detail": "ร้านกาแฟสกลนครและสถานะ Delivery (verified จาก Wongnai / LINE MAN — อัพเดท 24 พ.ค. 2026):\n\n✅ ยืนยันอยู่บน LINE MAN / Wongnai Delivery:\n• WE HUG CAFE — LINE MAN + FoodPanda + Wongnai Delivery · ทุกวัน 08:00-19:00 (กว้างสุด) · ส่งฟรีระยะใกล้\n• Alice Coffee and Bread — Wongnai x LINE MAN · จ-ศ 08:30-16:30 / เสาร์ 09:00-17:30 · เมนูดัง: Thai Tea 65฿, Coco Dirty 95฿\n• FIKA Cafè & Coworking — Wongnai x LINE MAN ยืนยัน\n• ZMd cafe' Specialty Coffee — Wongnai x LINE MAN ยืนยัน\n• Café Amazon (สาขาสกลนคร) — GrabFood ยืนยัน chain ใหญ่\n\n⚠️ มีตัวตนบน Social/Wongnai แต่ยังไม่ verified บน delivery app:\n• RAINTREE Cafe — Facebook 77K, Instagram @raintree_sakon · เน้น dine-in day cafe + night bar · Wongnai ระบุ delivery 08:00-17:00 แต่ยังไม่พบบน LINE MAN/GrabFood โดยตรง\n\n❓ ยังไม่มีข้อมูล:\n• CANTO CAFE — เพิ่งเพิ่มเข้าระบบ ยังไม่มีข้อมูลออนไลน์\n\n🆕 เปิดใหม่ 2025-2026:\n• CHANN CAFE — เปิดใหม่ พ.ย. 2568 · LINE MAN ✅\n• supa.cafe — บรรยากาศ homestyle · ยังไม่ verified delivery\n\nหมายเหตุ: Web search ไม่สามารถดึงรายการร้านจาก LINE MAN/GrabFood โดยตรงได้ (แสดงตาม GPS เท่านั้น) ต้องเปิดแอปในพื้นที่สกลนครเพื่อยืนยัน\n\nWongnai รวมร้านกาแฟสกลนคร: https://www.wongnai.com/listings/sakonnakhon-coffee-cafe\n\nเทรนด์ใหม่: LINE MAN แซงหน้า GrabFood เป็นเบอร์ 1 ระดับชาติ — ร้าน local ต่างจังหวัดเน้น Wongnai x LINE MAN มากกว่า GrabFood\nPeak delivery (national): 11:00-13:00 และ 17:00-20:00 น.\nกลยุทธ์: Bundle กาแฟ + เบเกอรี เพิ่มมูลค่าต่อบิล offset ค่า GP 30-35%",
         "pricing": {"espresso":{"price":"","note":""},"americano":{"price":"","note":""},"latte":{"price":"","note":""},"cappuccino":{"price":"","note":""},"cold_brew":{"price":"","note":""},"frappe":{"price":"","note":""},"matcha":{"price":"","note":""},"signature_drink":{"price":"","note":""},"food":{"price":"","note":""},"other":[]},
         "strengths": ["ร้าน local มี LINE MAN ครอบคลุม", "Specialty = differentiator ใน delivery", "GrabFood เร็ว ป้องกันเครื่องดื่มละลาย"],
-        "promotions": ["LINE MAN ส่งฟรีครบ 150 บาท", "ShopeeFood Flash Sale ต้นเดือน"],
-        "weaknesses": ["ข้อมูลร้านบน platform ยังไม่ verified real-time", "ต้องยืนยันว่า RAINTREE CAFE เปิด delivery จริง"],
+        "promotions": ["🔥 LINE MAN Grand Sale 'ถูกสุดทุกวัน' (25 มิ.ย.-31 ก.ค. 2026) — ส่วนลดสูงสุด 70% VIP, ดีลเริ่ม 1 บาท (100,000+ ร้านทั่วไทย)", "ShopeeFood Flash Sale ต้นเดือน", "GrabFood: โค้ดส่วนลด 30-50% กรกฎาคม 2026 active"],
+        "weaknesses": ["ข้อมูลร้านบน platform ยังไม่ verified real-time", "ต้องยืนยันว่า RAINTREE CAFE เปิด delivery จริง", "ปันฝัน โฮมการ์เด้น ยังไม่มีข้อมูล delivery — ติดตามต่อ"],
         "social_trend": {"primary_platform":"LINE MAN","posting_frequency":"","content_style":"","engagement_level":"high"}
     },
     {

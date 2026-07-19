@@ -856,6 +856,58 @@
         "Elemental Haus: LINE MAN confirmed + TikTok personality content"
       ],
       "count": 27
+    },
+    {
+      "id": "20260720-015017",
+      "ts": "2026-07-20T01:50:17",
+      "date_th": "20 ก.ค. 2569",
+      "time_th": "01:50",
+      "category": "platform",
+      "scope": "facebook",
+      "action": "import",
+      "summary": "นำเข้าข้อมูล Facebook (140 แถว)",
+      "details": [],
+      "count": 140
+    },
+    {
+      "id": "20260720-015017",
+      "ts": "2026-07-20T01:50:17",
+      "date_th": "20 ก.ค. 2569",
+      "time_th": "01:50",
+      "category": "platform",
+      "scope": "instagram",
+      "action": "import",
+      "summary": "นำเข้าข้อมูล Instagram (140 แถว)",
+      "details": [],
+      "count": 140
+    },
+    {
+      "id": "20260720-015018",
+      "ts": "2026-07-20T01:50:18",
+      "date_th": "20 ก.ค. 2569",
+      "time_th": "01:50",
+      "category": "platform",
+      "scope": "tiktok",
+      "action": "import",
+      "summary": "นำเข้าข้อมูล TikTok (365 แถว)",
+      "details": [],
+      "count": 365
+    },
+    {
+      "id": "20260720-015043",
+      "ts": "2026-07-20T01:50:43",
+      "date_th": "20 ก.ค. 2569",
+      "time_th": "01:50",
+      "category": "intel",
+      "scope": "วิเคราะห์เชิงลึก 6 มิติ",
+      "action": "research",
+      "summary": "วิเคราะห์คู่แข่งเชิงลึก 28 ร้าน (6 มิติ)",
+      "details": [
+        "คู่แข่งใหม่: ปันฝัน โฮมการ์เด้น คาเฟ่ (เปิด ม.ค. 2026) · ATV + Event Venue + Full Food",
+        "delivery: LINE MAN Grand Sale ถูกสุดทุกวัน (25 มิ.ย.-31 ก.ค. 2026) ส่วนลดสูงสุด 70% VIP — ทุกร้านบน LINE MAN ได้ประโยชน์",
+        "RAINTREE ยังไม่มี LINE MAN ยืนยัน — เน้น dine-in Wongnai-direct"
+      ],
+      "count": 28
     }
   ]
 }
