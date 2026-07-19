@@ -770,7 +770,7 @@ INTEL_DATA_FALLBACK = [
         "id": "competitor-wehugcafe",
         "category": "competitor",
         "title": "WE HUG CAFE (Wehug cafe) สกลนคร",
-        "summary": "Minimalist cafe ถนนเส้น บขส.ใหม่ · Facebook 1,888 likes · Instagram @wehugcafe_sakon 95 followers · เปิด 08:00-19:00 ทุกวัน · LINE MAN + FoodPanda ✅ · ราคา <100฿ · Loyalty stamp 10 แก้ว = 1 ฟรี · TikTok UGC active Jun 2026",
+        "summary": "Minimalist cafe ถนนเส้น บขส.ใหม่ · Facebook 1,888 likes · Instagram @wehugcafe_sakon 95 followers · เปิด 08:00-19:00 ทุกวัน · LINE MAN ✅ · ราคา <100฿ · Loyalty stamp 10 แก้ว = 1 ฟรี · TikTok UGC active Jun 2026",
         "updated": "9 Jun 2026",
         "source_url": "https://www.wongnai.com/restaurants/1298418Tu-wehug-cafe",
         "thumbnail_url": "",
@@ -824,10 +824,10 @@ INTEL_DATA_FALLBACK = [
         },
         "delivery": {
             "primary_app": "LINE MAN",
-            "apps": ["LINE MAN", "Wongnai Delivery", "FoodPanda"],
+            "apps": ["LINE MAN", "Wongnai Delivery"],
             "peak_hours": "08:00-11:00 (เช้า) / 14:00-17:00 (บ่าย)",
             "active_promos": [],
-            "notes": "LINE MAN ✅ + FoodPanda ✅ ยืนยัน (9 Jun 2026) · Wongnai delivery ✅ ส่งฟรีระยะใกล้ · เปิด 08:00-19:00 ทุกวัน = delivery hours กว้างสุดในกลุ่ม · TikTok UGC ยังมีคลิปใหม่ มิ.ย. 2026 (@arissp_7)"
+            "notes": "LINE MAN ✅ + Wongnai delivery ✅ ส่งฟรีระยะใกล้ · เปิด 08:00-19:00 ทุกวัน = delivery hours กว้างสุดในกลุ่ม · (FoodPanda ปิดบริการในไทย 23 พ.ค. 2568 แล้ว)"
         }
     },
     {
@@ -957,11 +957,11 @@ INTEL_DATA_FALLBACK = [
         "id": "competitor-hokkaido-craft",
         "category": "competitor",
         "title": "Hokkaido Craft Cafe' & Studio สาขา ปตท.มะขามป้อม สกลนคร",
-        "summary": "Japanese ice cream & specialty beverages · สาขา ปตท.มะขามป้อม สกลนคร · ทุกวัน 10:00-19:30 · Facebook active · Instagram @hokkaido_craftcafe_studio · FoodPanda ✅ · Signature: TARA TORA + Hokkaido milk · Wongnai 3.8⭐ · ราคา 50-130฿",
+        "summary": "Japanese ice cream & specialty beverages · สาขา ปตท.มะขามป้อม สกลนคร · ทุกวัน 10:00-19:30 · Facebook active · Instagram @hokkaido_craftcafe_studio · delivery ไม่ทราบ (FoodPanda ปิดแล้ว) · Signature: TARA TORA + Hokkaido milk · Wongnai 3.8⭐ · ราคา 50-130฿",
         "updated": "8 Jun 2026",
         "source_url": "https://www.facebook.com/hokkaido.craftcafeandstudio.ptt.makhampom/",
         "thumbnail_url": "",
-        "tags": ["สกลนคร", "Japanese", "ice-cream", "specialty-drinks", "FoodPanda", "delivery", "ปตท"],
+        "tags": ["สกลนคร", "Japanese", "ice-cream", "specialty-drinks", "delivery", "ปตท"],
         "relevance": "high",
         "detail": "Hokkaido Craft Cafe' & Studio สาขา ปตท.มะขามป้อม สกลนคร — Japanese ice cream & craft beverages\n\nที่ตั้ง: ปตท.มะขามป้อม เมืองสกลนคร (สาขาที่ตั้งในปั๊มน้ำมัน PTT)\nโทร: 064-882-7455 / 091-865-5044\nเวลาเปิด: ทุกวัน 10:00-19:30\n\nสาขาหลัก (ถ.สุโขทัย ตรงข้ามศาลากลาง) — มีรายงานว่า permanently closed (restaurantguru/Google)\nสาขา ปตท.มะขามป้อม — active, Facebook page ยังมีการอัพเดท\n\nBranding / Positioning: Japanese-style ice cream café · ไอศกรีมญี่ปุ่น low-fat homemade · craft beverages · Japanese wood décor บรรยากาศชิล\nกลุ่มเป้าหมาย: สายหวาน, สายญี่ปุ่น, ครอบครัว, นักท่องเที่ยว\n\nสิ่งอำนวยความสะดวก: Wi-Fi ✅ · ที่จอดรถ ✅ · รับบัตรเครดิต ✅ · Pet-friendly ✅ · Takeaway ✅\n\nSocial Presence:\n• Facebook: @hokkaido.craftcafeandstudio.ptt.makhampom (PTT branch) + main page (@hokkaido.craftcafeandstudio) — Main FB: 291 reviews, 3.4/5\n• Instagram: @hokkaido_craftcafe_studio — active\n• TikTok: UGC หลายคลิป (#hokkaido #คาเฟ่สกลนคร)\n• YouTube: Hokkaido Craft cafe & Studio channel\n\nMenu highlights:\n• TARA TORA (Taro Tora) 75฿ — signature drink, ดังมาก\n• Hokkaido milk hot 50฿\n• Black cocoa 80฿\n• Yogurt ice cream with cantaloupe jelly 130฿+\n• ไอศกรีมโยเกิร์ต (vanilla/yogurt) — low-fat homemade\n• Taiwan bubble tea\n• Cheese bread / Cheese chicken\n• ช็อคโกแลต 5 แบบ\n\nReviews:\n• Wongnai: 3.8/5 · 13 ratings · 10 reviews (สาขาใจกลางเมือง)\n• Google (main): 4.4/5 · 83 reviews\n• Facebook: 3.4/5 · 291 reviews\n• Notable: 'TARA TORA อร่อยสมค่ำล่ำลือ' · 'ตกแต่งสวยมาก' · 'กาแฟช็อคโก้เข้มข้นกลมกล่อม'\n• Warning: สาขาถ.สุโขทัยอาจปิดแล้ว — ยืนยันเฉพาะสาขา ปตท.มะขามป้อม\n\nDelivery: FoodPanda ✅ (foodpanda.co.th/restaurant/j5ic) · ไม่พบ LINE MAN/GrabFood โดยตรง",
         "pricing": {
@@ -985,7 +985,7 @@ INTEL_DATA_FALLBACK = [
         "strengths": [
             "Unique positioning — Japanese ice cream + craft beverages แตกต่างจาก local cafés ทั้งหมด",
             "Signature TARA TORA viral — 'อร่อยสมค่ำล่ำลือ' ลูกค้าแนะนำต่อ",
-            "FoodPanda ✅ — delivery platform ที่คู่แข่ง local ส่วนใหญ่ไม่มี",
+            "ที่ตั้งในปั๊ม PTT = traffic สูงจากนักเดินทาง",
             "ที่ตั้งในปั๊มน้ำมัน PTT = traffic สูงจากนักเดินทาง",
             "Multi-platform social: Facebook + Instagram + TikTok UGC",
             "Franchise brand recognition ระดับประเทศ (มีสาขาหลายจังหวัด)",
@@ -1008,11 +1008,11 @@ INTEL_DATA_FALLBACK = [
             "engagement_level": "medium (FB 291 reviews · Google 4.4/5 · TikTok UGC)"
         },
         "delivery": {
-            "primary_app": "FoodPanda",
-            "apps": ["FoodPanda"],
+            "primary_app": "LINE MAN",
+            "apps": ["LINE MAN"],
             "peak_hours": "ยังไม่มีข้อมูล",
             "active_promos": [],
-            "notes": "FoodPanda ✅ ยืนยัน (foodpanda.co.th/restaurant/j5ic/hokkaido-craft-cafe-and-studio) · ไม่พบ LINE MAN/GrabFood · ในปั๊ม PTT ทำให้ FoodPanda เหมาะกว่า Wongnai/LINE MAN สำหรับ takeaway traffic"
+            "notes": "FoodPanda ปิดบริการในไทย 23 พ.ค. 2568 แล้ว — ต้องยืนยัน LINE MAN/GrabFood ใหม่ · ในปั๊ม PTT อาจมี LINE MAN ผ่าน Wongnai"
         }
     },
     {
@@ -1325,7 +1325,7 @@ INTEL_DATA_FALLBACK = [
         "source_url": "", "thumbnail_url": "",
         "tags": ["delivery", "LINE MAN", "GrabFood", "ShopeeFood", "สกลนคร"],
         "relevance": "high",
-        "detail": "ส่วนแบ่งตลาด Delivery ไทย 2024 (verified):\n• LINE MAN: 44% — เบอร์ 1 ของไทย ครอบคลุม local cafe สูงสุด เชื่อมกับ Wongnai\n• GrabFood: 40% — เบอร์ 2 เสถียรสำหรับ chain (Amazon/Inthanin) มี GrabUnlimited ส่งฟรีไม่จำกัด\n• ShopeeFood: ~10% — ครอบคลุม 77 จังหวัด เปิด 24 ชม. นักล่าโปร Flash Sale\n• Robinhood: 0% GP! (ธนาคารไทยพาณิชย์) — Foodpanda: รอบนอก ~30%\n\nค่าคอมมิชชัน GP (ข้อมูลจาก web):\n• LINE MAN: ~25-30%\n• GrabFood: ~15-30% (ขึ้นกับสัญญา)\n• ShopeeFood: ~30%\n• Robinhood: 0% (แต่พื้นที่จำกัด)\n⚠️ ยืนยันกับทีม sales โดยตรงก่อนสมัคร\n\nPeak Coffee Delivery ไทย 2026 (verified):\n• เช้า 07:00-11:00 น. — peak หลัก รายได้สูงสุดต่อวัน\n• บ่าย 14:00-16:00 น. — peak รอง Coffee Break\n• เมนูขายดีปี 2026: ชาไทย และ อเมริกาโน่เย็น\n• กลยุทธ์: bundle กาแฟ + เบเกอรี่ เพิ่มมูลค่าต่อบิล\n\nแนะนำ: เริ่ม LINE MAN ก่อน ตั้งราคา delivery บวก 10-15% จากราคาหน้าร้าน",
+        "detail": "ส่วนแบ่งตลาด Delivery ไทย (อัพเดท ก.ค. 2026):\n• LINE MAN: เบอร์ 1 ของไทย — ครอบคลุม local cafe สูงสุด เชื่อมกับ Wongnai\n• GrabFood: เบอร์ 2 — เสถียรสำหรับ chain (Amazon/Inthanin) มี GrabUnlimited ส่งฟรีไม่จำกัด\n• ShopeeFood: ครอบคลุม 77 จังหวัด เปิด 24 ชม. นักล่าโปร Flash Sale\n• Robinhood: 0% GP! (ธนาคารไทยพาณิชย์)\n• ⚠️ FoodPanda: ปิดบริการในไทยแล้ว (23 พ.ค. 2568) — ถอดออกจากตัวเลือกแล้ว\n\nค่าคอมมิชชัน GP (ข้อมูลจาก web):\n• LINE MAN: ~25-30%\n• GrabFood: ~15-30% (ขึ้นกับสัญญา)\n• ShopeeFood: ~30%\n• Robinhood: 0% (แต่พื้นที่จำกัด)\n⚠️ ยืนยันกับทีม sales โดยตรงก่อนสมัคร\n\nPeak Coffee Delivery ไทย 2026 (verified):\n• เช้า 07:00-11:00 น. — peak หลัก รายได้สูงสุดต่อวัน\n• บ่าย 14:00-16:00 น. — peak รอง Coffee Break\n• เมนูขายดีปี 2026: ชาไทย และ อเมริกาโน่เย็น\n• กลยุทธ์: bundle กาแฟ + เบเกอรี่ เพิ่มมูลค่าต่อบิล\n\nแนะนำ: เริ่ม LINE MAN ก่อน ตั้งราคา delivery บวก 10-15% จากราคาหน้าร้าน",
         "pricing": {"espresso":{"price":"","note":""},"americano":{"price":"","note":""},"latte":{"price":"","note":""},"cappuccino":{"price":"","note":""},"cold_brew":{"price":"","note":""},"frappe":{"price":"","note":""},"matcha":{"price":"","note":""},"signature_drink":{"price":"","note":""},"food":{"price":"","note":""},"other":[]},
         "strengths": ["LINE MAN เบอร์ 1 ไทย 44% market share", "GrabUnlimited ดึงลูกค้า chain", "Robinhood 0% GP (ถ้าพื้นที่รองรับ)", "ShopeeFood Flash Sale สร้าง traffic burst"],
         "promotions": ["GrabFood x Café Amazon ลด 50-60 บาท โค้ด TRYAM60", "LINE MAN Grand Sale 'ถูกสุดทุกวัน' (25 มิ.ย.-31 ก.ค. 2026) ส่วนลดสูงสุด 70% VIP / เริ่มต้น 1 บาท — ร้านที่อยู่บน LINE MAN ได้ประโยชน์ทันที", "ShopeeFood: 30-50% off Payday/Flash Sale", "โครงการรัฐ: GP ลดเหลือ 7-9% ชั่วคราว (ตรวจสอบแคมเปญปัจจุบัน)"],
@@ -1336,12 +1336,12 @@ INTEL_DATA_FALLBACK = [
         "id": "delivery-local-cafes",
         "category": "delivery",
         "title": "ร้านกาแฟท้องถิ่นสกลนคร — สถานะ Delivery (Updated 20 Jul 2026)",
-        "summary": "WE HUG (LINE MAN+FoodPanda ✅) · CHANN (LINE MAN ✅) · SNIFF (LINE MAN ✅) · จุมพฏ (LINE MAN ✅ 2 สาขา) · Elemental Haus (LINE MAN ✅) · Rok 'n Road (LINE MAN ✅) · Alice (LINE MAN ✅) · FIKA (LINE MAN ✅) · ZMd (LINE MAN ✅) · BOONNAR (LINE MAN ✅) · A Cup of Joy (LINE MAN ✅) · MOKA FOX (LINE MAN ✅) · RAINTREE (Wongnai direct) · ป่านาคำหอม (❌) · มีสุข (❌) · All of KK (❌) · CANTO (ไม่ทราบ) · ปันฝัน โฮมการ์เด้น (ใหม่ ม.ค.2026 🆕) · Chains: Amazon/Wawee/Inthanin (GrabFood ✅) | 🔥LINE MAN Grand Sale ถูกสุดทุกวัน ถึง 31 ก.ค. 2026",
+        "summary": "WE HUG (LINE MAN ✅) · CHANN (LINE MAN ✅) · SNIFF (LINE MAN ✅) · จุมพฏ (LINE MAN ✅ 2 สาขา) · Elemental Haus (LINE MAN ✅) · Rok 'n Road (LINE MAN ✅) · Alice (LINE MAN ✅) · FIKA (LINE MAN ✅) · ZMd (LINE MAN ✅) · BOONNAR (LINE MAN ✅) · A Cup of Joy (LINE MAN ✅) · MOKA FOX (LINE MAN ✅) · RAINTREE (Wongnai direct) · ป่านาคำหอม (❌) · มีสุข (❌) · All of KK (❌) · CANTO (ไม่ทราบ) · ปันฝัน โฮมการ์เด้น (ใหม่ ม.ค.2026 🆕) · Chains: Amazon/Wawee/Inthanin (GrabFood ✅) | ⚠️ FoodPanda ปิดในไทยแล้ว (พ.ค. 2568) | 🔥LINE MAN Grand Sale ถูกสุดทุกวัน ถึง 31 ก.ค. 2026",
         "updated": "20 Jul 2026",
         "source_url": "https://www.wongnai.com/listings/sakonnakhon-coffee-cafe", "thumbnail_url": "",
         "tags": ["specialty", "local", "delivery", "สกลนคร", "Wongnai", "LINE MAN"],
         "relevance": "high",
-        "detail": "ร้านกาแฟสกลนครและสถานะ Delivery (verified จาก Wongnai / LINE MAN — อัพเดท 24 พ.ค. 2026):\n\n✅ ยืนยันอยู่บน LINE MAN / Wongnai Delivery:\n• WE HUG CAFE — LINE MAN + FoodPanda + Wongnai Delivery · ทุกวัน 08:00-19:00 (กว้างสุด) · ส่งฟรีระยะใกล้\n• Alice Coffee and Bread — Wongnai x LINE MAN · จ-ศ 08:30-16:30 / เสาร์ 09:00-17:30 · เมนูดัง: Thai Tea 65฿, Coco Dirty 95฿\n• FIKA Cafè & Coworking — Wongnai x LINE MAN ยืนยัน\n• ZMd cafe' Specialty Coffee — Wongnai x LINE MAN ยืนยัน\n• Café Amazon (สาขาสกลนคร) — GrabFood ยืนยัน chain ใหญ่\n\n⚠️ มีตัวตนบน Social/Wongnai แต่ยังไม่ verified บน delivery app:\n• RAINTREE Cafe — Facebook 77K, Instagram @raintree_sakon · เน้น dine-in day cafe + night bar · Wongnai ระบุ delivery 08:00-17:00 แต่ยังไม่พบบน LINE MAN/GrabFood โดยตรง\n\n❓ ยังไม่มีข้อมูล:\n• CANTO CAFE — เพิ่งเพิ่มเข้าระบบ ยังไม่มีข้อมูลออนไลน์\n\n🆕 เปิดใหม่ 2025-2026:\n• CHANN CAFE — เปิดใหม่ พ.ย. 2568 · LINE MAN ✅\n• supa.cafe — บรรยากาศ homestyle · ยังไม่ verified delivery\n\nหมายเหตุ: Web search ไม่สามารถดึงรายการร้านจาก LINE MAN/GrabFood โดยตรงได้ (แสดงตาม GPS เท่านั้น) ต้องเปิดแอปในพื้นที่สกลนครเพื่อยืนยัน\n\nWongnai รวมร้านกาแฟสกลนคร: https://www.wongnai.com/listings/sakonnakhon-coffee-cafe\n\nเทรนด์ใหม่: LINE MAN แซงหน้า GrabFood เป็นเบอร์ 1 ระดับชาติ — ร้าน local ต่างจังหวัดเน้น Wongnai x LINE MAN มากกว่า GrabFood\nPeak delivery (national): 11:00-13:00 และ 17:00-20:00 น.\nกลยุทธ์: Bundle กาแฟ + เบเกอรี เพิ่มมูลค่าต่อบิล offset ค่า GP 30-35%",
+        "detail": "ร้านกาแฟสกลนครและสถานะ Delivery (verified จาก Wongnai / LINE MAN — อัพเดท 20 ก.ค. 2026):\n\n⚠️ FoodPanda ปิดบริการในไทย 23 พ.ค. 2568 แล้ว — ถอดออกจากตัวเลือก delivery ทุกร้าน\n\n✅ ยืนยันอยู่บน LINE MAN / Wongnai Delivery:\n• WE HUG CAFE — LINE MAN + Wongnai Delivery · ทุกวัน 08:00-19:00 (กว้างสุด) · ส่งฟรีระยะใกล้\n• Alice Coffee and Bread — Wongnai x LINE MAN · จ-ศ 08:30-16:30 / เสาร์ 09:00-17:30 · เมนูดัง: Thai Tea 65฿, Coco Dirty 95฿\n• FIKA Cafè & Coworking — Wongnai x LINE MAN ยืนยัน\n• ZMd cafe' Specialty Coffee — Wongnai x LINE MAN ยืนยัน\n• Café Amazon (สาขาสกลนคร) — GrabFood ยืนยัน chain ใหญ่\n\n⚠️ มีตัวตนบน Social/Wongnai แต่ยังไม่ verified บน delivery app:\n• RAINTREE Cafe — Facebook 77K, Instagram @raintree_sakon · เน้น dine-in day cafe + night bar · Wongnai ระบุ delivery 08:00-17:00 แต่ยังไม่พบบน LINE MAN/GrabFood โดยตรง\n\n❓ ยังไม่มีข้อมูล:\n• CANTO CAFE — เพิ่งเพิ่มเข้าระบบ ยังไม่มีข้อมูลออนไลน์\n\n🆕 เปิดใหม่ 2025-2026:\n• CHANN CAFE — เปิดใหม่ พ.ย. 2568 · LINE MAN ✅\n• supa.cafe — บรรยากาศ homestyle · ยังไม่ verified delivery\n\nหมายเหตุ: Web search ไม่สามารถดึงรายการร้านจาก LINE MAN/GrabFood โดยตรงได้ (แสดงตาม GPS เท่านั้น) ต้องเปิดแอปในพื้นที่สกลนครเพื่อยืนยัน\n\nWongnai รวมร้านกาแฟสกลนคร: https://www.wongnai.com/listings/sakonnakhon-coffee-cafe\n\nเทรนด์ใหม่: LINE MAN แซงหน้า GrabFood เป็นเบอร์ 1 ระดับชาติ — ร้าน local ต่างจังหวัดเน้น Wongnai x LINE MAN มากกว่า GrabFood\nPeak delivery (national): 11:00-13:00 และ 17:00-20:00 น.\nกลยุทธ์: Bundle กาแฟ + เบเกอรี เพิ่มมูลค่าต่อบิล offset ค่า GP 30-35%",
         "pricing": {"espresso":{"price":"","note":""},"americano":{"price":"","note":""},"latte":{"price":"","note":""},"cappuccino":{"price":"","note":""},"cold_brew":{"price":"","note":""},"frappe":{"price":"","note":""},"matcha":{"price":"","note":""},"signature_drink":{"price":"","note":""},"food":{"price":"","note":""},"other":[]},
         "strengths": ["ร้าน local มี LINE MAN ครอบคลุม", "Specialty = differentiator ใน delivery", "GrabFood เร็ว ป้องกันเครื่องดื่มละลาย"],
         "promotions": ["🔥 LINE MAN Grand Sale 'ถูกสุดทุกวัน' (25 มิ.ย.-31 ก.ค. 2026) — ส่วนลดสูงสุด 70% VIP, ดีลเริ่ม 1 บาท (100,000+ ร้านทั่วไทย)", "ShopeeFood Flash Sale ต้นเดือน", "GrabFood: โค้ดส่วนลด 30-50% กรกฎาคม 2026 active"],
