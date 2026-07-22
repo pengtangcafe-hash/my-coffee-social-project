@@ -4567,6 +4567,34 @@ function renderLogSummaryCards() {{
     + mk('📈 รวมทั้งหมด', UPDATE_SUMMARY.all, '#10b981');
 }}
 
+var ulCollapsedMonths = {{}};
+function ulToggleMonth(ym) {{
+  ulCollapsedMonths[ym] = !ulCollapsedMonths[ym];
+  var body = document.getElementById('ul-mg-' + ym);
+  if (body) {{
+    body.style.display = ulCollapsedMonths[ym] ? 'none' : '';
+    var head = body.previousElementSibling;
+    if (head) {{ var ch = head.querySelector('.vf-mgroup-chev'); if (ch) ch.textContent = ulCollapsedMonths[ym] ? '▸' : '▾'; }}
+  }}
+}}
+function ulItemHtml(e) {{
+  const cat = e.category === 'platform' ? 'platform' : 'intel';
+  const cnt = (e.count != null) ? (' · ' + e.count) : '';
+  const scope = e.scope ? (' <span style="color:var(--text-muted)">(' + escapeHtml(e.scope) + ')</span>') : '';
+  const details = (e.details || []).map(d =>
+    '<div class="log-detail">' + escapeHtml(d) + '</div>').join('');
+  return '<div class="log-item">'
+    + '<div class="log-dot ' + cat + '"></div>'
+    + '<div style="flex:1;min-width:0">'
+      + '<div style="font-size:.72rem;color:var(--text-muted);margin-bottom:3px">'
+        + escapeHtml(e.date_th) + ' · ' + escapeHtml(e.time_th || '') + '</div>'
+      + '<div style="font-size:.9rem;color:var(--text)">'
+        + '<span class="log-cat ' + cat + '">' + (LOG_CAT_LABEL[cat] || cat) + '</span>'
+        + '<span style="font-weight:600">' + escapeHtml(e.summary) + '</span>'
+        + scope + cnt + '</div>'
+      + details
+    + '</div></div>';
+}}
 function renderLogTimeline() {{
   const el = document.getElementById('log-timeline');
   if (!el) return;
@@ -4576,22 +4604,26 @@ function renderLogTimeline() {{
     el.innerHTML = '<div class="text-center py-10" style="color:var(--text-muted)">ยังไม่มีรายการในหมวดนี้</div>';
     return;
   }}
-  el.innerHTML = items.map(e => {{
-    const cat = e.category === 'platform' ? 'platform' : 'intel';
-    const cnt = (e.count != null) ? (' · ' + e.count) : '';
-    const scope = e.scope ? (' <span style="color:var(--text-muted)">(' + escapeHtml(e.scope) + ')</span>') : '';
-    const details = (e.details || []).map(d =>
-      '<div class="log-detail">' + escapeHtml(d) + '</div>').join('');
-    return '<div class="log-item">'
-      + '<div class="log-dot ' + cat + '"></div>'
-      + '<div style="flex:1;min-width:0">'
-        + '<div style="font-size:.72rem;color:var(--text-muted);margin-bottom:3px">'
-          + escapeHtml(e.date_th) + ' · ' + escapeHtml(e.time_th || '') + '</div>'
-        + '<div style="font-size:.9rem;color:var(--text)">'
-          + '<span class="log-cat ' + cat + '">' + (LOG_CAT_LABEL[cat] || cat) + '</span>'
-          + '<span style="font-weight:600">' + escapeHtml(e.summary) + '</span>'
-          + scope + cnt + '</div>'
-        + details
+  // จัดกลุ่มตามเดือน (ใหม่→เก่า) เดือนล่าสุดกางไว้ เดือนเก่าหุบ
+  var groups = {{}};
+  items.forEach(function(e) {{
+    var ym = String(e.ts || '').slice(0, 7);
+    if (!/^\d{{4}}-\d{{2}}$/.test(ym)) ym = 'ไม่ระบุ';
+    (groups[ym] = groups[ym] || []).push(e);
+  }});
+  var keys = Object.keys(groups).sort(function(a, b) {{ return b.localeCompare(a); }});
+  el.innerHTML = keys.map(function(ym, idx) {{
+    var list = groups[ym];
+    var collapsed = (ulCollapsedMonths[ym] !== undefined) ? ulCollapsedMonths[ym] : (idx > 0);
+    var title = (ym === 'ไม่ระบุ') ? 'ไม่ระบุเดือน' : vfMonthTH(ym);
+    return '<div class="vf-mgroup">'
+      + '<div class="vf-mgroup-head" onclick="ulToggleMonth(\\'' + ym + '\\')">'
+      + '<span class="vf-mgroup-chev">' + (collapsed ? '▸' : '▾') + '</span>'
+      + '<span class="vf-mgroup-title">' + escapeHtml(title) + '</span>'
+      + '<span class="vf-mgroup-meta">' + list.length + ' รายการ</span>'
+      + '</div>'
+      + '<div id="ul-mg-' + escapeHtml(ym) + '"' + (collapsed ? ' style="display:none"' : '') + '>'
+      + list.map(ulItemHtml).join('')
       + '</div></div>';
   }}).join('');
 }}
