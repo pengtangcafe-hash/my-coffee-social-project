@@ -908,6 +908,42 @@
         "RAINTREE ยังไม่มี LINE MAN ยืนยัน — เน้น dine-in Wongnai-direct"
       ],
       "count": 28
+    },
+    {
+      "id": "20260720-024514",
+      "ts": "2026-07-20T02:45:14",
+      "date_th": "20 ก.ค. 2569",
+      "time_th": "02:45",
+      "category": "platform",
+      "scope": "facebook",
+      "action": "import",
+      "summary": "นำเข้าข้อมูล Facebook (140 แถว)",
+      "details": [],
+      "count": 140
+    },
+    {
+      "id": "20260720-024514",
+      "ts": "2026-07-20T02:45:14",
+      "date_th": "20 ก.ค. 2569",
+      "time_th": "02:45",
+      "category": "platform",
+      "scope": "instagram",
+      "action": "import",
+      "summary": "นำเข้าข้อมูล Instagram (140 แถว)",
+      "details": [],
+      "count": 140
+    },
+    {
+      "id": "20260720-024514",
+      "ts": "2026-07-20T02:45:14",
+      "date_th": "20 ก.ค. 2569",
+      "time_th": "02:45",
+      "category": "platform",
+      "scope": "tiktok",
+      "action": "import",
+      "summary": "นำเข้าข้อมูล TikTok (365 แถว)",
+      "details": [],
+      "count": 365
     }
   ]
 }
