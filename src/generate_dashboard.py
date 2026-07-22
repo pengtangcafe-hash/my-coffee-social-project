@@ -1317,6 +1317,60 @@ INTEL_DATA_FALLBACK = [
         }
     },
     {
+        "id": "competitor-sip1",
+        "category": "competitor",
+        "title": "SIP-1 Slow Bar สกลนคร (Verified 22 Jul 2026)",
+        "summary": "เพิ่งเปิดใหม่มาก (Wongnai 1 rating/0 รีวิว) · Slow Bar ดริปมือเน้น craft · <10 ที่นั่ง เปิดแค่ จ-พ+ส-อา 08:00-13:00 (ปิด พฤ-ศ) · IG @sip1_slowbar 90 followers/85 posts · LINE MAN ✅ เวลาส่งกว้างกว่าหน้าร้านมาก · แทบไม่มี digital footprint นอกเพจตัวเอง",
+        "updated": "22 Jul 2026",
+        "source_url": "https://www.facebook.com/people/SIP-1-Slow-bar/61553979445148/",
+        "thumbnail_url": "",
+        "tags": ["สกลนคร", "Local", "Independent", "New2026", "SlowBar", "DripCoffee", "TinyShop"],
+        "relevance": "medium",
+        "detail": "SIP-1 Slow Bar — 149 ถ.มรรคาลัย ต.ธาตุเชิงชุม อ.เมืองสกลนคร (มุมซอย ตรงข้ามเรือนจำ)\nโทร: 088-569-0034 / 061-114-2206\n\nConcept: Slow Bar — ดริปกาแฟมือ เน้นกระบวนการ craft (สื่อผ่านชื่อร้าน 'Slow Bar')\n\nSocial (verified 22 Jul 2026):\n• Facebook: SIP-1 Slow bar (fb.com/people/SIP-1-Slow-bar/61553979445148) — มีเพจจริง แต่เข้าถึงเนื้อหาไม่ได้ (login wall) ไม่พบ likes/followers แม้แต่ cache จาก search engine\n• Instagram: @sip1_slowbar — 90 followers / 43 following / 85 posts — active มี Reels สอนดริปกาแฟ\n• TikTok: พบการอ้างอิงถึง handle แต่ไม่สามารถยืนยันเนื้อหาได้ชัดเจน\n• Wongnai: listed 'Official' — 1 rating, 0 written reviews (สะท้อนว่าเพิ่งเปิดมาก)\n\nContent ตัวอย่างที่พบ: Reel 'วันนี้มาแนะทำวิธีการดริปแบบไวๆ แต่ได้ผลลัพธ์ดี' — เนื้อหาเชิงสอน/ให้ความรู้เรื่อง brewing\n\nร้านขนาดเล็กมาก: ที่นั่ง <10 ที่ · ราคาระดับต่ำกว่า 100 บาท (Wongnai price tier ฿)\nเวลาเปิดหน้าร้าน: จ-พ, ส-อา 08:00-13:00 (ปิด พฤ-ศ) — เปิดเฉพาะช่วงเช้าเท่านั้น และปิด 2 วันกลางสัปดาห์\n\nDelivery (LINE MAN ยืนยันจาก amenities บน Wongnai):\n• จ-พ 08:00-15:30\n• ส-อา 08:00-16:00 และ 18:00-23:00 (มีช่วงเย็นวันหยุดที่หน้าร้านปิดแล้วแต่ยังส่ง delivery ได้ — น่าจะเป็นโมเดล dark-kitchen ช่วงเย็น)\n\nช่องว่างสำหรับคู่แข่ง:\n• Digital footprint แทบไม่มีนอกเพจตัวเอง — ไม่มี Google review, ไม่มีบทความ, ไม่มี Lemon8 พูดถึง\n• เปิดหน้าร้านแค่ 4 วัน/สัปดาห์ ปิดเร็ว 13:00 — เข้าถึงลูกค้าบ่าย-เย็นไม่ได้ (ยกเว้นผ่าน delivery ช่วงเย็นเสาร์-อาทิตย์)\n• <10 ที่นั่ง จำกัดกลุ่มลูกค้านั่งร้านมาก\n• ยังไม่มีรีวิวให้ลูกค้าใหม่เทียบคุณภาพ/ราคาก่อนตัดสินใจ",
+        "pricing": {
+            "espresso": {"price": "ไม่ทราบ", "note": "ระดับราคา ต่ำกว่า 100฿ (Wongnai price tier)"},
+            "americano": {"price": "ไม่ทราบ", "note": ""},
+            "latte": {"price": "ไม่ทราบ", "note": ""},
+            "cappuccino": {"price": "ไม่ทราบ", "note": ""},
+            "cold_brew": {"price": "ไม่ทราบ", "note": ""},
+            "frappe": {"price": "ไม่ทราบ", "note": ""},
+            "matcha": {"price": "ไม่ทราบ", "note": ""},
+            "signature_drink": {"price": "ไม่ทราบ", "note": "ดริปมือ (slow bar)"},
+            "food": {"price": "ไม่ทราบ", "note": "ของหวาน (ตามหมวด Wongnai)"},
+            "other": []
+        },
+        "strengths": [
+            "เนื้อหา educational drip coffee (Reel สอนดริป) — สร้าง authority ด้าน craft",
+            "ราคาระดับต่ำกว่า 100 บาท เข้าถึงง่าย",
+            "Delivery ยืนยันผ่าน LINE MAN พร้อมช่วงเย็นวันหยุด",
+            "โพสต์ถี่ (85 posts) แม้ follower ยังน้อย — พยายามสร้าง content สม่ำเสมอ"
+        ],
+        "promotions": [],
+        "weaknesses": [
+            "เพิ่งเปิดมาก ยังไม่มีรีวิวจริง (Wongnai 1 rating/0 written reviews)",
+            "เปิดหน้าร้านแค่ 4 วัน/สัปดาห์ (ปิด พฤ-ศ) และปิดเร็ว 13:00 — เสียตลาดบ่าย-เย็น",
+            "<10 ที่นั่ง = capacity จำกัดมาก",
+            "Facebook เข้าถึงข้อมูลไม่ได้ (login wall) — ไม่ทราบ followers/engagement",
+            "ไม่มี TikTok ที่ยืนยันเนื้อหาได้ชัดเจน",
+            "ไม่มี Google Maps review ให้เทียบราคา-คุณภาพ"
+        ],
+        "location": "149 ถ.มรรคาลัย ต.ธาตุเชิงชุม อ.เมืองสกลนคร (ตรงข้ามเรือนจำ)",
+        "hours": "จ-พ, ส-อา 08:00-13:00 (ปิด พฤ-ศ)",
+        "social_trend": {
+            "primary_platform": "Instagram",
+            "posting_frequency": "ถี่ (85 posts) เทียบกับ follower ที่ยังน้อย",
+            "content_style": "Educational drip brewing + slow bar craft",
+            "engagement_level": "low (เพิ่งเปิด)"
+        },
+        "delivery": {
+            "primary_app": "LINE MAN",
+            "apps": ["LINE MAN"],
+            "peak_hours": "ยังไม่มีข้อมูล (ร้านใหม่)",
+            "active_promos": [],
+            "notes": "เวลาส่ง delivery กว้างกว่าหน้าร้านมาก: จ-พ 08:00-15:30, ส-อา 08:00-16:00 และ 18:00-23:00 (ช่วงเย็นส่งได้แม้หน้าร้านปิดแล้ว) — น่าจะเป็นโมเดล dark-kitchen ช่วงเย็น"
+        }
+    },
+    {
         "id": "delivery-apps-overview",
         "category": "delivery",
         "title": "Delivery Apps ร้านกาแฟ สกลนคร — ภาพรวม 2026",
@@ -1336,12 +1390,12 @@ INTEL_DATA_FALLBACK = [
         "id": "delivery-local-cafes",
         "category": "delivery",
         "title": "ร้านกาแฟท้องถิ่นสกลนคร — สถานะ Delivery (Updated 20 Jul 2026)",
-        "summary": "WE HUG (LINE MAN ✅) · CHANN (LINE MAN ✅) · SNIFF (LINE MAN ✅) · จุมพฏ (LINE MAN ✅ 2 สาขา) · Elemental Haus (LINE MAN ✅) · Rok 'n Road (LINE MAN ✅) · Alice (LINE MAN ✅) · FIKA (LINE MAN ✅) · ZMd (LINE MAN ✅) · BOONNAR (LINE MAN ✅) · A Cup of Joy (LINE MAN ✅) · MOKA FOX (LINE MAN ✅) · RAINTREE (Wongnai direct) · ป่านาคำหอม (❌) · มีสุข (❌) · All of KK (❌) · CANTO (ไม่ทราบ) · ปันฝัน โฮมการ์เด้น (ใหม่ ม.ค.2026 🆕) · Chains: Amazon/Wawee/Inthanin (GrabFood ✅) | ⚠️ FoodPanda ปิดในไทยแล้ว (พ.ค. 2568) | 🔥LINE MAN Grand Sale ถูกสุดทุกวัน ถึง 31 ก.ค. 2026",
+        "summary": "WE HUG (LINE MAN ✅) · CHANN (LINE MAN ✅) · SNIFF (LINE MAN ✅) · จุมพฏ (LINE MAN ✅ 2 สาขา) · Elemental Haus (LINE MAN ✅) · Rok 'n Road (LINE MAN ✅) · Alice (LINE MAN ✅) · FIKA (LINE MAN ✅) · ZMd (LINE MAN ✅) · BOONNAR (LINE MAN ✅) · A Cup of Joy (LINE MAN ✅) · MOKA FOX (LINE MAN ✅) · SIP-1 Slow Bar (LINE MAN ✅ เพิ่งเปิด 🆕) · RAINTREE (Wongnai direct) · ป่านาคำหอม (❌) · มีสุข (❌) · All of KK (❌) · CANTO (ไม่ทราบ) · ปันฝัน โฮมการ์เด้น (ใหม่ ม.ค.2026 🆕) · Chains: Amazon/Wawee/Inthanin (GrabFood ✅) | ⚠️ FoodPanda ปิดในไทยแล้ว (พ.ค. 2568) | 🔥LINE MAN Grand Sale ถูกสุดทุกวัน ถึง 31 ก.ค. 2026",
         "updated": "20 Jul 2026",
         "source_url": "https://www.wongnai.com/listings/sakonnakhon-coffee-cafe", "thumbnail_url": "",
         "tags": ["specialty", "local", "delivery", "สกลนคร", "Wongnai", "LINE MAN"],
         "relevance": "high",
-        "detail": "ร้านกาแฟสกลนครและสถานะ Delivery (verified จาก Wongnai / LINE MAN — อัพเดท 20 ก.ค. 2026):\n\n⚠️ FoodPanda ปิดบริการในไทย 23 พ.ค. 2568 แล้ว — ถอดออกจากตัวเลือก delivery ทุกร้าน\n\n✅ ยืนยันอยู่บน LINE MAN / Wongnai Delivery:\n• WE HUG CAFE — LINE MAN + Wongnai Delivery · ทุกวัน 08:00-19:00 (กว้างสุด) · ส่งฟรีระยะใกล้\n• Alice Coffee and Bread — Wongnai x LINE MAN · จ-ศ 08:30-16:30 / เสาร์ 09:00-17:30 · เมนูดัง: Thai Tea 65฿, Coco Dirty 95฿\n• FIKA Cafè & Coworking — Wongnai x LINE MAN ยืนยัน\n• ZMd cafe' Specialty Coffee — Wongnai x LINE MAN ยืนยัน\n• Café Amazon (สาขาสกลนคร) — GrabFood ยืนยัน chain ใหญ่\n\n⚠️ มีตัวตนบน Social/Wongnai แต่ยังไม่ verified บน delivery app:\n• RAINTREE Cafe — Facebook 77K, Instagram @raintree_sakon · เน้น dine-in day cafe + night bar · Wongnai ระบุ delivery 08:00-17:00 แต่ยังไม่พบบน LINE MAN/GrabFood โดยตรง\n\n❓ ยังไม่มีข้อมูล:\n• CANTO CAFE — เพิ่งเพิ่มเข้าระบบ ยังไม่มีข้อมูลออนไลน์\n\n🆕 เปิดใหม่ 2025-2026:\n• CHANN CAFE — เปิดใหม่ พ.ย. 2568 · LINE MAN ✅\n• supa.cafe — บรรยากาศ homestyle · ยังไม่ verified delivery\n\nหมายเหตุ: Web search ไม่สามารถดึงรายการร้านจาก LINE MAN/GrabFood โดยตรงได้ (แสดงตาม GPS เท่านั้น) ต้องเปิดแอปในพื้นที่สกลนครเพื่อยืนยัน\n\nWongnai รวมร้านกาแฟสกลนคร: https://www.wongnai.com/listings/sakonnakhon-coffee-cafe\n\nเทรนด์ใหม่: LINE MAN แซงหน้า GrabFood เป็นเบอร์ 1 ระดับชาติ — ร้าน local ต่างจังหวัดเน้น Wongnai x LINE MAN มากกว่า GrabFood\nPeak delivery (national): 11:00-13:00 และ 17:00-20:00 น.\nกลยุทธ์: Bundle กาแฟ + เบเกอรี เพิ่มมูลค่าต่อบิล offset ค่า GP 30-35%",
+        "detail": "ร้านกาแฟสกลนครและสถานะ Delivery (verified จาก Wongnai / LINE MAN — อัพเดท 20 ก.ค. 2026):\n\n⚠️ FoodPanda ปิดบริการในไทย 23 พ.ค. 2568 แล้ว — ถอดออกจากตัวเลือก delivery ทุกร้าน\n\n✅ ยืนยันอยู่บน LINE MAN / Wongnai Delivery:\n• WE HUG CAFE — LINE MAN + Wongnai Delivery · ทุกวัน 08:00-19:00 (กว้างสุด) · ส่งฟรีระยะใกล้\n• Alice Coffee and Bread — Wongnai x LINE MAN · จ-ศ 08:30-16:30 / เสาร์ 09:00-17:30 · เมนูดัง: Thai Tea 65฿, Coco Dirty 95฿\n• FIKA Cafè & Coworking — Wongnai x LINE MAN ยืนยัน\n• ZMd cafe' Specialty Coffee — Wongnai x LINE MAN ยืนยัน\n• Café Amazon (สาขาสกลนคร) — GrabFood ยืนยัน chain ใหญ่\n• SIP-1 Slow Bar — Wongnai amenities ระบุ LINE MAN · delivery ช่วงเย็นเสาร์-อาทิตย์แม้หน้าร้านปิดแล้ว (18:00-23:00) แต่เพิ่งเปิด ยังไม่มีรีวิว\n\n⚠️ มีตัวตนบน Social/Wongnai แต่ยังไม่ verified บน delivery app:\n• RAINTREE Cafe — Facebook 77K, Instagram @raintree_sakon · เน้น dine-in day cafe + night bar · Wongnai ระบุ delivery 08:00-17:00 แต่ยังไม่พบบน LINE MAN/GrabFood โดยตรง\n\n❓ ยังไม่มีข้อมูล:\n• CANTO CAFE — เพิ่งเพิ่มเข้าระบบ ยังไม่มีข้อมูลออนไลน์\n\n🆕 เปิดใหม่ 2025-2026:\n• CHANN CAFE — เปิดใหม่ พ.ย. 2568 · LINE MAN ✅\n• supa.cafe — บรรยากาศ homestyle · ยังไม่ verified delivery\n\nหมายเหตุ: Web search ไม่สามารถดึงรายการร้านจาก LINE MAN/GrabFood โดยตรงได้ (แสดงตาม GPS เท่านั้น) ต้องเปิดแอปในพื้นที่สกลนครเพื่อยืนยัน\n\nWongnai รวมร้านกาแฟสกลนคร: https://www.wongnai.com/listings/sakonnakhon-coffee-cafe\n\nเทรนด์ใหม่: LINE MAN แซงหน้า GrabFood เป็นเบอร์ 1 ระดับชาติ — ร้าน local ต่างจังหวัดเน้น Wongnai x LINE MAN มากกว่า GrabFood\nPeak delivery (national): 11:00-13:00 และ 17:00-20:00 น.\nกลยุทธ์: Bundle กาแฟ + เบเกอรี เพิ่มมูลค่าต่อบิล offset ค่า GP 30-35%",
         "pricing": {"espresso":{"price":"","note":""},"americano":{"price":"","note":""},"latte":{"price":"","note":""},"cappuccino":{"price":"","note":""},"cold_brew":{"price":"","note":""},"frappe":{"price":"","note":""},"matcha":{"price":"","note":""},"signature_drink":{"price":"","note":""},"food":{"price":"","note":""},"other":[]},
         "strengths": ["ร้าน local มี LINE MAN ครอบคลุม", "Specialty = differentiator ใน delivery", "GrabFood เร็ว ป้องกันเครื่องดื่มละลาย"],
         "promotions": ["🔥 LINE MAN Grand Sale 'ถูกสุดทุกวัน' (25 มิ.ย.-31 ก.ค. 2026) — ส่วนลดสูงสุด 70% VIP, ดีลเริ่ม 1 บาท (100,000+ ร้านทั่วไทย)", "ShopeeFood Flash Sale ต้นเดือน", "GrabFood: โค้ดส่วนลด 30-50% กรกฎาคม 2026 active"],

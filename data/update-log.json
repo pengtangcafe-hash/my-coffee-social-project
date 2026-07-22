@@ -944,6 +944,21 @@
       "summary": "นำเข้าข้อมูล TikTok (365 แถว)",
       "details": [],
       "count": 365
+    },
+    {
+      "id": "20260722-202732",
+      "ts": "2026-07-22T20:27:32",
+      "date_th": "22 ก.ค. 2569",
+      "time_th": "20:27",
+      "category": "intel",
+      "scope": "วิเคราะห์เชิงลึก 6 มิติ",
+      "action": "research",
+      "summary": "วิเคราะห์คู่แข่งเชิงลึก 1 ร้านใหม่ (SIP-1 Slow Bar) + อัพเดท delivery 2 ร้านเดิม (6 มิติ)",
+      "details": [
+        "คู่แข่งใหม่: SIP-1 Slow Bar (149 ถ.มรรคาลัย) — เพิ่งเปิด Wongnai 1 rating/0 รีวิว, IG 90 followers",
+        "delivery: FoodPanda ปิดตัว กระทบ WE HUG (เหลือ LINE MAN+Wongnai) และ Hokkaido Craft (ไม่มี delivery app เลยตอนนี้)"
+      ],
+      "count": 1
     }
   ]
 }
