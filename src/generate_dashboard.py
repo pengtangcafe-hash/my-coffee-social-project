@@ -5557,13 +5557,28 @@ function dcSyncPull(silent) {{
     }})
     .catch(function(e) {{ if (!silent) showToast('ดึงข้อมูลไม่สำเร็จ — ตรวจ URL / สิทธิ์ Anyone'); }});
 }}
-function dcSyncPush() {{
+// payload ที่ส่งขึ้น Sheet — ตัดฟิลด์ที่เก็บเฉพาะในเครื่องออก (posLast = ข้อมูล POS ดิบ Sheet ไม่ได้ใช้ กัน payload บวมจน fetch ล้ม)
+function dcPushPayload() {{
+  var p = {{}};
+  for (var k in DCS) {{ if (Object.prototype.hasOwnProperty.call(DCS, k)) p[k] = DCS[k]; }}
+  delete p.posLast;
+  return p;
+}}
+function dcSyncPush(isRetry) {{
   var url = dcGsUrl();
   if (!url) return;
-  fetch(url, {{ method: 'POST', headers: {{ 'Content-Type': 'text/plain;charset=utf-8' }}, body: JSON.stringify(DCS) }})
+  var body = JSON.stringify(dcPushPayload());
+  var kb = Math.round(body.length/1024);
+  fetch(url, {{ method: 'POST', headers: {{ 'Content-Type': 'text/plain;charset=utf-8' }}, body: body }})
     .then(function(r) {{ return r.json(); }})
-    .then(function(res) {{ if (res && res.ok) dcClearPending(); showToast((res && res.ok) ? 'บันทึกขึ้น Google Sheet แล้ว' : 'เขียน Sheet ไม่สำเร็จ'); }})
-    .catch(function(e) {{ showToast('เขียน Sheet ไม่สำเร็จ (เก็บในเครื่องแล้ว)'); }});
+    .then(function(res) {{
+      if (res && res.ok) {{ dcClearPending(); showToast('บันทึกขึ้น Google Sheet แล้ว ✓'); }}
+      else {{ showToast('เขียน Sheet ไม่สำเร็จ: ' + ((res && res.error) || 'ไม่ทราบสาเหตุ')); }}
+    }})
+    .catch(function(e) {{
+      if (!isRetry) {{ showToast('เขียน Sheet ไม่สำเร็จ — กำลังลองใหม่...'); setTimeout(function() {{ dcSyncPush(true); }}, 3000); return; }}
+      showToast('เขียน Sheet ไม่สำเร็จ (เก็บในเครื่องแล้ว · ' + kb + 'KB) — จะซิงก์ให้ตอนเปิดครั้งหน้า');
+    }});
 }}
 // ── Auto-pull ตอนเปิดหน้า + ตัวกันข้อมูลค้างถูกทับ ──
 function dcMarkPending() {{ try {{ localStorage.setItem('pengtang_push_pending','1'); }} catch(e) {{}} }}
@@ -5571,7 +5586,18 @@ function dcClearPending() {{ try {{ localStorage.removeItem('pengtang_push_pendi
 function dcHasPending() {{ try {{ return localStorage.getItem('pengtang_push_pending')==='1'; }} catch(e) {{ return false; }} }}
 function dcAutoPullOnBoot() {{
   if (!dcGsUrl()) return;                       // ยังไม่เชื่อม Sheet = ไม่ทำ
-  if (dcHasPending()) {{ dcShowPendingWarn(); return; }}  // มีของค้างยังไม่ซิงก์ = ไม่ดึงทับ
+  if (!DCS) dcLoadState();
+  if (dcHasPending()) {{
+    // มีของค้างยังไม่ขึ้น Sheet → ดันขึ้นก่อน (กู้อัตโนมัติ) สำเร็จแล้วค่อยดึงล่าสุด
+    fetch(dcGsUrl(), {{ method:'POST', headers:{{'Content-Type':'text/plain;charset=utf-8'}}, body: JSON.stringify(dcPushPayload()) }})
+      .then(function(r) {{ return r.json(); }})
+      .then(function(res) {{
+        if (res && res.ok) {{ dcClearPending(); showToast('ซิงก์ข้อมูลที่ค้างขึ้น Sheet แล้ว ✓'); dcSyncPull(true); }}
+        else {{ dcShowPendingWarn(); }}
+      }})
+      .catch(function() {{ dcShowPendingWarn(); }});
+    return;
+  }}
   dcSyncPull(false);                            // สะอาด = ดึงข้อมูลล่าสุด
 }}
 function dcDataScore(o) {{
