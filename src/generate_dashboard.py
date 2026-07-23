@@ -2326,6 +2326,8 @@ HTML_TEMPLATE = """\
       font-size:.72rem; font-weight:700; flex-shrink:0; }}
     .stk-badge.warn {{ background:rgba(194,65,12,.12); color:var(--dc-warn); }}
     .stk-badge.muted {{ background:var(--nav-active); color:var(--text-muted); }}
+    .stk-edit-btn {{ background:none; border:none; cursor:pointer; font-size:15px; padding:2px 5px; opacity:.6; flex-shrink:0; border-radius:6px; }}
+    .stk-edit-btn:hover {{ opacity:1; background:var(--nav-active); }}
     .stk-nums {{ display:flex; flex-wrap:wrap; gap:3px 16px; font-size:.78rem; color:var(--text-muted); margin-bottom:8px; }}
     .stk-nums b {{ color:var(--text); }}
     .stk-bar-wrap {{ height:8px; border-radius:999px; background:var(--nav-active); overflow:hidden; margin-bottom:3px; }}
@@ -5973,7 +5975,9 @@ function stkRenderRemain() {{
     return '<div class="stk-card'+(low?' low':'')+'">'
       +imgEl
       +'<div class="stk-card-body">'
-      +'<div class="stk-top"><span class="stk-name">'+escapeHtml(k)+'</span>'+badge+'</div>'
+      +'<div class="stk-top"><span class="stk-name">'+escapeHtml(k)+'</span>'+badge
+      +'<button class="stk-edit-btn" data-ing="'+escapeHtml(k)+'" onclick="stkEditIngBtn(this)" title="แก้ไข">✏️</button>'
+      +'</div>'
       +'<div class="stk-nums">'
       +'<span>ซื้อเข้า <b>'+fmtQty(bought,bu)+'</b></span>'
       +'<span>ใช้ไป <b>'+fmtQty(usedB,bu)+'</b></span>'
@@ -6287,6 +6291,57 @@ function stkSavePar() {{
     DCS.stock.threshold_pct=thr; DCS.stock.par=newPar; DCS.stock.images=newImgs;
     dcAfterChange(); dcCloseModal(); renderStockView();
     showToast('บันทึกการตั้งค่าสต็อกแล้ว ✓');
+  }};
+  if (!dcEdit) {{
+    if (saIsUnlocked()) {{ dcEdit=true; doSave(); return; }}
+    dcOpenPwModal('🔒 ปลดล็อกก่อนบันทึก','ใส่รหัสเพื่อแก้ไขข้อมูลสต็อก',function() {{ dcEdit=true; saUnlock(); showToast('ปลดล็อกแล้ว ✓'); doSave(); }});
+  }} else {{ doSave(); }}
+}}
+
+function stkEditIngBtn(btn) {{ stkEditIng(btn.getAttribute('data-ing')); }}
+function stkEditIng(ing) {{
+  if (!DCS) dcLoadState();
+  var par=(DCS.stock.par||{{}})[ing];
+  var count='', unit='แพ็ค', size='';
+  if (par!=null) {{
+    if (typeof par==='object') {{ count=par.count||''; unit=par.unit||'แพ็ค'; size=par.size||''; }}
+    else {{ count=par; var c2=DCS.catalog[ing]; size=c2?(c2.qty||''):''; }}
+  }}
+  var imgUrl=(DCS.stock.images||{{}})[ing]||'';
+  var kEsc=escapeHtml(ing);
+  var html='<div class="dc-modal-head"><h3>✏️ แก้ไข: '+kEsc+'</h3><button class="dc-x" onclick="dcCloseModal()" aria-label="ปิด">✕</button></div>'
+    +'<div class="dc-modal-scroll">'
+    +'<div class="stk-par-fields" style="margin-bottom:16px">'
+    +'<div class="stk-par-field"><label>จำนวน (สต็อกเต็ม)</label><input class="dc-inp" id="stk-e-count" type="number" min="0" step="any" value="'+(count||'')+'" placeholder="—"></div>'
+    +'<div class="stk-par-field"><label>หน่วย</label><select class="dc-inp" id="stk-e-unit"><option value="">—</option>'+stkUnitOpts(unit)+'</select></div>'
+    +'<div class="stk-par-field"><label>ปริมาณ/หน่วย</label><input class="dc-inp" id="stk-e-size" type="number" min="0" step="any" value="'+(size||'')+'" placeholder="—"></div>'
+    +'</div>'
+    +'<div class="dc-field"><label>🖼 รูปวัตถุดิบ</label>'
+    +'<div style="display:flex;gap:6px;align-items:center">'
+    +'<input class="dc-inp url-inp stk-par-img" type="url" placeholder="วาง URL หรือกดอัปรูป →" value="'+escapeHtml(imgUrl)+'" data-ing="'+kEsc+'" style="flex:1;min-width:0">'
+    +'<button type="button" class="dc-btn stk-img-btn" data-ing="'+kEsc+'" onclick="stkUploadImg(this)" style="white-space:nowrap;flex-shrink:0">📎 อัปรูป</button>'
+    +'</div><div class="dc-edithint" style="margin-top:4px">อัปรูปจากเครื่อง หรือวาง URL เอง · ลบ URL ออก = เอารูปออก</div></div>'
+    +'</div>'
+    +'<div class="dc-modal-foot"><span class="spacer"></span>'
+    +'<button class="dc-btn ghost" onclick="dcCloseModal()">ยกเลิก</button>'
+    +'<button class="dc-btn primary" data-ing="'+kEsc+'" onclick="stkSaveIngBtn(this)">💾 บันทึก</button></div>';
+  dcSetModalBody(html);
+}}
+function stkSaveIngBtn(btn) {{ stkSaveIng(btn.getAttribute('data-ing')); }}
+function stkSaveIng(ing) {{
+  var count=parseFloat((document.getElementById('stk-e-count')||{{}}).value||'');
+  var unit=((document.getElementById('stk-e-unit')||{{}}).value)||'แพ็ค';
+  var size=parseFloat((document.getElementById('stk-e-size')||{{}}).value||'')||1;
+  var imgInp=document.querySelector('.stk-par-img[data-ing="'+ing+'"]');
+  var url=imgInp?(imgInp.value||'').trim():'';
+  var doSave=function() {{
+    if (!DCS.stock.par) DCS.stock.par={{}};
+    if (!DCS.stock.images) DCS.stock.images={{}};
+    if (count>0) DCS.stock.par[ing]={{count:count,unit:unit||'แพ็ค',size:size}};
+    else delete DCS.stock.par[ing];
+    if (url) DCS.stock.images[ing]=url; else delete DCS.stock.images[ing];
+    dcAfterChange(); dcCloseModal(); renderStockView();
+    showToast('บันทึก '+ing+' แล้ว ✓');
   }};
   if (!dcEdit) {{
     if (saIsUnlocked()) {{ dcEdit=true; doSave(); return; }}
