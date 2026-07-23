@@ -2771,6 +2771,7 @@ HTML_TEMPLATE = """\
 </head>
 <body style="font-family: 'Prompt', system-ui, sans-serif" class="text-slate-800">
 <input type="file" id="vf-slip-file-input" accept="image/*" capture="environment" style="display:none" onchange="vfSlipFileSelected(this)">
+<input type="file" id="stk-img-file-input" accept="image/*" style="display:none" onchange="stkImgFileSelected(this)">
 
 <!-- Mobile top bar -->
 <div id="mobile-topbar" class="items-center justify-between px-4 py-3">
@@ -6188,8 +6189,11 @@ function stkOpenPar() {{
       return '<div class="stk-par-item">'
         +'<div class="stk-par-head" title="'+kEsc+'">'
         +'<span class="stk-par-ingname">'+kEsc+'</span>'
-        +'<div class="stk-par-field"><label>🖼 URL รูป</label>'
-        +'<input class="dc-inp url-inp stk-par-img" type="url" placeholder="https://..." value="'+escapeHtml(imgUrl)+'" data-ing="'+kEsc+'"></div>'
+        +'<div class="stk-par-field"><label>🖼 รูปวัตถุดิบ</label>'
+        +'<div style="display:flex;gap:6px;align-items:center">'
+        +'<input class="dc-inp url-inp stk-par-img" type="url" placeholder="วาง URL หรือกดอัปรูป →" value="'+escapeHtml(imgUrl)+'" data-ing="'+kEsc+'" style="flex:1;min-width:0">'
+        +'<button type="button" class="dc-btn stk-img-btn" data-ing="'+kEsc+'" onclick="stkUploadImg(this)" style="white-space:nowrap;flex-shrink:0">📎 อัปรูป</button>'
+        +'</div></div>'
         +'</div>'
         +'<div class="stk-par-fields">'
         +'<div class="stk-par-field"><label>จำนวน</label>'
@@ -6221,6 +6225,46 @@ function stkOpenPar() {{
     +'<button class="dc-btn ghost" onclick="dcCloseModal()">ยกเลิก</button>'
     +'<button class="dc-btn primary" onclick="stkSavePar()">💾 บันทึก</button></div>';
   dcSetModalBody(html); applyRoast();
+}}
+var _stkImgIng=null;
+function stkUploadImg(btn) {{
+  if (!dcGsUrl()) {{ showToast('เชื่อม Google Sheet ก่อน (อัปรูปผ่าน Apps Script)'); return; }}
+  _stkImgIng=btn.getAttribute('data-ing');
+  var fi=document.getElementById('stk-img-file-input'); if (fi) fi.click();
+}}
+function stkImgFileSelected(input) {{
+  if (!input.files||!input.files[0]||!_stkImgIng) return;
+  var file=input.files[0], ing=_stkImgIng; _stkImgIng=null; input.value='';
+  var urlInp=document.querySelector('.stk-par-img[data-ing="'+ing+'"]');
+  var btn=document.querySelector('.stk-img-btn[data-ing="'+ing+'"]');
+  if (btn) {{ btn.textContent='⏳ อัป...'; btn.disabled=true; }}
+  var reader=new FileReader();
+  reader.onload=function(ev) {{
+    var img=new Image();
+    img.onload=function() {{
+      var MAX=800, w=img.width, h=img.height;
+      if (w>MAX||h>MAX) {{ var sc=MAX/Math.max(w,h); w=Math.round(w*sc); h=Math.round(h*sc); }}
+      var cv=document.createElement('canvas'); cv.width=w; cv.height=h;
+      cv.getContext('2d').drawImage(img,0,0,w,h);
+      var b64=cv.toDataURL('image/jpeg',0.8).split(',')[1];
+      var fname=String(ing||'ingredient').replace(/[^0-9A-Za-zก-๙]/g,'_').slice(0,30)+'.jpg';
+      fetch(dcGsUrl(),{{method:'POST',headers:{{'Content-Type':'text/plain;charset=utf-8'}},
+        body:JSON.stringify({{action:'uploadSlip',folder:'ร้านกาแฟ-รูปวัตถุดิบ',flat:true,filename:fname,mime:'image/jpeg',data:b64}})}})
+      .then(function(r) {{ return r.json(); }})
+      .then(function(res) {{
+        if (btn) {{ btn.textContent='📎 อัปรูป'; btn.disabled=false; }}
+        if (!res||!res.ok) throw new Error(res&&res.error||'fail');
+        if (urlInp) urlInp.value=res.thumb;
+        showToast('อัปรูปวัตถุดิบแล้ว ✓ — กด 💾 บันทึก');
+      }})
+      .catch(function() {{
+        if (btn) {{ btn.textContent='📎 อัปรูป'; btn.disabled=false; }}
+        showToast('อัปไม่สำเร็จ — ตรวจว่า re-deploy Apps Script + อนุญาต Drive แล้ว');
+      }});
+    }};
+    img.src=ev.target.result;
+  }};
+  reader.readAsDataURL(file);
 }}
 function stkSavePar() {{
   var thr=parseFloat((document.getElementById('stk-par-thr')||{{}}).value||'');

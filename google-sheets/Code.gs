@@ -123,20 +123,24 @@ function getOrCreateFolder_(parent, name) {
 function handleUploadSlip_(data) {
   try {
     var tz = 'Asia/Bangkok';
-    // ใช้วันที่ของรายจ่ายถ้าส่งมา (YYYY-MM-DD) ไม่งั้นใช้วันที่อัปโหลด (เวลาไทย)
-    var d = /^\d{4}-\d{2}-\d{2}/.test(String(data.date || '')) ? new Date(data.date) : new Date();
-    var year  = Utilities.formatDate(d, tz, 'yyyy');
-    var month = Utilities.formatDate(d, tz, 'MM');
-    // ร้านกาแฟ-สลิป / ปี / เดือน
-    var root  = getOrCreateFolder_(null, 'ร้านกาแฟ-สลิป');
-    var yFold = getOrCreateFolder_(root, year);
-    var mFold = getOrCreateFolder_(yFold, month);
+    var rootName = data.folder || 'ร้านกาแฟ-สลิป';
+    var root = getOrCreateFolder_(null, rootName);
+    var target;
+    if (data.flat) {
+      // ไม่แยกปี/เดือน (เช่น รูปวัตถุดิบ — เป็นรูปอ้างอิง ไม่ใช่บิลตามวันที่)
+      target = root;
+    } else {
+      // สลิป: แยก ปี / เดือน (ตามวันที่รายจ่ายถ้าส่งมา ไม่งั้นวันอัปโหลด)
+      var d = /^\d{4}-\d{2}-\d{2}/.test(String(data.date || '')) ? new Date(data.date) : new Date();
+      var yFold = getOrCreateFolder_(root, Utilities.formatDate(d, tz, 'yyyy'));
+      target = getOrCreateFolder_(yFold, Utilities.formatDate(d, tz, 'MM'));
+    }
     // ตั้งชื่อไฟล์: วันเวลา_ชื่อเดิม.jpg (กันชนกัน + เรียงตามเวลา)
     var stamp = Utilities.formatDate(new Date(), tz, 'yyyyMMdd_HHmmss');
-    var base  = String(data.filename || 'slip').replace(/\.[^.]+$/, '').slice(0, 40);
+    var base  = String(data.filename || 'img').replace(/\.[^.]+$/, '').slice(0, 40);
     var fname = stamp + '_' + base + '.jpg';
     var blob  = Utilities.newBlob(Utilities.base64Decode(data.data), data.mime, fname);
-    var file  = mFold.createFile(blob);
+    var file  = target.createFile(blob);
     file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
     var id = file.getId();
     return json_({ ok: true, id: id,
