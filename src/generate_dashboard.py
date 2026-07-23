@@ -5919,7 +5919,7 @@ function stkRenderWarnCards() {{
       var parB=stkParBase(ing); var rem=stkRemainBase(ing); var bu=stkBaseUnit(ing);
       var isDis=!!dismissed[ing];
       var imgUrl=(DCS.stock.images||{{}})[ing]||'';
-      var imgBit=imgUrl?'<img src="'+escapeHtml(imgUrl)+'" style="width:16px;height:16px;border-radius:3px;object-fit:cover;vertical-align:middle;margin-right:4px" onerror="this.style.display=\\'none\\'">':'';
+      var imgBit=imgUrl?'<img src="'+escapeHtml(imgUrl)+'" referrerpolicy="no-referrer" loading="lazy" style="width:16px;height:16px;border-radius:3px;object-fit:cover;vertical-align:middle;margin-right:4px" onerror="this.style.display=\\'none\\'">':'';
       return stkWarnCardHTML({{name:ing,pct:pct,remainText:fmtQty(rem,bu)+' / '+fmtQty(parB,bu),mock:false,isDis:isDis,imgBit:imgBit}});
     }}).join('');
     return '<div class="stk-warn-section">'
@@ -5967,7 +5967,7 @@ function stkRenderRemain() {{
     var imgUrl=(DCS.stock.images||{{}})[k]||'';
     var icon=stkIngIcon(k);
     var imgEl=imgUrl
-      ?'<div class="stk-card-img"><img src="'+escapeHtml(imgUrl)+'" alt="" onerror="this.parentElement.textContent=\\''+icon+'\\'"></div>'
+      ?'<div class="stk-card-img"><img src="'+escapeHtml(imgUrl)+'" alt="" referrerpolicy="no-referrer" loading="lazy" onerror="this.parentElement.textContent=\\''+icon+'\\'"></div>'
       :'<div class="stk-card-img">'+icon+'</div>';
     return '<div class="stk-card'+(low?' low':'')+'">'
       +imgEl
