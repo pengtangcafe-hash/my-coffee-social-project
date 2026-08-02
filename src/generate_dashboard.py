@@ -1532,6 +1532,18 @@ def load_drink_costs() -> dict:
     return {}  # empty — view shows empty state
 
 
+def load_prices_json() -> dict:
+    """Load ราคาวัตถุดิบตลาด Makro จาก data/ingredient-prices.json (agent fetch)."""
+    f = PROJECT_ROOT / "data" / "ingredient-prices.json"
+    if f.exists():
+        try:
+            with open(f, encoding="utf-8") as fh:
+                return json.load(fh)
+        except Exception:
+            pass
+    return {}  # empty — view shows empty state
+
+
 def load_tracker_json() -> dict:
     """Load competitor tracking data from data/competitor-tracking-latest.json."""
     tracking_file = PROJECT_ROOT / "data" / "competitor-tracking-latest.json"
@@ -2362,6 +2374,38 @@ HTML_TEMPLATE = """\
     .stk-usage-ing {{ font-size:.78rem; color:var(--text-muted); padding:2px 0; }}
     .stk-usage-ing b {{ color:var(--text); }}
     .stk-hide {{ display:none!important; }}
+
+    /* ── Backbar: อัพเดทราคาวัตถุดิบ (Makro price watch) ── */
+    .bbp-toolbar {{ display:flex; justify-content:flex-end; margin-bottom:12px; }}
+    .bbp-grid {{ display:grid; grid-template-columns:repeat(auto-fill,minmax(270px,1fr)); gap:12px; }}
+    .bbp-card {{ background:var(--card); border:1px solid var(--card-border); border-radius:14px; padding:13px 14px; }}
+    .bbp-card-top {{ display:flex; gap:10px; align-items:flex-start; }}
+    .bbp-img {{ width:44px; height:44px; border-radius:10px; flex-shrink:0; background:var(--nav-active);
+      display:flex; align-items:center; justify-content:center; font-size:1.2rem; overflow:hidden; }}
+    .bbp-img img {{ width:100%; height:100%; object-fit:cover; border-radius:10px; }}
+    .bbp-body {{ flex:1; min-width:0; }}
+    .bbp-top {{ display:flex; flex-wrap:wrap; align-items:center; gap:6px; margin-bottom:2px; }}
+    .bbp-name {{ font-weight:700; font-size:.9rem; color:var(--text); flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }}
+    .bbp-badge {{ display:inline-flex; align-items:center; gap:2px; padding:2px 8px; border-radius:999px; font-size:.68rem; font-weight:800; flex-shrink:0; }}
+    .bbp-badge.up {{ background:rgba(220,38,38,.12); color:#dc2626; }}
+    .bbp-badge.down {{ background:rgba(21,128,61,.12); color:var(--dc-profit); }}
+    .bbp-badge.flat {{ background:var(--nav-active); color:var(--text-muted); }}
+    .bbp-badge.discount {{ background:rgba(220,38,38,.16); color:#dc2626; }}
+    .bbp-price-main {{ font-size:1.02rem; font-weight:800; color:var(--text); }}
+    .bbp-price-sub {{ font-size:.72rem; color:var(--text-muted); }}
+    .bbp-meta-row {{ font-size:.7rem; color:var(--text-muted); margin-top:3px; }}
+    .bbp-actual-row {{ font-size:.74rem; color:var(--text); margin-top:7px; background:var(--nav-active);
+      border-radius:8px; padding:6px 9px; line-height:1.5; }}
+    .bbp-actual-row b {{ color:var(--text); }}
+    .bbp-empty-note {{ font-size:.72rem; color:var(--text-muted); font-style:italic; margin-top:7px; }}
+    .bbp-actions {{ display:flex; gap:6px; margin-top:10px; flex-wrap:wrap; }}
+    .bbp-btn {{ font-size:.72rem; padding:5px 10px; border-radius:8px; border:1px solid var(--card-border);
+      background:transparent; color:var(--text); cursor:pointer; }}
+    .bbp-btn:hover {{ background:var(--nav-active); }}
+    .bbp-chart-wrap {{ margin-top:10px; height:180px; position:relative; }}
+    .bbp-legend {{ display:flex; flex-wrap:wrap; gap:10px; font-size:.7rem; color:var(--text-muted); margin-top:6px; }}
+    .bbp-legend span {{ display:inline-flex; align-items:center; gap:4px; }}
+    .bbp-legend i {{ width:10px; height:10px; border-radius:3px; display:inline-block; }}
     .stk-modal-tabs {{ display:flex; flex-wrap:wrap; gap:6px; padding:0 24px 12px;
       border-bottom:1px solid var(--card-border); flex-shrink:0; }}
     .stk-tab-badge {{ display:inline-block; min-width:16px; height:16px; padding:0 4px;
@@ -2915,6 +2959,16 @@ HTML_TEMPLATE = """\
         สต็อกหลังบ้าน
       </button>
 
+      <button onclick="showView('view-bb-prices')" id="nav-bb-prices"
+        class="nav-btn w-full text-left px-4 py-2.5 rounded-xl flex items-center gap-3
+               text-slate-600 hover:bg-slate-50 transition-colors text-sm">
+        <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+        อัพเดทราคาวัตถุดิบ
+      </button>
+
       <button onclick="showView('view-bb-varfix')" id="nav-bb-varfix"
         class="nav-btn w-full text-left px-4 py-2.5 rounded-xl flex items-center gap-3
                text-slate-600 hover:bg-slate-50 transition-colors text-sm">
@@ -3321,6 +3375,23 @@ HTML_TEMPLATE = """\
       <div id="stk-root"></div>
     </div>
 
+    <!-- ── Backbar: อัพเดทราคาวัตถุดิบ (Makro price watch) ── -->
+    <div id="view-bb-prices" class="view">
+      <div class="mb-6">
+        <div class="ov-h1-row">
+          <div>
+            <h1 class="ov-h1" style="margin:0">อัพเดทราคาวัตถุดิบ</h1>
+            <p class="ov-sub-h" style="margin:0">ราคาตลาด Makro เทียบกับราคาที่ซื้อจริง · ดูแนวโน้มขึ้น/ลง</p>
+          </div>
+        </div>
+        <div class="bb-status-bar">
+          <span class="bb-status-pill live"><span class="dot"></span>🟢 ใช้งานอยู่</span>
+          <span class="bb-status-meta">ราคาตลาดอัปเดตล่าสุด: <b id="bbp-updated">—</b></span>
+        </div>
+      </div>
+      <div id="bbp-root"></div>
+    </div>
+
     <!-- ── Backbar: ต้นทุนผันแปรและคงที่ (Launching soon) ── -->
     <div id="view-bb-varfix" class="view">
       <div class="mb-6">
@@ -3385,6 +3456,7 @@ const UPDATE_LOG = {UPDATE_LOG_JSON};
 const UPDATE_SUMMARY = {UPDATE_SUMMARY_JSON};
 const LOGOS = {LOGOS_JSON};
 const DRINK_COSTS = {DRINK_COSTS_JSON};
+const PRICE_DATA = {PRICE_JSON};
 
 // ── Avatar โลโก้ร้าน (ขนาดเท่ากันทุกร้าน) — มีโลโก้ใช้โลโก้ ไม่มีใช้อักษรนำ ──
 function avatarHTML(id, name, color, sizePx) {{
@@ -3495,6 +3567,7 @@ function initCharts(viewId) {{
   if (viewId === 'view-tracker') {{ try {{ renderTrackerView(); }} catch(e) {{ console.error('renderTrackerView', e); }} return; }}
   if (viewId === 'view-cost-drinks') {{ try {{ renderDrinkCosts(); }} catch(e) {{ console.error('renderDrinkCosts', e); }} return; }}
   if (viewId === 'view-bb-stock') {{ try {{ renderStockView(); }} catch(e) {{ console.error('renderStockView', e); }} return; }}
+  if (viewId === 'view-bb-prices') {{ try {{ renderPricesView(); }} catch(e) {{ console.error('renderPricesView', e); }} return; }}
   if (viewId === 'view-bb-varfix') {{ try {{ renderVarfixView(); }} catch(e) {{ console.error('renderVarfixView', e); }} return; }}
   if (viewId === 'view-bb-posimport') {{ try {{ renderPosImportView(); }} catch(e) {{ console.error('renderPosImportView', e); }} return; }}
   if (viewId === 'view-quest') {{ try {{ renderQuestView(); }} catch(e) {{ console.error('renderQuestView', e); }} return; }}
@@ -4771,7 +4844,7 @@ function dcThumb(m, size) {{
 
 // ── สถานะปลดล็อกกลาง (sessionStorage: คงอยู่ตอนรีเฟรช, หายเมื่อปิดแท็บ) ──
 function saIsUnlocked() {{ return sessionStorage.getItem('pengtang_unlocked')==='1'; }}
-var SA_LOCK_VIEWS=['view-cost-drinks','view-pos-cost','view-bb-armory','view-bb-stock','view-bb-varfix','view-bb-posimport','view-quest'];
+var SA_LOCK_VIEWS=['view-cost-drinks','view-pos-cost','view-bb-armory','view-bb-stock','view-bb-prices','view-bb-varfix','view-bb-posimport','view-quest'];
 function saMarkLockable() {{
   SA_LOCK_VIEWS.forEach(function(id) {{ var v=document.getElementById(id); if (v) v.classList.add('sa-lockable'); }});
 }}
@@ -4803,6 +4876,7 @@ function renderActiveBackbar() {{
   var viewMap={{
     'view-cost-drinks':renderDrinkCosts,
     'view-bb-stock':renderStockView,
+    'view-bb-prices':renderPricesView,
     'view-bb-varfix':renderVarfixView,
     'view-bb-posimport':renderPosImportView
   }};
@@ -4849,6 +4923,7 @@ function dcNormalize(s) {{
   s.stock.images = s.stock.images || {{}};
   s.expenses = s.expenses || [];
   s.expense_slips = s.expense_slips || {{}};
+  if (s.priceManual === undefined) s.priceManual = {{}};
   // posLast เก็บเฉพาะใน browser — Sheet sync ไม่มีฟิลด์นี้
   if (s.posLast === undefined) s.posLast = null;
   // Quest & Achievement — seed สำหรับ user ใหม่ที่ยังไม่มีข้อมูล
@@ -6346,6 +6421,246 @@ function stkSaveIng(ing) {{
   if (!dcEdit) {{
     if (saIsUnlocked()) {{ dcEdit=true; doSave(); return; }}
     dcOpenPwModal('🔒 ปลดล็อกก่อนบันทึก','ใส่รหัสเพื่อแก้ไขข้อมูลสต็อก',function() {{ dcEdit=true; saUnlock(); showToast('ปลดล็อกแล้ว ✓'); doSave(); }});
+  }} else {{ doSave(); }}
+}}
+
+// ── Backbar: อัพเดทราคาวัตถุดิบ (Makro price watch) ──
+var bbpChartOpen = {{}};
+function bbpImageFor(item) {{
+  var imgs = (DCS.stock && DCS.stock.images) || {{}};
+  var aliases = item.aliases || [];
+  for (var i = 0; i < aliases.length; i++) {{ if (imgs[aliases[i]]) return imgs[aliases[i]]; }}
+  return '';
+}}
+function bbpLastMakro(item) {{
+  var h = item.history || [];
+  return h.length ? h[h.length - 1] : null;
+}}
+function bbpDeltaInfo(item) {{
+  var h = item.history || [];
+  if (!h.length) return null;
+  var last = h[h.length - 1];
+  var prev = null;
+  for (var i = h.length - 2; i >= 0; i--) {{ if (h[i].base_price !== last.base_price) {{ prev = h[i]; break; }} }}
+  if (!prev) return null;
+  var diff = last.base_price - prev.base_price;
+  var pct = prev.base_price ? (diff / prev.base_price * 100) : 0;
+  return {{ diff: diff, pct: pct, dir: diff > 0 ? 'up' : (diff < 0 ? 'down' : 'flat') }};
+}}
+function bbpFmtBase(v) {{
+  if (v == null || isNaN(v)) return '—';
+  return '฿' + v.toFixed(v < 1 ? 4 : 2);
+}}
+function bbpPurchasesFor(item) {{
+  var aliases = item.aliases || [];
+  return ((DCS.purchases) || []).filter(function(p) {{
+    return p && p.ing && aliases.indexOf(p.ing) >= 0 && p.price != null && p.size > 0;
+  }}).map(function(p) {{
+    return {{ date: p.date || '', time: p.time || '', vendor: p.vendor || '', price: p.price, size: p.size, unit: p.unit || '', base: p.price / p.size }};
+  }}).sort(function(a, b) {{ return (a.date + a.time).localeCompare(b.date + b.time); }});
+}}
+function bbpManualFor(item) {{
+  return (((DCS.priceManual) || {{}})[item.ing_id] || []).slice().sort(function(a, b) {{ return (a.date || '').localeCompare(b.date || ''); }});
+}}
+function bbpHasAnyData(item) {{
+  return !!(bbpLastMakro(item) || bbpPurchasesFor(item).length || bbpManualFor(item).length);
+}}
+function bbpCardHtml(item) {{
+  var last = bbpLastMakro(item);
+  var delta = bbpDeltaInfo(item);
+  var img = bbpImageFor(item);
+  var imgHtml = img
+    ? '<img src="' + escapeHtml(img) + '" alt="" referrerpolicy="no-referrer" loading="lazy" onerror="this.parentElement.textContent=\\'🧂\\'">'
+    : '🧂';
+  var badges = '';
+  if (last && last.discount_pct > 0) {{
+    badges += '<span class="bbp-badge discount">🔻 ลดราคา ' + last.discount_pct + '%</span>';
+  }}
+  if (delta && delta.dir !== 'flat') {{
+    var arrow = delta.dir === 'up' ? '▲' : '▼';
+    badges += '<span class="bbp-badge ' + delta.dir + '">' + arrow + ' ' + Math.abs(delta.pct).toFixed(1) + '%</span>';
+  }}
+  var priceBlock = last
+    ? '<div class="bbp-price-main">' + bbpFmtBase(last.base_price) + '/' + escapeHtml(item.pack_unit || 'หน่วย') + '</div>'
+      + '<div class="bbp-price-sub">(' + vfFmtMoney(last.price) + ' / ' + last.pack_qty + ' ' + escapeHtml(last.pack_unit || '') + ')</div>'
+      + '<div class="bbp-meta-row">ราคาตลาด Makro · อัปเดต ' + vfFmtDate(last.fetched_at || last.date) + '</div>'
+    : '<div class="bbp-empty-note">ยังไม่มีราคาตลาด — กด "+ บันทึกราคาเอง" เพื่อเพิ่ม</div>';
+  var purchases = bbpPurchasesFor(item);
+  var lastPurchase = purchases.length ? purchases[purchases.length - 1] : null;
+  var actualHtml = lastPurchase
+    ? '<div class="bbp-actual-row">🧾 ซื้อจริงล่าสุด: <b>' + bbpFmtBase(lastPurchase.base) + '/' + escapeHtml(item.pack_unit || 'หน่วย') + '</b>'
+      + (lastPurchase.vendor ? ' · ' + escapeHtml(lastPurchase.vendor) : '')
+      + ' · ' + vfFmtDate(lastPurchase.date) + '</div>'
+    : '';
+  var hasChart = bbpHasAnyData(item);
+  var chartOpen = !!bbpChartOpen[item.ing_id];
+  var actions = '<div class="bbp-actions">'
+    + (hasChart ? '<button class="bbp-btn" onclick="bbpToggleChart(\\'' + item.ing_id + '\\')">' + (chartOpen ? '▲ ซ่อนกราฟ' : '📈 ดูกราฟ') + '</button>' : '')
+    + '<button class="bbp-btn" onclick="bbpOpenManual(\\'' + item.ing_id + '\\')">+ บันทึกราคาเอง</button>'
+    + '</div>';
+  var chartHtml = '<div class="bbp-chart-wrap" id="bbp-chart-wrap-' + item.ing_id + '" style="' + (chartOpen ? '' : 'display:none') + '">'
+    + '<canvas id="bbp-chart-' + item.ing_id + '"></canvas></div>'
+    + '<div class="bbp-legend" id="bbp-legend-' + item.ing_id + '" style="' + (chartOpen ? '' : 'display:none') + '">'
+    + '<span><i style="background:#f97316"></i>ราคาตลาด Makro</span>'
+    + '<span><i style="background:#0ea5e9"></i>ซื้อจริง</span>'
+    + '<span><i style="background:#16a34a"></i>บันทึกเอง</span>'
+    + '</div>';
+  return '<div class="bbp-card" data-ing="' + item.ing_id + '">'
+    + '<div class="bbp-card-top">'
+    + '<div class="bbp-img">' + imgHtml + '</div>'
+    + '<div class="bbp-body">'
+    + '<div class="bbp-top"><span class="bbp-name" title="' + escapeHtml(item.label) + '">' + escapeHtml(item.label) + '</span>' + badges + '</div>'
+    + priceBlock
+    + actualHtml
+    + actions
+    + '</div></div>'
+    + chartHtml
+    + '</div>';
+}}
+function renderPricesView() {{
+  if (!DCS) dcLoadState();
+  var root = document.getElementById('bbp-root');
+  if (!root) return;
+  var items = (PRICE_DATA && PRICE_DATA.items) || [];
+  var updEl = document.getElementById('bbp-updated');
+  if (updEl) updEl.textContent = (PRICE_DATA && PRICE_DATA.updated_at) ? vfFmtDate(PRICE_DATA.updated_at) : '—';
+  if (!items.length) {{
+    root.innerHTML = '<div class="ov-tile ov-soon"><div class="ov-soon-emoji">🧾</div><div class="ov-soon-title">ยังไม่มีข้อมูลราคาวัตถุดิบ</div>'
+      + '<div class="ov-soon-sub">รอ Claude ดึงราคาจาก Makro หรือกด "+ บันทึกราคาเอง"</div></div>';
+    return;
+  }}
+  var toolbar = '<div class="bbp-toolbar"><button class="dc-btn primary" onclick="bbpOpenManual(\\'\\')">+ บันทึกราคาเอง</button></div>';
+  var cards = items.map(bbpCardHtml).join('');
+  root.innerHTML = toolbar + '<div class="bbp-grid">' + cards + '</div>';
+  items.forEach(function(item) {{ if (bbpChartOpen[item.ing_id]) bbpInitChart(item); }});
+}}
+function bbpRefreshIfActive() {{
+  var v = document.getElementById('view-bb-prices');
+  if (v && v.classList.contains('active')) renderPricesView();
+}}
+function bbpToggleChart(ingId) {{
+  bbpChartOpen[ingId] = !bbpChartOpen[ingId];
+  var wrap = document.getElementById('bbp-chart-wrap-' + ingId);
+  var legend = document.getElementById('bbp-legend-' + ingId);
+  var btn = document.querySelector('.bbp-card[data-ing="' + ingId + '"] .bbp-btn');
+  if (wrap) wrap.style.display = bbpChartOpen[ingId] ? '' : 'none';
+  if (legend) legend.style.display = bbpChartOpen[ingId] ? '' : 'none';
+  if (btn) btn.textContent = bbpChartOpen[ingId] ? '▲ ซ่อนกราฟ' : '📈 ดูกราฟ';
+  if (bbpChartOpen[ingId]) {{
+    var item = (PRICE_DATA.items || []).find(function(x) {{ return x.ing_id === ingId; }});
+    if (item) bbpInitChart(item);
+  }} else if (chartInstances['bbp-chart-' + ingId]) {{
+    chartInstances['bbp-chart-' + ingId].destroy();
+    delete chartInstances['bbp-chart-' + ingId];
+  }}
+}}
+function bbpInitChart(item) {{
+  var canvasId = 'bbp-chart-' + item.ing_id;
+  var canvas = document.getElementById(canvasId);
+  if (!canvas || typeof Chart === 'undefined') return;
+  if (chartInstances[canvasId]) {{ chartInstances[canvasId].destroy(); delete chartInstances[canvasId]; }}
+  var makroPts = (item.history || []).map(function(h) {{ return {{ date: h.date, v: h.base_price }}; }});
+  var purchasePts = bbpPurchasesFor(item).map(function(p) {{ return {{ date: p.date, v: p.base }}; }});
+  var manualPts = bbpManualFor(item).map(function(m) {{
+    var v = (m.pack_qty > 0) ? (m.price / m.pack_qty) : null;
+    return {{ date: m.date, v: v }};
+  }}).filter(function(p) {{ return p.v != null; }});
+  var dateSet = {{}};
+  makroPts.concat(purchasePts).concat(manualPts).forEach(function(p) {{ if (p.date) dateSet[p.date] = true; }});
+  var labels = Object.keys(dateSet).sort();
+  function seriesFor(pts) {{
+    var map = {{}};
+    pts.forEach(function(p) {{ map[p.date] = p.v; }});
+    return labels.map(function(d) {{ return (map[d] != null) ? map[d] : null; }});
+  }}
+  var tc = getThemeChartCfg();
+  var datasets = [];
+  if (makroPts.length) datasets.push({{ label: 'ราคาตลาด Makro', data: seriesFor(makroPts), borderColor: '#f97316', backgroundColor: 'rgba(249,115,22,.12)', spanGaps: true, tension: .25 }});
+  if (purchasePts.length) datasets.push({{ label: 'ซื้อจริง', data: seriesFor(purchasePts), borderColor: '#0ea5e9', backgroundColor: 'rgba(14,165,233,.12)', spanGaps: true, tension: .25 }});
+  if (manualPts.length) datasets.push({{ label: 'บันทึกเอง', data: seriesFor(manualPts), borderColor: '#16a34a', backgroundColor: 'rgba(22,163,74,.12)', spanGaps: true, tension: .25 }});
+  chartInstances[canvasId] = new Chart(canvas, {{
+    type: 'line',
+    data: {{ labels: labels.map(vfFmtDate), datasets: datasets }},
+    options: {{
+      responsive: true, maintainAspectRatio: false,
+      plugins: {{
+        legend: {{ display: false }},
+        tooltip: {{
+          backgroundColor: tc.tooltipBg, titleColor: tc.tooltipText, bodyColor: tc.tooltipText,
+          callbacks: {{ label: function(ctx) {{ return ctx.dataset.label + ': ' + bbpFmtBase(ctx.parsed.y) + '/' + (item.pack_unit || 'หน่วย'); }} }}
+        }}
+      }},
+      scales: {{
+        x: {{ grid: {{ color: tc.grid }}, ticks: {{ color: tc.tick, font: {{ size: 10 }} }} }},
+        y: {{ grid: {{ color: tc.grid }}, ticks: {{ color: tc.tick, font: {{ size: 10 }}, callback: function(v) {{ return bbpFmtBase(v); }} }} }}
+      }}
+    }}
+  }});
+}}
+function bbpManualItemOptions(selectedId) {{
+  var items = (PRICE_DATA && PRICE_DATA.items) || [];
+  return items.map(function(it) {{
+    return '<option value="' + it.ing_id + '"' + (it.ing_id === selectedId ? ' selected' : '') + '>' + escapeHtml(it.label) + '</option>';
+  }}).join('');
+}}
+function bbpManualUnitLabel(ingId) {{
+  var item = (PRICE_DATA.items || []).find(function(x) {{ return x.ing_id === ingId; }});
+  return item ? (item.pack_unit || 'หน่วย') : 'หน่วย';
+}}
+function bbpManualItemChange(sel) {{
+  var lbl = document.getElementById('bbp-m-unit');
+  if (lbl) lbl.textContent = '(' + bbpManualUnitLabel(sel.value) + ')';
+}}
+function bbpOpenManual(presetIngId) {{
+  var items = (PRICE_DATA && PRICE_DATA.items) || [];
+  if (!items.length) {{ showToast('ยังไม่มีรายการวัตถุดิบให้เลือก'); return; }}
+  var sel = presetIngId || items[0].ing_id;
+  var html = '<div class="dc-modal-head"><h3>💾 บันทึกราคาเอง</h3><button class="dc-x" onclick="dcCloseModal()" aria-label="ปิด">✕</button></div>'
+    + '<div class="dc-modal-scroll">'
+    + '<div class="dc-field"><label>🥛 วัตถุดิบ</label>'
+    + '<select class="dc-inp" id="bbp-m-item" onchange="bbpManualItemChange(this)">' + bbpManualItemOptions(sel) + '</select></div>'
+    + '<div style="display:flex;gap:10px;flex-wrap:wrap">'
+    + '<div class="dc-field" style="flex:1;min-width:110px"><label>💰 ราคา (฿)</label>'
+    + '<input class="dc-inp" id="bbp-m-price" type="number" min="0" step="any" placeholder="บาท"></div>'
+    + '<div class="dc-field" style="flex:1;min-width:110px"><label>ปริมาณ/แพ็ค <span id="bbp-m-unit" style="color:var(--text-muted)">(' + bbpManualUnitLabel(sel) + ')</span></label>'
+    + '<input class="dc-inp" id="bbp-m-qty" type="number" min="0.01" step="any" placeholder="เช่น 1000"></div>'
+    + '</div>'
+    + '<div style="display:flex;gap:10px;flex-wrap:wrap">'
+    + '<div class="dc-field" style="flex:1;min-width:140px"><label>🏪 ซื้อจากไหน</label>'
+    + '<input class="dc-inp" id="bbp-m-where" type="text" placeholder="เช่น Makro สกลนคร"></div>'
+    + '<div class="dc-field" style="flex:1;min-width:120px"><label>📅 วันที่</label>'
+    + '<input class="dc-inp" id="bbp-m-date" type="date" value="' + vfTodayISO() + '"></div>'
+    + '</div>'
+    + '<div class="dc-field"><label>หมายเหตุ (ไม่บังคับ)</label><input class="dc-inp" id="bbp-m-note" placeholder="—"></div>'
+    + '</div>'
+    + '<div class="dc-modal-foot"><span class="spacer"></span>'
+    + '<button class="dc-btn ghost" onclick="dcCloseModal()">ยกเลิก</button>'
+    + '<button class="dc-btn primary" onclick="bbpSaveManual()">💾 บันทึก</button></div>';
+  dcSetModalBody(html);
+}}
+function bbpSaveManual() {{
+  var itemSel = document.getElementById('bbp-m-item');
+  var ingId = itemSel ? itemSel.value : '';
+  var price = parseFloat((document.getElementById('bbp-m-price') || {{}}).value || '');
+  var qty = parseFloat((document.getElementById('bbp-m-qty') || {{}}).value || '');
+  var where = ((document.getElementById('bbp-m-where') || {{}}).value || '').trim();
+  var date = (document.getElementById('bbp-m-date') || {{}}).value || vfTodayISO();
+  var note = ((document.getElementById('bbp-m-note') || {{}}).value || '').trim();
+  if (!ingId) {{ showToast('เลือกวัตถุดิบก่อน'); return; }}
+  if (!(price >= 0)) {{ showToast('ใส่ราคาให้ถูกต้อง'); return; }}
+  if (!(qty > 0)) {{ showToast('ใส่ปริมาณ/แพ็คให้ถูกต้อง'); return; }}
+  var item = (PRICE_DATA.items || []).find(function(x) {{ return x.ing_id === ingId; }});
+  var rec = {{ date: date, price: price, pack_qty: qty, pack_unit: (item ? item.pack_unit : ''), base_price: price / qty, where: where, note: note }};
+  var doSave = function() {{
+    if (!DCS.priceManual) DCS.priceManual = {{}};
+    if (!DCS.priceManual[ingId]) DCS.priceManual[ingId] = [];
+    DCS.priceManual[ingId].push(rec);
+    dcAfterChange(); dcCloseModal(); renderPricesView();
+    showToast('บันทึกราคาแล้ว ✓');
+  }};
+  if (!dcEdit) {{
+    if (saIsUnlocked()) {{ dcEdit = true; doSave(); return; }}
+    dcOpenPwModal('🔒 ปลดล็อกก่อนบันทึก', 'ใส่รหัสเพื่อบันทึกราคาวัตถุดิบ', function() {{ dcEdit = true; saUnlock(); showToast('ปลดล็อกแล้ว ✓'); doSave(); }});
   }} else {{ doSave(); }}
 }}
 
@@ -8298,6 +8613,7 @@ def build_html(all_history: dict[str, dict], generated_at: str) -> str:
     update_summary_json = json.dumps(update_log.summarize(log), ensure_ascii=False)
     logos_json = json.dumps(load_logos(), ensure_ascii=False)
     drink_costs_json = json.dumps(load_drink_costs(), ensure_ascii=False)
+    price_json = json.dumps(load_prices_json(), ensure_ascii=False)
 
     sidebar_nav = build_sidebar_nav(all_history)
 
@@ -8316,6 +8632,7 @@ def build_html(all_history: dict[str, dict], generated_at: str) -> str:
         UPDATE_SUMMARY_JSON=update_summary_json,
         LOGOS_JSON=logos_json,
         DRINK_COSTS_JSON=drink_costs_json,
+        PRICE_JSON=price_json,
         GENERATED_AT=generated_at,
         SIDEBAR_NAV_ITEMS=sidebar_nav,
         PLATFORM_VIEWS=platform_views,

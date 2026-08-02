@@ -50,6 +50,18 @@
   - dashboard เก็บ Web app URL ใน localStorage (`pengtang_gs_url`) — แก้ในเว็บ auto-push, แก้ใน Sheet กด "🔄 ซิงก์" เพื่อ pull
   - วิธีตั้งค่า/Deploy: `google-sheets/README.md` · POST ใช้ Content-Type text/plain เลี่ยง CORS preflight
 
+## Backbar — อัพเดทราคาวัตถุดิบ (Makro price watch)
+หน้า `view-bb-prices` เทียบ **ราคาตลาด Makro** กับ **ราคาที่ซื้อจริง** ต่อวัตถุดิบ ~24 รายการที่ track (นม/ไซรัป/ชา/แพ็คเกจจิ้ง)
+- แหล่งข้อมูลราคาตลาด: `data/ingredient-prices.json` — Claude/agent เป็นคนดึง (WebFetch จาก makro_url ของแต่ละ item), **ผู้ใช้ไม่แก้ไฟล์นี้เอง**
+  - โมเดล: 1 tracked item ผูกหลาย catalog key ผ่าน `aliases[]` (คลังมีชื่อซ้ำ/สะกดต่างกัน) — ห้ามแก้ชื่อใน `DCS.catalog`, แก้ที่ aliases แทน
+  - ทุก entry เก็บ pack_qty+pack_unit+price แล้วคำนวณ **base_price = price / pack_qty** (บาท/หน่วยฐาน) — กราฟ/Δ เทียบกันด้วย base_price เท่านั้น ห้ามเทียบราคาแพ็คดิบ (แพ็คขนาดต่างกันไม่ใช่ราคาขึ้น/ลง)
+  - **สินค้าแพ็คเกจจิ้ง** (แก้ว/ฝา/หลอด/ถุง/ฟิล์มปิดฝา) ถ้าหาราคาตลาดที่ตรงรุ่นจริงไม่ได้ → เว้นว่างไว้ (ไม่เดา) ผู้ใช้กด "+ บันทึกราคาเอง" เพื่อเติมเอง
+- **รีเฟรชราคาตลาด**: ขอให้ Claude "อัพเดทราคาวัตถุดิบ" → Claude ไล่ WebFetch ทีละ `makro_url` ใน ingredient-prices.json → append เข้า `history[]` **เฉพาะเมื่อ base_price เปลี่ยนจากจุดล่าสุด** (ไม่งั้นประวัติซ้ำ) + อัปเดต `fetched_at` เสมอ → item ไหน fetch ล้มเหลว คงประวัติเดิมไว้ (ไม่เขียน null/0) แล้วรายงานว่าไล่ตัวไหนไม่ได้ → รัน `python src/generate_dashboard.py --rebuild`
+- **ราคาที่ซื้อจริง**: ดึงจาก `DCS.purchases` (บันทึกซื้อเข้าในหน้าสต็อกหลังบ้าน) ที่ ing ∈ aliases ของ item นั้น — ไม่ต้องกรอกซ้ำ
+- **DCS.priceManual**: ราคาที่ผู้ใช้กรอกเอง (ปุ่ม "+ บันทึกราคาเอง" ในหน้านี้) เก็บใน localStorage เหมือนข้อมูลอื่นใน DCS — ไม่ sync ขึ้น Google Sheet (Phase นี้)
+- หน้าอยู่ใน `SA_LOCK_VIEWS` (เบลอตอนล็อก) เหมือนหน้า Backbar อื่นๆ
+- หลังรีเฟรชราคาสำเร็จ: บันทึก log ด้วย `python src/update_log.py add --category intel --action "อัพเดทราคาวัตถุดิบ" --scope "Makro" --summary "..." --count <n>`
+
 ## Report Format
 ทุก report ที่ /analyze สร้างต้องมี sections เหล่านี้เสมอ:
 1. Executive Summary (3-5 bullet points ที่สำคัญที่สุด)
