@@ -4,278 +4,552 @@
     {
       "ing_id": "milk-evap-carnation",
       "label": "นมข้นจืด(คาเนชัน)",
-      "aliases": ["นมข้นจืด (คาเนชัน)"],
+      "aliases": [
+        "นมข้นจืด (คาเนชัน)"
+      ],
       "makro_url": "https://www.makro.pro/th/p/856303-6926627438787",
       "makro_name": "คาร์เนชัน นมข้นจืด 1 กก.",
       "pack_qty": 1000,
       "pack_unit": "กรัม/มล.",
       "history": [
-        { "date": "2026-08-02", "price": 66, "pack_qty": 1000, "pack_unit": "กรัม/มล.", "base_price": 0.066, "was": 67, "discount_pct": 1, "source": "makro", "fetched_at": "2026-08-02" }
-      ]
+        {
+          "date": "2026-08-02",
+          "price": 66,
+          "pack_qty": 1000,
+          "pack_unit": "กรัม/มล.",
+          "base_price": 0.066,
+          "was": 67,
+          "discount_pct": 1,
+          "source": "makro",
+          "fetched_at": "2026-08-02"
+        }
+      ],
+      "vendor": "makro"
     },
     {
       "ing_id": "milk-evap-falcon",
       "label": "นมข้นจืด(Falcon)",
-      "aliases": ["Falcon", "นมข้นจืด (Falcon)"],
+      "aliases": [
+        "Falcon",
+        "นมข้นจืด (Falcon)"
+      ],
       "makro_url": "https://www.makro.pro/th/p/118069-6761206218947",
       "makro_name": "นกเหยี่ยว นมข้นจืด 1 ล.",
       "pack_qty": 1000,
       "pack_unit": "กรัม/มล.",
       "history": [
-        { "date": "2026-08-02", "price": 58, "pack_qty": 1000, "pack_unit": "กรัม/มล.", "base_price": 0.058, "was": null, "discount_pct": 0, "source": "makro", "fetched_at": "2026-08-02" }
-      ]
+        {
+          "date": "2026-08-02",
+          "price": 58,
+          "pack_qty": 1000,
+          "pack_unit": "กรัม/มล.",
+          "base_price": 0.058,
+          "was": null,
+          "discount_pct": 0,
+          "source": "makro",
+          "fetched_at": "2026-08-02"
+        }
+      ],
+      "vendor": "makro"
     },
     {
       "ing_id": "milk-condensed",
       "label": "นมข้นหวาน",
-      "aliases": ["นมข้นหวาน", "นมข้นหวาน (คาเนชัน)", "ข้นหวาน Canation"],
+      "aliases": [
+        "นมข้นหวาน",
+        "นมข้นหวาน (คาเนชัน)",
+        "ข้นหวาน Canation"
+      ],
       "makro_url": "https://www.makro.pro/th/p/24856-6761199534275",
       "makro_name": "คาร์เนชัน ครีมเทียมข้นหวาน 388 ก. x 48",
       "pack_qty": 388,
       "pack_unit": "กรัม/มล.",
       "history": [
-        { "date": "2026-08-02", "price": 23.63, "pack_qty": 388, "pack_unit": "กรัม/มล.", "base_price": 0.0609, "was": 24.52, "discount_pct": 3, "source": "makro", "fetched_at": "2026-08-02" }
-      ]
+        {
+          "date": "2026-08-02",
+          "price": 23.63,
+          "pack_qty": 388,
+          "pack_unit": "กรัม/มล.",
+          "base_price": 0.0609,
+          "was": 24.52,
+          "discount_pct": 3,
+          "source": "makro",
+          "fetched_at": "2026-08-02"
+        }
+      ],
+      "vendor": "makro"
     },
     {
       "ing_id": "milk-fresh-mmilk",
       "label": "นมสด Mmilk",
-      "aliases": ["Mmilk", "นมสด Mmilk", "นมจืด Mmilk", "ฟองนม mmilk", "ฟองนมMmilk"],
+      "aliases": [
+        "Mmilk",
+        "นมสด Mmilk",
+        "นมจืด Mmilk",
+        "ฟองนม mmilk",
+        "ฟองนมMmilk"
+      ],
       "makro_url": "https://www.makro.pro/th/p/919782-232749504879136",
       "makro_name": "เอ็มมิลค์ นมรสจืด 1 ล.",
       "pack_qty": 1000,
       "pack_unit": "กรัม/มล.",
       "history": [
-        { "date": "2026-08-02", "price": 51, "pack_qty": 1000, "pack_unit": "กรัม/มล.", "base_price": 0.051, "was": 57, "discount_pct": 10, "source": "makro", "fetched_at": "2026-08-02" }
-      ]
+        {
+          "date": "2026-08-02",
+          "price": 51,
+          "pack_qty": 1000,
+          "pack_unit": "กรัม/มล.",
+          "base_price": 0.051,
+          "was": 57,
+          "discount_pct": 10,
+          "source": "makro",
+          "fetched_at": "2026-08-02"
+        }
+      ],
+      "vendor": "makro"
     },
     {
       "ing_id": "coffeemate",
       "label": "คอฟฟี่เมจ",
-      "aliases": ["คอฟฟี่เมจ"],
+      "aliases": [
+        "คอฟฟี่เมจ"
+      ],
       "makro_url": "https://www.makro.pro/th/p/145335-6926626750659",
       "makro_name": "คอฟฟีเมต ครีมเทียม สูตรออริจินัล 1 กก.",
       "pack_qty": 1000,
       "pack_unit": "กรัม/มล.",
       "history": [
-        { "date": "2026-08-02", "price": 140, "pack_qty": 1000, "pack_unit": "กรัม/มล.", "base_price": 0.14, "was": null, "discount_pct": 0, "source": "makro", "fetched_at": "2026-08-02" }
-      ]
+        {
+          "date": "2026-08-02",
+          "price": 140,
+          "pack_qty": 1000,
+          "pack_unit": "กรัม/มล.",
+          "base_price": 0.14,
+          "was": null,
+          "discount_pct": 0,
+          "source": "makro",
+          "fetched_at": "2026-08-02"
+        }
+      ],
+      "vendor": "makro"
     },
     {
       "ing_id": "honey-aro",
       "label": "น้ำผึ้ง ARO",
-      "aliases": ["น้ำผึ้ง Aro"],
+      "aliases": [
+        "น้ำผึ้ง Aro"
+      ],
       "makro_url": "https://www.makro.pro/th/p/930832-169875071598598",
       "makro_name": "เอโร่ น้ำผึ้งแท้ 100% 1 กก.",
       "pack_qty": 1000,
       "pack_unit": "กรัม/มล.",
       "history": [
-        { "date": "2026-08-02", "price": 155, "pack_qty": 1000, "pack_unit": "กรัม/มล.", "base_price": 0.155, "was": null, "discount_pct": 0, "source": "makro", "fetched_at": "2026-08-02" }
-      ]
+        {
+          "date": "2026-08-02",
+          "price": 155,
+          "pack_qty": 1000,
+          "pack_unit": "กรัม/มล.",
+          "base_price": 0.155,
+          "was": null,
+          "discount_pct": 0,
+          "source": "makro",
+          "fetched_at": "2026-08-02"
+        }
+      ],
+      "vendor": "makro"
     },
     {
       "ing_id": "sunquick",
       "label": "Sunquick",
-      "aliases": ["Sunquick 1966", "น้ำส้ม (ซันควิก)"],
+      "aliases": [
+        "Sunquick 1966",
+        "น้ำส้ม (ซันควิก)"
+      ],
       "makro_url": "https://www.makro.pro/th/p/112790-6974544380099",
       "makro_name": "ซันควิก น้ำส้มเข้มข้น 1 ล.",
       "pack_qty": 1000,
       "pack_unit": "กรัม/มล.",
       "history": [
-        { "date": "2026-08-02", "price": 239, "pack_qty": 1000, "pack_unit": "กรัม/มล.", "base_price": 0.239, "was": 247, "discount_pct": 3, "source": "makro", "fetched_at": "2026-08-02" }
-      ]
+        {
+          "date": "2026-08-02",
+          "price": 239,
+          "pack_qty": 1000,
+          "pack_unit": "กรัม/มล.",
+          "base_price": 0.239,
+          "was": 247,
+          "discount_pct": 3,
+          "source": "makro",
+          "fetched_at": "2026-08-02"
+        }
+      ],
+      "vendor": "makro"
     },
     {
       "ing_id": "tea-red-tramue",
       "label": "ชาตรามือแดง",
-      "aliases": ["ชาตรามือ", "ชาไทยตรามือ", "ชาตรามือแดง"],
+      "aliases": [
+        "ชาตรามือ",
+        "ชาไทยตรามือ",
+        "ชาตรามือแดง"
+      ],
       "makro_url": "https://www.makro.pro/th/p/155655-6761203073219",
       "makro_name": "ชาตรามือ ชาผงปรุงสำเร็จ ฉลากแดง 400 ก.",
       "pack_qty": 400,
       "pack_unit": "กรัม/มล.",
       "history": [
-        { "date": "2026-08-02", "price": 80, "pack_qty": 400, "pack_unit": "กรัม/มล.", "base_price": 0.2, "was": null, "discount_pct": 0, "source": "makro", "fetched_at": "2026-08-02" }
-      ]
+        {
+          "date": "2026-08-02",
+          "price": 80,
+          "pack_qty": 400,
+          "pack_unit": "กรัม/มล.",
+          "base_price": 0.2,
+          "was": null,
+          "discount_pct": 0,
+          "source": "makro",
+          "fetched_at": "2026-08-02"
+        }
+      ],
+      "vendor": "makro"
     },
     {
       "ing_id": "tea-green-tramue",
       "label": "ชาตรามือเขียว",
-      "aliases": ["ชาตรามือเขียว"],
+      "aliases": [
+        "ชาตรามือเขียว"
+      ],
       "makro_url": "https://www.makro.pro/th/p/155848-6761203007683",
       "makro_name": "ชาตรามือ ชาเขียวนม 200 ก.",
       "pack_qty": 200,
       "pack_unit": "กรัม/มล.",
       "history": [
-        { "date": "2026-08-02", "price": 80, "pack_qty": 200, "pack_unit": "กรัม/มล.", "base_price": 0.4, "was": null, "discount_pct": 0, "source": "makro", "fetched_at": "2026-08-02" }
-      ]
+        {
+          "date": "2026-08-02",
+          "price": 80,
+          "pack_qty": 200,
+          "pack_unit": "กรัม/มล.",
+          "base_price": 0.4,
+          "was": null,
+          "discount_pct": 0,
+          "source": "makro",
+          "fetched_at": "2026-08-02"
+        }
+      ],
+      "vendor": "makro"
     },
     {
       "ing_id": "syrup-mitr-phol",
       "label": "มิตรผลน้ำเชื่อม",
-      "aliases": ["มิตรผล", "มิตรผลน้ำเชื่อมเข้มข้น"],
+      "aliases": [
+        "มิตรผล",
+        "มิตรผลน้ำเชื่อมเข้มข้น"
+      ],
       "makro_url": "https://www.makro.pro/th/p/831537-6761205006531",
       "makro_name": "มิตรผล น้ำเชื่อม 800 มล. x 12",
       "pack_qty": 800,
       "pack_unit": "กรัม/มล.",
       "history": [
-        { "date": "2026-08-02", "price": 41.08, "pack_qty": 800, "pack_unit": "กรัม/มล.", "base_price": 0.05135, "was": null, "discount_pct": 0, "source": "makro", "fetched_at": "2026-08-02" }
-      ]
+        {
+          "date": "2026-08-02",
+          "price": 41.08,
+          "pack_qty": 800,
+          "pack_unit": "กรัม/มล.",
+          "base_price": 0.05135,
+          "was": null,
+          "discount_pct": 0,
+          "source": "makro",
+          "fetched_at": "2026-08-02"
+        }
+      ],
+      "vendor": "makro"
     },
     {
       "ing_id": "cocoa-tulip",
       "label": "โกโก้ทิวลิป",
-      "aliases": ["โกโก้ Tulip 32 %", "โกโก้ทิวลิป"],
+      "aliases": [
+        "โกโก้ Tulip 32 %",
+        "โกโก้ทิวลิป"
+      ],
       "makro_url": "https://www.makro.pro/th/p/183167-6926628454595",
       "makro_name": "ทิวลิป ผงโกโก้ สีมาตรฐาน 440 ก. x 2",
       "pack_qty": 440,
       "pack_unit": "กรัม/มล.",
       "history": [
-        { "date": "2026-08-02", "price": 183, "pack_qty": 440, "pack_unit": "กรัม/มล.", "base_price": 0.41591, "was": null, "discount_pct": 0, "source": "makro", "fetched_at": "2026-08-02" }
-      ]
+        {
+          "date": "2026-08-02",
+          "price": 183,
+          "pack_qty": 440,
+          "pack_unit": "กรัม/มล.",
+          "base_price": 0.41591,
+          "was": null,
+          "discount_pct": 0,
+          "source": "makro",
+          "fetched_at": "2026-08-02"
+        }
+      ],
+      "vendor": "makro"
     },
     {
       "ing_id": "lime-powder",
       "label": "ผงมะนาว/คนอร์",
-      "aliases": ["ผงมะนาว", "คนอร์ผงรสมะนาว"],
+      "aliases": [
+        "ผงมะนาว",
+        "คนอร์ผงรสมะนาว"
+      ],
       "makro_url": "https://www.makro.pro/th/p/201908-6814744805571",
       "makro_name": "คนอร์ ผงรสมะนาว 400 ก.",
       "pack_qty": 400,
       "pack_unit": "กรัม/มล.",
       "history": [
-        { "date": "2026-08-02", "price": 79, "pack_qty": 400, "pack_unit": "กรัม/มล.", "base_price": 0.1975, "was": 89, "discount_pct": 11, "source": "makro", "fetched_at": "2026-08-02" }
-      ]
+        {
+          "date": "2026-08-02",
+          "price": 79,
+          "pack_qty": 400,
+          "pack_unit": "กรัม/มล.",
+          "base_price": 0.1975,
+          "was": 89,
+          "discount_pct": 11,
+          "source": "makro",
+          "fetched_at": "2026-08-02"
+        }
+      ],
+      "vendor": "makro"
     },
     {
       "ing_id": "soda",
       "label": "โซดา",
-      "aliases": ["Soda", "โซดา"],
+      "aliases": [
+        "Soda",
+        "โซดา"
+      ],
       "makro_url": "https://www.makro.pro/th/p/160629-6761215066307",
       "makro_name": "สิงห์ โซดา 325 มล. x 24",
       "pack_qty": 325,
       "pack_unit": "กรัม/มล.",
       "history": [
-        { "date": "2026-08-02", "price": 7.92, "pack_qty": 325, "pack_unit": "กรัม/มล.", "base_price": 0.02437, "was": null, "discount_pct": 0, "source": "makro", "fetched_at": "2026-08-02" }
-      ]
+        {
+          "date": "2026-08-02",
+          "price": 7.92,
+          "pack_qty": 325,
+          "pack_unit": "กรัม/มล.",
+          "base_price": 0.02437,
+          "was": null,
+          "discount_pct": 0,
+          "source": "makro",
+          "fetched_at": "2026-08-02"
+        }
+      ],
+      "vendor": "makro"
     },
     {
       "ing_id": "water-aro",
       "label": "น้ำเปล่า ARO",
-      "aliases": ["น้ำเปล่า", "น้ำเปล่า ปันสุข"],
+      "aliases": [
+        "น้ำเปล่า",
+        "น้ำเปล่า ปันสุข"
+      ],
       "makro_url": "https://www.makro.pro/th/p/194247-7499710136515",
       "makro_name": "เอโร่ น้ำดื่ม 1.5 ล. x 6",
       "pack_qty": 1500,
       "pack_unit": "กรัม/มล.",
       "history": [
-        { "date": "2026-08-02", "price": 6.0, "pack_qty": 1500, "pack_unit": "กรัม/มล.", "base_price": 0.004, "was": null, "discount_pct": 0, "source": "makro", "fetched_at": "2026-08-02" }
-      ]
+        {
+          "date": "2026-08-02",
+          "price": 6.0,
+          "pack_qty": 1500,
+          "pack_unit": "กรัม/มล.",
+          "base_price": 0.004,
+          "was": null,
+          "discount_pct": 0,
+          "source": "makro",
+          "fetched_at": "2026-08-02"
+        }
+      ],
+      "vendor": "7even"
     },
     {
       "ing_id": "monin-mint-popcorn",
       "label": "Monin (mint/popcorn)",
-      "aliases": ["Monin popcorn/mint", "Monin mint", "Monin popcorn", "popcorn/mint", "popcorn / mint"],
+      "aliases": [
+        "Monin popcorn/mint",
+        "Monin mint",
+        "Monin popcorn",
+        "popcorn/mint",
+        "popcorn / mint"
+      ],
       "makro_url": "https://www.makro.pro/th/p/132037-7072567689411",
       "makro_name": "โมนิน ไซรัป กลิ่นมินต์เขียว 700 มล.",
       "pack_qty": 700,
       "pack_unit": "กรัม/มล.",
       "history": [
-        { "date": "2026-08-02", "price": 392, "pack_qty": 700, "pack_unit": "กรัม/มล.", "base_price": 0.56, "was": null, "discount_pct": 0, "source": "makro", "fetched_at": "2026-08-02" }
-      ]
+        {
+          "date": "2026-08-02",
+          "price": 392,
+          "pack_qty": 700,
+          "pack_unit": "กรัม/มล.",
+          "base_price": 0.56,
+          "was": null,
+          "discount_pct": 0,
+          "source": "makro",
+          "fetched_at": "2026-08-02"
+        }
+      ],
+      "vendor": "pranee"
     },
     {
       "ing_id": "syrup-peach",
       "label": "พีชไซรัป",
-      "aliases": ["พีชไซรัป"],
+      "aliases": [
+        "พีชไซรัป"
+      ],
       "makro_url": "https://www.makro.pro/en/p/847500-7497510813891",
       "makro_name": "LONG BEACH Peach Flavored Syrup 740 ml",
       "pack_qty": 740,
       "pack_unit": "กรัม/มล.",
       "history": [
-        { "date": "2026-08-02", "price": 139, "pack_qty": 740, "pack_unit": "กรัม/มล.", "base_price": 0.18784, "was": null, "discount_pct": 0, "source": "makro", "fetched_at": "2026-08-02" }
-      ]
+        {
+          "date": "2026-08-02",
+          "price": 139,
+          "pack_qty": 740,
+          "pack_unit": "กรัม/มล.",
+          "base_price": 0.18784,
+          "was": null,
+          "discount_pct": 0,
+          "source": "makro",
+          "fetched_at": "2026-08-02"
+        }
+      ],
+      "vendor": "pranee"
     },
     {
       "ing_id": "syrup-coconut",
       "label": "ไซรัปมะพร้าว",
-      "aliases": ["ไซรัปมะพร้าว"],
+      "aliases": [
+        "ไซรัปมะพร้าว"
+      ],
       "makro_url": "https://www.makro.pro/th/p/157818812283-906757455764265",
       "makro_name": "โกเฟรชไซรัปมะพร้าวใบเตย 740 มล.",
       "pack_qty": 740,
       "pack_unit": "กรัม/มล.",
       "history": [
-        { "date": "2026-08-02", "price": 72, "pack_qty": 740, "pack_unit": "กรัม/มล.", "base_price": 0.0973, "was": null, "discount_pct": 0, "source": "makro", "fetched_at": "2026-08-02" }
-      ]
+        {
+          "date": "2026-08-02",
+          "price": 72,
+          "pack_qty": 740,
+          "pack_unit": "กรัม/มล.",
+          "base_price": 0.0973,
+          "was": null,
+          "discount_pct": 0,
+          "source": "makro",
+          "fetched_at": "2026-08-02"
+        }
+      ],
+      "vendor": "pranee"
     },
     {
       "ing_id": "syrup-white-choc",
       "label": "ไซรัปไวท์ช็อค",
-      "aliases": ["ไซรัปไวท์ช็อค", "White Cho LongBeach"],
+      "aliases": [
+        "ไซรัปไวท์ช็อค",
+        "White Cho LongBeach"
+      ],
       "makro_url": "https://www.makro.pro/th/p/135903152459-651349296256504",
       "makro_name": "ลองบีช ไซรัปไม่มีแคลอรี่ไวท์ช็อคโกแลต 740 มล.",
       "pack_qty": 740,
       "pack_unit": "กรัม/มล.",
       "history": [
-        { "date": "2026-08-02", "price": 254, "pack_qty": 740, "pack_unit": "กรัม/มล.", "base_price": 0.34324, "was": null, "discount_pct": 0, "source": "makro", "fetched_at": "2026-08-02" }
-      ]
+        {
+          "date": "2026-08-02",
+          "price": 254,
+          "pack_qty": 740,
+          "pack_unit": "กรัม/มล.",
+          "base_price": 0.34324,
+          "was": null,
+          "discount_pct": 0,
+          "source": "makro",
+          "fetched_at": "2026-08-02"
+        }
+      ],
+      "vendor": "pranee"
     },
     {
       "ing_id": "cup-14-16oz",
       "label": "แก้ว14/16 ออน",
-      "aliases": ["แก้ว 14 ออน", "แก้ว 16 ออน"],
+      "aliases": [
+        "แก้ว 14 ออน",
+        "แก้ว 16 ออน"
+      ],
       "makro_url": "",
       "makro_name": "",
       "pack_qty": null,
       "pack_unit": "ชิ้น",
-      "history": []
+      "history": [],
+      "vendor": "pranee"
     },
     {
       "ing_id": "lid-98",
       "label": "ฝา 98",
-      "aliases": ["ฝา 98 ยกดื่ม"],
+      "aliases": [
+        "ฝา 98 ยกดื่ม"
+      ],
       "makro_url": "",
       "makro_name": "",
       "pack_qty": null,
       "pack_unit": "ชิ้น",
-      "history": []
+      "history": [],
+      "vendor": "pranee"
     },
     {
       "ing_id": "straw",
       "label": "หลอด",
-      "aliases": ["หลอด"],
+      "aliases": [
+        "หลอด"
+      ],
       "makro_url": "",
       "makro_name": "",
       "pack_qty": null,
       "pack_unit": "ชิ้น",
-      "history": []
+      "history": [],
+      "vendor": "pranee"
     },
     {
       "ing_id": "zip-bag",
       "label": "ถุงซิป",
-      "aliases": ["ถุงซิป", "ถุงซิปใส่น้ำแข็ง"],
+      "aliases": [
+        "ถุงซิป",
+        "ถุงซิปใส่น้ำแข็ง"
+      ],
       "makro_url": "",
       "makro_name": "",
       "pack_qty": null,
       "pack_unit": "ชิ้น",
-      "history": []
+      "history": [],
+      "vendor": "pranee"
     },
     {
       "ing_id": "cup-sleeve-bag",
       "label": "ถุงใส่แก้ว",
-      "aliases": ["ถุงใส่แก้ว"],
+      "aliases": [
+        "ถุงใส่แก้ว"
+      ],
       "makro_url": "",
       "makro_name": "",
       "pack_qty": null,
       "pack_unit": "ชิ้น",
-      "history": []
+      "history": [],
+      "vendor": "pranee"
     },
     {
       "ing_id": "lid-paper-seal",
       "label": "กระดาษปิดฝาแก้ว",
-      "aliases": ["กระดาษปิดฝาแก้ว"],
+      "aliases": [
+        "กระดาษปิดฝาแก้ว"
+      ],
       "makro_url": "",
       "makro_name": "",
       "pack_qty": null,
       "pack_unit": "ชิ้น",
-      "history": []
+      "history": [],
+      "vendor": "pranee"
     }
   ]
 }

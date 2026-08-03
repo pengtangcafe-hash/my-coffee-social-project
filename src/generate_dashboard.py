@@ -2377,6 +2377,16 @@ HTML_TEMPLATE = """\
 
     /* ── Backbar: อัพเดทราคาวัตถุดิบ (Makro price watch) ── */
     .bbp-toolbar {{ display:flex; justify-content:flex-end; margin-bottom:12px; }}
+    .bbp-vendor {{ background:var(--card); border:1px solid var(--card-border); border-radius:18px; margin-bottom:16px; overflow:hidden; box-shadow:0 1px 3px rgba(0,0,0,.04); }}
+    .bbp-vendor-head {{ display:flex; align-items:center; gap:12px; padding:14px 18px; cursor:pointer; user-select:none; background:linear-gradient(180deg,rgba(139,69,19,.05),transparent); }}
+    .bbp-vendor-head:hover {{ background:linear-gradient(180deg,rgba(139,69,19,.09),transparent); }}
+    .bbp-vendor-chev {{ font-size:.95rem; color:var(--text-muted); width:14px; flex-shrink:0; }}
+    .bbp-vendor-logo {{ width:38px; height:38px; border-radius:9px; object-fit:cover; flex-shrink:0; border:1px solid var(--card-border); background:var(--nav-active); }}
+    .bbp-vendor-logo.ph {{ display:flex; align-items:center; justify-content:center; font-size:20px; }}
+    .bbp-vendor-name {{ font-weight:800; font-size:1.05rem; color:var(--text); }}
+    .bbp-vendor-count {{ font-size:.82rem; color:var(--text-muted); font-weight:600; }}
+    .bbp-logo-btn {{ margin-left:auto; font-size:.75rem; padding:4px 10px; flex-shrink:0; }}
+    .bbp-vendor-body {{ padding:0 16px 16px; }}
     .bbp-grid {{ display:grid; grid-template-columns:repeat(auto-fill,minmax(270px,1fr)); gap:12px; }}
     .bbp-card {{ background:var(--card); border:1px solid var(--card-border); border-radius:14px; padding:13px 14px; }}
     .bbp-card-top {{ display:flex; gap:10px; align-items:flex-start; }}
@@ -2818,6 +2828,7 @@ HTML_TEMPLATE = """\
 <body style="font-family: 'Prompt', system-ui, sans-serif" class="text-slate-800">
 <input type="file" id="vf-slip-file-input" accept="image/*" capture="environment" style="display:none" onchange="vfSlipFileSelected(this)">
 <input type="file" id="stk-img-file-input" accept="image/*" style="display:none" onchange="stkImgFileSelected(this)">
+<input type="file" id="bbp-logo-file-input" accept="image/*" style="display:none" onchange="bbpLogoFileSelected(this)">
 
 <!-- Mobile top bar -->
 <div id="mobile-topbar" class="items-center justify-between px-4 py-3">
@@ -4924,6 +4935,7 @@ function dcNormalize(s) {{
   s.expenses = s.expenses || [];
   s.expense_slips = s.expense_slips || {{}};
   if (s.priceManual === undefined) s.priceManual = {{}};
+  if (s.supplierLogos === undefined) s.supplierLogos = {{}};
   // posLast เก็บเฉพาะใน browser — Sheet sync ไม่มีฟิลด์นี้
   if (s.posLast === undefined) s.posLast = null;
   // Quest & Achievement — seed สำหรับ user ใหม่ที่ยังไม่มีข้อมูล
@@ -6517,6 +6529,27 @@ function bbpCardHtml(item) {{
     + chartHtml
     + '</div>';
 }}
+var BBP_VENDORS = [{{id:'makro',label:'Makro'}},{{id:'pranee',label:'ปราณี'}},{{id:'7even',label:'7even'}}];
+var bbpCollapsedVendors = {{}};
+function bbpVendorSection(vid, list) {{
+  var vinfo = BBP_VENDORS.filter(function(x) {{ return x.id===vid; }})[0] || {{id:vid,label:vid}};
+  var collapsed = !!bbpCollapsedVendors[vid];
+  var logo = ((DCS.supplierLogos)||{{}})[vid] || '';
+  var logoEl = logo
+    ? '<img src="'+escapeHtml(logo)+'" referrerpolicy="no-referrer" loading="lazy" class="bbp-vendor-logo" alt="" onerror="this.outerHTML=\\'<div class=&quot;bbp-vendor-logo ph&quot;>🏪</div>\\'">'
+    : '<div class="bbp-vendor-logo ph">🏪</div>';
+  return '<div class="bbp-vendor">'
+    + '<div class="bbp-vendor-head" onclick="bbpToggleVendor(\\''+vid+'\\')">'
+    + '<span class="bbp-vendor-chev">'+(collapsed?'▸':'▾')+'</span>'
+    + logoEl
+    + '<span class="bbp-vendor-name">'+escapeHtml(vinfo.label)+'</span>'
+    + '<span class="bbp-vendor-count">'+list.length+' รายการ</span>'
+    + '<button class="dc-btn ghost bbp-logo-btn" data-vendor="'+escapeHtml(vid)+'" onclick="event.stopPropagation();bbpUploadLogo(this)">🖼 โลโก้</button>'
+    + '</div>'
+    + '<div class="bbp-vendor-body" id="bbp-vg-'+escapeHtml(vid)+'"'+(collapsed?' style="display:none"':'')+'>'
+    + '<div class="bbp-grid">'+list.map(bbpCardHtml).join('')+'</div>'
+    + '</div></div>';
+}}
 function renderPricesView() {{
   if (!DCS) dcLoadState();
   var root = document.getElementById('bbp-root');
@@ -6530,9 +6563,65 @@ function renderPricesView() {{
     return;
   }}
   var toolbar = '<div class="bbp-toolbar"><button class="dc-btn primary" onclick="bbpOpenManual(\\'\\')">+ บันทึกราคาเอง</button></div>';
-  var cards = items.map(bbpCardHtml).join('');
-  root.innerHTML = toolbar + '<div class="bbp-grid">' + cards + '</div>';
-  items.forEach(function(item) {{ if (bbpChartOpen[item.ing_id]) bbpInitChart(item); }});
+  // จัดกลุ่มตามร้านที่ซื้อ (vendor)
+  var groups = {{}};
+  items.forEach(function(it) {{ var v = it.vendor || 'makro'; (groups[v]=groups[v]||[]).push(it); }});
+  var order = BBP_VENDORS.map(function(x) {{ return x.id; }});
+  Object.keys(groups).forEach(function(v) {{ if (order.indexOf(v)<0) order.push(v); }});
+  var html = toolbar;
+  order.forEach(function(vid) {{ if (groups[vid] && groups[vid].length) html += bbpVendorSection(vid, groups[vid]); }});
+  root.innerHTML = html;
+  items.forEach(function(item) {{
+    if (bbpChartOpen[item.ing_id] && !bbpCollapsedVendors[item.vendor||'makro']) bbpInitChart(item);
+  }});
+}}
+function bbpToggleVendor(vid) {{
+  bbpCollapsedVendors[vid] = !bbpCollapsedVendors[vid];
+  var body = document.getElementById('bbp-vg-'+vid);
+  if (!body) return;
+  body.style.display = bbpCollapsedVendors[vid] ? 'none' : '';
+  var head = body.previousElementSibling;
+  if (head) {{ var ch = head.querySelector('.bbp-vendor-chev'); if (ch) ch.textContent = bbpCollapsedVendors[vid] ? '▸' : '▾'; }}
+  if (!bbpCollapsedVendors[vid]) {{
+    ((PRICE_DATA.items)||[]).forEach(function(item) {{ if ((item.vendor||'makro')===vid && bbpChartOpen[item.ing_id]) bbpInitChart(item); }});
+  }}
+}}
+var _bbpLogoVendor = null;
+function bbpUploadLogo(btn) {{
+  if (!dcGsUrl()) {{ showToast('เชื่อม Google Sheet ก่อน (อัปโลโก้ผ่าน Apps Script)'); return; }}
+  var vid = btn.getAttribute('data-vendor');
+  if (!saIsUnlocked()) {{ dcOpenPwModal('🔒 ปลดล็อกก่อน','ใส่รหัสเพื่ออัปโลโก้',function() {{ saUnlock(); _bbpLogoVendor=vid; document.getElementById('bbp-logo-file-input').click(); }}); return; }}
+  _bbpLogoVendor = vid;
+  document.getElementById('bbp-logo-file-input').click();
+}}
+function bbpLogoFileSelected(input) {{
+  if (!input.files||!input.files[0]||!_bbpLogoVendor) return;
+  var file=input.files[0], vid=_bbpLogoVendor; _bbpLogoVendor=null; input.value='';
+  var reader=new FileReader();
+  reader.onload=function(ev) {{
+    var img=new Image();
+    img.onload=function() {{
+      var MAX=400, w=img.width, h=img.height;
+      if (w>MAX||h>MAX) {{ var sc=MAX/Math.max(w,h); w=Math.round(w*sc); h=Math.round(h*sc); }}
+      var cv=document.createElement('canvas'); cv.width=w; cv.height=h;
+      cv.getContext('2d').drawImage(img,0,0,w,h);
+      var b64=cv.toDataURL('image/jpeg',0.85).split(',')[1];
+      showToast('⏳ อัปโลโก้...');
+      fetch(dcGsUrl(),{{method:'POST',headers:{{'Content-Type':'text/plain;charset=utf-8'}},
+        body:JSON.stringify({{action:'uploadSlip',folder:'ร้านกาแฟ-โลโก้ร้าน',flat:true,filename:vid+'_logo.jpg',mime:'image/jpeg',data:b64}})}})
+      .then(function(r) {{ return r.json(); }})
+      .then(function(res) {{
+        if (!res||!res.ok) throw new Error(res&&res.error||'fail');
+        if (!DCS.supplierLogos) DCS.supplierLogos={{}};
+        DCS.supplierLogos[vid]=res.thumb;
+        dcAfterChange(); renderPricesView();
+        showToast('อัปโลโก้แล้ว ✓');
+      }})
+      .catch(function() {{ showToast('อัปโลโก้ไม่สำเร็จ — ตรวจ re-deploy Apps Script + อนุญาต Drive'); }});
+    }};
+    img.src=ev.target.result;
+  }};
+  reader.readAsDataURL(file);
 }}
 function bbpRefreshIfActive() {{
   var v = document.getElementById('view-bb-prices');
