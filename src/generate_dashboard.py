@@ -6530,7 +6530,7 @@ function bbpCardHtml(item) {{
     + '</div>';
 }}
 var BBP_VENDORS = [{{id:'makro',label:'Makro'}},{{id:'pranee',label:'ปราณี'}},{{id:'7even',label:'7even'}}];
-var BBP_DEFAULT_LOGO = {{ makro:'assets/logos/vendor-makro.svg', pranee:'assets/logos/vendor-pranee.svg', '7even':'assets/logos/vendor-7even.svg' }};
+var BBP_DEFAULT_LOGO = {{ makro:'assets/logos/real-makro.png', pranee:'assets/logos/real-pranee.jpg', '7even':'assets/logos/real-7even.png' }};
 var bbpCollapsedVendors = {{}};
 function bbpVendorSection(vid, list) {{
   var vinfo = BBP_VENDORS.filter(function(x) {{ return x.id===vid; }})[0] || {{id:vid,label:vid}};
