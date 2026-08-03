@@ -6530,11 +6530,12 @@ function bbpCardHtml(item) {{
     + '</div>';
 }}
 var BBP_VENDORS = [{{id:'makro',label:'Makro'}},{{id:'pranee',label:'ปราณี'}},{{id:'7even',label:'7even'}}];
+var BBP_DEFAULT_LOGO = {{ makro:'assets/logos/vendor-makro.svg', pranee:'assets/logos/vendor-pranee.svg', '7even':'assets/logos/vendor-7even.svg' }};
 var bbpCollapsedVendors = {{}};
 function bbpVendorSection(vid, list) {{
   var vinfo = BBP_VENDORS.filter(function(x) {{ return x.id===vid; }})[0] || {{id:vid,label:vid}};
   var collapsed = !!bbpCollapsedVendors[vid];
-  var logo = ((DCS.supplierLogos)||{{}})[vid] || '';
+  var logo = ((DCS.supplierLogos)||{{}})[vid] || BBP_DEFAULT_LOGO[vid] || '';
   var logoEl = logo
     ? '<img src="'+escapeHtml(logo)+'" referrerpolicy="no-referrer" loading="lazy" class="bbp-vendor-logo" alt="" onerror="this.outerHTML=\\'<div class=&quot;bbp-vendor-logo ph&quot;>🏪</div>\\'">'
     : '<div class="bbp-vendor-logo ph">🏪</div>';
