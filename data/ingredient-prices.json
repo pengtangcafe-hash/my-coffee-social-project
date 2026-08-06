@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-02",
+  "updated_at": "2026-08-06",
   "items": [
     {
       "ing_id": "milk-evap-carnation",
@@ -21,7 +21,7 @@
           "was": 67,
           "discount_pct": 1,
           "source": "makro",
-          "fetched_at": "2026-08-02"
+          "fetched_at": "2026-08-06"
         }
       ],
       "vendor": "makro",
@@ -50,6 +50,17 @@
           "discount_pct": 0,
           "source": "makro",
           "fetched_at": "2026-08-02"
+        },
+        {
+          "date": "2026-08-06",
+          "price": 56,
+          "pack_qty": 1000,
+          "pack_unit": "กรัม/มล.",
+          "base_price": 0.056,
+          "was": 62,
+          "discount_pct": 9,
+          "source": "makro",
+          "fetched_at": "2026-08-06"
         }
       ],
       "vendor": "makro",
@@ -79,6 +90,17 @@
           "discount_pct": 3,
           "source": "makro",
           "fetched_at": "2026-08-02"
+        },
+        {
+          "date": "2026-08-06",
+          "price": 23.65,
+          "pack_qty": 388,
+          "pack_unit": "กรัม/มล.",
+          "base_price": 0.06095,
+          "was": 24.52,
+          "discount_pct": 3,
+          "source": "makro",
+          "fetched_at": "2026-08-06"
         }
       ],
       "vendor": "makro",
@@ -109,7 +131,7 @@
           "was": 57,
           "discount_pct": 10,
           "source": "makro",
-          "fetched_at": "2026-08-02"
+          "fetched_at": "2026-08-06"
         }
       ],
       "vendor": "makro",
@@ -136,7 +158,7 @@
           "was": null,
           "discount_pct": 0,
           "source": "makro",
-          "fetched_at": "2026-08-02"
+          "fetched_at": "2026-08-06"
         }
       ],
       "vendor": "makro",
@@ -163,7 +185,7 @@
           "was": null,
           "discount_pct": 0,
           "source": "makro",
-          "fetched_at": "2026-08-02"
+          "fetched_at": "2026-08-06"
         }
       ],
       "vendor": "makro",
@@ -191,7 +213,7 @@
           "was": 247,
           "discount_pct": 3,
           "source": "makro",
-          "fetched_at": "2026-08-02"
+          "fetched_at": "2026-08-06"
         }
       ],
       "vendor": "makro",
@@ -220,7 +242,7 @@
           "was": null,
           "discount_pct": 0,
           "source": "makro",
-          "fetched_at": "2026-08-02"
+          "fetched_at": "2026-08-06"
         }
       ],
       "vendor": "makro",
@@ -247,7 +269,7 @@
           "was": null,
           "discount_pct": 0,
           "source": "makro",
-          "fetched_at": "2026-08-02"
+          "fetched_at": "2026-08-06"
         }
       ],
       "vendor": "makro",
@@ -275,7 +297,7 @@
           "was": null,
           "discount_pct": 0,
           "source": "makro",
-          "fetched_at": "2026-08-02"
+          "fetched_at": "2026-08-06"
         }
       ],
       "vendor": "makro",
@@ -303,7 +325,7 @@
           "was": null,
           "discount_pct": 0,
           "source": "makro",
-          "fetched_at": "2026-08-02"
+          "fetched_at": "2026-08-06"
         }
       ],
       "vendor": "makro",
@@ -331,7 +353,7 @@
           "was": 89,
           "discount_pct": 11,
           "source": "makro",
-          "fetched_at": "2026-08-02"
+          "fetched_at": "2026-08-06"
         }
       ],
       "vendor": "makro",
@@ -359,7 +381,7 @@
           "was": null,
           "discount_pct": 0,
           "source": "makro",
-          "fetched_at": "2026-08-02"
+          "fetched_at": "2026-08-06"
         }
       ],
       "vendor": "makro",
@@ -387,7 +409,7 @@
           "was": null,
           "discount_pct": 0,
           "source": "makro",
-          "fetched_at": "2026-08-02"
+          "fetched_at": "2026-08-06"
         }
       ],
       "vendor": "makro",
@@ -435,7 +457,7 @@
           "was": null,
           "discount_pct": 0,
           "source": "makro",
-          "fetched_at": "2026-08-02"
+          "fetched_at": "2026-08-06"
         }
       ],
       "vendor": "pranee",
@@ -462,7 +484,7 @@
           "was": null,
           "discount_pct": 0,
           "source": "makro",
-          "fetched_at": "2026-08-02"
+          "fetched_at": "2026-08-06"
         }
       ],
       "vendor": "pranee",
@@ -490,6 +512,17 @@
           "discount_pct": 0,
           "source": "makro",
           "fetched_at": "2026-08-02"
+        },
+        {
+          "date": "2026-08-06",
+          "price": 80,
+          "pack_qty": 740,
+          "pack_unit": "กรัม/มล.",
+          "base_price": 0.10811,
+          "was": null,
+          "discount_pct": 0,
+          "source": "makro",
+          "fetched_at": "2026-08-06"
         }
       ],
       "vendor": "pranee",
@@ -518,6 +551,17 @@
           "discount_pct": 0,
           "source": "makro",
           "fetched_at": "2026-08-02"
+        },
+        {
+          "date": "2026-08-06",
+          "price": 280,
+          "pack_qty": 740,
+          "pack_unit": "กรัม/มล.",
+          "base_price": 0.37838,
+          "was": null,
+          "discount_pct": 0,
+          "source": "makro",
+          "fetched_at": "2026-08-06"
         }
       ],
       "vendor": "pranee",
