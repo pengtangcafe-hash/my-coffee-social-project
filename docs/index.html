@@ -592,6 +592,40 @@
     .dc-sellbtn.on { border-color: transparent; color: #fff; background: #2e7d32; }
     .dc-controls .ov-mtab.sell-on { border-color: #2e7d32; color: #2e7d32; font-weight: 800; }
 
+    /* 🍵 เครื่องคำนวณสูตรชา (ต่อหม้อ) */
+    .tea-wrap { margin: 8px 0 20px; border: 1px solid rgba(120,80,40,.22); border-radius: 14px; background: var(--tile-bg); overflow: hidden; }
+    .tea-head { display: flex; align-items: center; gap: 8px; padding: 13px 16px; font-weight: 800; font-size: .9rem; color: var(--text); cursor: pointer; user-select: none; }
+    .tea-head .tea-sub { font-size: .72rem; font-weight: 600; color: var(--text-muted); }
+    .tea-body { padding: 0 16px 16px; }
+    .tea-card { background: var(--card); border: 1px solid var(--card-border); border-radius: 12px; padding: 14px; margin-bottom: 12px; }
+    .tea-card-head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+    .tea-title { flex: 1; font-weight: 800; font-size: .95rem; }
+    .tea-del-batch { flex-shrink: 0; border: 1px solid var(--card-border); background: var(--card); color: var(--dc-warn); border-radius: 8px; padding: 4px 10px; font-size: .74rem; cursor: pointer; }
+    .tea-tablewrap { overflow-x: auto; }
+    .tea-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
+    .tea-table th { text-align: left; font-size: .68rem; color: var(--text-muted); font-weight: 700; padding: 4px 6px; white-space: nowrap; }
+    .tea-table td { padding: 3px 6px; }
+    .tea-table th:nth-child(n+2), .tea-table td:nth-child(n+2) { text-align: right; }
+    .tea-in { border: 1px solid var(--card-border); border-radius: 7px; padding: 5px 8px; background: var(--bg); color: var(--text); font-size: .82rem; width: 100%; }
+    .tea-in:focus { outline: 2px solid var(--ov-caramel); outline-offset: -1px; }
+    .tea-nm { min-width: 120px; }
+    .tea-num { max-width: 78px; text-align: right; }
+    .tea-linecost { font-weight: 700; color: var(--text); white-space: nowrap; }
+    .tea-del { border: none; background: transparent; color: var(--text-muted); cursor: pointer; font-size: .9rem; padding: 2px 4px; }
+    .tea-del:hover { color: var(--dc-warn); }
+    .tea-add { margin-top: 8px; border: 1px dashed var(--card-border); background: transparent; color: var(--text-muted); border-radius: 8px; padding: 5px 12px; font-size: .76rem; cursor: pointer; }
+    .tea-add:hover { border-color: var(--ov-caramel); color: var(--ov-accent-ink); }
+    .tea-water { margin-top: 12px; font-size: .8rem; color: var(--text-muted); display: flex; align-items: center; gap: 7px; flex-wrap: wrap; }
+    .tea-watersel { width: auto; min-width: 120px; }
+    .tea-fixed { font-weight: 700; color: var(--text); }
+    .tea-foot { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--card-border); display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    .tea-yieldbox { font-size: .82rem; color: var(--text-muted); display: flex; align-items: center; gap: 6px; }
+    .tea-yield { max-width: 62px; }
+    .tea-result { font-size: .84rem; color: var(--text-muted); }
+    .tea-result b { color: var(--text); }
+    .tea-arrow { color: var(--text-muted); margin: 0 4px; }
+    .tea-percup { font-weight: 800; color: #2e7d32; font-size: .98rem; }
+
     .dc-row { background: var(--card); border: 1px solid var(--card-border); border-radius: 16px;
       padding: 15px 18px; cursor: pointer; transition: border-color .18s, box-shadow .18s, transform .18s; }
     .dc-row.selling { border-color: rgba(46,125,50,.5); }
@@ -3051,9 +3085,10 @@ function dcNormalize(s) {
   if (s.priceManual === undefined) s.priceManual = {};
   if (s.supplierLogos === undefined) s.supplierLogos = {};
   if (s.priceImages === undefined) s.priceImages = {};
-  // เมนูที่ขายจริงตอนนี้ + ตารางแมป POS→เมนู (เก็บเฉพาะเครื่อง — re-graft ตอน pull)
+  // เมนูที่ขายจริงตอนนี้ + ตารางแมป POS→เมนู + สูตรชาต่อหม้อ (เก็บเฉพาะเครื่อง — re-graft ตอน pull)
   if (s.activeMenus === undefined) s.activeMenus = [];
   if (s.posMenuMap === undefined) s.posMenuMap = {};
+  if (s.teaBatches === undefined) s.teaBatches = teaSeed();
   // posLast เก็บเฉพาะใน browser — Sheet sync ไม่มีฟิลด์นี้
   if (s.posLast === undefined) s.posLast = null;
   // Quest & Achievement — seed สำหรับ user ใหม่ที่ยังไม่มีข้อมูล
@@ -3225,6 +3260,85 @@ function dcEmpty() {
     + '</div>';
 }
 
+// ══ 🍵 เครื่องคำนวณสูตรชา (ต่อหม้อ) — standalone ไม่ผูกเมนู/สต็อก ══
+var TEA_WATER = { aro: { label:'น้ำ Aro', price:6, size:1500 }, '7even': { label:'น้ำ 7-Eleven', price:7, size:1500 } };
+function teaSeed() {
+  return [
+    { id:'tea-thai', name:'ชาไทยเย็น', water:'aro', waterMl:1050, yield:10, items:[
+      { name:'ชาไทยตรามือ', grams:0, size:400, price:70 },
+      { name:'ชาไทย Extra gold', grams:0, size:400, price:92 },
+      { name:'คอฟฟี่เมต', grams:0, size:1000, price:138 }
+    ]},
+    { id:'tea-green', name:'ชาเขียวเย็น', water:'aro', waterMl:1050, yield:10, items:[
+      { name:'ชาเขียวตรามือ', grams:0, size:200, price:70 },
+      { name:'ชาเขียว Extra green', grams:0, size:180, price:80 },
+      { name:'มังกรบิน หัวเชื้อ', grams:0, size:200, price:100 },
+      { name:'ชาเขียวญี่ปุ่น (อี้เหวิน)', grams:0, size:450, price:85 },
+      { name:'คอฟฟี่เมต', grams:0, size:1000, price:138 }
+    ]}
+  ];
+}
+function teaList() { if (!DCS.teaBatches) DCS.teaBatches = teaSeed(); return DCS.teaBatches; }
+function teaFind(id) { return teaList().filter(function(b) { return b.id === id; })[0]; }
+function teaUnitCost(it) { var s = parseFloat(it.size) || 0, p = parseFloat(it.price) || 0; return s > 0 ? p / s : 0; }
+function teaWaterUnit(b) { var w = TEA_WATER[b.water] || TEA_WATER.aro; var s = parseFloat(w.size) || 0; return s > 0 ? (parseFloat(w.price) || 0) / s : 0; }
+function teaBatchCost(b) {
+  var c = 0; (b.items || []).forEach(function(it) { c += (parseFloat(it.grams) || 0) * teaUnitCost(it); });
+  c += (parseFloat(b.waterMl) || 0) * teaWaterUnit(b);
+  return c;
+}
+function teaChanged() { dcAfterChange(); teaRender(); }
+function teaOnInput(el) {
+  var bid = el.getAttribute('data-bid'), field = el.getAttribute('data-field'), idx = el.getAttribute('data-idx');
+  if (idx !== null && idx !== '') {
+    var b = teaFind(bid); if (!b || !b.items[+idx]) return;
+    b.items[+idx][field] = (field === 'name') ? el.value : (parseFloat(el.value) || 0);
+  } else if (field === 'water') { var bw = teaFind(bid); if (bw) bw.water = el.value; }
+  else if (field === 'yield') { var by = teaFind(bid); if (by) by.yield = Math.max(1, parseInt(el.value, 10) || 1); }
+  else if (field === 'name') { var bn = teaFind(bid); if (bn) bn.name = el.value; }
+  teaChanged();
+}
+function teaAddItem(bid) { var b = teaFind(bid); if (b) { b.items.push({ name:'วัตถุดิบใหม่', grams:0, size:0, price:0 }); teaChanged(); } }
+function teaDelItem(bid, idx) { var b = teaFind(bid); if (b) { b.items.splice(idx, 1); teaChanged(); } }
+function teaAddBatch() { teaList().push({ id:'tea-' + Date.now(), name:'สูตรใหม่', water:'aro', waterMl:1050, yield:10, items:[] }); teaChanged(); }
+function teaDelBatch(bid) { if (!confirm('ลบสูตรนี้ทั้งหมด?')) return; DCS.teaBatches = teaList().filter(function(b) { return b.id !== bid; }); teaChanged(); }
+function teaToggleCollapse() { try { var c = localStorage.getItem('pengtang_tea_collapsed') === '1'; localStorage.setItem('pengtang_tea_collapsed', c ? '0' : '1'); } catch (e) {} teaRender(); }
+function teaBatchHtml(b) {
+  var cost = teaBatchCost(b), y = parseInt(b.yield, 10) || 1, perCup = cost / y;
+  var rows = (b.items || []).map(function(it, i) {
+    var line = (parseFloat(it.grams) || 0) * teaUnitCost(it);
+    return '<tr>'
+      + '<td><input class="tea-in tea-nm" data-bid="' + b.id + '" data-idx="' + i + '" data-field="name" value="' + escapeHtml(it.name || '') + '" onchange="teaOnInput(this)"></td>'
+      + '<td><input class="tea-in tea-num" type="number" min="0" data-bid="' + b.id + '" data-idx="' + i + '" data-field="grams" value="' + (it.grams || 0) + '" onchange="teaOnInput(this)"></td>'
+      + '<td><input class="tea-in tea-num" type="number" min="0" data-bid="' + b.id + '" data-idx="' + i + '" data-field="size" value="' + (it.size || 0) + '" onchange="teaOnInput(this)"></td>'
+      + '<td><input class="tea-in tea-num" type="number" min="0" data-bid="' + b.id + '" data-idx="' + i + '" data-field="price" value="' + (it.price || 0) + '" onchange="teaOnInput(this)"></td>'
+      + '<td class="tea-linecost">' + dcF1(line) + '฿</td>'
+      + '<td><button class="tea-del" title="ลบวัตถุดิบ" onclick="teaDelItem(\'' + b.id + '\',' + i + ')">✕</button></td>'
+      + '</tr>';
+  }).join('');
+  var wCost = (parseFloat(b.waterMl) || 0) * teaWaterUnit(b);
+  var waterOpts = Object.keys(TEA_WATER).map(function(k) { return '<option value="' + k + '"' + (k === b.water ? ' selected' : '') + '>' + escapeHtml(TEA_WATER[k].label) + '</option>'; }).join('');
+  return '<div class="tea-card">'
+    + '<div class="tea-card-head"><input class="tea-in tea-title" data-bid="' + b.id + '" data-field="name" value="' + escapeHtml(b.name || '') + '" onchange="teaOnInput(this)">'
+      + '<button class="tea-del-batch" onclick="teaDelBatch(\'' + b.id + '\')">🗑️ ลบสูตร</button></div>'
+    + '<div class="tea-tablewrap"><table class="tea-table"><thead><tr><th>วัตถุดิบ</th><th>กรัม/หม้อ</th><th>ขนาดแพ็ค</th><th>ราคาแพ็ค</th><th>ต้นทุน</th><th></th></tr></thead>'
+      + '<tbody>' + rows + '</tbody></table></div>'
+    + '<button class="tea-add" onclick="teaAddItem(\'' + b.id + '\')">+ เพิ่มวัตถุดิบ</button>'
+    + '<div class="tea-water">💧 น้ำ <select class="tea-in tea-watersel" data-bid="' + b.id + '" data-field="water" onchange="teaOnInput(this)">' + waterOpts + '</select>'
+      + ' <span class="tea-fixed">' + (b.waterMl || 1050) + ' ml (คงที่)</span> · ต้นทุนน้ำ ' + dcF1(wCost) + '฿</div>'
+    + '<div class="tea-foot"><div class="tea-yieldbox">ได้ <input class="tea-in tea-num tea-yield" type="number" min="1" data-bid="' + b.id + '" data-field="yield" value="' + y + '" onchange="teaOnInput(this)"> แก้ว/หม้อ</div>'
+      + '<div class="tea-result">ต้นทุน/หม้อ <b>' + dcF1(cost) + '฿</b> <span class="tea-arrow">→</span> <span class="tea-percup">ต้นทุน/แก้ว ' + dcF1(perCup) + '฿</span></div></div>'
+    + '</div>';
+}
+function teaRender() {
+  var root = document.getElementById('tea-calc-root'); if (!root) return;
+  var col = false; try { col = localStorage.getItem('pengtang_tea_collapsed') === '1'; } catch (e) {}
+  var head = '<div class="tea-head" onclick="teaToggleCollapse()"><span class="dc-chev' + (col ? ' dc-collapsed' : '') + '">▾</span> 🍵 เครื่องคำนวณสูตรชา (ต่อหม้อ) <span class="tea-sub">ต้มหัวเชื้อ 1 หม้อ → คิดต้นทุน/แก้ว</span></div>';
+  if (col) { root.innerHTML = '<div class="tea-wrap">' + head + '</div>'; return; }
+  var body = teaList().map(teaBatchHtml).join('') + '<button class="dc-btn" style="margin-top:8px" onclick="teaAddBatch()">+ เพิ่มสูตรชา</button>';
+  root.innerHTML = '<div class="tea-wrap">' + head + '<div class="tea-body">' + body + '</div></div>';
+}
+
 function renderDrinkCosts() {
   var root = document.getElementById('dc-root');
   if (!root) return;
@@ -3310,6 +3424,9 @@ function renderDrinkCosts() {
     + '</div>'
     + '</div>');
 
+  // 🍵 เครื่องคำนวณสูตรชา — วางต่อจากกราฟ (ก่อนรายการเมนู)
+  h.push('<div id="tea-calc-root"></div>');
+
   // เริ่ม scroll container ของรายการ
   h.push('<div class="dc-list-scroll">');
 
@@ -3367,6 +3484,7 @@ function renderDrinkCosts() {
   requestAnimationFrame(function() {
     root.querySelectorAll('[data-w]').forEach(function(el) { el.style.width = el.getAttribute('data-w'); });
     dcRenderPolar(menus);
+    teaRender();
   });
 }
 
@@ -3893,7 +4011,7 @@ function dcSyncPull(silent) {
       DCS = dcNormalize(obj);
       // posLast + quest keys: ถ้า Sheet ยังไม่มี (obj ไม่มี key) ให้เก็บของ local ไว้
       DCS.posLast = prev.posLast !== undefined ? prev.posLast : null;
-      ['quests','achievements','plans','loops','questLog','questHistory','questMeta','activeMenus','posMenuMap'].forEach(function(k) {
+      ['quests','achievements','plans','loops','questLog','questHistory','questMeta','activeMenus','posMenuMap','teaBatches'].forEach(function(k) {
         if (obj[k] === undefined) DCS[k] = prev[k] !== undefined ? prev[k] : DCS[k];
       });
       dcSave(); renderDrinkCosts(); stkRefreshIfActive(); vfRefreshIfActive();
