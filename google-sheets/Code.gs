@@ -26,6 +26,21 @@ function doGet(e) {
   return json_(buildData_());
 }
 
+// ── ครั้งเดียว: อนุญาตให้สคริปต์ "ยิงเว็บนอก" (Loyverse API) + ทดสอบ token ────
+// วิธีใช้: ในตัวแก้ไข เลือกฟังก์ชัน authorizeExternal จากเมนู แล้วกด Run (▶)
+//   → Google เด้งขออนุญาต scope external_request → กดอนุญาต
+//   → ดูผลใน Execution log: code=200 = token ใช้ได้, code=401 = token ผิด
+// ไม่ต้อง re-deploy หลังทำ (สิทธิ์ผูกกับเจ้าของสคริปต์ web app รันในนามเจ้าของ)
+function authorizeExternal() {
+  var token = PropertiesService.getScriptProperties().getProperty('LOYVERSE_TOKEN');
+  if (!token) { Logger.log('ยังไม่ได้ตั้ง Script Property: LOYVERSE_TOKEN'); return; }
+  var resp = UrlFetchApp.fetch('https://api.loyverse.com/v1.0/categories?limit=1', {
+    headers: { Authorization: 'Bearer ' + token }, muteHttpExceptions: true
+  });
+  Logger.log('External request OK — HTTP code=' + resp.getResponseCode()
+    + ' (200=token ใช้ได้, 401=token ผิด/หมดอายุ)');
+}
+
 // ── Loyverse POS proxy ──────────────────────────────────────────────────────
 // token เก็บใน: Project Settings → Script Properties → key LOYVERSE_TOKEN
 // ห้ามเขียน token ในโค้ด (web นี้ public)
