@@ -659,6 +659,22 @@
       "vendor": "pranee",
       "pack_label": "",
       "makro_img": ""
+    },
+    {
+      "ing_id": "tea-green-evern",
+      "label": "ผงชาเขียว (อี้เหวิน)",
+      "aliases": [
+        "ผงชาเขียว (อี้เหวิน)",
+        "ผงชาเขียวอี้เหวิน"
+      ],
+      "makro_url": "",
+      "makro_name": "",
+      "pack_qty": null,
+      "pack_unit": "ถุง",
+      "history": [],
+      "vendor": "evern",
+      "pack_label": "",
+      "makro_img": ""
     }
   ]
 }
