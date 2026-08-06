@@ -2403,6 +2403,13 @@ HTML_TEMPLATE = """\
     .bbp-badge.discount {{ background:rgba(220,38,38,.16); color:#dc2626; }}
     .bbp-price-main {{ font-size:1.02rem; font-weight:800; color:var(--text); }}
     .bbp-price-sub {{ font-size:.72rem; color:var(--text-muted); }}
+    .bbp-price-box {{ background:rgba(22,163,74,.09); border:1.5px solid rgba(22,163,74,.5); border-radius:12px; padding:9px 12px; margin:7px 0 4px; }}
+    .bbp-price-pack {{ font-size:1.08rem; font-weight:800; color:var(--text); line-height:1.25; }}
+    .bbp-pack-unit {{ font-size:.78rem; font-weight:600; color:var(--text-muted); }}
+    .bbp-price-base {{ font-size:.82rem; color:#16a34a; font-weight:700; margin-top:2px; }}
+    .bbp-base-unit {{ color:#16a34a; font-weight:600; }}
+    .bbp-base-hint {{ color:var(--text-muted); font-weight:400; font-size:.68rem; }}
+    .bbp-makro-name {{ font-size:.72rem; color:var(--text-muted); margin-top:5px; line-height:1.4; border-top:1px dashed var(--card-border); padding-top:5px; }}
     .bbp-meta-row {{ font-size:.7rem; color:var(--text-muted); margin-top:3px; }}
     .bbp-actual-row {{ font-size:.74rem; color:var(--text); margin-top:7px; background:var(--nav-active);
       border-radius:8px; padding:6px 9px; line-height:1.5; }}
@@ -2829,6 +2836,7 @@ HTML_TEMPLATE = """\
 <input type="file" id="vf-slip-file-input" accept="image/*" capture="environment" style="display:none" onchange="vfSlipFileSelected(this)">
 <input type="file" id="stk-img-file-input" accept="image/*" style="display:none" onchange="stkImgFileSelected(this)">
 <input type="file" id="bbp-logo-file-input" accept="image/*" style="display:none" onchange="bbpLogoFileSelected(this)">
+<input type="file" id="bbp-img-file-input" accept="image/*" style="display:none" onchange="bbpImgFileSelected(this)">
 
 <!-- Mobile top bar -->
 <div id="mobile-topbar" class="items-center justify-between px-4 py-3">
@@ -4936,6 +4944,7 @@ function dcNormalize(s) {{
   s.expense_slips = s.expense_slips || {{}};
   if (s.priceManual === undefined) s.priceManual = {{}};
   if (s.supplierLogos === undefined) s.supplierLogos = {{}};
+  if (s.priceImages === undefined) s.priceImages = {{}};
   // posLast เก็บเฉพาะใน browser — Sheet sync ไม่มีฟิลด์นี้
   if (s.posLast === undefined) s.posLast = null;
   // Quest & Achievement — seed สำหรับ user ใหม่ที่ยังไม่มีข้อมูล
@@ -6439,10 +6448,50 @@ function stkSaveIng(ing) {{
 // ── Backbar: อัพเดทราคาวัตถุดิบ (Makro price watch) ──
 var bbpChartOpen = {{}};
 function bbpImageFor(item) {{
+  var pi = (DCS.priceImages) || {{}};
+  if (pi[item.ing_id]) return pi[item.ing_id];
   var imgs = (DCS.stock && DCS.stock.images) || {{}};
   var aliases = item.aliases || [];
   for (var i = 0; i < aliases.length; i++) {{ if (imgs[aliases[i]]) return imgs[aliases[i]]; }}
+  if (item.makro_img) return item.makro_img;
   return '';
+}}
+var _bbpImgIng = null;
+function bbpUploadImg(btn) {{
+  if (!dcGsUrl()) {{ showToast('เชื่อม Google Sheet ก่อน (อัปรูปผ่าน Apps Script)'); return; }}
+  var ing = btn.getAttribute('data-ing');
+  if (!saIsUnlocked()) {{ dcOpenPwModal('🔒 ปลดล็อกก่อน','ใส่รหัสเพื่ออัปรูปสินค้า',function() {{ saUnlock(); _bbpImgIng=ing; document.getElementById('bbp-img-file-input').click(); }}); return; }}
+  _bbpImgIng = ing;
+  document.getElementById('bbp-img-file-input').click();
+}}
+function bbpImgFileSelected(input) {{
+  if (!input.files||!input.files[0]||!_bbpImgIng) return;
+  var file=input.files[0], ing=_bbpImgIng; _bbpImgIng=null; input.value='';
+  var reader=new FileReader();
+  reader.onload=function(ev) {{
+    var img=new Image();
+    img.onload=function() {{
+      var MAX=500, w=img.width, h=img.height;
+      if (w>MAX||h>MAX) {{ var sc=MAX/Math.max(w,h); w=Math.round(w*sc); h=Math.round(h*sc); }}
+      var cv=document.createElement('canvas'); cv.width=w; cv.height=h;
+      cv.getContext('2d').drawImage(img,0,0,w,h);
+      var b64=cv.toDataURL('image/jpeg',0.82).split(',')[1];
+      showToast('⏳ อัปรูป...');
+      fetch(dcGsUrl(),{{method:'POST',headers:{{'Content-Type':'text/plain;charset=utf-8'}},
+        body:JSON.stringify({{action:'uploadSlip',folder:'ร้านกาแฟ-รูปวัตถุดิบ',flat:true,filename:ing+'.jpg',mime:'image/jpeg',data:b64}})}})
+      .then(function(r) {{ return r.json(); }})
+      .then(function(res) {{
+        if (!res||!res.ok) throw new Error(res&&res.error||'fail');
+        if (!DCS.priceImages) DCS.priceImages={{}};
+        DCS.priceImages[ing]=res.thumb;
+        dcAfterChange(); bbpRefreshIfActive();
+        showToast('อัปรูปสินค้าแล้ว ✓');
+      }})
+      .catch(function() {{ showToast('อัปไม่สำเร็จ — ตรวจ re-deploy Apps Script + อนุญาต Drive'); }});
+    }};
+    img.src=ev.target.result;
+  }};
+  reader.readAsDataURL(file);
 }}
 function bbpLastMakro(item) {{
   var h = item.history || [];
@@ -6492,9 +6541,13 @@ function bbpCardHtml(item) {{
     var arrow = delta.dir === 'up' ? '▲' : '▼';
     badges += '<span class="bbp-badge ' + delta.dir + '">' + arrow + ' ' + Math.abs(delta.pct).toFixed(1) + '%</span>';
   }}
+  var packLbl = item.pack_label || ((last && last.pack_qty) ? (last.pack_qty + ' ' + (last.pack_unit || '')) : '');
   var priceBlock = last
-    ? '<div class="bbp-price-main">' + bbpFmtBase(last.base_price) + '/' + escapeHtml(item.pack_unit || 'หน่วย') + '</div>'
-      + '<div class="bbp-price-sub">(' + vfFmtMoney(last.price) + ' / ' + last.pack_qty + ' ' + escapeHtml(last.pack_unit || '') + ')</div>'
+    ? '<div class="bbp-price-box">'
+      + '<div class="bbp-price-pack">💰 ' + vfFmtMoney(last.price) + (packLbl ? ' <span class="bbp-pack-unit">/ ' + escapeHtml(packLbl) + '</span>' : '') + '</div>'
+      + '<div class="bbp-price-base">≈ ' + bbpFmtBase(last.base_price) + '<span class="bbp-base-unit">/' + escapeHtml(last.pack_unit || 'หน่วย') + '</span> <span class="bbp-base-hint">(ไว้เทียบราคา)</span></div>'
+      + (item.makro_name ? '<div class="bbp-makro-name">🏷️ ' + escapeHtml(item.makro_name) + '</div>' : '')
+      + '</div>'
       + '<div class="bbp-meta-row">ราคาตลาด Makro · อัปเดต ' + vfFmtDate(last.fetched_at || last.date) + '</div>'
     : '<div class="bbp-empty-note">ยังไม่มีราคาตลาด — กด "+ บันทึกราคาเอง" เพื่อเพิ่ม</div>';
   var purchases = bbpPurchasesFor(item);
@@ -6508,6 +6561,7 @@ function bbpCardHtml(item) {{
   var chartOpen = !!bbpChartOpen[item.ing_id];
   var actions = '<div class="bbp-actions">'
     + (hasChart ? '<button class="bbp-btn" onclick="bbpToggleChart(\\'' + item.ing_id + '\\')">' + (chartOpen ? '▲ ซ่อนกราฟ' : '📈 ดูกราฟ') + '</button>' : '')
+    + '<button class="bbp-btn" data-ing="' + item.ing_id + '" onclick="bbpUploadImg(this)">📎 รูป</button>'
     + '<button class="bbp-btn" onclick="bbpOpenManual(\\'' + item.ing_id + '\\')">+ บันทึกราคาเอง</button>'
     + '</div>';
   var chartHtml = '<div class="bbp-chart-wrap" id="bbp-chart-wrap-' + item.ing_id + '" style="' + (chartOpen ? '' : 'display:none') + '">'

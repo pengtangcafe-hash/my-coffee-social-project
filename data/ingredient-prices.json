@@ -24,7 +24,9 @@
           "fetched_at": "2026-08-02"
         }
       ],
-      "vendor": "makro"
+      "vendor": "makro",
+      "pack_label": "กระป๋อง 1 กก.",
+      "makro_img": ""
     },
     {
       "ing_id": "milk-evap-falcon",
@@ -50,7 +52,9 @@
           "fetched_at": "2026-08-02"
         }
       ],
-      "vendor": "makro"
+      "vendor": "makro",
+      "pack_label": "กระป๋อง 1 ล.",
+      "makro_img": ""
     },
     {
       "ing_id": "milk-condensed",
@@ -77,7 +81,9 @@
           "fetched_at": "2026-08-02"
         }
       ],
-      "vendor": "makro"
+      "vendor": "makro",
+      "pack_label": "ลัง 48 กระป๋อง × 388 ก.",
+      "makro_img": ""
     },
     {
       "ing_id": "milk-fresh-mmilk",
@@ -106,7 +112,9 @@
           "fetched_at": "2026-08-02"
         }
       ],
-      "vendor": "makro"
+      "vendor": "makro",
+      "pack_label": "กล่อง 1 ล.",
+      "makro_img": ""
     },
     {
       "ing_id": "coffeemate",
@@ -131,7 +139,9 @@
           "fetched_at": "2026-08-02"
         }
       ],
-      "vendor": "makro"
+      "vendor": "makro",
+      "pack_label": "ถุง 1 กก.",
+      "makro_img": ""
     },
     {
       "ing_id": "honey-aro",
@@ -156,7 +166,9 @@
           "fetched_at": "2026-08-02"
         }
       ],
-      "vendor": "makro"
+      "vendor": "makro",
+      "pack_label": "ขวด 1 กก.",
+      "makro_img": ""
     },
     {
       "ing_id": "sunquick",
@@ -182,7 +194,9 @@
           "fetched_at": "2026-08-02"
         }
       ],
-      "vendor": "makro"
+      "vendor": "makro",
+      "pack_label": "ขวด 1 ล.",
+      "makro_img": ""
     },
     {
       "ing_id": "tea-red-tramue",
@@ -209,7 +223,9 @@
           "fetched_at": "2026-08-02"
         }
       ],
-      "vendor": "makro"
+      "vendor": "makro",
+      "pack_label": "ถุง 400 ก.",
+      "makro_img": ""
     },
     {
       "ing_id": "tea-green-tramue",
@@ -234,7 +250,9 @@
           "fetched_at": "2026-08-02"
         }
       ],
-      "vendor": "makro"
+      "vendor": "makro",
+      "pack_label": "ถุง 200 ก.",
+      "makro_img": ""
     },
     {
       "ing_id": "syrup-mitr-phol",
@@ -260,7 +278,9 @@
           "fetched_at": "2026-08-02"
         }
       ],
-      "vendor": "makro"
+      "vendor": "makro",
+      "pack_label": "แพ็ค 12 ขวด × 800 มล.",
+      "makro_img": ""
     },
     {
       "ing_id": "cocoa-tulip",
@@ -286,7 +306,9 @@
           "fetched_at": "2026-08-02"
         }
       ],
-      "vendor": "makro"
+      "vendor": "makro",
+      "pack_label": "แพ็ค 2 ถุง × 440 ก.",
+      "makro_img": ""
     },
     {
       "ing_id": "lime-powder",
@@ -312,7 +334,9 @@
           "fetched_at": "2026-08-02"
         }
       ],
-      "vendor": "makro"
+      "vendor": "makro",
+      "pack_label": "ถุง 400 ก.",
+      "makro_img": ""
     },
     {
       "ing_id": "soda",
@@ -338,7 +362,9 @@
           "fetched_at": "2026-08-02"
         }
       ],
-      "vendor": "makro"
+      "vendor": "makro",
+      "pack_label": "ลัง 24 ขวด × 325 มล.",
+      "makro_img": ""
     },
     {
       "ing_id": "water-aro",
@@ -364,7 +390,9 @@
           "fetched_at": "2026-08-02"
         }
       ],
-      "vendor": "7even"
+      "vendor": "7even",
+      "pack_label": "แพ็ค 6 ขวด × 1.5 ล.",
+      "makro_img": ""
     },
     {
       "ing_id": "monin-mint-popcorn",
@@ -393,7 +421,9 @@
           "fetched_at": "2026-08-02"
         }
       ],
-      "vendor": "pranee"
+      "vendor": "pranee",
+      "pack_label": "ขวด 700 มล.",
+      "makro_img": ""
     },
     {
       "ing_id": "syrup-peach",
@@ -418,7 +448,9 @@
           "fetched_at": "2026-08-02"
         }
       ],
-      "vendor": "pranee"
+      "vendor": "pranee",
+      "pack_label": "ขวด 740 มล.",
+      "makro_img": ""
     },
     {
       "ing_id": "syrup-coconut",
@@ -443,7 +475,9 @@
           "fetched_at": "2026-08-02"
         }
       ],
-      "vendor": "pranee"
+      "vendor": "pranee",
+      "pack_label": "ขวด 740 มล.",
+      "makro_img": ""
     },
     {
       "ing_id": "syrup-white-choc",
@@ -469,7 +503,9 @@
           "fetched_at": "2026-08-02"
         }
       ],
-      "vendor": "pranee"
+      "vendor": "pranee",
+      "pack_label": "ขวด 740 มล.",
+      "makro_img": ""
     },
     {
       "ing_id": "cup-14-16oz",
@@ -483,7 +519,9 @@
       "pack_qty": null,
       "pack_unit": "ชิ้น",
       "history": [],
-      "vendor": "pranee"
+      "vendor": "pranee",
+      "pack_label": "",
+      "makro_img": ""
     },
     {
       "ing_id": "lid-98",
@@ -496,7 +534,9 @@
       "pack_qty": null,
       "pack_unit": "ชิ้น",
       "history": [],
-      "vendor": "pranee"
+      "vendor": "pranee",
+      "pack_label": "",
+      "makro_img": ""
     },
     {
       "ing_id": "straw",
@@ -509,7 +549,9 @@
       "pack_qty": null,
       "pack_unit": "ชิ้น",
       "history": [],
-      "vendor": "pranee"
+      "vendor": "pranee",
+      "pack_label": "",
+      "makro_img": ""
     },
     {
       "ing_id": "zip-bag",
@@ -523,7 +565,9 @@
       "pack_qty": null,
       "pack_unit": "ชิ้น",
       "history": [],
-      "vendor": "pranee"
+      "vendor": "pranee",
+      "pack_label": "",
+      "makro_img": ""
     },
     {
       "ing_id": "cup-sleeve-bag",
@@ -536,7 +580,9 @@
       "pack_qty": null,
       "pack_unit": "ชิ้น",
       "history": [],
-      "vendor": "pranee"
+      "vendor": "pranee",
+      "pack_label": "",
+      "makro_img": ""
     },
     {
       "ing_id": "lid-paper-seal",
@@ -549,7 +595,9 @@
       "pack_qty": null,
       "pack_unit": "ชิ้น",
       "history": [],
-      "vendor": "pranee"
+      "vendor": "pranee",
+      "pack_label": "",
+      "makro_img": ""
     }
   ]
 }
