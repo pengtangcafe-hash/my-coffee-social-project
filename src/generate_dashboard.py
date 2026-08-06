@@ -2855,6 +2855,12 @@ HTML_TEMPLATE = """\
     .pos-hbar-val {{ flex-shrink:0; color:var(--text-muted); font-size:.74rem; white-space:nowrap; }}
     .pos-day-scroll {{ max-height:280px; overflow-y:auto; }}
     @media (max-width:600px) {{ .pos-hbar-val {{ font-size:.68rem; }} .pos-hbar-lab {{ min-width:46px; }} }}
+    /* B2 loop — แมป POS→เมนู + ตัดสต็อก */
+    .pos-loop {{ background:rgba(46,125,50,.05); border:1px solid rgba(46,125,50,.22); border-radius:12px; padding:16px; }}
+    .pos-loop-sub {{ font-size:.8rem; color:var(--text-muted); font-weight:600; margin-bottom:8px; }}
+    .pos-map-sel {{ max-width:100%; border:1px solid var(--card-border); border-radius:8px; padding:4px 8px; background:var(--bg); color:var(--text); font-size:.82rem; }}
+    .pos-automatch {{ font-size:.68rem; color:#2e7d32; font-weight:700; white-space:nowrap; }}
+    .pos-loop .dc-table {{ font-size:.84rem; }}
     .pos-custom-row {{ display:flex; gap:12px; flex-wrap:wrap; align-items:center; margin:8px 0; font-size:.875rem; }}
     .pos-custom-row label {{ display:flex; align-items:center; gap:6px; }}
     .pos-custom-row input[type=date] {{ border:1px solid var(--border); border-radius:8px; padding:4px 8px; background:var(--bg); color:var(--text); font-size:.875rem; }}
@@ -7832,7 +7838,104 @@ function posRenderResult(data, fromCache) {{
       + '<div class="pos-day-scroll">' + dayBars + '</div></div>'
     : '';
 
-  el.innerHTML = cacheHtml + noCatWarn + cardsHtml + peakHtml + dailyHtml + catTableHtml + menuTableHtml + diagHtml;
+  el.innerHTML = cacheHtml + noCatWarn + cardsHtml + peakHtml + dailyHtml + catTableHtml + menuTableHtml + posStockLoopHtml(menuTotals, menuKeys) + diagHtml;
+}}
+
+// ══ B2: ลูปตัดสต็อก (POS → แมปเมนู → หักวัตถุดิบตามสูตร → เขียน DCS.sales) ══
+// เมนูร้านที่แมปกับชื่อ POS: posMenuMap[posName]=dcMenuName ('' = ไม่ตัด); ถ้ายังไม่เคยตั้ง → auto exact-match
+function posEffMenu(posName) {{
+  var mm = DCS.posMenuMap || {{}};
+  if (mm[posName] !== undefined) return mm[posName];
+  var lower = String(posName || '').trim().toLowerCase();
+  var hit = (DCS.menus || []).filter(function(m) {{ return String(m.name || '').trim().toLowerCase() === lower; }})[0];
+  return hit ? hit.name : '';
+}}
+function posSetMenuMap(posName, dcMenu) {{
+  if (!DCS.posMenuMap) DCS.posMenuMap = {{}};
+  DCS.posMenuMap[posName] = dcMenu;
+  dcAfterChange();
+  renderPosImportView();
+}}
+function posStockLoopHtml(menuTotals, menuKeys) {{
+  menuKeys = menuKeys || Object.keys(menuTotals || {{}});
+  if (!menuKeys.length) return '';
+  var mappedCups = {{}}, unmapped = [];
+  menuKeys.forEach(function(pn) {{
+    var dm = posEffMenu(pn);
+    if (!dm) {{ unmapped.push(pn); return; }}
+    mappedCups[dm] = (mappedCups[dm] || 0) + (menuTotals[pn].cups || 0);
+  }});
+  var ingUsed = {{}}, noRecipe = [];
+  Object.keys(mappedCups).forEach(function(dm) {{
+    var menu = (DCS.menus || []).filter(function(m) {{ return m.name === dm; }})[0];
+    var cups = mappedCups[dm];
+    if (!menu || !menu.recipe || !menu.recipe.length) {{ if (cups > 0) noRecipe.push(dm); return; }}
+    menu.recipe.forEach(function(l) {{ ingUsed[l.ing] = (ingUsed[l.ing] || 0) + cups * (parseFloat(l.qty) || 0); }});
+  }});
+  var mapRows = menuKeys.map(function(pn) {{
+    var eff = posEffMenu(pn);
+    var isAuto = ((DCS.posMenuMap || {{}})[pn] === undefined) && !!eff;
+    var opts = '<option value="">— ไม่ตัดสต็อก —</option>' + (DCS.menus || []).map(function(m) {{
+      return '<option value="' + escapeHtml(m.name) + '"' + (m.name === eff ? ' selected' : '') + '>' + escapeHtml(m.name) + '</option>';
+    }}).join('');
+    return '<tr><td>' + escapeHtml(pn) + '</td>'
+      + '<td><select class="pos-map-sel" data-pos="' + escapeHtml(pn) + '" onchange="posSetMenuMap(this.getAttribute(\\'data-pos\\'), this.value)">' + opts + '</select>'
+      + (isAuto ? ' <span class="pos-automatch">จับคู่อัตโนมัติ</span>' : '') + '</td>'
+      + '<td style="text-align:right">' + posInt(menuTotals[pn].cups) + '</td></tr>';
+  }}).join('');
+  var mapTable = '<table class="dc-table" style="width:100%"><thead><tr><th>เมนูจาก POS</th><th>→ เมนูในร้าน (มีสูตร)</th><th style="text-align:right">แก้ว</th></tr></thead><tbody>' + mapRows + '</tbody></table>';
+
+  var ingKeys = Object.keys(ingUsed).sort(function(a, b) {{ return ingUsed[b] - ingUsed[a]; }});
+  var dedRows = ingKeys.map(function(ing) {{
+    var used = ingUsed[ing], after = stkRemainBase(ing) - used, bu = stkBaseUnit(ing);
+    var pb = stkParBase(ing), low = pb > 0 && (after / pb * 100) < (DCS.stock.threshold_pct || 60);
+    return '<tr><td>' + escapeHtml(ing) + '</td>'
+      + '<td style="text-align:right">' + fmtQty(used, bu) + '</td>'
+      + '<td style="text-align:right' + (low ? ';color:var(--dc-warn);font-weight:700' : '') + '">' + fmtQty(after, bu) + (low ? ' ⚠️' : '') + '</td></tr>';
+  }}).join('');
+  var dedTable = ingKeys.length
+    ? '<table class="dc-table" style="width:100%"><thead><tr><th>วัตถุดิบ</th><th style="text-align:right">ตัดออก</th><th style="text-align:right">คงเหลือหลังบันทึก</th></tr></thead><tbody>' + dedRows + '</tbody></table>'
+    : '<div class="ov-soon-sub">ยังตัดวัตถุดิบไม่ได้ — จับคู่เมนู + ตั้งสูตรก่อน</div>';
+
+  var warns = '';
+  if (unmapped.length) warns += '<div class="stk-warn-row" style="margin:6px 0">⚠️ ยังไม่ได้จับคู่ (' + unmapped.length + '): ' + unmapped.map(escapeHtml).join(', ') + ' — จะไม่ถูกตัดสต็อก</div>';
+  if (noRecipe.length) warns += '<div class="stk-warn-row" style="margin:6px 0">📝 จับคู่แล้วแต่ยังไม่มีสูตร (' + noRecipe.length + '): ' + noRecipe.map(escapeHtml).join(', ') + ' — ตั้งสูตรในหน้าต้นทุนเครื่องดื่มก่อน</div>';
+
+  var applyBtn = '<div style="margin-top:12px"><button class="dc-btn primary" onclick="posApplyToStock()">✅ บันทึกยอดขายเข้าสต็อก (ตัดวัตถุดิบตามสูตร)</button>'
+    + '<div style="font-size:.72rem;color:var(--text-muted);margin-top:6px">* POS เป็นยอดจริงของวันนั้น — กดซ้ำได้ ระบบเขียนทับยอดขายวันเดียวกัน (ไม่นับซ้ำ)</div></div>';
+
+  return '<div class="pos-section pos-loop"><h3 class="pos-section-title">🔗 เชื่อมเข้าสต็อก — ตัดวัตถุดิบตามสูตร</h3>'
+    + '<div class="pos-loop-sub">แมปชื่อเมนู POS → เมนูในร้าน (แก้ทีหลังได้ ไม่กระทบส่วนอื่น)</div>'
+    + mapTable + warns
+    + '<div class="pos-loop-sub" style="margin-top:16px">🧪 วัตถุดิบที่จะถูกตัด (ตามยอดขายช่วงที่ดึงมา)</div>'
+    + dedTable + applyBtn + '</div>';
+}}
+function posApplyToStock() {{
+  var data = DCS.posLast && DCS.posLast.data;
+  if (!data || !data.receipts || !data.receipts.length) {{ showToast('ยังไม่มีข้อมูล POS ให้บันทึก'); return; }}
+  if (!saIsUnlocked()) {{ dcOpenPwModal('🔒 ปลดล็อกก่อน', 'ใส่รหัสเพื่อบันทึกยอดขายเข้าสต็อก', function() {{ saUnlock(); posApplyToStock(); }}); return; }}
+  var agg = {{}}, posDates = {{}};
+  data.receipts.forEach(function(r) {{
+    var sign = r.receipt_type === 'REFUND' ? -1 : 1;
+    var p = posTHDateHour(r.receipt_date); if (!p) return;
+    posDates[p.date] = true;
+    (r.line_items || []).forEach(function(li) {{
+      var dm = posEffMenu(li.item_name || ''); if (!dm) return;
+      var key = p.date + '||' + dm;
+      agg[key] = (agg[key] || 0) + sign * Math.abs(Number(li.quantity || 0));
+    }});
+  }});
+  // POS เป็นตัวจริงของวันนั้น: ลบยอดขายเดิมของวันที่มีข้อมูล POS แล้วเขียนใหม่ (กันนับซ้ำเมื่อกดซ้ำ)
+  DCS.sales = (DCS.sales || []).filter(function(s) {{ return !posDates[s.date]; }});
+  var added = 0;
+  Object.keys(agg).forEach(function(k) {{
+    var parts = k.split('||'), cups = agg[k];
+    if (cups > 0) {{ DCS.sales.push({{ date: parts[0], menu: parts[1], cups: cups }}); added++; }}
+  }});
+  dcAfterChange();
+  showToast('บันทึกเข้าสต็อกแล้ว ' + added + ' รายการ — วัตถุดิบถูกตัดตามสูตร');
+  renderPosImportView();
+  if (typeof stkRefreshIfActive === 'function') stkRefreshIfActive();
 }}
 
 function posFetch() {{
