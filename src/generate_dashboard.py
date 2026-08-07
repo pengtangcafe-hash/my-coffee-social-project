@@ -2545,6 +2545,7 @@ HTML_TEMPLATE = """\
     .tea-nm {{ min-width: 120px; }}
     .tea-num {{ max-width: 78px; text-align: right; }}
     .tea-linecost {{ font-weight: 700; color: var(--text); white-space: nowrap; }}
+    .tea-percup-cell {{ font-weight: 800; color: #2e7d32; white-space: nowrap; }}
     .tea-del {{ border: none; background: transparent; color: var(--text-muted); cursor: pointer; font-size: .9rem; padding: 2px 4px; }}
     .tea-del:hover {{ color: var(--dc-warn); }}
     .tea-add {{ margin-top: 8px; border: 1px dashed var(--card-border); background: transparent; color: var(--text-muted); border-radius: 8px; padding: 5px 12px; font-size: .76rem; cursor: pointer; }}
@@ -5240,6 +5241,7 @@ function teaBatchHtml(b) {{
     return '<tr>'
       + '<td><input class="tea-in tea-nm" data-bid="' + b.id + '" data-idx="' + i + '" data-field="name" value="' + escapeHtml(it.name || '') + '" onchange="teaOnInput(this)"></td>'
       + '<td><input class="tea-in tea-num" type="number" min="0" data-bid="' + b.id + '" data-idx="' + i + '" data-field="grams" value="' + (it.grams || 0) + '" onchange="teaOnInput(this)"></td>'
+      + '<td class="tea-percup-cell">' + (+((parseFloat(it.grams) || 0) / y).toFixed(2)) + '</td>'
       + '<td><input class="tea-in tea-num" type="number" min="0" data-bid="' + b.id + '" data-idx="' + i + '" data-field="size" value="' + (it.size || 0) + '" onchange="teaOnInput(this)"></td>'
       + '<td><input class="tea-in tea-num" type="number" min="0" data-bid="' + b.id + '" data-idx="' + i + '" data-field="price" value="' + (it.price || 0) + '" onchange="teaOnInput(this)"></td>'
       + '<td class="tea-linecost">' + dcF1(line) + '฿</td>'
@@ -5251,11 +5253,11 @@ function teaBatchHtml(b) {{
   return '<div class="tea-card">'
     + '<div class="tea-card-head"><input class="tea-in tea-title" data-bid="' + b.id + '" data-field="name" value="' + escapeHtml(b.name || '') + '" onchange="teaOnInput(this)">'
       + '<button class="tea-del-batch" onclick="teaDelBatch(\\'' + b.id + '\\')">🗑️ ลบสูตร</button></div>'
-    + '<div class="tea-tablewrap"><table class="tea-table"><thead><tr><th>วัตถุดิบ</th><th>กรัม/หม้อ</th><th>ขนาดแพ็ค</th><th>ราคาแพ็ค</th><th>ต้นทุน</th><th></th></tr></thead>'
+    + '<div class="tea-tablewrap"><table class="tea-table"><thead><tr><th>วัตถุดิบ</th><th>กรัม/หม้อ</th><th title="กรัม/หม้อ ÷ ได้กี่แก้ว">ต่อแก้ว ÷' + y + '</th><th>ขนาดแพ็ค</th><th>ราคาแพ็ค</th><th>ต้นทุน</th><th></th></tr></thead>'
       + '<tbody>' + rows + '</tbody></table></div>'
     + '<button class="tea-add" onclick="teaAddItem(\\'' + b.id + '\\')">+ เพิ่มวัตถุดิบ</button>'
     + '<div class="tea-water">💧 น้ำ <select class="tea-in tea-watersel" data-bid="' + b.id + '" data-field="water" onchange="teaOnInput(this)">' + waterOpts + '</select>'
-      + ' <span class="tea-fixed">' + (b.waterMl || 1050) + ' ml (คงที่)</span> · ต้นทุนน้ำ ' + dcF1(wCost) + '฿</div>'
+      + ' <span class="tea-fixed">' + (b.waterMl || 1050) + ' ml (คงที่ · ' + (+((parseFloat(b.waterMl) || 0) / y).toFixed(1)) + ' ml/แก้ว)</span> · ต้นทุนน้ำ ' + dcF1(wCost) + '฿</div>'
     + '<div class="tea-foot"><div class="tea-yieldbox">ได้ <input class="tea-in tea-num tea-yield" type="number" min="1" data-bid="' + b.id + '" data-field="yield" value="' + y + '" onchange="teaOnInput(this)"> แก้ว/หม้อ</div>'
       + '<div class="tea-result">ต้นทุน/หม้อ <b>' + dcF1(cost) + '฿</b> <span class="tea-arrow">→</span> <span class="tea-percup">ต้นทุน/แก้ว ' + dcF1(perCup) + '฿</span></div></div>'
     + '<button class="tea-push" onclick="teaPushToMenu(\\'' + b.id + '\\')" title="เอาสูตรนี้ไปเป็นสูตรต่อแก้วของเมนู เพื่อให้ตัดสต็อกได้">📥 ส่งเข้าเมนู (÷' + y + ' = ต่อแก้ว → ตัดสต็อกได้)</button>'
