@@ -5289,13 +5289,14 @@ function teaPushToMenu(bid) {{
   if (!valid.length) {{ showToast('ยังไม่ได้กรอกกรัม/วัตถุดิบในสูตรนี้'); return; }}
   var nm = (b.name || '').trim();
   if (!nm) {{ showToast('ตั้งชื่อสูตรก่อน'); return; }}
-  // เอาวัตถุดิบเข้าคลัง (unit cost = ราคาแพ็ค ÷ ขนาดแพ็ค)
+  // เอาวัตถุดิบเข้าคลัง (unit cost = ราคาแพ็ค ÷ ขนาดแพ็ค) — เฉพาะตัวที่ยังไม่มีในคลัง
+  //    (ถ้ามีอยู่แล้ว เช่น คอฟฟี่เมต ใช้ราคาคลังเดิม ไม่ทับ → กันต้นทุนเมนูอื่นที่ใช้ตัวเดียวกันเพี้ยน)
   valid.forEach(function(it) {{
-    var s = parseFloat(it.size) || 0, p = parseFloat(it.price) || 0;
-    if (s > 0) DCS.catalog[it.name.trim()] = {{ price: p, qty: s, unit_cost: p / s, unit: 'กรัม/มล.' }};
+    var nm = it.name.trim(), s = parseFloat(it.size) || 0, p = parseFloat(it.price) || 0;
+    if (s > 0 && !DCS.catalog[nm]) DCS.catalog[nm] = {{ price: p, qty: s, unit_cost: p / s, unit: 'กรัม/มล.' }};
   }});
   var w = TEA_WATER[b.water] || TEA_WATER.aro, wName = w.label, ws = parseFloat(w.size) || 1, wp = parseFloat(w.price) || 0;
-  DCS.catalog[wName] = {{ price: wp, qty: ws, unit_cost: wp / ws, unit: 'กรัม/มล.' }};
+  if (!DCS.catalog[wName]) DCS.catalog[wName] = {{ price: wp, qty: ws, unit_cost: wp / ws, unit: 'กรัม/มล.' }};
   // สูตรต่อแก้ว = ปริมาณต่อหม้อ ÷ ได้กี่แก้ว
   var recipe = valid.map(function(it) {{ return {{ ing: it.name.trim(), qty: +((parseFloat(it.grams) || 0) / y).toFixed(3) }}; }});
   recipe.push({{ ing: wName, qty: +((parseFloat(b.waterMl) || 0) / y).toFixed(3) }});
@@ -5805,6 +5806,15 @@ function dcSaveMenu() {{
   if (!dcDraft.id) dcDraft.id = 'm' + Date.now();
   var i = -1;
   DCS.menus.forEach(function(m, idx) {{ if (m.id === dcDraft.id) i = idx; }});
+  // 🔁 เปลี่ยนชื่อเมนู: ย้าย activeMenus/posMenuMap ให้ตรงชื่อใหม่ + ตั้ง id=ชื่อใหม่
+  //    (Code.gs รีเซ็ต id=name ตอนซิงก์ ถ้าไม่ย้าย เมนูจะหลุดกลุ่ม 🟢 หลังซิงก์ = ดูเหมือนบั๊กหาย)
+  var oldM = i >= 0 ? DCS.menus[i] : null;
+  if (oldM && oldM.name !== dcDraft.name) {{
+    var oldKeys = [oldM.id, oldM.name], newName = dcDraft.name;
+    dcDraft.id = newName;
+    if (DCS.activeMenus) DCS.activeMenus = DCS.activeMenus.map(function(x) {{ return oldKeys.indexOf(x) >= 0 ? newName : x; }});
+    if (DCS.posMenuMap) Object.keys(DCS.posMenuMap).forEach(function(k) {{ if (oldKeys.indexOf(DCS.posMenuMap[k]) >= 0) DCS.posMenuMap[k] = newName; }});
+  }}
   if (i >= 0) DCS.menus[i] = dcDraft; else DCS.menus.push(dcDraft);
   dcAfterChange(); dcCloseModal(); renderDrinkCosts(); showToast('บันทึกเมนู "' + dcDraft.name + '" แล้ว');
 }}
@@ -5981,17 +5991,18 @@ function dcSyncPull(silent) {{
         return;
       }}
       // 🛡️ จำ key ที่ Sheet "ส่งมาจริง" ก่อน normalize — เพราะ dcNormalize เติม default ลง obj โดยตรง
-      //    (obj[k] จะไม่ undefined หลัง normalize → เช็คหลัง normalize จะพลาด ทำให้ activeMenus/teaBatches หายทุกซิงก์)
-      var _localKeys = ['quests','achievements','plans','loops','questLog','questHistory','questMeta','activeMenus','posMenuMap','teaBatches'];
+      //    (obj[k] จะไม่ undefined หลัง normalize → เช็คหลัง normalize จะพลาด ทำให้ค่าหายทุกซิงก์)
+      // กลุ่ม A: Sheet "อาจ" เก็บ (quest ฯลฯ) — ถ้า Sheet ส่งมา Sheet ชนะ, ไม่ส่งค่อยคงของ local
+      var _sheetKeys = ['quests','achievements','plans','loops','questLog','questHistory','questMeta'];
+      // กลุ่ม B: Sheet "ไม่เคย" เก็บเลย = เฉพาะเครื่อง → คงของ local เสมอ (เพิ่ม key ใหม่ที่นี่เท่านั้น)
+      var _clientOnlyKeys = ['activeMenus','posMenuMap','teaBatches','priceManual','supplierLogos','priceImages'];
       var sheetHas = {{}};
-      _localKeys.forEach(function(k) {{ sheetHas[k] = (obj[k] !== undefined); }});
+      _sheetKeys.forEach(function(k) {{ sheetHas[k] = (obj[k] !== undefined); }});
       var prev = DCS ? dcClone(DCS) : {{}};
       DCS = dcNormalize(obj);
-      // ฟิลด์เฉพาะเครื่อง/quest: ถ้า Sheet ไม่ได้ส่งมา (raw undefined) → คงของในเครื่องไว้ ไม่ให้ default ทับ
       DCS.posLast = prev.posLast !== undefined ? prev.posLast : null;
-      _localKeys.forEach(function(k) {{
-        if (!sheetHas[k]) DCS[k] = prev[k] !== undefined ? prev[k] : DCS[k];
-      }});
+      _sheetKeys.forEach(function(k) {{ if (!sheetHas[k]) DCS[k] = prev[k] !== undefined ? prev[k] : DCS[k]; }});
+      _clientOnlyKeys.forEach(function(k) {{ if (prev[k] !== undefined) DCS[k] = prev[k]; }});
       dcSave(); renderDrinkCosts(); stkRefreshIfActive(); vfRefreshIfActive();
       if (!silent) showToast('ซิงก์จาก Google Sheet แล้ว (' + DCS.menus.length + ' เมนู)');
     }})
@@ -7698,6 +7709,10 @@ function vfSaveStockBill() {{
   }});
   if (!newLines.length) {{ showToast('ต้องมีวัตถุดิบอย่างน้อย 1 บรรทัด (หรือลบทุกบรรทัดเพื่อลบบิล)'); return; }}
   var o=_vfStockOrig||{{ date:d, vendor:v }};
+  // เตือนถ้าเปลี่ยนวันที่/ร้านไปชนบิลอื่นที่มีอยู่ (จะถูกรวมเข้าด้วยกัน)
+  if ((d!==o.date || v!==(o.vendor||'')) && (DCS.purchases||[]).some(function(p) {{ return (p.date||'')===d && (p.vendor||'')===v; }})) {{
+    if (!confirm('มีบิลของวันที่ '+vfFmtDate(d)+(v?(' · '+v):'')+' อยู่แล้ว\\nบันทึกนี้จะรวมเข้ากับบิลนั้น — ยืนยันไหม?')) return;
+  }}
   DCS.purchases=(DCS.purchases||[]).filter(function(p) {{ return !((p.date||'')===o.date && (p.vendor||'')===(o.vendor||'')); }});
   newLines.forEach(function(l) {{ DCS.purchases.push(l); }});
   _vfStockOrig=null;
