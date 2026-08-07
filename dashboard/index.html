@@ -625,6 +625,8 @@
     .tea-result b { color: var(--text); }
     .tea-arrow { color: var(--text-muted); margin: 0 4px; }
     .tea-percup { font-weight: 800; color: #2e7d32; font-size: .98rem; }
+    .tea-push { margin-top: 12px; width: 100%; border: 1px solid #2e7d32; background: rgba(46,125,50,.08); color: #2e7d32; border-radius: 9px; padding: 9px 12px; font-size: .82rem; font-weight: 800; cursor: pointer; transition: background .15s; }
+    .tea-push:hover { background: #2e7d32; color: #fff; }
 
     .dc-row { background: var(--card); border: 1px solid var(--card-border); border-radius: 16px;
       padding: 15px 18px; cursor: pointer; transition: border-color .18s, box-shadow .18s, transform .18s; }
@@ -3328,6 +3330,7 @@ function teaBatchHtml(b) {
       + ' <span class="tea-fixed">' + (b.waterMl || 1050) + ' ml (คงที่)</span> · ต้นทุนน้ำ ' + dcF1(wCost) + '฿</div>'
     + '<div class="tea-foot"><div class="tea-yieldbox">ได้ <input class="tea-in tea-num tea-yield" type="number" min="1" data-bid="' + b.id + '" data-field="yield" value="' + y + '" onchange="teaOnInput(this)"> แก้ว/หม้อ</div>'
       + '<div class="tea-result">ต้นทุน/หม้อ <b>' + dcF1(cost) + '฿</b> <span class="tea-arrow">→</span> <span class="tea-percup">ต้นทุน/แก้ว ' + dcF1(perCup) + '฿</span></div></div>'
+    + '<button class="tea-push" onclick="teaPushToMenu(\'' + b.id + '\')" title="เอาสูตรนี้ไปเป็นสูตรต่อแก้วของเมนู เพื่อให้ตัดสต็อกได้">📥 ส่งเข้าเมนู (÷' + y + ' = ต่อแก้ว → ตัดสต็อกได้)</button>'
     + '</div>';
 }
 function teaRender() {
@@ -3337,6 +3340,37 @@ function teaRender() {
   if (col) { root.innerHTML = '<div class="tea-wrap">' + head + '</div>'; return; }
   var body = teaList().map(teaBatchHtml).join('') + '<button class="dc-btn" style="margin-top:8px" onclick="teaAddBatch()">+ เพิ่มสูตรชา</button>';
   root.innerHTML = '<div class="tea-wrap">' + head + '<div class="tea-body">' + body + '</div></div>';
+}
+// ส่งสูตรต่อหม้อ → เมนู (÷ ได้กี่แก้ว = ต่อแก้ว) + เอาวัตถุดิบเข้าคลัง → ลูป B2 ตัดสต็อกได้
+function teaPushToMenu(bid) {
+  var b = teaFind(bid); if (!b) return;
+  if (!saIsUnlocked()) { dcOpenPwModal('🔒 ปลดล็อกก่อน', 'ใส่รหัสเพื่อส่งสูตรเข้าเมนู', function() { saUnlock(); teaPushToMenu(bid); }); return; }
+  var y = parseInt(b.yield, 10) || 1;
+  var valid = (b.items || []).filter(function(it) { return (it.name || '').trim() && (parseFloat(it.grams) || 0) > 0; });
+  if (!valid.length) { showToast('ยังไม่ได้กรอกกรัม/วัตถุดิบในสูตรนี้'); return; }
+  var nm = (b.name || '').trim();
+  if (!nm) { showToast('ตั้งชื่อสูตรก่อน'); return; }
+  // เอาวัตถุดิบเข้าคลัง (unit cost = ราคาแพ็ค ÷ ขนาดแพ็ค)
+  valid.forEach(function(it) {
+    var s = parseFloat(it.size) || 0, p = parseFloat(it.price) || 0;
+    if (s > 0) DCS.catalog[it.name.trim()] = { price: p, qty: s, unit_cost: p / s, unit: 'กรัม/มล.' };
+  });
+  var w = TEA_WATER[b.water] || TEA_WATER.aro, wName = w.label, ws = parseFloat(w.size) || 1, wp = parseFloat(w.price) || 0;
+  DCS.catalog[wName] = { price: wp, qty: ws, unit_cost: wp / ws, unit: 'กรัม/มล.' };
+  // สูตรต่อแก้ว = ปริมาณต่อหม้อ ÷ ได้กี่แก้ว
+  var recipe = valid.map(function(it) { return { ing: it.name.trim(), qty: +((parseFloat(it.grams) || 0) / y).toFixed(3) }; });
+  recipe.push({ ing: wName, qty: +((parseFloat(b.waterMl) || 0) / y).toFixed(3) });
+  var menu = (DCS.menus || []).filter(function(m) { return (m.name || '').trim().toLowerCase() === nm.toLowerCase(); })[0];
+  if (menu) {
+    if (!confirm('ส่งสูตรเข้าเมนู "' + nm + '"?\nสูตรเดิมของเมนูนี้จะถูกแทนที่ด้วยสูตรต่อแก้ว (÷' + y + ')')) return;
+    menu.recipe = recipe;
+  } else {
+    if (!confirm('ยังไม่มีเมนู "' + nm + '" — สร้างเมนูใหม่ (หมวดชา) พร้อมสูตรนี้เลยไหม?')) return;
+    DCS.menus.push({ id: nm, name: nm, category: 'tea', image: '', recipe: recipe, prices: { store: null, lineman: null, shoppee: null, grab: null }, seed_cost_cup: null });
+  }
+  dcAfterChange();
+  showToast('✅ ส่งเข้าเมนู "' + nm + '" แล้ว — ตัดสต็อกต่อแก้วได้ (วัตถุดิบ ' + recipe.length + ' รายการ)');
+  renderDrinkCosts();
 }
 
 function renderDrinkCosts() {
