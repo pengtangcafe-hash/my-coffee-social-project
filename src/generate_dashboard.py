@@ -2836,10 +2836,19 @@ HTML_TEMPLATE = """\
     .vf-line-table {{ width:100%; border-collapse:collapse; font-size:.78rem; margin:4px 0 4px; }}
     .vf-line-table td {{ padding:3px 4px 3px 0; color:var(--text-muted); vertical-align:top; }}
     .vf-line-table td:last-child {{ text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap; }}
+    /* editor บิลซื้อเข้าสต็อก */
+    .vf-sb-hint {{ font-size:.72rem; color:var(--text-muted); margin:8px 0; }}
+    .vf-sb-row {{ border:1px solid var(--card-border); border-radius:10px; padding:10px; margin-bottom:10px; background:var(--bg); }}
+    .vf-sb-ing {{ font-weight:700; margin-bottom:8px; }}
+    .vf-sb-nums {{ display:flex; flex-wrap:wrap; align-items:flex-end; gap:8px; }}
+    .vf-sb-nums label {{ display:flex; flex-direction:column; gap:3px; font-size:.66rem; color:var(--text-muted); font-weight:600; flex:1; min-width:64px; }}
+    .vf-sb-nums input {{ font-size:.82rem; }}
+    .vf-sb-del {{ flex-shrink:0; border:1px solid var(--card-border); background:var(--card); border-radius:8px; padding:6px 10px; cursor:pointer; font-size:.9rem; height:38px; }}
+    .vf-sb-del:hover {{ border-color:#ef4444; }}
     .vf-line-table tr:not(:last-child) td {{ border-bottom:1px dashed var(--card-border); }}
     .vf-receipt-note {{ font-size:.75rem; color:var(--text-muted); margin:4px 0; }}
     .vf-receipt-foot {{ padding:6px 14px 12px; border-top:1px dashed var(--card-border); margin-top:4px;
-      display:flex; align-items:center; justify-content:space-between; }}
+      display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:6px; }}
     .vf-receipt-total {{ font-size:1.15rem; font-weight:900; color:var(--text); font-variant-numeric:tabular-nums; }}
     .vf-slip-btn {{ font-size:.72rem!important; padding:4px 10px!important; }}
     .vf-slip-thumb {{ width:60px; height:45px; object-fit:cover; border-radius:6px; cursor:pointer; margin-right:6px; border:1px solid var(--card-border); vertical-align:middle; }}
@@ -7229,6 +7238,9 @@ function vfReceiptCard(b) {{
     ?'<button class="vf-slip-btn dc-btn" data-expid="'+escapeHtml(b.id)+'" onclick="vfEditExpenseBtn(this)" title="แก้ไขรายจ่าย">✏️ แก้ไข</button>'
      +'<button class="vf-slip-btn dc-btn" data-expid="'+escapeHtml(b.id)+'" onclick="vfDeleteExpenseBtn(this)" style="color:#ef4444" title="ลบรายจ่าย">🗑️ ลบ</button>'
     :'';
+  var stockEditBtn=(b.readonly&&b.items&&b.items.length)
+    ?'<button class="vf-slip-btn dc-btn" data-date="'+escapeHtml(b.date||'')+'" data-vendor="'+escapeHtml(b.vendor||'')+'" onclick="vfEditStockBill(this)" title="แก้ไขบิลซื้อเข้าสต็อก (แก้จำนวน/ราคา)">✏️ แก้บิล</button>'
+    :'';
   return '<div class="vf-receipt-card">'
     +headHtml
     +'<div class="vf-receipt-body">'
@@ -7237,7 +7249,7 @@ function vfReceiptCard(b) {{
     +'</div>'
     +'<div class="vf-receipt-foot">'
     +'<span class="vf-receipt-total">'+vfFmtMoney(b.amount||0)+'</span>'
-    +slipBtn+editBtns
+    +slipBtn+editBtns+stockEditBtn
     +'</div>'
     +'</div>';
 }}
@@ -7624,6 +7636,74 @@ function vfDeleteExpense(id) {{
   if (!confirm('ลบรายจ่าย "'+exp.label+'" จำนวน '+vfFmtMoney(exp.amount||0)+'?\\nกดตกลงเพื่อยืนยัน')) return;
   DCS.expenses=DCS.expenses.filter(function(e) {{ return e.id!==id; }});
   dcAfterChange(); renderVarfixView(); showToast('ลบรายจ่ายแล้ว ✓');
+}}
+// ── แก้ไขบิลซื้อเข้าสต็อก (กลุ่ม purchases ตามวันที่+ร้าน) ──
+var _vfStockOrig=null;
+function vfEditStockBill(btn) {{
+  if (!saIsUnlocked()) {{ dcRequestEdit(); return; }}
+  var d=btn.getAttribute('data-date')||'', v=btn.getAttribute('data-vendor')||'';
+  var lines=(DCS.purchases||[]).filter(function(p) {{ return (p.date||'')===d && (p.vendor||'')===v; }});
+  _vfStockOrig={{ date:d, vendor:v, time:(lines[0]&&lines[0].time)||'' }};
+  var rowsHtml=lines.map(vfStockRowHtml).join('');
+  var pay=(lines[0]&&lines[0].pay)||'cash';
+  var html='<div class="dc-modal-head"><h3>✏️ แก้ไขบิลซื้อเข้าสต็อก</h3><button class="dc-x" onclick="dcCloseModal()" aria-label="ปิด">✕</button></div>'
+    +'<div class="dc-modal-scroll">'
+    +'<div style="display:flex;gap:10px;flex-wrap:wrap">'
+    +'<div class="dc-field" style="flex:1;min-width:130px"><label>📅 วันที่</label><input class="dc-inp" id="vf-sb-date" type="date" value="'+escapeHtml(d)+'"></div>'
+    +'<div class="dc-field" style="flex:2;min-width:150px"><label>🏪 ร้าน</label><input class="dc-inp" id="vf-sb-vendor" type="text" value="'+escapeHtml(v)+'"></div>'
+    +'<div class="dc-field" style="flex:1;min-width:110px"><label>วิธีจ่าย</label><select class="dc-inp" id="vf-sb-pay"><option value="cash"'+(pay!=='transfer'?' selected':'')+'>💵 เงินสด</option><option value="transfer"'+(pay==='transfer'?' selected':'')+'>🏦 โอน</option></select></div>'
+    +'</div>'
+    +'<div class="vf-sb-hint">แก้จำนวน/ราคา แต่ละบรรทัดได้ · ลบบรรทัดที่กรอกผิด · ราคาต่อบิลคิดใหม่ให้อัตโนมัติ</div>'
+    +'<div id="vf-sb-rows">'+rowsHtml+'</div>'
+    +'<button class="dc-btn ghost" onclick="vfStockAddRow()" style="margin-top:8px">+ เพิ่มวัตถุดิบ</button>'
+    +'</div>'
+    +'<div class="dc-modal-foot"><span class="spacer"></span>'
+    +'<button class="dc-btn ghost" onclick="dcCloseModal()">ยกเลิก</button>'
+    +'<button class="dc-btn primary" onclick="vfSaveStockBill()">💾 อัปเดตบิล</button></div>';
+  dcSetModalBody(html);
+}}
+function vfStockRowHtml(p) {{
+  p=p||{{}};
+  return '<div class="vf-sb-row">'
+    +'<input class="dc-inp vf-sb-ing" placeholder="ชื่อวัตถุดิบ" value="'+escapeHtml(p.ing||'')+'">'
+    +'<div class="vf-sb-nums">'
+    +'<label>จำนวน<input class="dc-inp vf-sb-qty" type="number" min="0" step="any" value="'+(p.qty!=null?p.qty:'')+'"></label>'
+    +'<label>หน่วย<input class="dc-inp vf-sb-unit" type="text" placeholder="แพ็ค" value="'+escapeHtml(p.unit||'')+'"></label>'
+    +'<label>ปริมาณ/หน่วย<input class="dc-inp vf-sb-size" type="number" min="0" step="any" value="'+(p.size!=null?p.size:'')+'"></label>'
+    +'<label>ราคา/หน่วย<input class="dc-inp vf-sb-price" type="number" min="0" step="0.01" value="'+(p.price!=null?p.price:'')+'"></label>'
+    +'<button class="vf-sb-del" onclick="vfStockDelRow(this)" title="ลบบรรทัด">🗑️</button>'
+    +'</div></div>';
+}}
+function vfStockAddRow() {{
+  var wrap=document.getElementById('vf-sb-rows'); if (!wrap) return;
+  var tmp=document.createElement('div'); tmp.innerHTML=vfStockRowHtml({{}});
+  wrap.appendChild(tmp.firstChild);
+}}
+function vfStockDelRow(btn) {{
+  var row=btn.closest('.vf-sb-row'); if (row) row.remove();
+}}
+function vfSaveStockBill() {{
+  var d=(document.getElementById('vf-sb-date')||{{}}).value||'';
+  var v=((document.getElementById('vf-sb-vendor')||{{}}).value||'').trim();
+  var pay=(document.getElementById('vf-sb-pay')||{{}}).value||'cash';
+  var time=(_vfStockOrig&&_vfStockOrig.time)||'';
+  var newLines=[];
+  document.querySelectorAll('#vf-sb-rows .vf-sb-row').forEach(function(r) {{
+    var ing=((r.querySelector('.vf-sb-ing')||{{}}).value||'').trim(); if (!ing) return;
+    var qty=parseFloat((r.querySelector('.vf-sb-qty')||{{}}).value);
+    var unit=((r.querySelector('.vf-sb-unit')||{{}}).value||'').trim()||'แพ็ค';
+    var size=parseFloat((r.querySelector('.vf-sb-size')||{{}}).value);
+    var price=parseFloat((r.querySelector('.vf-sb-price')||{{}}).value);
+    newLines.push({{ date:d, ing:ing, qty:isNaN(qty)?null:qty, unit:unit, size:isNaN(size)?null:size, price:isNaN(price)?null:price, note:'', vendor:v, time:time, pay:pay }});
+  }});
+  if (!newLines.length) {{ showToast('ต้องมีวัตถุดิบอย่างน้อย 1 บรรทัด (หรือลบทุกบรรทัดเพื่อลบบิล)'); return; }}
+  var o=_vfStockOrig||{{ date:d, vendor:v }};
+  DCS.purchases=(DCS.purchases||[]).filter(function(p) {{ return !((p.date||'')===o.date && (p.vendor||'')===(o.vendor||'')); }});
+  newLines.forEach(function(l) {{ DCS.purchases.push(l); }});
+  _vfStockOrig=null;
+  dcAfterChange(); dcCloseModal(); renderVarfixView();
+  if (typeof stkRefreshIfActive==='function') stkRefreshIfActive();
+  showToast('อัปเดตบิลสต็อกแล้ว ✓ (' + newLines.length + ' รายการ)');
 }}
 function vfOpenExpense(id) {{
   var exp=id?(DCS.expenses||[]).filter(function(e) {{ return e.id===id; }})[0]:null;

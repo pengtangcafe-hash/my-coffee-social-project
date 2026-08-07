@@ -417,17 +417,35 @@
       "makro_img": ""
     },
     {
-      "ing_id": "water-7eleven",
-      "label": "น้ำดื่ม 7-Eleven",
+      "ing_id": "water-7eleven-tank",
+      "label": "น้ำถังเซเว่น 6 ล.",
       "aliases": [
+        "น้ำถังเซเว่น 6 l",
+        "น้ำถังเซเว่น",
         "น้ำเปล่า 7-Eleven",
-        "น้ำดื่มเซเว่น",
+        "น้ำดื่มเซเว่น"
+      ],
+      "makro_url": "",
+      "makro_name": "",
+      "pack_qty": null,
+      "pack_unit": "ถัง",
+      "history": [],
+      "vendor": "7even",
+      "pack_label": "",
+      "makro_img": ""
+    },
+    {
+      "ing_id": "water-7eleven-pack",
+      "label": "น้ำแพ็คเซเว่น 6 แพ็ค",
+      "aliases": [
+        "น้ำแพ็คเซเว่น 6 แพ็ค",
+        "น้ำแพ็คเซเว่น",
         "น้ำ 7even"
       ],
       "makro_url": "",
       "makro_name": "",
       "pack_qty": null,
-      "pack_unit": "ขวด",
+      "pack_unit": "แพ็ค",
       "history": [],
       "vendor": "7even",
       "pack_label": "",
