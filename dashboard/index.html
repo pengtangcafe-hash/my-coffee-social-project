@@ -4043,12 +4043,17 @@ function dcSyncPull(silent) {
         dcShowEmptySheetWarn();
         return;
       }
+      // 🛡️ จำ key ที่ Sheet "ส่งมาจริง" ก่อน normalize — เพราะ dcNormalize เติม default ลง obj โดยตรง
+      //    (obj[k] จะไม่ undefined หลัง normalize → เช็คหลัง normalize จะพลาด ทำให้ activeMenus/teaBatches หายทุกซิงก์)
+      var _localKeys = ['quests','achievements','plans','loops','questLog','questHistory','questMeta','activeMenus','posMenuMap','teaBatches'];
+      var sheetHas = {};
+      _localKeys.forEach(function(k) { sheetHas[k] = (obj[k] !== undefined); });
       var prev = DCS ? dcClone(DCS) : {};
       DCS = dcNormalize(obj);
-      // posLast + quest keys: ถ้า Sheet ยังไม่มี (obj ไม่มี key) ให้เก็บของ local ไว้
+      // ฟิลด์เฉพาะเครื่อง/quest: ถ้า Sheet ไม่ได้ส่งมา (raw undefined) → คงของในเครื่องไว้ ไม่ให้ default ทับ
       DCS.posLast = prev.posLast !== undefined ? prev.posLast : null;
-      ['quests','achievements','plans','loops','questLog','questHistory','questMeta','activeMenus','posMenuMap','teaBatches'].forEach(function(k) {
-        if (obj[k] === undefined) DCS[k] = prev[k] !== undefined ? prev[k] : DCS[k];
+      _localKeys.forEach(function(k) {
+        if (!sheetHas[k]) DCS[k] = prev[k] !== undefined ? prev[k] : DCS[k];
       });
       dcSave(); renderDrinkCosts(); stkRefreshIfActive(); vfRefreshIfActive();
       if (!silent) showToast('ซิงก์จาก Google Sheet แล้ว (' + DCS.menus.length + ' เมนู)');
