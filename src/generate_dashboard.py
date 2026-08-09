@@ -2563,6 +2563,30 @@ HTML_TEMPLATE = """\
     .tea-push {{ margin-top: 12px; width: 100%; border: 1px solid #2e7d32; background: rgba(46,125,50,.08); color: #2e7d32; border-radius: 9px; padding: 9px 12px; font-size: .82rem; font-weight: 800; cursor: pointer; transition: background .15s; }}
     .tea-push:hover {{ background: #2e7d32; color: #fff; }}
 
+    /* 🎨 Menu Design — carousel 3 มิติ */
+    .md-stage {{ position: relative; height: 70vh; min-height: 460px; border-radius: 22px; overflow: hidden;
+      perspective: 1100px; background: radial-gradient(120% 90% at 50% 12%, #4a2c1f 0%, #2a1810 62%, #170d08 100%); }}
+    .md-glow {{ position: absolute; left: 50%; top: 40%; width: 62%; height: 42%; transform: translate(-50%, -50%);
+      background: radial-gradient(circle, rgba(202,128,80,.5), transparent 70%); filter: blur(34px); pointer-events: none; }}
+    .md-scroll {{ position: absolute; inset: 0; overflow-y: auto; scroll-snap-type: y mandatory;
+      scrollbar-width: none; -webkit-overflow-scrolling: touch; }}
+    .md-scroll::-webkit-scrollbar {{ display: none; }}
+    .md-pad {{ height: 33%; flex-shrink: 0; }}
+    .md-slide {{ height: 34%; min-height: 150px; display: flex; align-items: center; justify-content: center; scroll-snap-align: center; }}
+    .md-cup {{ width: min(60vw, 240px); height: min(60vw, 240px); border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      overflow: hidden; will-change: transform, opacity;
+      background: radial-gradient(circle at 34% 28%, rgba(255,255,255,.38), rgba(120,66,44,.18) 46%, rgba(58,32,20,.6) 100%);
+      box-shadow: 0 34px 70px -22px rgba(0,0,0,.78), inset 0 2px 16px rgba(255,255,255,.16); }}
+    .md-cup.md-noimg::after {{ content: attr(data-ic); font-size: clamp(60px, 16vw, 100px); line-height: 1; }}
+    .md-cup-img {{ width: 84%; height: 84%; object-fit: contain; filter: drop-shadow(0 20px 26px rgba(0,0,0,.55)); }}
+    .md-heading {{ position: absolute; left: 0; right: 0; bottom: 0; padding: 22px 20px 28px; text-align: center; pointer-events: none;
+      background: linear-gradient(to top, rgba(18,11,7,.94) 28%, rgba(18,11,7,0)); }}
+    .md-cat {{ font-size: .78rem; font-weight: 800; letter-spacing: .04em; color: #e6c9a8; margin-bottom: 6px; min-height: 1em; }}
+    .md-name {{ font-size: clamp(1.5rem, 5vw, 2.2rem); font-weight: 900; color: #fff; line-height: 1.12; text-wrap: balance; }}
+    .md-price {{ font-size: clamp(1.1rem, 3.5vw, 1.5rem); font-weight: 700; color: #f2b374; margin-top: 6px; min-height: 1em; }}
+    .md-hint {{ position: absolute; top: 14px; left: 0; right: 0; text-align: center; font-size: .72rem; color: rgba(255,255,255,.5); pointer-events: none; }}
+    @media (prefers-reduced-motion: reduce) {{ .md-cup {{ transition: none; }} }}
+
     .dc-row {{ background: var(--card); border: 1px solid var(--card-border); border-radius: 16px;
       padding: 15px 18px; cursor: pointer; transition: border-color .18s, box-shadow .18s, transform .18s; }}
     .dc-row.selling {{ border-color: rgba(46,125,50,.5); }}
@@ -2974,6 +2998,16 @@ HTML_TEMPLATE = """\
         ภาพรวม
       </button>
 
+      <div class="pt-2 pb-1">
+        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest px-4">Platforms</p>
+      </div>
+
+      {SIDEBAR_NAV_ITEMS}
+
+      <div class="pt-2 pb-1">
+        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest px-4">Idea &amp; Design</p>
+      </div>
+
       <button onclick="showView('view-quest')" id="nav-quest"
         class="nav-btn w-full text-left px-4 py-2.5 rounded-xl flex items-center gap-3
                text-slate-600 hover:bg-slate-50 transition-colors text-sm">
@@ -2984,11 +3018,15 @@ HTML_TEMPLATE = """\
         90 Days Quest
       </button>
 
-      <div class="pt-2 pb-1">
-        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest px-4">Platforms</p>
-      </div>
-
-      {SIDEBAR_NAV_ITEMS}
+      <button onclick="showView('view-menu-design')" id="nav-menu-design"
+        class="nav-btn w-full text-left px-4 py-2.5 rounded-xl flex items-center gap-3
+               text-slate-600 hover:bg-slate-50 transition-colors text-sm">
+        <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8zM6 1v3M10 1v3M14 1v3"/>
+        </svg>
+        Menu Design
+      </button>
 
       <div class="pt-2 pb-1">
         <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest px-4">Intelligence</p>
@@ -3532,6 +3570,15 @@ HTML_TEMPLATE = """\
       <div id="qst-root"></div>
     </div>
 
+    <!-- Menu Design (IDEA & DESIGN) -->
+    <div id="view-menu-design" class="view">
+      <div class="mb-4">
+        <h1 class="ov-h1">Menu Design</h1>
+        <p class="ov-sub-h">ต้นแบบดีไซน์เมนู (แรงบันดาลใจจากแอป coffee_app) — เลื่อนขึ้น–ลงดูเมนูจริงของร้านแบบ 3 มิติ</p>
+      </div>
+      <div id="md-root"></div>
+    </div>
+
   </main>
 </div>
 
@@ -3670,6 +3717,7 @@ function initCharts(viewId) {{
   if (viewId === 'view-bb-varfix') {{ try {{ renderVarfixView(); }} catch(e) {{ console.error('renderVarfixView', e); }} return; }}
   if (viewId === 'view-bb-posimport') {{ try {{ renderPosImportView(); }} catch(e) {{ console.error('renderPosImportView', e); }} return; }}
   if (viewId === 'view-quest') {{ try {{ renderQuestView(); }} catch(e) {{ console.error('renderQuestView', e); }} return; }}
+  if (viewId === 'view-menu-design') {{ try {{ renderMenuDesignView(); }} catch(e) {{ console.error('renderMenuDesignView', e); }} return; }}
   if (viewId === 'view-bb-armory') {{ return; }}
   const platform = viewId.replace('view-', '');
   if (!DATA[platform]) return;
@@ -5311,6 +5359,71 @@ function teaPushToMenu(bid) {{
   dcAfterChange();
   showToast('✅ ส่งเข้าเมนู "' + nm + '" แล้ว — ตัดสต็อกต่อแก้วได้ (วัตถุดิบ ' + recipe.length + ' รายการ)');
   renderDrinkCosts();
+}}
+
+// ══ Menu Design — ต้นแบบเมนู 3 มิติ (แรงบันดาลใจ coffee_app) ══
+var _mdMenus = [], _mdRaf = 0;
+function mdSourceMenus() {{
+  if (!DCS) dcLoadState();
+  var all = (DCS.menus || []);
+  var act = all.filter(dcIsActive);
+  return act.length ? act : all;
+}}
+function renderMenuDesignView() {{
+  var root = document.getElementById('md-root'); if (!root) return;
+  _mdMenus = mdSourceMenus();
+  if (!_mdMenus.length) {{
+    root.innerHTML = '<div class="ov-tile ov-soon"><div class="ov-soon-emoji">🎨</div><div class="ov-soon-title">ยังไม่มีเมนู</div><div class="ov-soon-sub">เพิ่มเมนูในหน้าต้นทุนเครื่องดื่มก่อน แล้วกลับมาดูที่นี่</div></div>';
+    return;
+  }}
+  var slides = _mdMenus.map(function(m, i) {{
+    var img = (m.image || '').trim();
+    var icon = (DC_CAT_ICON[dcCategoryOf(m)] || '☕');
+    var inner = img
+      ? '<img class="md-cup-img" src="' + escapeHtml(img) + '" referrerpolicy="no-referrer" loading="lazy" alt="" onerror="this.parentNode.classList.add(\\'md-noimg\\'); this.parentNode.setAttribute(\\'data-ic\\', \\'' + icon + '\\'); this.remove()">'
+      : '';
+    return '<div class="md-slide" data-i="' + i + '"><div class="md-cup' + (img ? '' : ' md-noimg') + '" data-ic="' + icon + '">' + inner + '</div></div>';
+  }}).join('');
+  root.innerHTML =
+    '<div class="md-stage">'
+    + '<div class="md-glow"></div>'
+    + '<div class="md-scroll" id="md-scroll"><div class="md-pad"></div>' + slides + '<div class="md-pad"></div></div>'
+    + '<div class="md-heading"><div class="md-cat" id="md-cat"></div><div class="md-name" id="md-name"></div><div class="md-price" id="md-price"></div></div>'
+    + '<div class="md-hint">เลื่อนขึ้น–ลง ↕ (' + _mdMenus.length + ' เมนู)</div>'
+    + '</div>';
+  var sc = document.getElementById('md-scroll');
+  if (sc) {{ sc.addEventListener('scroll', mdOnScroll, {{ passive: true }}); requestAnimationFrame(mdUpdate); }}
+}}
+function mdOnScroll() {{ if (_mdRaf) return; _mdRaf = requestAnimationFrame(function() {{ _mdRaf = 0; mdUpdate(); }}); }}
+function mdUpdate() {{
+  var sc = document.getElementById('md-scroll'); if (!sc) return;
+  var rect = sc.getBoundingClientRect();
+  var focus = rect.top + rect.height * 0.40;
+  var slides = sc.querySelectorAll('.md-slide');
+  var best = -1, bestAd = 1e9;
+  slides.forEach(function(sl, i) {{
+    var r = sl.getBoundingClientRect();
+    var c = r.top + r.height / 2;
+    var d = (c - focus) / rect.height;
+    var ad = Math.abs(d);
+    var scale = Math.max(0.4, 1 - ad * 0.85);
+    var op = Math.max(0.12, 1 - ad * 1.15);
+    var cup = sl.querySelector('.md-cup');
+    if (cup) {{
+      cup.style.transform = 'translateY(' + (d * 42).toFixed(1) + 'px) scale(' + scale.toFixed(3) + ')';
+      cup.style.opacity = op.toFixed(3);
+      cup.style.zIndex = String(1000 - Math.round(ad * 1000));
+    }}
+    if (ad < bestAd) {{ bestAd = ad; best = i; }}
+  }});
+  if (best >= 0 && _mdMenus[best]) mdHeading(_mdMenus[best]);
+}}
+function mdHeading(m) {{
+  var cat = dcCategoryOf(m);
+  var ce = document.getElementById('md-cat'), ne = document.getElementById('md-name'), pe = document.getElementById('md-price');
+  if (ce) ce.textContent = (DC_CAT_ICON[cat] || '') + ' ' + (DC_CAT_LABEL[cat] || '');
+  if (ne) ne.textContent = m.name || '';
+  if (pe) {{ var pr = (m.prices && m.prices.store != null) ? m.prices.store : null; pe.textContent = pr != null ? ('฿' + pr) : ''; }}
 }}
 
 function renderDrinkCosts() {{
