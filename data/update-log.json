@@ -999,6 +999,58 @@
         "ราคาเปลี่ยน: นมข้นจืด Falcon 58->56 (ลด9%), นมข้นหวาน 23.63->23.65, ไซรัปมะพร้าว 72->80 (ขึ้น), ไซรัปไวท์ช็อค 254->280 (ขึ้น); อีก 14 รายการราคาเท่าเดิม"
       ],
       "count": 18
+    },
+    {
+      "id": "20260811-230541",
+      "ts": "2026-08-11T23:05:41",
+      "date_th": "11 ส.ค. 2569",
+      "time_th": "23:05",
+      "category": "platform",
+      "scope": "facebook",
+      "action": "import",
+      "summary": "นำเข้าข้อมูล Facebook (140 แถว)",
+      "details": [],
+      "count": 140
+    },
+    {
+      "id": "20260811-230541",
+      "ts": "2026-08-11T23:05:41",
+      "date_th": "11 ส.ค. 2569",
+      "time_th": "23:05",
+      "category": "platform",
+      "scope": "instagram",
+      "action": "import",
+      "summary": "นำเข้าข้อมูล Instagram (140 แถว)",
+      "details": [],
+      "count": 140
+    },
+    {
+      "id": "20260811-230541",
+      "ts": "2026-08-11T23:05:41",
+      "date_th": "11 ส.ค. 2569",
+      "time_th": "23:05",
+      "category": "platform",
+      "scope": "tiktok",
+      "action": "import",
+      "summary": "นำเข้าข้อมูล TikTok (365 แถว)",
+      "details": [],
+      "count": 365
+    },
+    {
+      "id": "20260811-230602",
+      "ts": "2026-08-11T23:06:02",
+      "date_th": "11 ส.ค. 2569",
+      "time_th": "23:06",
+      "category": "intel",
+      "scope": "ร้านกาแฟ สกลนคร",
+      "action": "research",
+      "summary": "ค้นข้อมูลตลาด/คู่แข่ง: ร้านกาแฟ ที่สกลนคร — เจอคู่แข่งใหม่ 2 ร้าน + เทรนด์ Specialty/Gen Z 2026 + Thailand Coffee Fest 2026",
+      "details": [
+        "คู่แข่งใหม่: The House Cafe, Kraam House Cafe",
+        "Thailand Coffee Fest 2026: 10-13 ก.ย. ที่ IMPACT Hall 5",
+        "เทรนด์ Gen Z + World of Coffee Bangkok 2026 (เจ้าภาพครั้งแรกในไทย)"
+      ],
+      "count": null
     }
   ]
 }
