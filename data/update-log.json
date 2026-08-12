@@ -1065,6 +1065,57 @@
         "ราคาเปลี่ยน: นมข้นหวาน(คาเนชัน) 23.65→23.63 บาท/ซอง (ลง); ที่เหลือ 17 รายการราคาเท่าเดิม"
       ],
       "count": 18
+    },
+    {
+      "id": "20260813-003920",
+      "ts": "2026-08-13T00:39:20",
+      "date_th": "13 ส.ค. 2569",
+      "time_th": "00:39",
+      "category": "platform",
+      "scope": "facebook",
+      "action": "import",
+      "summary": "นำเข้าข้อมูล Facebook (140 แถว)",
+      "details": [],
+      "count": 140
+    },
+    {
+      "id": "20260813-003920",
+      "ts": "2026-08-13T00:39:20",
+      "date_th": "13 ส.ค. 2569",
+      "time_th": "00:39",
+      "category": "platform",
+      "scope": "instagram",
+      "action": "import",
+      "summary": "นำเข้าข้อมูล Instagram (140 แถว)",
+      "details": [],
+      "count": 140
+    },
+    {
+      "id": "20260813-003920",
+      "ts": "2026-08-13T00:39:20",
+      "date_th": "13 ส.ค. 2569",
+      "time_th": "00:39",
+      "category": "platform",
+      "scope": "tiktok",
+      "action": "import",
+      "summary": "นำเข้าข้อมูล TikTok (365 แถว)",
+      "details": [],
+      "count": 365
+    },
+    {
+      "id": "20260813-003949",
+      "ts": "2026-08-13T00:39:49",
+      "date_th": "13 ส.ค. 2569",
+      "time_th": "00:39",
+      "category": "intel",
+      "scope": "วิเคราะห์เชิงลึก 6 มิติ",
+      "action": "research",
+      "summary": "วิเคราะห์คู่แข่งเชิงลึก Café Jackies สกลนคร (6 มิติ)",
+      "details": [
+        "คู่แข่งเปลี่ยนแปลงมากสุด: Café Jackies — คอนเซปต์ใหม่ Taylor Swift fan café, กระแสไวรัล ที่จอดรถล้น",
+        "delivery: LINE MAN ผ่าน Wongnai, ยังไม่พบ GrabFood/ShopeeFood"
+      ],
+      "count": 1
     }
   ]
 }
