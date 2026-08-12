@@ -1116,6 +1116,21 @@
         "delivery: LINE MAN ผ่าน Wongnai, ยังไม่พบ GrabFood/ShopeeFood"
       ],
       "count": 1
+    },
+    {
+      "id": "20260813-004509",
+      "ts": "2026-08-13T00:45:09",
+      "date_th": "13 ส.ค. 2569",
+      "time_th": "00:45",
+      "category": "intel",
+      "scope": "วิเคราะห์เชิงลึก 6 มิติ",
+      "action": "research",
+      "summary": "วิเคราะห์คู่แข่งเชิงลึก SIP ONE / SIP-1 Slowbar สกลนคร (6 มิติ)",
+      "details": [
+        "ไม่พบการเปลี่ยนแปลงเนื้อหาที่ยืนยันได้ — รีเช็ควันที่ verified เท่านั้น",
+        "delivery: ยังไม่พบบน LINE MAN/GrabFood/ShopeeFood เน้น dine-in"
+      ],
+      "count": 1
     }
   ]
 }
