@@ -1712,12 +1712,17 @@ def run_normalize_all(input_path: str) -> list[tuple[str, Path]]:
 # ─────────────────────────────────────────────────────────────
 
 def load_all_history(today: str) -> dict[str, dict]:
-    """Load all platform JSONs from data/history/ for today. Returns {platform: {...}}."""
+    """Load platform JSONs from data/history/. ใช้ไฟล์ของวันนี้ถ้ามี ไม่งั้น fallback ไปไฟล์ล่าสุดที่มี
+    (กันแพลตฟอร์มหายไปทั้งแถบ ถ้าวันนั้นมีแค่บางแพลตฟอร์มที่อัปเดต เช่น TikTok ดึงอัตโนมัติทุกวัน
+    แต่ Facebook/Instagram ยังอัปเดตมือเป็นครั้งคราว). Returns {platform: {...}}."""
     history_dir = PROJECT_ROOT / "data" / "history"
     loaded = {}
     for platform in PLATFORM_LABELS:
         json_path = history_dir / f"{platform}_{today}.json"
-        if json_path.exists():
+        if not json_path.exists():
+            candidates = sorted(history_dir.glob(f"{platform}_*.json"))
+            json_path = candidates[-1] if candidates else None
+        if json_path and json_path.exists():
             with open(json_path, encoding="utf-8") as f:
                 loaded[platform] = json.load(f)
             print(f"[load] {json_path.name}  ({loaded[platform]['row_count']} rows)")
@@ -1822,6 +1827,61 @@ def build_platform_data(platform: str, raw: dict) -> dict:
             "colors": dough_colors,
         },
         "table": table_rows,
+    }
+
+
+def compute_period_comparison(all_history: dict[str, dict]) -> dict:
+    """เทียบยอดดู (reach) สัปดาห์นี้ vs สัปดาห์ที่แล้ว, เดือนนี้ vs เดือนที่แล้ว — ต่อแพลตฟอร์ม + รวมทุกแพลตฟอร์ม
+    สัปดาห์ = จันทร์-อาทิตย์ตามปฏิทิน, เดือน = วันที่ 1 ถึงสิ้นเดือนตามปฏิทิน (เดือนนี้นับถึงวันนี้เท่านั้น เพราะยังไม่จบเดือน)"""
+    today = pd.Timestamp.now().normalize()
+    this_week_start = today - pd.Timedelta(days=today.dayofweek)
+    last_week_start = this_week_start - pd.Timedelta(days=7)
+    last_week_end = this_week_start - pd.Timedelta(days=1)
+    this_month_start = today.replace(day=1)
+    last_month_end = this_month_start - pd.Timedelta(days=1)
+    last_month_start = last_month_end.replace(day=1)
+
+    def sum_range(df, start, end):
+        if df.empty or "reach" not in df.columns:
+            return 0
+        mask = (df["date"] >= start) & (df["date"] <= end)
+        return _safe_int(df.loc[mask, "reach"].sum())
+
+    def pct_change(cur, prev):
+        if prev == 0:
+            return None if cur == 0 else 100.0
+        return round((cur - prev) / prev * 100, 1)
+
+    per_platform = {}
+    combined = {"this_week": 0, "last_week": 0, "this_month": 0, "last_month": 0}
+
+    for platform, raw in all_history.items():
+        df = pd.DataFrame(raw["data"])
+        if not df.empty:
+            df["date"] = pd.to_datetime(df["date"])
+
+        tw = sum_range(df, this_week_start, today)
+        lw = sum_range(df, last_week_start, last_week_end)
+        tm = sum_range(df, this_month_start, today)
+        lm = sum_range(df, last_month_start, last_month_end)
+
+        per_platform[platform] = {
+            "this_week": tw, "last_week": lw,
+            "this_month": tm, "last_month": lm,
+            "week_change_pct": pct_change(tw, lw),
+            "month_change_pct": pct_change(tm, lm),
+        }
+        for key in ("this_week", "last_week", "this_month", "last_month"):
+            combined[key] += per_platform[platform][key]
+
+    combined["week_change_pct"] = pct_change(combined["this_week"], combined["last_week"])
+    combined["month_change_pct"] = pct_change(combined["this_month"], combined["last_month"])
+
+    return {
+        "combined": combined,
+        "platforms": per_platform,
+        "labels": {p: PLATFORM_LABELS.get(p, p) for p in per_platform},
+        "colors": {p: PLATFORM_COLORS.get(p, "#888") for p in per_platform},
     }
 
 
@@ -2294,6 +2354,25 @@ HTML_TEMPLATE = """\
     .ov-plat-numl {{ font-size: .72rem; color: var(--text-muted); margin-top: 3px; }}
     .ov-spark {{ width: 100%; height: 42px; margin-top: 14px; display: block; }}
     .ov-spark path.line {{ fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }}
+
+    /* Week/month comparison */
+    .ov-wm-hero {{ display: flex; align-items: baseline; gap: 10px; margin-bottom: 16px; }}
+    .ov-wm-num {{ font-size: 2.1rem; font-weight: 900; letter-spacing: -0.02em; line-height: 1;
+      color: var(--text); font-variant-numeric: tabular-nums; }}
+    .ov-wm-delta {{ font-size: .8rem; font-weight: 800; padding: 3px 10px; border-radius: 999px;
+      font-variant-numeric: tabular-nums; }}
+    .ov-wm-delta.up {{ background: rgba(22,163,74,.12); color: #16a34a; }}
+    .ov-wm-delta.down {{ background: rgba(220,38,38,.12); color: #dc2626; }}
+    .ov-wm-delta.flat {{ background: var(--nav-active); color: var(--text-muted); }}
+    .ov-wm-prev {{ font-size: .76rem; color: var(--text-muted); margin-top: 2px; }}
+    .ov-wm-plats {{ display: flex; flex-direction: column; gap: 10px; }}
+    .ov-wm-row {{ display: grid; grid-template-columns: 96px 1fr auto; align-items: center; gap: 12px; }}
+    .ov-wm-name {{ display: inline-flex; align-items: center; gap: 8px; font-weight: 600;
+      font-size: .82rem; color: var(--text); }}
+    .ov-wm-track {{ height: 8px; border-radius: 999px; background: var(--nav-active); overflow: hidden; }}
+    .ov-wm-fill {{ height: 100%; width: 0; border-radius: 999px; transition: width 1s cubic-bezier(.22,1,.36,1); }}
+    .ov-wm-val {{ font-weight: 700; font-size: .8rem; font-variant-numeric: tabular-nums;
+      color: var(--text); min-width: 56px; text-align: right; }}
 
     /* Showdown */
     .ov-showdown-tabs {{ display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 18px; }}
@@ -3325,6 +3404,20 @@ HTML_TEMPLATE = """\
         <div class="ov-bars" id="ov-showdown-bars"></div>
       </div>
 
+      <!-- Row 4: week/month comparison -->
+      <div class="ov-grid mb-4">
+        <div class="ov-tile ov-anim" style="--d:6">
+          <div class="ov-tile-h">📅 สัปดาห์นี้ vs สัปดาห์ที่แล้ว</div>
+          <div class="ov-wm-hero" id="ov-week-hero"></div>
+          <div class="ov-wm-plats" id="ov-week-plats"></div>
+        </div>
+        <div class="ov-tile ov-anim" style="--d:7">
+          <div class="ov-tile-h">🗓️ เดือนนี้ vs เดือนที่แล้ว</div>
+          <div class="ov-wm-hero" id="ov-month-hero"></div>
+          <div class="ov-wm-plats" id="ov-month-plats"></div>
+        </div>
+      </div>
+
     </div>
 
     <!-- ── Platform Views (injected) ── -->
@@ -3678,6 +3771,7 @@ HTML_TEMPLATE = """\
 // ── Injected data ──
 const DATA = {DATA_JSON};
 const COMP = {COMP_JSON};
+const WM = {WM_JSON};
 const PLATFORMS = {PLATFORMS_JSON};
 const INTEL = {INTEL_JSON};
 const TRACKER = {TRACKER_JSON};
@@ -3925,6 +4019,55 @@ function ovRenderShowdown(animate) {{
   }});
 }}
 
+function ovWmDeltaBadge(pct) {{
+  if (pct === null || pct === undefined) return '<span class="ov-wm-delta flat">ใหม่</span>';
+  const cls = pct > 0 ? 'up' : (pct < 0 ? 'down' : 'flat');
+  const arrow = pct > 0 ? '▲' : (pct < 0 ? '▼' : '—');
+  return '<span class="ov-wm-delta ' + cls + '">' + arrow + ' ' + Math.abs(pct).toFixed(1) + '%</span>';
+}}
+
+function ovRenderWeekMonth(animate) {{
+  if (!WM || !WM.combined) return;
+  const labels = WM.labels || {{}}, colors = WM.colors || {{}}, plats = WM.platforms || {{}};
+  const platformKeys = Object.keys(plats);
+
+  [['week', 'this_week', 'last_week'], ['month', 'this_month', 'last_month']].forEach(function(cfg) {{
+    const period = cfg[0], curKey = cfg[1], prevKey = cfg[2];
+    const c = WM.combined;
+    const heroEl = document.getElementById('ov-' + period + '-hero');
+    if (heroEl) {{
+      heroEl.innerHTML = '<span class="ov-wm-num" data-count="' + c[curKey] + '">0</span>'
+        + ovWmDeltaBadge(c[period + '_change_pct']);
+    }}
+
+    const rowsEl = document.getElementById('ov-' + period + '-plats');
+    if (rowsEl) {{
+      const maxV = Math.max.apply(null, platformKeys.map(function(p) {{ return plats[p][curKey]; }}).concat([1]));
+      rowsEl.innerHTML = platformKeys.map(function(p) {{
+        const v = plats[p][curKey];
+        const w = (v / maxV * 100);
+        return '<div class="ov-wm-row">'
+          + '<span class="ov-wm-name"><span class="ov-plat-dot" style="background:' + colors[p] + '"></span>' + labels[p] + '</span>'
+          + '<div class="ov-wm-track"><div class="ov-wm-fill" data-w="' + w.toFixed(2) + '" style="background:' + colors[p] + '"></div></div>'
+          + '<span class="ov-wm-val">' + ovFmtInt(v) + '</span>'
+        + '</div>';
+      }}).join('');
+      const fills = rowsEl.querySelectorAll('.ov-wm-fill');
+      requestAnimationFrame(function() {{
+        fills.forEach(function(f) {{
+          const w = f.getAttribute('data-w') + '%';
+          if (animate) {{ f.style.width = '0%'; requestAnimationFrame(function() {{ f.style.width = w; }}); }}
+          else f.style.width = w;
+        }});
+      }});
+    }}
+  }});
+
+  document.querySelectorAll('.ov-wm-num').forEach(function(el) {{
+    ovAnimateCount(el, Number(el.getAttribute('data-count')), animate ? 1100 : 0);
+  }});
+}}
+
 function initHomeOverview() {{
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const intro = !homeIntroPlayed && !reduce;
@@ -3991,6 +4134,7 @@ function initHomeOverview() {{
   ovRenderShareDonut(intro);
   ovRenderShowdownTabs();
   ovRenderShowdown(intro);
+  ovRenderWeekMonth(intro);
 
   homeIntroPlayed = true;
 }}
@@ -9434,6 +9578,7 @@ dcAutoPullOnBoot();
 
 def build_html(all_history: dict[str, dict], generated_at: str) -> str:
     data_json, comp_json = build_data_json(all_history)
+    wm_json = json.dumps(compute_period_comparison(all_history), ensure_ascii=False)
     platforms_json = json.dumps(list(all_history.keys()), ensure_ascii=False)
     intel_json = json.dumps(load_intel_json(), ensure_ascii=False)
     tracker_json = json.dumps(load_tracker_json(), ensure_ascii=False)
@@ -9457,6 +9602,7 @@ def build_html(all_history: dict[str, dict], generated_at: str) -> str:
     return HTML_TEMPLATE.format(
         DATA_JSON=data_json,
         COMP_JSON=comp_json,
+        WM_JSON=wm_json,
         PLATFORMS_JSON=platforms_json,
         INTEL_JSON=intel_json,
         TRACKER_JSON=tracker_json,
