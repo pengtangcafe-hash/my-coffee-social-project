@@ -66,7 +66,12 @@ def refresh_access_token(env: dict) -> str:
         raise RuntimeError(f"Refresh token ล้มเหลว: {data}")
 
     # TikTok ออก refresh_token ใหม่ทุกครั้งที่ใช้ — ต้องบันทึกกลับไปแทนอันเก่า ไม่งั้นรันครั้งถัดไปจะพัง
+    # นับอายุ refresh_token ใหม่จากวันนี้ทุกครั้ง (refresh_expires_in รีเซ็ตทุกครั้งที่ใช้จริง —
+    # แปลว่าถ้าสคริปต์รันสม่ำเสมอ นับถอยหลังจะรีเซ็ตตลอด แทบไม่มีทางหมดอายุจริง
+    # จะหมดอายุก็ต่อเมื่อ "ไม่ได้รันเลย" นานเกินจำนวนวันที่ TikTok กำหนดไว้)
     env["TIKTOK_REFRESH_TOKEN"] = data["refresh_token"]
+    env["TIKTOK_TOKEN_ISSUED_AT"] = datetime.now().strftime("%Y-%m-%d")
+    env["TIKTOK_REFRESH_VALID_DAYS"] = str(data.get("refresh_expires_in", 31536000) // 86400)
     save_env(ENV_PATH, env)
 
     return data["access_token"]

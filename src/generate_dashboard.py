@@ -1830,6 +1830,37 @@ def build_platform_data(platform: str, raw: dict) -> dict:
     }
 
 
+def load_tiktok_token_status() -> dict:
+    """อ่านวันที่ออก refresh_token ล่าสุดจาก .env → คำนวณจำนวนวันที่เหลือก่อนหมดอายุ
+    (fetch_tiktok.py จะรีเซ็ตวันที่นี้ทุกครั้งที่รันสำเร็จ — ถ้าหยุดรันนานเกินจำนวนวันที่กำหนด token จะหมดอายุจริง)"""
+    env_path = PROJECT_ROOT / ".env"
+    env = {}
+    if env_path.exists():
+        for line in env_path.read_text(encoding="utf-8").splitlines():
+            line = line.strip()
+            if not line or line.startswith("#") or "=" not in line:
+                continue
+            k, v = line.split("=", 1)
+            env[k.strip()] = v.strip()
+
+    issued_at = env.get("TIKTOK_TOKEN_ISSUED_AT")
+    valid_days = int(env.get("TIKTOK_REFRESH_VALID_DAYS", 365) or 365)
+    if not issued_at:
+        return {"configured": False}
+
+    issued_dt = datetime.strptime(issued_at, "%Y-%m-%d")
+    expires_dt = issued_dt + pd.Timedelta(days=valid_days)
+    days_left = (expires_dt - datetime.now()).days
+
+    return {
+        "configured": True,
+        "issued_at": issued_at,
+        "expires_at": expires_dt.strftime("%Y-%m-%d"),
+        "valid_days": valid_days,
+        "days_left": days_left,
+    }
+
+
 def compute_period_comparison(all_history: dict[str, dict]) -> dict:
     """เทียบยอดดู (reach) สัปดาห์นี้ vs สัปดาห์ที่แล้ว, เดือนนี้ vs เดือนที่แล้ว — ต่อแพลตฟอร์ม + รวมทุกแพลตฟอร์ม
     สัปดาห์ = จันทร์-อาทิตย์ตามปฏิทิน, เดือน = วันที่ 1 ถึงสิ้นเดือนตามปฏิทิน (เดือนนี้นับถึงวันนี้เท่านั้น เพราะยังไม่จบเดือน)"""
@@ -2373,6 +2404,19 @@ HTML_TEMPLATE = """\
     .ov-wm-fill {{ height: 100%; width: 0; border-radius: 999px; transition: width 1s cubic-bezier(.22,1,.36,1); }}
     .ov-wm-val {{ font-weight: 700; font-size: .8rem; font-variant-numeric: tabular-nums;
       color: var(--text); min-width: 56px; text-align: right; }}
+
+    /* TikTok token status strip */
+    .ov-token {{ display: flex; align-items: center; gap: 14px; padding: 14px 18px; border-radius: 14px;
+      font-size: .82rem; margin-bottom: 4px; }}
+    .ov-token.ok {{ background: rgba(22,163,74,.08); border: 1px solid rgba(22,163,74,.22); }}
+    .ov-token.warn {{ background: rgba(217,119,6,.09); border: 1px solid rgba(217,119,6,.25); }}
+    .ov-token.danger {{ background: rgba(220,38,38,.09); border: 1px solid rgba(220,38,38,.25); }}
+    .ov-token-days {{ font-weight: 900; font-size: 1.1rem; flex-shrink: 0; font-variant-numeric: tabular-nums; }}
+    .ov-token.ok .ov-token-days {{ color: #16a34a; }}
+    .ov-token.warn .ov-token-days {{ color: #d97706; }}
+    .ov-token.danger .ov-token-days {{ color: #dc2626; }}
+    .ov-token-text {{ color: var(--text-muted); line-height: 1.5; }}
+    .ov-token-text b {{ color: var(--text); }}
 
     /* Showdown */
     .ov-showdown-tabs {{ display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 18px; }}
@@ -3418,6 +3462,9 @@ HTML_TEMPLATE = """\
         </div>
       </div>
 
+      <!-- Row 5: TikTok API token status -->
+      <div id="ov-token-status" class="ov-anim" style="--d:8"></div>
+
     </div>
 
     <!-- ── Platform Views (injected) ── -->
@@ -3772,6 +3819,7 @@ HTML_TEMPLATE = """\
 const DATA = {DATA_JSON};
 const COMP = {COMP_JSON};
 const WM = {WM_JSON};
+const TOKEN_STATUS = {TOKEN_STATUS_JSON};
 const PLATFORMS = {PLATFORMS_JSON};
 const INTEL = {INTEL_JSON};
 const TRACKER = {TRACKER_JSON};
@@ -4068,6 +4116,32 @@ function ovRenderWeekMonth(animate) {{
   }});
 }}
 
+function ovRenderTokenStatus() {{
+  const el = document.getElementById('ov-token-status');
+  if (!el || !TOKEN_STATUS || !TOKEN_STATUS.configured) return;
+
+  const days = TOKEN_STATUS.days_left;
+  let cls, icon, text;
+  if (days > 30) {{
+    cls = 'ok'; icon = '🔑';
+    text = 'TikTok token ยังใช้ได้ปกติ — ' + '<b>รันคำสั่ง <code>/update-tiktok</code> เป็นประจำ</b> แล้วนับถอยหลังจะรีเซ็ตเองทุกครั้งที่รันสำเร็จ แทบไม่มีทางหมดอายุจริง';
+  }} else if (days > 7) {{
+    cls = 'warn'; icon = '⚠️';
+    text = 'เหลือไม่ถึงเดือน — <b>รันคำสั่ง <code>/update-tiktok</code> เร็วๆ นี้</b> เพื่อรีเซ็ตอายุ token ให้ยาวไปอีก ' + TOKEN_STATUS.valid_days + ' วัน ไม่งั้นข้อมูล TikTok จะดึงอัตโนมัติไม่ได้อีก';
+  }} else if (days > 0) {{
+    cls = 'danger'; icon = '🚨';
+    text = 'ใกล้หมดอายุมาก — <b>รันคำสั่ง <code>/update-tiktok</code> ด่วน</b> ถ้าปล่อยจนหมดอายุ ต้องขอลิงก์ authorize ใหม่จาก TikTok Developer Portal อีกครั้ง (ขั้นตอนเดิมตอนตั้งค่าครั้งแรก)';
+  }} else {{
+    cls = 'danger'; icon = '⛔';
+    text = '<b>Token หมดอายุแล้ว</b> — ดึงข้อมูล TikTok อัตโนมัติไม่ได้จนกว่าจะขอลิงก์ authorize ใหม่จาก TikTok Developer Portal (ล็อกอินด้วยบัญชี Sandbox target user แล้วขอ auth code ใหม่ให้ผมแลกเป็น token)';
+  }}
+
+  el.className = 'ov-anim ov-token ' + cls;
+  el.innerHTML = '<span style="font-size:1.3rem">' + icon + '</span>'
+    + '<span class="ov-token-days">' + (days > 0 ? days + ' วัน' : 'หมดอายุแล้ว') + '</span>'
+    + '<span class="ov-token-text">' + text + '</span>';
+}}
+
 function initHomeOverview() {{
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const intro = !homeIntroPlayed && !reduce;
@@ -4135,6 +4209,7 @@ function initHomeOverview() {{
   ovRenderShowdownTabs();
   ovRenderShowdown(intro);
   ovRenderWeekMonth(intro);
+  ovRenderTokenStatus();
 
   homeIntroPlayed = true;
 }}
@@ -9579,6 +9654,7 @@ dcAutoPullOnBoot();
 def build_html(all_history: dict[str, dict], generated_at: str) -> str:
     data_json, comp_json = build_data_json(all_history)
     wm_json = json.dumps(compute_period_comparison(all_history), ensure_ascii=False)
+    token_status_json = json.dumps(load_tiktok_token_status(), ensure_ascii=False)
     platforms_json = json.dumps(list(all_history.keys()), ensure_ascii=False)
     intel_json = json.dumps(load_intel_json(), ensure_ascii=False)
     tracker_json = json.dumps(load_tracker_json(), ensure_ascii=False)
@@ -9603,6 +9679,7 @@ def build_html(all_history: dict[str, dict], generated_at: str) -> str:
         DATA_JSON=data_json,
         COMP_JSON=comp_json,
         WM_JSON=wm_json,
+        TOKEN_STATUS_JSON=token_status_json,
         PLATFORMS_JSON=platforms_json,
         INTEL_JSON=intel_json,
         TRACKER_JSON=tracker_json,

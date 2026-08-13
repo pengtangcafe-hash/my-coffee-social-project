@@ -1,0 +1,42 @@
+ดึงข้อมูล TikTok อัตโนมัติผ่าน API (แทน export CSV มือ) แล้ว push ขึ้น GitHub
+
+ใช้ `src/fetch_tiktok.py` ดึงยอดวิว/ไลค์/คอมเมนต์/แชร์จาก TikTok API จริง (เก็บ snapshot รายวันใน
+`data/tiktok-raw-snapshots/` แล้วคำนวณผลต่างจากเมื่อวานเอง เพราะ API ให้แค่ยอดสะสม ไม่มีรายวัน)
+credential อยู่ใน `.env` (TIKTOK_CLIENT_KEY / TIKTOK_CLIENT_SECRET / TIKTOK_REFRESH_TOKEN — ห้าม commit)
+
+## ขั้นตอน
+
+1. **ดึงข้อมูล TikTok**
+   ```
+   python src/fetch_tiktok.py
+   ```
+   ถ้า error เรื่อง refresh token หมดอายุ/ใช้ไม่ได้ → ต้องขอ auth code ใหม่จากผู้ใช้ (ดูขั้นตอนใน
+   ประวัติแชทที่ตั้งค่าครั้งแรก — ต้องเปิดลิงก์ authorize ใหม่ เพราะ refresh_token มีอายุ ~365 วัน)
+
+2. **Rebuild + คัดลอกไป docs/** (⚠️ ห้ามลืม — GitHub Pages เสิร์ฟจาก `docs/` ไม่ใช่ `dashboard/`)
+   ```
+   python src/generate_dashboard.py --rebuild
+   copy dashboard\index.html docs\index.html
+   ```
+
+3. **บันทึก log การอัปเดต**
+   ```
+   python src/update_log.py add --category platform --action "ดึงข้อมูล TikTok" --scope "TikTok" --summary "ดึงยอดวิว/ไลค์/คอมเมนต์/แชร์จาก TikTok API — [วันที่]" --count 1
+   ```
+   แล้ว rebuild ซ้ำหนึ่งครั้งให้ badge "อัปเดตล่าสุด" ขยับ:
+   ```
+   python src/generate_dashboard.py --rebuild
+   copy dashboard\index.html docs\index.html
+   ```
+
+4. **Push ขึ้น GitHub**
+   ```
+   git add data/history/tiktok_*.json data/tiktok-raw-snapshots/ data/update-log.json dashboard/index.html docs/index.html
+   git commit -m "feat: ดึงข้อมูล TikTok อัตโนมัติ — [YYYY-MM-DD]"
+   git push origin master
+   ```
+
+5. **สรุปใน chat:**
+   - ยอดวันนี้ (reach/likes/comments/shares) ที่ดึงได้
+   - GitHub Pages: `https://pengtangcafe-hash.github.io/my-coffee-social-project/`
+   - เตือนกด Ctrl+Shift+R
