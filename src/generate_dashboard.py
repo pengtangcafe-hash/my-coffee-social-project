@@ -72,6 +72,21 @@ DOUGHNUT_DEF = {
 # ── Intel / Market Intelligence fallback data ──
 INTEL_DATA_FALLBACK = [
     {
+        "id": "own-brand-pengtang-slowbar",
+        "category": "own_brand",
+        "title": "เพิ่งตั้ง สโลว์บาร์กาแฟ (แบรนด์ของเราเอง — Verified 13 Aug 2026)",
+        "summary": "แบรนด์/ร้านใหม่ของเราเอง (ไม่ใช่คู่แข่ง) · เพิ่งเปิดตัว ก.ค. 2026 · โซนธาตุนาเวง เมืองสกลนคร (โซนเดียวกับ Café Jackies) · ตอนนี้เน้นรับงาน event/catering มากกว่าหน้าร้านประจำ · FB 64 followers · TikTok @pengtang.coffee 10 followers · Google Maps ลงทะเบียนแล้วแต่ยังไม่มีเวลาทำการ/เว็บไซต์/รีวิว",
+        "updated": "13 Aug 2026",
+        "source_url": "https://www.facebook.com/profile.php?id=61556727135224",
+        "thumbnail_url": "",
+        "tags": ["แบรนด์ของเรา", "สกลนคร", "Slow bar", "เปิดใหม่", "Facebook", "TikTok", "Google Maps"],
+        "relevance": "high",
+        "detail": "เพิ่งตั้ง สโลว์บาร์กาแฟ (เพิ่งตั้ง Coffee slowbar) — แบรนด์/กิจการใหม่ของเราเอง แยกจากรายการคู่แข่งโดยเจตนา (ใช้สำหรับติดตามสถานะการเปิดตัวของแบรนด์เราเอง ไม่ใช่ competitive intelligence)\n\nConcept/Tagline: 'เพิ่งตั้ง : วันนี้ เดี๋ยวนี้ ตอนนี้ เพราะเพิ่งตั้ง' — คำเล่นคำจากชื่อร้าน ใช้ทั้งบน Facebook และ TikTok\n\nที่ตั้ง (Google Maps): ตำบลธาตุนาเวง อำเภอเมืองสกลนคร 47000 (Plus code 53MV+C4) — ปักหมุดแล้วแต่ยังไม่ระบุที่อยู่เต็ม/เวลาทำการ/เว็บไซต์ · โทร 096-723-5838 · รองรับ LGBTQ+ · มีทั้งนั่งร้าน + สั่งกลับบ้าน\nที่อยู่บน Facebook เขียนแบบกวนๆ ว่า 'ร้านกาแฟเล็กๆกลางเมืองใหญ่'\n\nสถานะการเปิดตัว (ไทม์ไลน์จาก Facebook):\n• 15 ก.ค. 2026 — โพสต์ teaser 'เตรียมพับกบ แฮร่! แล้วพบกันเร็วๆ นี้ค้าบ' (ก่อนเปิดตัว)\n• 23 ก.ค. 2026 — งานแรก: รับจัด Coffee Break ให้ร้านอาหาร 'YEP' ที่เทศบาลนครสกลนคร (event/catering model) — มีคอมเมนต์จาก YEP ว่า 'ไปอีกค้าบ' (สนใจจ้างต่อ)\n\nSocial Presence (ณ 13 ส.ค. 2026 — สแกนผ่านเบราว์เซอร์จริงเพราะ Facebook/TikTok บล็อกการเข้าถึงแบบไม่ล็อกอิน):\n• Facebook: 64 followers, กำลังติดตาม 9 · ยังไม่มีคะแนนรีวิว (0 รีวิว) · ระดับราคา ฿฿\n• TikTok: @pengtang.coffee — 10 followers, 10 likes, ยังไม่มีคลิปโพสต์ (บัญชีใหม่มาก)\n• Google Maps: ลงทะเบียนธุรกิจแล้ว แต่ยังไม่มีรีวิว/เวลาทำการ/เว็บไซต์ — ร้านใกล้เคียงที่ Google แนะนำคู่กัน ได้แก่ เพชร, คณิน SlowBar, เพิ่งตื่น Coffee Slowbar (คนละร้านกับเรา ชื่อคล้ายกันเฉยๆ), P.Pool Coffee, Slow bar\n\nสิ่งที่ควรทำต่อ (ยังไม่ทำ):\n• เพิ่มเวลาทำการ + เว็บไซต์/ที่อยู่เต็มบน Google Maps\n• ตัดสินใจโมเดล: เน้น event/catering ต่อ หรือเปิดหน้าร้านประจำ\n• เริ่มโพสต์ TikTok (ตอนนี้มีแค่บัญชีเปล่า)",
+        "pricing": {"espresso":{"price":"","note":""},"americano":{"price":"","note":""},"latte":{"price":"","note":""},"cappuccino":{"price":"","note":""},"cold_brew":{"price":"","note":""},"frappe":{"price":"","note":""},"matcha":{"price":"","note":""},"signature_drink":{"price":"","note":""},"food":{"price":"","note":""},"other":[]},
+        "strengths": [], "promotions": [],
+        "social_trend": {"primary_platform":"Facebook + TikTok","posting_frequency":"เพิ่งเริ่ม (2 โพสต์ FB, 0 คลิป TikTok)","content_style":"เปิดตัวแบรนด์ + event/catering","engagement_level":"เพิ่งเริ่มต้น (ฐาน followers หลักสิบคน)"}
+    },
+    {
         "id": "competitor-amazon-coffee",
         "category": "competitor",
         "title": "Amazon Coffee สกลนคร (PTT)",
@@ -3325,6 +3340,7 @@ HTML_TEMPLATE = """\
       <!-- Filter tabs -->
       <div class="flex flex-wrap gap-2 mb-5">
         <button class="intel-tab active" id="intel-tab-all"       onclick="setIntelTab('all')">ทั้งหมด</button>
+        <button class="intel-tab"        id="intel-tab-own_brand" onclick="setIntelTab('own_brand')">🏠 แบรนด์เรา</button>
         <button class="intel-tab"        id="intel-tab-competitor" onclick="setIntelTab('competitor')">☕ คู่แข่ง</button>
         <button class="intel-tab"        id="intel-tab-delivery"   onclick="setIntelTab('delivery')">🛵 Delivery</button>
         <button class="intel-tab"        id="intel-tab-coffee_knowledge" onclick="setIntelTab('coffee_knowledge')">💡 ความรู้</button>
@@ -4077,6 +4093,7 @@ function initDoughnutChart(platform) {{
 
 // ── Intel view ──
 const INTEL_BADGE = {{
+  own_brand:        {{ label: '🏠 แบรนด์เรา', cls: 'bg-teal-100 text-teal-700' }},
   competitor:       {{ label: '☕ คู่แข่ง',   cls: 'bg-red-100 text-red-700' }},
   delivery:         {{ label: '🛵 Delivery',  cls: 'bg-orange-100 text-orange-700' }},
   coffee_knowledge: {{ label: '💡 ความรู้',   cls: 'bg-blue-100 text-blue-700' }},
