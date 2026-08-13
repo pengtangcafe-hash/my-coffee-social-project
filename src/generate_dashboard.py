@@ -2390,7 +2390,7 @@ HTML_TEMPLATE = """\
     .ov-wm-hero {{ display: flex; align-items: baseline; gap: 10px; margin-bottom: 16px; }}
     .ov-wm-num {{ font-size: 2.1rem; font-weight: 900; letter-spacing: -0.02em; line-height: 1;
       color: var(--text); font-variant-numeric: tabular-nums; }}
-    .ov-wm-delta {{ font-size: .8rem; font-weight: 800; padding: 3px 10px; border-radius: 999px;
+    .ov-wm-delta {{ font-size: .72rem; font-weight: 800; padding: 3px 9px; border-radius: 999px;
       font-variant-numeric: tabular-nums; }}
     .ov-wm-delta.up {{ background: rgba(22,163,74,.12); color: #16a34a; }}
     .ov-wm-delta.down {{ background: rgba(220,38,38,.12); color: #dc2626; }}
@@ -2407,7 +2407,7 @@ HTML_TEMPLATE = """\
 
     /* TikTok token status strip */
     .ov-token {{ display: flex; align-items: center; gap: 14px; padding: 14px 18px; border-radius: 14px;
-      font-size: .82rem; margin-bottom: 4px; }}
+      font-size: .82rem; }}
     .ov-token.ok {{ background: rgba(22,163,74,.08); border: 1px solid rgba(22,163,74,.22); }}
     .ov-token.warn {{ background: rgba(217,119,6,.09); border: 1px solid rgba(217,119,6,.25); }}
     .ov-token.danger {{ background: rgba(220,38,38,.09); border: 1px solid rgba(220,38,38,.25); }}
@@ -3442,7 +3442,7 @@ HTML_TEMPLATE = """\
       <div class="ov-plats mb-4" id="ov-plats"></div>
 
       <!-- Row 3: head-to-head comparison -->
-      <div class="ov-tile ov-anim" style="--d:5">
+      <div class="ov-tile ov-anim mb-4" style="--d:5">
         <div class="ov-tile-h">⚔️ เทียบหมัดต่อหมัด · จัดอันดับ 3 แพลตฟอร์ม</div>
         <div class="ov-showdown-tabs" id="ov-showdown-tabs"></div>
         <div class="ov-bars" id="ov-showdown-bars"></div>
