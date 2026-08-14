@@ -6678,8 +6678,19 @@ function renderStockView() {{
   var tabs='<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px">'
     +'<button class="ov-mtab'+(stkTab==='remain'?' active':'')+'" onclick="stkSetTab(\\'remain\\')">สต็อกคงเหลือ</button>'
     +'<button class="ov-mtab'+(stkTab==='usage'?' active':'')+'" onclick="stkSetTab(\\'usage\\')">การใช้ต่อเมนู</button>'
+    +'<button class="ov-mtab'+(stkTab==='history'?' active':'')+'" onclick="stkSetTab(\\'history\\')">📜 ประวัติการนำเข้า</button>'
     +'</div>';
-  root.innerHTML=kpi+toolbar+stkRenderWarnCards()+tabs+'<div>'+(stkTab==='remain'?stkRenderRemain():stkRenderUsage())+'</div>';
+  var body=stkTab==='remain'?stkRenderRemain():stkTab==='usage'?stkRenderUsage():stkRenderHistory();
+  root.innerHTML=kpi+toolbar+stkRenderWarnCards()+tabs+'<div>'+body+'</div>';
+}}
+// ประวัติการนำเข้า — แยกออกจาก "สต็อกคงเหลือ" (ตัวเลขสะสม) ให้เห็นเป็นรอบๆ ว่าซื้อเข้าตอนไหน
+// ล็อตไหนบ้าง ใช้ข้อมูล/การ์ดเดียวกับหน้าต้นทุน (vfPurchaseBills + vfBillsGrouped) ไม่ต้องสร้างซ้ำ
+function stkRenderHistory() {{
+  var bills=vfPurchaseBills().slice().sort(function(a,b) {{
+    var ka=(a.date||'')+' '+(a.time||''), kb=(b.date||'')+' '+(b.time||'');
+    return kb.localeCompare(ka);
+  }});
+  return vfBillsGrouped(bills);
 }}
 function stkSetTab(t) {{ stkTab=t; renderStockView(); }}
 function stkSetIgrp(g) {{ stkIgrpTab=g; renderStockView(); }}
