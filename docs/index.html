@@ -3185,7 +3185,7 @@ function dcIngGroup(name) {
   if (/ชา|มัทฉะ/.test(name) || /matcha/.test(n)) return 'tea';
   if (/ข้นหวาน|น้ำตาล|น้ำผึ้ง|น้ำเชื่อม|มิตรผล/.test(name) || /honey/.test(n)) return 'sweet';
   if (/นมสด|นมข้น|นมจืด|ฟองนม|ครีม|คอฟฟี่เมจ/.test(name) || /mmilk|milk|falcon|oat/.test(n)) return 'milk';
-  if (/มังกรบิน/.test(name) || /monin|syrup|sunquick/.test(n)) return 'syrup';
+  if (/มังกรบิน|ไซรัป/.test(name) || /monin|syrup|sunquick/.test(n)) return 'syrup';
   return 'other';
 }
 function dcMenuImage(m) { return (m.image && m.image.trim()) ? m.image.trim() : ('assets/drink-icons/' + dcCategoryOf(m) + '.svg'); }
