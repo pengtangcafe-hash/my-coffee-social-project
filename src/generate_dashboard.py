@@ -6837,8 +6837,6 @@ function stkOpenPurchase() {{
     +'<div style="display:flex;gap:10px;flex-wrap:wrap">'
     +'<div class="dc-field" style="flex:1;min-width:110px"><label>📅 วันที่</label>'
     +'<input class="dc-inp" id="stk-p-date" type="date" value="'+stkTodayISO()+'"></div>'
-    +'<div class="dc-field" style="flex:1;min-width:90px"><label>⏰ เวลา</label>'
-    +'<input class="dc-inp" id="stk-p-time" type="time" value="'+stkNowTime()+'"></div>'
     +'<div class="dc-field" style="flex:1;min-width:100px"><label>วิธีจ่าย</label>'
     +'<select class="dc-inp" id="stk-p-pay"><option value="cash">💵 เงินสด</option><option value="transfer">🏦 โอน</option></select></div>'
     +'</div>'
@@ -6867,7 +6865,7 @@ function stkSavePurchase() {{
   var prRaw=((document.getElementById('stk-p-price')||{{}}).value||'').trim();
   var price=prRaw===''?null:(parseFloat(prRaw)||null);
   var date=(document.getElementById('stk-p-date')||{{}}).value||stkTodayISO();
-  var time=(document.getElementById('stk-p-time')||{{}}).value||'';
+  var time=stkNowTime();  // ไม่ให้กรอกเอง บันทึกเวลาปัจจุบันเงียบๆ (ตัดช่องกรอกออกแล้ว กันวุ่นวาย)
   var pay=(document.getElementById('stk-p-pay')||{{}}).value||'cash';
   var vendor=((document.getElementById('stk-p-vendor')||{{}}).value||'').trim();
   var note=((document.getElementById('stk-p-note')||{{}}).value||'').trim();
