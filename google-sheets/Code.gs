@@ -442,7 +442,7 @@ function writeData_(data) {
   (data.purchases || []).forEach(function(p) {
     brows.push([p.date || '', p.ing || '', blank_(p.qty), p.unit || 'แพ็ค', blank_(p.size), blank_(p.price), p.note || '', p.vendor || '', p.time || '', p.pay || 'cash']);
   });
-  writeSheet_(SH.buyLogs, brows);
+  writeSheet_(SH.buyLogs, brows, [9]);  // คอลัมน์ 9 = เวลา — บังคับ text กันเป็น time-of-day ซ้ำ
 
   // สต็อก-ยอดขาย
   var salrows = [['วันที่', 'เมนู', 'จำนวนแก้ว']];
@@ -574,8 +574,16 @@ function timeStr_(v) {
   return String(v||'').trim();
 }
 
-function writeSheet_(name, rows) {
+// textCols (ไม่บังคับ): array ของเลขคอลัมน์ (1-based) ที่ต้องบังคับ format เป็นข้อความล้วน ('@')
+// ก่อนเขียนค่า — กัน Sheets auto-detect สตริงหน้าตาเหมือนเวลา (เช่น "16:53") แล้วแปลงเป็น time-of-day
+// เอง ซึ่งพอเกิดครั้งเดียว cell นั้นจะติด format time ค้างไปตลอด ทุกครั้งที่เขียนทับใหม่ (แม้เขียน
+// สตริงธรรมดา) ก็จะถูกตีความเป็นเวลาอีกเรื่อยๆ ต้องบังคับ format ก่อน setValues ทุกครั้งถึงจะหลุดวงจรนี้จริง
+function writeSheet_(name, rows, textCols) {
   var sh = sheet_(name);
   sh.clearContents();
-  if (rows.length) sh.getRange(1, 1, rows.length, rows[0].length).setValues(rows);
+  if (!rows.length) return;
+  if (textCols && textCols.length) {
+    textCols.forEach(function(c) { sh.getRange(1, c, rows.length, 1).setNumberFormat('@'); });
+  }
+  sh.getRange(1, 1, rows.length, rows[0].length).setValues(rows);
 }
