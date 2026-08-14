@@ -233,7 +233,7 @@ function buildData_() {
     var price = r[5] !== '' && r[5] != null ? Number(r[5]) : null;
     var note = String(r[6] || '').trim();
     var vendor = String(r[7] || '').trim();
-    var time = String(r[8] || '').trim();
+    var time = timeStr_(r[8]);
     var pay = String(r[9] || 'cash').trim();
     purchases.push({ date: date, ing: ing, qty: qty, unit: unit, size: size, price: price, note: note, vendor: vendor, time: time, pay: pay });
   }
@@ -307,11 +307,12 @@ function buildData_() {
     }
   });
 
+  // แต่ละคีย์แนบได้หลายสลิป (สลิปโอน + บิลซื้อ ฯลฯ) — 1 แถวต่อ 1 สลิป คีย์ซ้ำได้ รวมเป็น array
   var expSlips = {};
   var slv = rows_(SH.slipBills);
   for (var i = 1; i < slv.length; i++) {
     var sk = String(slv[i][0] || '').trim(), su = String(slv[i][1] || '').trim();
-    if (sk && su) expSlips[sk] = su;
+    if (sk && su) (expSlips[sk] = expSlips[sk] || []).push(su);
   }
   // เควส
   var quests = [];
@@ -490,10 +491,15 @@ function writeData_(data) {
     }
   });
 
-  // สลิป-บิล [คีย์, ลิงก์]
+  // สลิป-บิล [คีย์, ลิงก์] — 1 คีย์แนบได้หลายสลิป เขียนแยกแถวต่อสลิป (รองรับข้อมูลเก่าที่ยังเป็น
+  // สตริงเดี่ยวก่อนอัปเดตนี้ด้วย — เว็บฝั่ง dashboard ก็ normalize เป็น array ตอนอ่านเหมือนกัน)
   var expSlips = data.expense_slips || {};
   var slrows = [['คีย์', 'ลิงก์']];
-  Object.keys(expSlips).forEach(function(k) { if (expSlips[k]) slrows.push([k, expSlips[k]]); });
+  Object.keys(expSlips).forEach(function(k) {
+    var v = expSlips[k];
+    var arr = Array.isArray(v) ? v : (v ? [v] : []);
+    arr.forEach(function(url) { if (url) slrows.push([k, url]); });
+  });
   writeSheet_(SH.slipBills, slrows);
 
   // เควส
@@ -553,6 +559,17 @@ function dateStr_(v) {
   if (v instanceof Date) {
     var y = v.getFullYear(), m = v.getMonth()+1, d = v.getDate();
     return y + '-' + (m<10?'0':'') + m + '-' + (d<10?'0':'') + d;
+  }
+  return String(v||'').trim();
+}
+
+// เซลล์ "เวลา" ที่เขียนเป็นสตริง "16:53" ชีตมักตีความเป็น time-of-day แล้ว getValues() คืนมาเป็น
+// Date object (วันที่ปลอมเป็น 30 ธ.ค. 1899 — วันฐานของ Sheets/Excel) ต้องดึงแค่ชั่วโมง:นาทีออกมา
+// ไม่งั้น String(v) จะได้ทั้งก้อน "Sat Dec 30 1899 16:53:00 GMT+..." ติดมาด้วย
+function timeStr_(v) {
+  if (v instanceof Date) {
+    var h = v.getHours(), m = v.getMinutes();
+    return (h<10?'0':'') + h + ':' + (m<10?'0':'') + m;
   }
   return String(v||'').trim();
 }

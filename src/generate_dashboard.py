@@ -3081,6 +3081,12 @@ HTML_TEMPLATE = """\
     .vf-receipt-total {{ font-size:1.15rem; font-weight:900; color:var(--text); font-variant-numeric:tabular-nums; }}
     .vf-slip-btn {{ font-size:.72rem!important; padding:4px 10px!important; }}
     .vf-slip-thumb {{ width:60px; height:45px; object-fit:cover; border-radius:6px; cursor:pointer; margin-right:6px; border:1px solid var(--card-border); vertical-align:middle; }}
+    .vf-slip-item {{ position:relative; display:inline-block; margin-right:6px; vertical-align:middle; }}
+    .vf-slip-item .vf-slip-thumb {{ margin-right:0; }}
+    .vf-slip-x {{ position:absolute; top:-6px; right:-2px; width:18px; height:18px; border-radius:999px;
+      background:#dc2626; color:#fff; border:2px solid var(--card); font-size:.65rem; line-height:1;
+      cursor:pointer; display:flex; align-items:center; justify-content:center; padding:0; }}
+    .vf-slip-x:hover {{ filter:brightness(1.1); }}
     /* ── varfix history card ── */
     .vf-history-card {{ background:var(--card); border:1px solid var(--card-border); border-radius:16px; margin-top:22px; margin-bottom:22px; overflow:hidden; }}
     .vf-history-hdr {{ display:flex; align-items:center; justify-content:space-between; padding:12px 16px; cursor:pointer; user-select:none; font-weight:700; font-size:.9rem; color:var(--text); }}
@@ -7650,15 +7656,27 @@ function vfReceiptCard(b) {{
   var vendorHtml=b.vendor?'<div class="vf-vendor">🏪 '+escapeHtml(b.vendor)+'</div>':'';
   var linesHtml=(b.items&&b.items.length)?vfLineTable(b.items):'';
   var noteHtml=b.note&&!b.readonly?'<div class="vf-receipt-note">📝 '+escapeHtml(b.note)+'</div>':'';
-  var _vsk=b.readonly?(b._vslipKey||''):(b.id||'');
-  var _viv=b.readonly?1:0;
-  var _vsu=b.readonly?((DCS.expense_slips||{{}})[b._vslipKey||'']||''):(b.slip||'');
-  var _vvu=vfThumbToView(_vsu);
-  var slipBtn=_vsk?(_vsu
-    ?('<a href="'+escapeHtml(_vvu)+'" target="_blank" rel="noopener"><img class="vf-slip-thumb" referrerpolicy="no-referrer" loading="lazy" src="'+escapeHtml(_vsu)+'" alt="สลิป" onerror="vfSlipImgErr(this)"></a>'
-     +'<button class="vf-slip-btn dc-btn" data-slipkey="'+escapeHtml(_vsk)+'" data-isvar="'+_viv+'" onclick="vfAttachSlip(this)">🔄 เปลี่ยนสลิป</button>')
-    :'<button class="vf-slip-btn dc-btn" data-slipkey="'+escapeHtml(_vsk)+'" data-isvar="'+_viv+'" onclick="vfAttachSlip(this)">📎 แนบสลิป</button>')
-    :'';
+  var slipBtn;
+  if (b.readonly) {{
+    // บิลซื้อเข้าสต็อก — แนบได้หลายสลิป (เช่น สลิปโอน + บิลซื้อ) เพิ่ม/ลบทีละใบได้
+    var _vsk=b._vslipKey||'';
+    var _vsRaw=(DCS.expense_slips||{{}})[_vsk];
+    var _vsArr=Array.isArray(_vsRaw)?_vsRaw:(_vsRaw?[_vsRaw]:[]);  // รองรับข้อมูลเก่าที่ยังเป็นสตริงเดี่ยว
+    var thumbsHtml=_vsArr.map(function(url,idx) {{
+      return '<span class="vf-slip-item">'
+        +'<a href="'+escapeHtml(vfThumbToView(url))+'" target="_blank" rel="noopener"><img class="vf-slip-thumb" referrerpolicy="no-referrer" loading="lazy" src="'+escapeHtml(url)+'" alt="สลิป" onerror="vfSlipImgErr(this)"></a>'
+        +'<button class="vf-slip-x" data-slipkey="'+escapeHtml(_vsk)+'" data-idx="'+idx+'" onclick="vfRemoveSlip(this)" title="ลบสลิปนี้">✕</button>'
+        +'</span>';
+    }}).join('');
+    slipBtn=_vsk?(thumbsHtml+'<button class="vf-slip-btn dc-btn" data-slipkey="'+escapeHtml(_vsk)+'" data-isvar="1" onclick="vfAttachSlip(this)">+ เพิ่มสลิป</button>'):'';
+  }} else {{
+    var _vsu=b.slip||'';
+    slipBtn=b.id?(_vsu
+      ?('<a href="'+escapeHtml(vfThumbToView(_vsu))+'" target="_blank" rel="noopener"><img class="vf-slip-thumb" referrerpolicy="no-referrer" loading="lazy" src="'+escapeHtml(_vsu)+'" alt="สลิป" onerror="vfSlipImgErr(this)"></a>'
+       +'<button class="vf-slip-btn dc-btn" data-slipkey="'+escapeHtml(b.id)+'" data-isvar="0" onclick="vfAttachSlip(this)">🔄 เปลี่ยนสลิป</button>')
+      :'<button class="vf-slip-btn dc-btn" data-slipkey="'+escapeHtml(b.id)+'" data-isvar="0" onclick="vfAttachSlip(this)">📎 แนบสลิป</button>')
+      :'';
+  }}
   var editBtns=(!b.readonly&&b.id)
     ?'<button class="vf-slip-btn dc-btn" data-expid="'+escapeHtml(b.id)+'" onclick="vfEditExpenseBtn(this)" title="แก้ไขรายจ่าย">✏️ แก้ไข</button>'
      +'<button class="vf-slip-btn dc-btn" data-expid="'+escapeHtml(b.id)+'" onclick="vfDeleteExpenseBtn(this)" style="color:#ef4444" title="ลบรายจ่าย">🗑️ ลบ</button>'
@@ -7712,7 +7730,7 @@ function vfSlipFileSelected(input) {{
   var ctx=_vfSlipCtx; _vfSlipCtx=null;
   input.value='';
   var isModal=ctx.target==='modal';
-  var btn=isModal?document.querySelector('#vf-e-slip-preview .dc-btn'):document.querySelector('[data-slipkey="'+ctx.key+'"]');
+  var btn=isModal?document.querySelector('#vf-e-slip-preview .dc-btn'):document.querySelector('.vf-slip-btn[data-slipkey="'+ctx.key+'"]');
   if (btn) {{ btn.textContent='⏳ กำลังอัป...'; btn.disabled=true; }}
   var reader=new FileReader();
   reader.onload=function(ev) {{
@@ -7741,7 +7759,10 @@ function vfSlipFileSelected(input) {{
             +'<button class="dc-btn ghost" onclick="vfRemoveModalSlip()" style="font-size:.75rem">✕ ลบ</button>';
         }} else if (ctx.isVar) {{
           if (!DCS.expense_slips) DCS.expense_slips={{}};
-          DCS.expense_slips[ctx.key]=res.thumb;
+          var _existing=DCS.expense_slips[ctx.key];
+          var _arr=Array.isArray(_existing)?_existing:(_existing?[_existing]:[]);  // migrate ค่าเก่าที่เป็นสตริงเดี่ยว
+          _arr.push(res.thumb);
+          DCS.expense_slips[ctx.key]=_arr;
           dcAfterChange(); renderVarfixView();
         }} else {{
           var exp=DCS.expenses.find(function(e) {{ return e.id===ctx.key; }});
@@ -7755,7 +7776,7 @@ function vfSlipFileSelected(input) {{
           var prev=document.getElementById('vf-e-slip-preview');
           if (prev) prev.innerHTML='<button class="dc-btn ghost" onclick="vfAttachSlipModal()" style="font-size:.8rem">📎 แนบสลิป</button>';
         }} else {{
-          if (btn) {{ btn.textContent='📎 แนบสลิป'; btn.disabled=false; }}
+          if (btn) {{ btn.textContent=ctx.isVar?'+ เพิ่มสลิป':'📎 แนบสลิป'; btn.disabled=false; }}
         }}
         showToast('อัปไม่สำเร็จ — ตรวจว่า re-deploy Apps Script + อนุญาต Drive แล้ว');
       }});
@@ -7763,6 +7784,17 @@ function vfSlipFileSelected(input) {{
     img.src=ev.target.result;
   }};
   reader.readAsDataURL(file);
+}}
+function vfRemoveSlip(btn) {{
+  if (!saIsUnlocked()) {{ dcRequestEdit(); return; }}
+  var key=btn.dataset.slipkey, idx=parseInt(btn.dataset.idx,10);
+  if (!DCS.expense_slips) return;
+  var existing=DCS.expense_slips[key];
+  var arr=Array.isArray(existing)?existing.slice():(existing?[existing]:[]);
+  arr.splice(idx,1);
+  DCS.expense_slips[key]=arr;
+  dcAfterChange(); renderVarfixView();
+  showToast('ลบสลิปแล้ว');
 }}
 function vfMockBills() {{
   var t=vfTodayISO();
