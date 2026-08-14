@@ -7656,26 +7656,31 @@ function vfReceiptCard(b) {{
   var vendorHtml=b.vendor?'<div class="vf-vendor">🏪 '+escapeHtml(b.vendor)+'</div>':'';
   var linesHtml=(b.items&&b.items.length)?vfLineTable(b.items):'';
   var noteHtml=b.note&&!b.readonly?'<div class="vf-receipt-note">📝 '+escapeHtml(b.note)+'</div>':'';
-  var slipBtn;
-  if (b.readonly) {{
-    // บิลซื้อเข้าสต็อก — แนบได้หลายสลิป (เช่น สลิปโอน + บิลซื้อ) เพิ่ม/ลบทีละใบได้
-    var _vsk=b._vslipKey||'';
-    var _vsRaw=(DCS.expense_slips||{{}})[_vsk];
-    var _vsArr=Array.isArray(_vsRaw)?_vsRaw:(_vsRaw?[_vsRaw]:[]);  // รองรับข้อมูลเก่าที่ยังเป็นสตริงเดี่ยว
+  // แนบสลิปได้หลายใบต่อบิล (เช่น สลิปโอน + บิลซื้อ) เพิ่ม/ลบทีละใบได้ — ใช้ระบบเดียวกันทั้งบิลสต็อก
+  // และรายจ่ายมือ ต่างกันแค่คีย์: บิลสต็อกใช้ _vslipKey (วันที่+ร้าน), รายจ่ายมือใช้ id ของรายการ
+  // เผื่อค่าเก่า (b.slip เดี่ยว) ที่ยังไม่เคย migrate เข้า array — เอามาต่อท้ายให้ตอนแสดงผล
+  var _vsk=b.readonly?(b._vslipKey||''):(b.id||'');
+  var slipBtn='';
+  if (_vsk) {{
+    if (!DCS.expense_slips) DCS.expense_slips={{}};
+    var _vsRaw=DCS.expense_slips[_vsk];
+    var _vsArr=Array.isArray(_vsRaw)?_vsRaw:(_vsRaw?[_vsRaw]:[]);
+    // migrate ค่าเก่า b.slip (เดี่ยว จากก่อนรวมระบบ) เข้า array จริงถาวร แล้วเคลียร์ exp.slip ทิ้ง
+    // ต้องเคลียร์ที่ต้นตอ (DCS.expenses) ไม่ใช่แค่ตัวแปร b เพราะ b เป็นแค่สำเนา (Object.assign) —
+    // ไม่งั้นพอลบสลิปนี้ผ่านปุ่ม ✕ แล้ว re-render รอบถัดไปจะเจอ exp.slip เดิมค้างอยู่แล้วดันเข้า array คืนมาอีก
+    if (!b.readonly&&b.slip&&_vsArr.indexOf(b.slip)<0) {{
+      _vsArr.push(b.slip);
+      var _origExp=(DCS.expenses||[]).filter(function(e) {{ return e.id===b.id; }})[0];
+      if (_origExp) _origExp.slip='';
+    }}
+    DCS.expense_slips[_vsk]=_vsArr;
     var thumbsHtml=_vsArr.map(function(url,idx) {{
       return '<span class="vf-slip-item">'
         +'<a href="'+escapeHtml(vfThumbToView(url))+'" target="_blank" rel="noopener"><img class="vf-slip-thumb" referrerpolicy="no-referrer" loading="lazy" src="'+escapeHtml(url)+'" alt="สลิป" onerror="vfSlipImgErr(this)"></a>'
         +'<button class="vf-slip-x" data-slipkey="'+escapeHtml(_vsk)+'" data-idx="'+idx+'" onclick="vfRemoveSlip(this)" title="ลบสลิปนี้">✕</button>'
         +'</span>';
     }}).join('');
-    slipBtn=_vsk?(thumbsHtml+'<button class="vf-slip-btn dc-btn" data-slipkey="'+escapeHtml(_vsk)+'" data-isvar="1" onclick="vfAttachSlip(this)">+ เพิ่มสลิป</button>'):'';
-  }} else {{
-    var _vsu=b.slip||'';
-    slipBtn=b.id?(_vsu
-      ?('<a href="'+escapeHtml(vfThumbToView(_vsu))+'" target="_blank" rel="noopener"><img class="vf-slip-thumb" referrerpolicy="no-referrer" loading="lazy" src="'+escapeHtml(_vsu)+'" alt="สลิป" onerror="vfSlipImgErr(this)"></a>'
-       +'<button class="vf-slip-btn dc-btn" data-slipkey="'+escapeHtml(b.id)+'" data-isvar="0" onclick="vfAttachSlip(this)">🔄 เปลี่ยนสลิป</button>')
-      :'<button class="vf-slip-btn dc-btn" data-slipkey="'+escapeHtml(b.id)+'" data-isvar="0" onclick="vfAttachSlip(this)">📎 แนบสลิป</button>')
-      :'';
+    slipBtn=thumbsHtml+'<button class="vf-slip-btn dc-btn" data-slipkey="'+escapeHtml(_vsk)+'" onclick="vfAttachSlip(this)">+ เพิ่มสลิป</button>';
   }}
   var editBtns=(!b.readonly&&b.id)
     ?'<button class="vf-slip-btn dc-btn" data-expid="'+escapeHtml(b.id)+'" onclick="vfEditExpenseBtn(this)" title="แก้ไขรายจ่าย">✏️ แก้ไข</button>'
@@ -7710,7 +7715,7 @@ var _vfEditId=null;
 function vfAttachSlip(btn) {{
   if (!saIsUnlocked()) {{ dcRequestEdit(); return; }}
   if (!dcGsUrl()) {{ showToast('เชื่อม Google Sheet ก่อน — ไปที่เมนู "เชื่อม Sheet"'); return; }}
-  _vfSlipCtx={{key:btn.dataset.slipkey,isVar:btn.dataset.isvar==='1'}};
+  _vfSlipCtx={{key:btn.dataset.slipkey}};
   document.getElementById('vf-slip-file-input').click();
 }}
 function vfAttachSlipModal() {{
@@ -7744,7 +7749,11 @@ function vfSlipFileSelected(input) {{
       var fname=(file.name||'slip').replace(/\.[^.]+$/,'')+'.jpg';
       var slipDate='';
       if (isModal) {{ var _de=document.getElementById('vf-e-date'); slipDate=_de?_de.value:''; }}
-      else if (!ctx.isVar) {{ var _ex=(DCS.expenses||[]).filter(function(e) {{ return e.id===ctx.key; }})[0]; slipDate=_ex?_ex.date:''; }}
+      else {{
+        var _vm=(ctx.key||'').match(/^V\|(\d{{4}}-\d{{2}}-\d{{2}})\|/);  // คีย์บิลสต็อก 'V|วันที่|ร้าน' ดึงวันที่ออกมาได้เลย
+        if (_vm) slipDate=_vm[1];
+        else {{ var _ex=(DCS.expenses||[]).filter(function(e) {{ return e.id===ctx.key; }})[0]; slipDate=_ex?_ex.date:''; }}
+      }}
       fetch(dcGsUrl(),{{method:'POST',headers:{{'Content-Type':'text/plain;charset=utf-8'}},
         body:JSON.stringify({{action:'uploadSlip',filename:fname,mime:'image/jpeg',data:b64,date:slipDate}})}})
       .then(function(r) {{ return r.json(); }})
@@ -7757,16 +7766,13 @@ function vfSlipFileSelected(input) {{
             +'<span style="color:#22c55e;font-size:.8rem;font-weight:600">แนบแล้ว ✓</span>'
             +'<button class="dc-btn ghost" onclick="vfAttachSlipModal()" style="font-size:.75rem">🔄 เปลี่ยน</button>'
             +'<button class="dc-btn ghost" onclick="vfRemoveModalSlip()" style="font-size:.75rem">✕ ลบ</button>';
-        }} else if (ctx.isVar) {{
+        }} else {{
+          // ทั้งบิลสต็อกและรายจ่ายมือใช้ระบบเดียวกันแล้ว — เก็บใน DCS.expense_slips[key] เป็น array เสมอ
           if (!DCS.expense_slips) DCS.expense_slips={{}};
           var _existing=DCS.expense_slips[ctx.key];
           var _arr=Array.isArray(_existing)?_existing:(_existing?[_existing]:[]);  // migrate ค่าเก่าที่เป็นสตริงเดี่ยว
           _arr.push(res.thumb);
           DCS.expense_slips[ctx.key]=_arr;
-          dcAfterChange(); renderVarfixView();
-        }} else {{
-          var exp=DCS.expenses.find(function(e) {{ return e.id===ctx.key; }});
-          if (exp) exp.slip=res.thumb;
           dcAfterChange(); renderVarfixView();
         }}
         showToast('แนบสลิปแล้ว ✓');
@@ -7776,7 +7782,7 @@ function vfSlipFileSelected(input) {{
           var prev=document.getElementById('vf-e-slip-preview');
           if (prev) prev.innerHTML='<button class="dc-btn ghost" onclick="vfAttachSlipModal()" style="font-size:.8rem">📎 แนบสลิป</button>';
         }} else {{
-          if (btn) {{ btn.textContent=ctx.isVar?'+ เพิ่มสลิป':'📎 แนบสลิป'; btn.disabled=false; }}
+          if (btn) {{ btn.textContent='+ เพิ่มสลิป'; btn.disabled=false; }}
         }}
         showToast('อัปไม่สำเร็จ — ตรวจว่า re-deploy Apps Script + อนุญาต Drive แล้ว');
       }});
