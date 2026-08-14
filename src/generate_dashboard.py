@@ -5368,6 +5368,17 @@ function dcToISODate(v) {{
   }}
   return s;
 }}
+// 🛡️ ทำความสะอาดค่า "เวลา" ที่เพี้ยนมาจากบั๊ก Google Sheets time-of-day เดิม
+// (สตริงยาวๆ แบบ "Sat Dec 30 1899 16:53:00 GMT+0642 (เวลาอินโดจีน)") ดึงแค่ HH:MM ออกมา
+// ทำที่นี่ (client) ด้วยเป็นชั้นป้องกันสอง เผื่อค่าที่เพี้ยนไปแล้วค้างอยู่ใน local storage ก่อนหน้านี้
+// (แก้แค่ฝั่งเขียน Sheet อย่างเดียวไม่พอ เพราะข้อมูลที่เพี้ยนไปแล้วถูก pull เก็บไว้ในเครื่องแล้ว)
+function dcCleanTime(v) {{
+  if (!v) return '';
+  var s = String(v);
+  var m = s.match(/(\d{{1,2}}):(\d{{2}}):\d{{2}}/);
+  if (m) return (m[1].length<2?'0':'')+m[1]+':'+m[2];
+  return s.trim();
+}}
 function dcNormalize(s) {{
   s = s || {{}};
   s.catalog = s.catalog || {{}};
@@ -5401,7 +5412,7 @@ function dcNormalize(s) {{
   if (s.questMeta === undefined) s.questMeta = {{ startDate: '2026-05-31', totalDays: 90, targetOpenDay: 30 }};
   // 🛡️ normalize วันที่เป็น ISO (กัน Google Sheets แปลงเป็น Date string ยาว → filter เดือนพัง)
   (s.expenses||[]).forEach(function(e) {{ if (e) e.date = dcToISODate(e.date); }});
-  (s.purchases||[]).forEach(function(p) {{ if (p) p.date = dcToISODate(p.date); }});
+  (s.purchases||[]).forEach(function(p) {{ if (p) {{ p.date = dcToISODate(p.date); p.time = dcCleanTime(p.time); }} }});
   (s.sales||[]).forEach(function(sl) {{ if (sl) sl.date = dcToISODate(sl.date); }});
   return s;
 }}
