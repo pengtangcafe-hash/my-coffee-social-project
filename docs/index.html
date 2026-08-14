@@ -5907,6 +5907,7 @@ function renderVarfixView() {
     +'<button class="dc-btn" onclick="dcOpenConnect()">🔗 '+(vfConnected?'Google Sheet ✓':'เชื่อม Sheet')+'</button>'
     +(vfConnected?'<button class="dc-btn" onclick="dcSyncPull()">🔄 ซิงก์</button>':'')
     +'<span class="spacer"></span>'
+    +'<button class="dc-btn" onclick="vfBtnAddStockPurchase()">📦 ซื้อวัตถุดิบ/บรรจุภัณฑ์</button>'
     +'<button class="dc-btn primary" onclick="vfBtnAddExpense()">+ บันทึกรายจ่าย</button></div>';
   var mockHeaderHtml=isMock
     ?'<div class="stk-warn-row" style="margin-bottom:10px"><span class="stk-warn-row-title" style="text-transform:none;color:var(--text-muted)">🎭 ตัวอย่างระบบ (mockup) — จะปิดเองเมื่อมีรายจ่ายจริง</span></div>'
@@ -5991,7 +5992,8 @@ function vfEditStockBill(btn) {
 function vfStockRowHtml(p) {
   p=p||{};
   return '<div class="vf-sb-row">'
-    +'<input class="dc-inp vf-sb-ing" placeholder="ชื่อวัตถุดิบ" value="'+escapeHtml(p.ing||'')+'">'
+    +'<input class="dc-inp dc-ring vf-sb-ing" placeholder="ค้นหาวัตถุดิบ..." autocomplete="off" value="'+escapeHtml(p.ing||'')+'"'
+    +' data-ing="'+escapeHtml(p.ing||'')+'" oninput="dcAcFilter(this)" onfocus="vfStockAcOpen(this)" onkeydown="dcAcKey(event,this)">'
     +'<div class="vf-sb-nums">'
     +'<label>จำนวน<input class="dc-inp vf-sb-qty" type="number" min="0" step="any" value="'+(p.qty!=null?p.qty:'')+'"></label>'
     +'<label>หน่วย<input class="dc-inp vf-sb-unit" type="text" placeholder="แพ็ค" value="'+escapeHtml(p.unit||'')+'"></label>'
@@ -6007,6 +6009,17 @@ function vfStockAddRow() {
 }
 function vfStockDelRow(btn) {
   var row=btn.closest('.vf-sb-row'); if (row) row.remove();
+}
+// autocomplete วัตถุดิบ (คลังเดียวกับหน้า คลังวัตถุดิบ/สต็อก) — ผูกกับ row ที่คลิก ไม่ชนกันตอนมีหลายบรรทัด
+function vfStockAcOpen(inp) {
+  var row=inp.closest('.vf-sb-row');  // ต้อง capture ไว้ในนี้ — ห้ามอ่านจาก dcAcCtx.row ตอน onSelect
+  dcAcOpen(inp,row);                  // เพราะ dcAcSelect() เคลียร์ dcAcCtx เป็น null ก่อนเรียก callback เสมอ
+  dcAcCtx.onSelect=function(name) {
+    var c=DCS.catalog[name]||{};
+    var sizeEl=row.querySelector('.vf-sb-size'), unitEl=row.querySelector('.vf-sb-unit');
+    if (sizeEl&&!sizeEl.value&&c.qty) sizeEl.value=c.qty;
+    if (unitEl&&!unitEl.value&&c.unit) unitEl.value=c.unit;
+  };
 }
 function vfSaveStockBill() {
   var d=(document.getElementById('vf-sb-date')||{}).value||'';
@@ -6034,6 +6047,61 @@ function vfSaveStockBill() {
   dcAfterChange(); dcCloseModal(); renderVarfixView();
   if (typeof stkRefreshIfActive==='function') stkRefreshIfActive();
   showToast('อัปเดตบิลสต็อกแล้ว ✓ (' + newLines.length + ' รายการ)');
+}
+function vfBtnAddStockPurchase() {
+  if (!dcEdit) {
+    if (saIsUnlocked()) { dcEdit=true; vfOpenStockPurchase(); return; }
+    dcOpenPwModal('🔒 ปลดล็อกก่อนบันทึก','ใส่รหัสเพื่อบันทึกซื้อวัตถุดิบ',function() {
+      dcEdit=true; saUnlock(); showToast('ปลดล็อกแล้ว ✓'); vfOpenStockPurchase();
+    });
+  } else { vfOpenStockPurchase(); }
+}
+// บันทึกซื้อวัตถุดิบ/บรรจุภัณฑ์หลายรายการรวมบิลเดียว — ผูกกับคลังวัตถุดิบจริง (autocomplete)
+// บันทึกเข้า DCS.purchases ตรงๆ เหมือนหน้าสต็อก → สต็อกคงเหลือคำนวณใหม่อัตโนมัติ ไม่ต้องอัปเดตแยก
+function vfOpenStockPurchase() {
+  var html='<div class="dc-modal-head"><h3>📦 บันทึกซื้อวัตถุดิบ/บรรจุภัณฑ์</h3><button class="dc-x" onclick="dcCloseModal()" aria-label="ปิด">✕</button></div>'
+    +'<div class="dc-modal-scroll">'
+    +'<div style="display:flex;gap:10px;flex-wrap:wrap">'
+    +'<div class="dc-field" style="flex:1;min-width:130px"><label>📅 วันที่</label><input class="dc-inp" id="vf-np-date" type="date" value="'+stkTodayISO()+'"></div>'
+    +'<div class="dc-field" style="flex:2;min-width:150px"><label>🏪 ร้าน/แหล่งซื้อ (ไม่บังคับ)</label><input class="dc-inp" id="vf-np-vendor" type="text" placeholder="เช่น ตลาดสกลนคร"></div>'
+    +'<div class="dc-field" style="flex:1;min-width:110px"><label>วิธีจ่าย</label><select class="dc-inp" id="vf-np-pay"><option value="cash">💵 เงินสด</option><option value="transfer">🏦 โอน</option></select></div>'
+    +'</div>'
+    +'<div class="vf-sb-hint">เลือกวัตถุดิบจากคลังที่มีอยู่แล้ว (พิมพ์ค้นหาได้) — ซื้อหลายอย่างในบิลเดียวกันได้ กดเพิ่มบรรทัดเรื่อยๆ</div>'
+    +'<div id="vf-sb-rows">'+vfStockRowHtml({})+'</div>'
+    +'<button class="dc-btn ghost" onclick="vfStockAddRow()" style="margin-top:8px">+ เพิ่มวัตถุดิบ</button>'
+    +'</div>'
+    +'<div class="dc-modal-foot"><span class="spacer"></span>'
+    +'<button class="dc-btn ghost" onclick="dcCloseModal()">ยกเลิก</button>'
+    +'<button class="dc-btn primary" onclick="vfSaveNewStockPurchase()">💾 บันทึก</button></div>';
+  dcSetModalBody(html);
+}
+function vfSaveNewStockPurchase() {
+  var d=(document.getElementById('vf-np-date')||{}).value||stkTodayISO();
+  var v=((document.getElementById('vf-np-vendor')||{}).value||'').trim();
+  var pay=(document.getElementById('vf-np-pay')||{}).value||'cash';
+  var time=stkNowTime();
+  var lines=[], skipped=0;
+  document.querySelectorAll('#vf-sb-rows .vf-sb-row').forEach(function(r) {
+    var ing=((r.querySelector('.vf-sb-ing')||{}).value||'').trim();
+    var qty=parseFloat((r.querySelector('.vf-sb-qty')||{}).value);
+    var unit=((r.querySelector('.vf-sb-unit')||{}).value||'').trim()||'แพ็ค';
+    var size=parseFloat((r.querySelector('.vf-sb-size')||{}).value);
+    var price=parseFloat((r.querySelector('.vf-sb-price')||{}).value);
+    if (!ing && !(qty>0) && !(size>0) && !(price>0)) return;  // แถวว่างสนิท — ข้ามเงียบๆ
+    if (!ing || !(qty>0) || !(size>0)) { skipped++; return; }
+    lines.push({ date:d, ing:ing, qty:qty, unit:unit, size:size, price:isNaN(price)?null:price, note:'', vendor:v, time:time, pay:pay });
+  });
+  if (!lines.length) { showToast('เลือกวัตถุดิบ + ใส่จำนวน/ปริมาณต่อหน่วยให้ครบอย่างน้อย 1 รายการ'); return; }
+  var doSave=function() {
+    lines.forEach(function(l) { DCS.purchases.push(l); });
+    dcAfterChange(); dcCloseModal(); renderVarfixView();
+    if (typeof stkRefreshIfActive==='function') stkRefreshIfActive();
+    showToast('บันทึกซื้อเข้า ' + lines.length + ' รายการ ✓' + (skipped?(' (ข้าม '+skipped+' บรรทัดที่กรอกไม่ครบ)'):''));
+  };
+  if (!dcEdit) {
+    if (saIsUnlocked()) { dcEdit=true; doSave(); return; }
+    dcOpenPwModal('🔒 ปลดล็อกก่อนบันทึก','ใส่รหัสเพื่อบันทึกซื้อวัตถุดิบ',function() { dcEdit=true; saUnlock(); doSave(); });
+  } else { doSave(); }
 }
 function vfOpenExpense(id) {
   var exp=id?(DCS.expenses||[]).filter(function(e) { return e.id===id; })[0]:null;
