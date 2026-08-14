@@ -5282,12 +5282,14 @@ var DC_IGROUPS = [['bean', 'เมล็ดกาแฟ'], ['milk', 'นม'], [
 function dcIngGroup(name) {{
   var n = (name || '').toLowerCase();
   if (/แก้ว|ฝา|หลอด|ถุง|กระดาษ/.test(name)) return 'pack';
+  // เช็คไซรัปก่อน "โกโก้" เสมอ — ชื่อไซรัปหลายยี่ห้อมีคำว่า choc/whitechoc ปนอยู่ ("Whitechoc" มี "cho" ซ่อนอยู่)
+  // ถ้าเช็คโกโก้ก่อน คำว่า "cho" (สำหรับจับ chocolate) จะไปแมตช์มั่วเข้ากลุ่มโกโก้แทนที่จะเป็นไซรัป
+  if (/มังกรบิน|ไซรัป/.test(name) || /monin|syrup|sunquick/.test(n)) return 'syrup';
   if (/กาแฟ|เอสเพรสโซ|เอสเปรสโซ/.test(name) || /coffee|espresso/.test(n)) return 'bean';
   if (/โกโก้/.test(name) || /cho|tulip|cocoa/.test(n)) return 'cocoa';
   if (/ชา|มัทฉะ/.test(name) || /matcha/.test(n)) return 'tea';
   if (/ข้นหวาน|น้ำตาล|น้ำผึ้ง|น้ำเชื่อม|มิตรผล/.test(name) || /honey/.test(n)) return 'sweet';
   if (/นมสด|นมข้น|นมจืด|ฟองนม|ครีม|คอฟฟี่เมจ/.test(name) || /mmilk|milk|falcon|oat/.test(n)) return 'milk';
-  if (/มังกรบิน|ไซรัป/.test(name) || /monin|syrup|sunquick/.test(n)) return 'syrup';
   return 'other';
 }}
 function dcMenuImage(m) {{ return (m.image && m.image.trim()) ? m.image.trim() : ('assets/drink-icons/' + dcCategoryOf(m) + '.svg'); }}
