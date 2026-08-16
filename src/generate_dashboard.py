@@ -2943,6 +2943,9 @@ HTML_TEMPLATE = """\
       font-variant-numeric: tabular-nums; }}
     .dc-ac {{ position: relative; min-width: 0; }}
     .dc-ac-inp {{ width: 100%; }}
+    .dc-ing-warn {{ border-color: var(--dc-warn, #e53935) !important; background: color-mix(in srgb, var(--dc-warn, #e53935) 12%, transparent); padding-right: 28px !important; }}
+    .dc-ing-warn-ic {{ position: absolute; right: 8px; top: 50%; transform: translateY(-50%); font-size: .8rem;
+      pointer-events: none; }}
     #dc-acpanel {{ position: fixed; z-index: 210; background: var(--card); border: 1px solid var(--card-border);
       border-radius: 12px; box-shadow: 0 22px 55px -20px rgba(0,0,0,.5); overflow-y: auto;
       max-height: 380px; padding: 0; }}
@@ -6271,7 +6274,11 @@ function dcRenderMenuModal() {{
   }}).join('');
   var recRows = d.recipe.map(function(l, i) {{
     var cost = dcUnitCost(l.ing) * (parseFloat(l.qty) || 0);
-    return '<div class="dc-rrow"><div class="dc-ac"><input class="dc-inp dc-ac-inp dc-ring" data-ing="' + escapeHtml(l.ing || '') + '" value="' + escapeHtml(l.ing || '') + '" placeholder="ค้นหา / เลือกวัตถุดิบ" autocomplete="off" onfocus="dcAcOpen(this,' + i + ')" oninput="dcAcFilter(this)" onkeydown="dcAcKey(event,this)"></div>'
+    var noMatch = l.ing && !DCS.catalog[l.ing];
+    var ingCls = 'dc-inp dc-ac-inp dc-ring' + (noMatch ? ' dc-ing-warn' : '');
+    var ingTitle = noMatch ? ' title="ชื่อนี้ไม่ตรงกับคลังวัตถุดิบ — ต้นทุน/สต็อกของบรรทัดนี้จะไม่ถูกคำนวณ กดเพื่อเลือกจากคลังใหม่"' : '';
+    return '<div class="dc-rrow"><div class="dc-ac"><input class="' + ingCls + '" data-ing="' + escapeHtml(l.ing || '') + '" value="' + escapeHtml(l.ing || '') + '" placeholder="ค้นหา / เลือกวัตถุดิบ" autocomplete="off"' + ingTitle + ' onfocus="dcAcOpen(this,' + i + ')" oninput="dcAcFilter(this)" onkeydown="dcAcKey(event,this)">'
+      + (noMatch ? '<span class="dc-ing-warn-ic" title="ไม่พบในคลังวัตถุดิบ">⚠️</span>' : '') + '</div>'
       + '<input class="dc-inp dc-rqty" type="number" min="0" step="any" placeholder="ปริมาณ" value="' + (l.qty === '' || l.qty == null ? '' : l.qty) + '" oninput="dcOnInput()">'
       + '<span class="dc-rcost">' + cost.toFixed(2) + '฿</span>'
       + '<button class="dc-rdel" type="button" title="ลบ" onclick="dcDelIng(' + i + ')">✕</button></div>';
