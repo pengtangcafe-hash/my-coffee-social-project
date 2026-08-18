@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-13",
+  "updated_at": "2026-08-18",
   "items": [
     {
       "ing_id": "milk-evap-carnation",
@@ -21,7 +21,7 @@
           "was": 67,
           "discount_pct": 1,
           "source": "makro",
-          "fetched_at": "2026-08-13"
+          "fetched_at": "2026-08-18"
         }
       ],
       "vendor": "makro",
@@ -60,7 +60,7 @@
           "was": 62,
           "discount_pct": 9,
           "source": "makro",
-          "fetched_at": "2026-08-13"
+          "fetched_at": "2026-08-18"
         }
       ],
       "vendor": "makro",
@@ -111,7 +111,7 @@
           "was": 24.52,
           "discount_pct": 3,
           "source": "makro",
-          "fetched_at": "2026-08-13"
+          "fetched_at": "2026-08-18"
         }
       ],
       "vendor": "makro",
@@ -142,7 +142,7 @@
           "was": 57,
           "discount_pct": 10,
           "source": "makro",
-          "fetched_at": "2026-08-13"
+          "fetched_at": "2026-08-18"
         }
       ],
       "vendor": "makro",
@@ -169,7 +169,7 @@
           "was": null,
           "discount_pct": 0,
           "source": "makro",
-          "fetched_at": "2026-08-13"
+          "fetched_at": "2026-08-18"
         }
       ],
       "vendor": "makro",
@@ -196,7 +196,7 @@
           "was": null,
           "discount_pct": 0,
           "source": "makro",
-          "fetched_at": "2026-08-13"
+          "fetched_at": "2026-08-18"
         }
       ],
       "vendor": "makro",
@@ -224,7 +224,7 @@
           "was": 247,
           "discount_pct": 3,
           "source": "makro",
-          "fetched_at": "2026-08-13"
+          "fetched_at": "2026-08-18"
         }
       ],
       "vendor": "makro",
@@ -253,7 +253,7 @@
           "was": null,
           "discount_pct": 0,
           "source": "makro",
-          "fetched_at": "2026-08-13"
+          "fetched_at": "2026-08-18"
         }
       ],
       "vendor": "makro",
@@ -280,7 +280,7 @@
           "was": null,
           "discount_pct": 0,
           "source": "makro",
-          "fetched_at": "2026-08-13"
+          "fetched_at": "2026-08-18"
         }
       ],
       "vendor": "makro",
@@ -308,7 +308,7 @@
           "was": null,
           "discount_pct": 0,
           "source": "makro",
-          "fetched_at": "2026-08-13"
+          "fetched_at": "2026-08-18"
         }
       ],
       "vendor": "makro",
@@ -336,7 +336,7 @@
           "was": null,
           "discount_pct": 0,
           "source": "makro",
-          "fetched_at": "2026-08-13"
+          "fetched_at": "2026-08-18"
         }
       ],
       "vendor": "makro",
@@ -364,7 +364,7 @@
           "was": 89,
           "discount_pct": 11,
           "source": "makro",
-          "fetched_at": "2026-08-13"
+          "fetched_at": "2026-08-18"
         }
       ],
       "vendor": "makro",
@@ -392,7 +392,7 @@
           "was": null,
           "discount_pct": 0,
           "source": "makro",
-          "fetched_at": "2026-08-13"
+          "fetched_at": "2026-08-18"
         }
       ],
       "vendor": "makro",
@@ -420,7 +420,7 @@
           "was": null,
           "discount_pct": 0,
           "source": "makro",
-          "fetched_at": "2026-08-13"
+          "fetched_at": "2026-08-18"
         }
       ],
       "vendor": "makro",
@@ -486,7 +486,7 @@
           "was": null,
           "discount_pct": 0,
           "source": "makro",
-          "fetched_at": "2026-08-13"
+          "fetched_at": "2026-08-18"
         }
       ],
       "vendor": "pranee",
@@ -513,7 +513,7 @@
           "was": null,
           "discount_pct": 0,
           "source": "makro",
-          "fetched_at": "2026-08-13"
+          "fetched_at": "2026-08-18"
         }
       ],
       "vendor": "pranee",
@@ -551,7 +551,7 @@
           "was": null,
           "discount_pct": 0,
           "source": "makro",
-          "fetched_at": "2026-08-13"
+          "fetched_at": "2026-08-18"
         }
       ],
       "vendor": "pranee",
@@ -590,7 +590,7 @@
           "was": null,
           "discount_pct": 0,
           "source": "makro",
-          "fetched_at": "2026-08-13"
+          "fetched_at": "2026-08-18"
         }
       ],
       "vendor": "pranee",
