@@ -461,11 +461,11 @@ INTEL_DATA_FALLBACK = [
         "hours": "⚠️ ขัดกัน: Facebook = \"เปิดตลอดเวลา\" · รีวิว ก.ค. 2567 = ทุกวัน 08:00-18:00",
         "social_trend": {"primary_platform": "Facebook + Instagram", "posting_frequency": "ปานกลาง (IG ยังโพสต์ต่อเนื่องถึง ส.ค. 2026)", "content_style": "Slow bar craft · community/พูดคุย · ออกบูธสัญจร · เกาะกระแส specialty ไทย", "engagement_level": "low-medium (ฐาน followers หลักร้อยคน · reaction หลักหน่วย)"},
         "delivery": {
-            "primary_app": "ไม่พบ",
-            "apps": [],
-            "peak_hours": "ไม่ทราบ",
+            "primary_app": "LINE MAN (ยืนยันครั้งก่อน 22 ก.ค. 2026 — recheck 13 ส.ค. ยืนยันซ้ำไม่ได้)",
+            "apps": ["LINE MAN"],
+            "peak_hours": "จ-พ 08:00-15:30 · ส-อา 08:00-16:00 และ 18:00-23:00 (ช่วงเย็นวันหยุดส่งได้แม้หน้าร้านปิดแล้ว — ตามข้อมูล 22 ก.ค. 2026)",
             "active_promos": [],
-            "notes": "ไม่พบบน LINE MAN / GrabFood / ShopeeFood · โปรโมชั่นระบุ \"เฉพาะหน้าร้าน\" = เน้น dine-in อย่างเดียว"
+            "notes": "⚠️ ข้อมูลขัดกันระหว่าง 2 รอบเช็ค: รอบ 22 ก.ค. 2026 ยืนยัน LINE MAN ผ่าน amenities บน Wongnai พร้อมช่วงเวลาส่งชัดเจน แต่รอบ 13 ส.ค. 2026 (และรีเช็คซ้ำ 19 ส.ค.) หาไม่เจอ/ยืนยันซ้ำไม่ได้ — อาจเป็นเพราะร้านถอด listing ออก หรือ search engine เข้าถึงไม่ได้เฉยๆ แนะนำเช็คแอป LINE MAN ตรงๆ (พิมพ์ชื่อร้าน) เพื่อยืนยันสถานะปัจจุบัน (รวม 2 เอนทรีที่เคยซ้ำกัน — competitor-sip1 กับ competitor-sipone — เป็นรายการเดียว 19 ส.ค. 2026)"
         }
     },
     {
@@ -1368,60 +1368,6 @@ INTEL_DATA_FALLBACK = [
             "peak_hours": "ยังไม่มีข้อมูล",
             "active_promos": [],
             "notes": "ยังไม่พบบน Wongnai/LINE MAN/GrabFood/ShopeeFood — เพิ่งเปิด ม.ค. 2026 · น่าจะเน้น dine-in + event ก่อน delivery · ติดตามต่อ"
-        }
-    },
-    {
-        "id": "competitor-sip1",
-        "category": "competitor",
-        "title": "SIP-1 Slow Bar สกลนคร (Verified 22 Jul 2026)",
-        "summary": "เพิ่งเปิดใหม่มาก (Wongnai 1 rating/0 รีวิว) · Slow Bar ดริปมือเน้น craft · <10 ที่นั่ง เปิดแค่ จ-พ+ส-อา 08:00-13:00 (ปิด พฤ-ศ) · IG @sip1_slowbar 90 followers/85 posts · LINE MAN ✅ เวลาส่งกว้างกว่าหน้าร้านมาก · แทบไม่มี digital footprint นอกเพจตัวเอง",
-        "updated": "22 Jul 2026",
-        "source_url": "https://www.facebook.com/people/SIP-1-Slow-bar/61553979445148/",
-        "thumbnail_url": "",
-        "tags": ["สกลนคร", "Local", "Independent", "New2026", "SlowBar", "DripCoffee", "TinyShop"],
-        "relevance": "medium",
-        "detail": "SIP-1 Slow Bar — 149 ถ.มรรคาลัย ต.ธาตุเชิงชุม อ.เมืองสกลนคร (มุมซอย ตรงข้ามเรือนจำ)\nโทร: 088-569-0034 / 061-114-2206\n\nConcept: Slow Bar — ดริปกาแฟมือ เน้นกระบวนการ craft (สื่อผ่านชื่อร้าน 'Slow Bar')\n\nSocial (verified 22 Jul 2026):\n• Facebook: SIP-1 Slow bar (fb.com/people/SIP-1-Slow-bar/61553979445148) — มีเพจจริง แต่เข้าถึงเนื้อหาไม่ได้ (login wall) ไม่พบ likes/followers แม้แต่ cache จาก search engine\n• Instagram: @sip1_slowbar — 90 followers / 43 following / 85 posts — active มี Reels สอนดริปกาแฟ\n• TikTok: พบการอ้างอิงถึง handle แต่ไม่สามารถยืนยันเนื้อหาได้ชัดเจน\n• Wongnai: listed 'Official' — 1 rating, 0 written reviews (สะท้อนว่าเพิ่งเปิดมาก)\n\nContent ตัวอย่างที่พบ: Reel 'วันนี้มาแนะทำวิธีการดริปแบบไวๆ แต่ได้ผลลัพธ์ดี' — เนื้อหาเชิงสอน/ให้ความรู้เรื่อง brewing\n\nร้านขนาดเล็กมาก: ที่นั่ง <10 ที่ · ราคาระดับต่ำกว่า 100 บาท (Wongnai price tier ฿)\nเวลาเปิดหน้าร้าน: จ-พ, ส-อา 08:00-13:00 (ปิด พฤ-ศ) — เปิดเฉพาะช่วงเช้าเท่านั้น และปิด 2 วันกลางสัปดาห์\n\nDelivery (LINE MAN ยืนยันจาก amenities บน Wongnai):\n• จ-พ 08:00-15:30\n• ส-อา 08:00-16:00 และ 18:00-23:00 (มีช่วงเย็นวันหยุดที่หน้าร้านปิดแล้วแต่ยังส่ง delivery ได้ — น่าจะเป็นโมเดล dark-kitchen ช่วงเย็น)\n\nช่องว่างสำหรับคู่แข่ง:\n• Digital footprint แทบไม่มีนอกเพจตัวเอง — ไม่มี Google review, ไม่มีบทความ, ไม่มี Lemon8 พูดถึง\n• เปิดหน้าร้านแค่ 4 วัน/สัปดาห์ ปิดเร็ว 13:00 — เข้าถึงลูกค้าบ่าย-เย็นไม่ได้ (ยกเว้นผ่าน delivery ช่วงเย็นเสาร์-อาทิตย์)\n• <10 ที่นั่ง จำกัดกลุ่มลูกค้านั่งร้านมาก\n• ยังไม่มีรีวิวให้ลูกค้าใหม่เทียบคุณภาพ/ราคาก่อนตัดสินใจ",
-        "pricing": {
-            "espresso": {"price": "ไม่ทราบ", "note": "ระดับราคา ต่ำกว่า 100฿ (Wongnai price tier)"},
-            "americano": {"price": "ไม่ทราบ", "note": ""},
-            "latte": {"price": "ไม่ทราบ", "note": ""},
-            "cappuccino": {"price": "ไม่ทราบ", "note": ""},
-            "cold_brew": {"price": "ไม่ทราบ", "note": ""},
-            "frappe": {"price": "ไม่ทราบ", "note": ""},
-            "matcha": {"price": "ไม่ทราบ", "note": ""},
-            "signature_drink": {"price": "ไม่ทราบ", "note": "ดริปมือ (slow bar)"},
-            "food": {"price": "ไม่ทราบ", "note": "ของหวาน (ตามหมวด Wongnai)"},
-            "other": []
-        },
-        "strengths": [
-            "เนื้อหา educational drip coffee (Reel สอนดริป) — สร้าง authority ด้าน craft",
-            "ราคาระดับต่ำกว่า 100 บาท เข้าถึงง่าย",
-            "Delivery ยืนยันผ่าน LINE MAN พร้อมช่วงเย็นวันหยุด",
-            "โพสต์ถี่ (85 posts) แม้ follower ยังน้อย — พยายามสร้าง content สม่ำเสมอ"
-        ],
-        "promotions": [],
-        "weaknesses": [
-            "เพิ่งเปิดมาก ยังไม่มีรีวิวจริง (Wongnai 1 rating/0 written reviews)",
-            "เปิดหน้าร้านแค่ 4 วัน/สัปดาห์ (ปิด พฤ-ศ) และปิดเร็ว 13:00 — เสียตลาดบ่าย-เย็น",
-            "<10 ที่นั่ง = capacity จำกัดมาก",
-            "Facebook เข้าถึงข้อมูลไม่ได้ (login wall) — ไม่ทราบ followers/engagement",
-            "ไม่มี TikTok ที่ยืนยันเนื้อหาได้ชัดเจน",
-            "ไม่มี Google Maps review ให้เทียบราคา-คุณภาพ"
-        ],
-        "location": "149 ถ.มรรคาลัย ต.ธาตุเชิงชุม อ.เมืองสกลนคร (ตรงข้ามเรือนจำ)",
-        "hours": "จ-พ, ส-อา 08:00-13:00 (ปิด พฤ-ศ)",
-        "social_trend": {
-            "primary_platform": "Instagram",
-            "posting_frequency": "ถี่ (85 posts) เทียบกับ follower ที่ยังน้อย",
-            "content_style": "Educational drip brewing + slow bar craft",
-            "engagement_level": "low (เพิ่งเปิด)"
-        },
-        "delivery": {
-            "primary_app": "LINE MAN",
-            "apps": ["LINE MAN"],
-            "peak_hours": "ยังไม่มีข้อมูล (ร้านใหม่)",
-            "active_promos": [],
-            "notes": "เวลาส่ง delivery กว้างกว่าหน้าร้านมาก: จ-พ 08:00-15:30, ส-อา 08:00-16:00 และ 18:00-23:00 (ช่วงเย็นส่งได้แม้หน้าร้านปิดแล้ว) — น่าจะเป็นโมเดล dark-kitchen ช่วงเย็น"
         }
     },
     {

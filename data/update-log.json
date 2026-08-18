@@ -1157,6 +1157,57 @@
       "summary": "ดึงยอดวิว/ไลค์/คอมเมนต์/แชร์จาก TikTok API — 2026-08-18 (ไม่มีการเปลี่ยนแปลงจากยอดสะสม 2026-08-14)",
       "details": [],
       "count": 1
+    },
+    {
+      "id": "20260819-000300",
+      "ts": "2026-08-19T00:03:00",
+      "date_th": "19 ส.ค. 2569",
+      "time_th": "00:03",
+      "category": "platform",
+      "scope": "facebook",
+      "action": "import",
+      "summary": "นำเข้าข้อมูล Facebook (140 แถว)",
+      "details": [],
+      "count": 140
+    },
+    {
+      "id": "20260819-000300",
+      "ts": "2026-08-19T00:03:00",
+      "date_th": "19 ส.ค. 2569",
+      "time_th": "00:03",
+      "category": "platform",
+      "scope": "instagram",
+      "action": "import",
+      "summary": "นำเข้าข้อมูล Instagram (140 แถว)",
+      "details": [],
+      "count": 140
+    },
+    {
+      "id": "20260819-000300",
+      "ts": "2026-08-19T00:03:00",
+      "date_th": "19 ส.ค. 2569",
+      "time_th": "00:03",
+      "category": "platform",
+      "scope": "tiktok",
+      "action": "import",
+      "summary": "นำเข้าข้อมูล TikTok (365 แถว)",
+      "details": [],
+      "count": 365
+    },
+    {
+      "id": "20260819-000325",
+      "ts": "2026-08-19T00:03:25",
+      "date_th": "19 ส.ค. 2569",
+      "time_th": "00:03",
+      "category": "intel",
+      "scope": "วิเคราะห์เชิงลึก 6 มิติ (ทุกร้าน)",
+      "action": "research",
+      "summary": "วิเคราะห์คู่แข่งเชิงลึก 31 ร้าน (6 มิติ รวม Delivery Apps) — พบและแก้เอนทรีซ้ำของ SIP ONE/SIP-1",
+      "details": [
+        "คู่แข่งเปลี่ยนแปลงมากสุด: SIP ONE/SIP-1 Slowbar (รวมเอนทรีซ้ำ 2 รายการเป็น 1, ข้อมูล delivery ขัดกันระหว่างรอบเช็ค)",
+        "delivery: ตลาดคาเฟ่บูทีคสกลนครส่วนใหญ่ยังไม่มี delivery app ใดๆ, LINE MAN เป็นแอปหลักเจ้าเดียวสำหรับร้านที่มี"
+      ],
+      "count": 31
     }
   ]
 }
