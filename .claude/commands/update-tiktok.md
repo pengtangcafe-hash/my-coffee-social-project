@@ -36,7 +36,15 @@ credential อยู่ใน `.env` (TIKTOK_CLIENT_KEY / TIKTOK_CLIENT_SECRET /
    git push origin master
    ```
 
-5. **สรุปใน chat:**
+5. **ยืนยันว่า push สำเร็จจริง** (⚠️ ห้ามข้าม — เคยเกิดเหตุการณ์ดึงข้อมูลสำเร็จ+บันทึก log แล้ว แต่ไฟล์ไม่เคยขึ้น GitHub จริง เว็บเลยค้างข้อมูลเก่าหลายวันโดยไม่มีใครรู้):
+   ```
+   git status --short
+   git log origin/master..HEAD --oneline
+   ```
+   - `git status --short` ต้องไม่เหลือไฟล์ที่เกี่ยวข้อง (data/history/tiktok_*.json, dashboard/index.html, docs/index.html, data/update-log.json) ค้างเป็น modified/untracked — ถ้ามี ให้ย้อนกลับไป add+commit+push ให้ครบก่อน
+   - `git log origin/master..HEAD` ต้อง**ว่างเปล่า** (ไม่มี commit ค้างที่ยังไม่ถึง remote) — ถ้ายังมีบรรทัดโผล่มา ให้ `git push origin master` ซ้ำจนว่าง ห้ามสรุปผลให้ผู้ใช้ว่า "อัปเดตแล้ว" จนกว่าจะยืนยันขั้นนี้ผ่าน
+
+6. **สรุปใน chat:**
    - ยอดวันนี้ (reach/likes/comments/shares) ที่ดึงได้
    - GitHub Pages: `https://pengtangcafe-hash.github.io/my-coffee-social-project/`
    - เตือนกด Ctrl+Shift+R

@@ -37,6 +37,10 @@
   `python src/update_log.py add --category intel --action <action> --scope "..." --summary "..." [--count N] [--detail "..."]`
 - รีเฟรช dashboard โดยไม่ import ใหม่: `python src/generate_dashboard.py --rebuild`
 - ดู log: `python src/update_log.py show` · สรุป: `python src/update_log.py summary`
+- **⚠️ ทุก slash-command ที่ลงท้ายด้วย "push ขึ้น GitHub" ต้องยืนยันว่า push ถึง remote จริงก่อนสรุปผลให้ผู้ใช้**
+  (`git status --short` ต้องว่างสำหรับไฟล์ที่เกี่ยวข้อง + `git log origin/master..HEAD --oneline` ต้องว่างเปล่า) —
+  เคยเกิดเหตุการณ์ข้อมูล TikTok/Facebook/Instagram อัปเดตสำเร็จและบันทึก log ไว้แล้ว แต่ไฟล์ไม่เคยถูก commit/push จริง
+  เว็บที่ deploy เลยค้างข้อมูลเก่าหลายวันโดยไม่มีใครรู้ (แก้ไปแล้ว 2026-08-21 — ดูขั้นตอนยืนยันใน `.claude/commands/update-*.md` ทุกไฟล์)
 
 ## Backbar — ต้นทุนเครื่องดื่ม (Drink Costs)
 หน้า `view-cost-drinks` คำนวณต้นทุน/แก้ว, กำไร & กำไร %, สัดส่วนวัตถุดิบ, จุดคุ้มทุน — ต่อ 3 ช่องทาง (หน้าร้าน/Lineman/Shoppee)

@@ -20,12 +20,20 @@
 
 4. **Push ขึ้น GitHub** (การ import platform ถูกบันทึก log อัตโนมัติโดย generate_dashboard.py แล้ว)
    ```
-   git add docs/ data/history/ data/update-log.json reports/
+   git add dashboard/ docs/ data/history/ data/update-log.json reports/
    git commit -m "Social overview update — [YYYY-MM-DD]"
    git push
    ```
 
-5. **สรุปใน chat:**
+5. **ยืนยันว่า push สำเร็จจริง** (⚠️ ห้ามข้าม — เคยเกิดเหตุการณ์ import ข้อมูลสำเร็จ+บันทึก log แล้ว แต่ไฟล์ไม่เคยขึ้น GitHub จริง เว็บเลยค้างข้อมูลเก่าหลายวันโดยไม่มีใครรู้):
+   ```
+   git status --short
+   git log origin/master..HEAD --oneline
+   ```
+   - `git status --short` ต้องไม่เหลือไฟล์ที่เกี่ยวข้อง (data/history/, dashboard/index.html, docs/index.html, data/update-log.json) ค้างเป็น modified/untracked — ถ้ามี ให้ย้อนกลับไป add+commit+push ให้ครบก่อน
+   - `git log origin/master..HEAD` ต้อง**ว่างเปล่า** (ไม่มี commit ค้างที่ยังไม่ถึง remote) — ถ้ายังมีบรรทัดโผล่มา ให้ `git push` ซ้ำจนว่าง ห้ามสรุปผลให้ผู้ใช้ว่า "อัปเดตแล้ว" จนกว่าจะยืนยันขั้นนี้ผ่าน
+
+6. **สรุปใน chat:**
    - platforms ที่ detect ได้ (TikTok / Facebook / Instagram)
    - จำนวนวันที่มีข้อมูล
    - highlights สำคัญ 2-3 จุด (เช่น reach สูงสุด, engagement rate)
