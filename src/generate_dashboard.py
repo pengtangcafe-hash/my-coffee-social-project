@@ -2486,6 +2486,9 @@ HTML_TEMPLATE = """\
     .stk-card-body {{ flex:1; min-width:0; }}
     .stk-top {{ display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin-bottom:4px; }}
     .stk-name {{ font-weight:700; font-size:.92rem; color:var(--text); flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }}
+    .stk-drag-handle {{ cursor:grab; touch-action:none; user-select:none; color:var(--text-muted);
+      font-size:15px; line-height:1; padding:2px 4px; flex-shrink:0; border-radius:6px; }}
+    .stk-drag-handle:hover {{ background:var(--nav-active); color:var(--text); }}
     .stk-badge {{ display:inline-flex; align-items:center; padding:3px 10px; border-radius:999px;
       font-size:.72rem; font-weight:700; flex-shrink:0; }}
     .stk-badge.warn {{ background:rgba(194,65,12,.12); color:var(--dc-warn); }}
@@ -2919,11 +2922,19 @@ HTML_TEMPLATE = """\
       flex-shrink: 0; padding: 14px 24px; border-top: 1px solid var(--card-border); background: var(--card); }}
     .dc-modal-foot .spacer {{ margin-right: auto; }}
 
-    .dc-cat-row {{ display: grid; grid-template-columns: 1.6fr 70px 80px 70px 32px; gap: 8px;
+    .dc-cat-row {{ display: grid; grid-template-columns: 22px 1.6fr 70px 80px 70px 32px; gap: 8px;
       align-items: center; margin-bottom: 7px; }}
+    @media (max-width: 560px) {{
+      .dc-cat-row {{ grid-template-columns: 18px 1.6fr 54px 60px 50px 26px; gap: 5px; }}
+    }}
     .dc-cat-row .uc {{ font-size: .76rem; color: var(--text-muted); text-align: right; font-variant-numeric: tabular-nums; }}
     .dc-cat-head {{ font-size: .68rem; font-weight: 700; color: var(--text-muted); }}
     .dc-cat-list {{ padding-right: 4px; margin-top: 8px; }}
+    .dc-drag-handle {{ cursor: grab; touch-action: none; user-select: none; color: var(--text-muted);
+      font-size: 15px; line-height: 1; text-align: center; padding: 4px 0; border-radius: 6px; }}
+    .dc-drag-handle:hover {{ background: var(--nav-active); color: var(--text); }}
+    .dc-dragging {{ opacity: .55; box-shadow: 0 10px 24px -8px rgba(0,0,0,.4); cursor: grabbing;
+      position: relative; z-index: 5; }}
     .dc-catfilter {{ position: sticky; top: 0; z-index: 2; background: var(--card); display: flex;
       flex-wrap: wrap; gap: 6px; padding: 2px 0 10px; margin-bottom: 2px; }}
     .dc-pwwrap {{ position: relative; }}
@@ -5490,6 +5501,107 @@ function dcRowKey(e, el) {{ if (e.key === 'Enter' || e.key === ' ') {{ e.prevent
 var dcCollapsed = null;
 function dcLoadCollapsed() {{ if (dcCollapsed) return; try {{ dcCollapsed = JSON.parse(localStorage.getItem('pengtang_dc_collapsed') || '{{}}'); }} catch (e) {{ dcCollapsed = {{}}; }} if (!dcCollapsed) dcCollapsed = {{}}; }}
 function dcSaveCollapsed() {{ try {{ localStorage.setItem('pengtang_dc_collapsed', JSON.stringify(dcCollapsed)); }} catch (e) {{}} }}
+
+// ── ลำดับ card แบบลากจัดเอง — บันทึกเฉพาะเบราว์เซอร์นี้เท่านั้น ไม่ sync ขึ้น Google Sheet ──
+var DC_ORDER_KEY = 'pengtang_dc_order';
+var dcOrderCache = null;
+function dcOrderLoad() {{
+  if (dcOrderCache) return dcOrderCache;
+  try {{ dcOrderCache = JSON.parse(localStorage.getItem(DC_ORDER_KEY) || '{{}}'); }} catch (e) {{ dcOrderCache = {{}}; }}
+  if (!dcOrderCache) dcOrderCache = {{}};
+  return dcOrderCache;
+}}
+function dcOrderPersist() {{ try {{ localStorage.setItem(DC_ORDER_KEY, JSON.stringify(dcOrderCache || {{}})); }} catch (e) {{}} }}
+function dcOrderGet(listKey) {{ return dcOrderLoad()[listKey] || []; }}
+function dcOrderSet(listKey, arr) {{ dcOrderLoad()[listKey] = arr; dcOrderPersist(); }}
+// จัดลำดับ naturalArr (ค่าเริ่มต้น) ตามลำดับที่ผู้ใช้เคยลากไว้ — รายการใหม่ที่ไม่เคยลากจะต่อท้ายอัตโนมัติ
+function dcOrderApply(listKey, naturalArr) {{
+  var saved = dcOrderGet(listKey);
+  if (!saved.length) return naturalArr;
+  var have = {{}}; naturalArr.forEach(function(k) {{ have[k] = true; }});
+  var out = saved.filter(function(k) {{ return have[k]; }});
+  var seen = {{}}; out.forEach(function(k) {{ seen[k] = true; }});
+  naturalArr.forEach(function(k) {{ if (!seen[k]) out.push(k); }});
+  return out;
+}}
+// เปลี่ยนชื่อคีย์ในลำดับที่บันทึกไว้ (ใช้ตอนแก้ชื่อวัตถุดิบ กันลำดับหลุดไปท้ายแถว)
+function dcOrderRemap(listKey, map) {{
+  var saved = dcOrderGet(listKey);
+  if (!saved.length) return;
+  dcOrderSet(listKey, saved.map(function(k) {{ return map.hasOwnProperty(k) ? map[k] : k; }}));
+}}
+// เมนูเปลี่ยนชื่อ = id เปลี่ยนตาม (ดู dcSaveMenu) — ไล่ remap ทุกกลุ่ม/หมวดที่เคยลากไว้ ('menu:' นำหน้าทุกคีย์)
+function dcOrderRemapAllMenus(map) {{
+  var o = dcOrderLoad();
+  Object.keys(o).forEach(function(k) {{ if (k.indexOf('menu:') === 0) dcOrderRemap(k, map); }});
+}}
+// เอาลำดับใหม่ของ "กลุ่มย่อยที่มองเห็นตอนลาก" ไปแทนที่เฉพาะตำแหน่งเดิมของกลุ่มนั้นในลำดับเต็ม — ไม่กระทบกลุ่ม/แท็บอื่น
+function dcOrderSpliceGroup(listKey, fullNaturalArr, visibleNewOrder) {{
+  var full = dcOrderApply(listKey, fullNaturalArr).slice();
+  var inGroup = {{}}; visibleNewOrder.forEach(function(k) {{ inGroup[k] = true; }});
+  var positions = [];
+  full.forEach(function(k, i) {{ if (inGroup[k]) positions.push(i); }});
+  positions.forEach(function(pos, idx) {{ full[pos] = visibleNewOrder[idx]; }});
+  dcOrderSet(listKey, full);
+}}
+
+// ── กลไกลาก-จัดลำดับ card ทั่วไป — ลากได้เฉพาะจากที่จับ (⠿) กัน input/ปุ่มในการ์ดใช้งานไม่ได้ ──
+var dcDragScrollRAF = null;
+function dcDragAutoScroll(scrollEl, clientY) {{
+  var edge = 46, speed = 14, top, bottom;
+  if (scrollEl === window) {{ top = 0; bottom = window.innerHeight; }}
+  else {{ var r = scrollEl.getBoundingClientRect(); top = r.top; bottom = r.bottom; }}
+  var dy = 0;
+  if (clientY < top + edge) dy = -speed; else if (clientY > bottom - edge) dy = speed;
+  if (dcDragScrollRAF) {{ cancelAnimationFrame(dcDragScrollRAF); dcDragScrollRAF = null; }}
+  if (!dy) return;
+  function step() {{
+    if (scrollEl === window) window.scrollBy(0, dy); else scrollEl.scrollTop += dy;
+    dcDragScrollRAF = requestAnimationFrame(step);
+  }}
+  dcDragScrollRAF = requestAnimationFrame(step);
+}}
+function dcInitDragReorder(container, opts) {{
+  if (!container || container.__dcDragBound) return;
+  container.__dcDragBound = true;
+  container.addEventListener('pointerdown', function(e) {{
+    if (e.button != null && e.button !== 0) return;
+    var handle = e.target.closest(opts.handleSel);
+    if (!handle || !container.contains(handle)) return;
+    var item = handle.closest(opts.itemSel);
+    if (!item) return;
+    e.preventDefault();
+    var dragEl = item, moved = false, startX = e.clientX, startY = e.clientY;
+    try {{ handle.setPointerCapture(e.pointerId); }} catch (err) {{}}
+    var scrollEl = opts.scrollEl ? (typeof opts.scrollEl === 'function' ? opts.scrollEl() : opts.scrollEl) : window;
+    function onMove(ev) {{
+      if (!moved && Math.abs(ev.clientY - startY) < 4 && Math.abs(ev.clientX - startX) < 4) return;
+      moved = true;
+      dragEl.classList.add('dc-dragging');
+      dcDragAutoScroll(scrollEl, ev.clientY);
+      var siblings = Array.prototype.slice.call(container.querySelectorAll(opts.itemSel))
+        .filter(function(el) {{ return el !== dragEl && el.offsetParent !== null; }});
+      var placed = false;
+      for (var i = 0; i < siblings.length; i++) {{
+        var r = siblings[i].getBoundingClientRect();
+        if (ev.clientY < r.top + r.height / 2) {{ container.insertBefore(dragEl, siblings[i]); placed = true; break; }}
+      }}
+      if (!placed) container.appendChild(dragEl);
+    }}
+    function onUp(ev) {{
+      handle.removeEventListener('pointermove', onMove);
+      handle.removeEventListener('pointerup', onUp);
+      handle.removeEventListener('pointercancel', onUp);
+      if (dcDragScrollRAF) {{ cancelAnimationFrame(dcDragScrollRAF); dcDragScrollRAF = null; }}
+      dragEl.classList.remove('dc-dragging');
+      if (moved && opts.onDrop) opts.onDrop(container, dragEl);
+    }}
+    handle.addEventListener('pointermove', onMove);
+    handle.addEventListener('pointerup', onUp);
+    handle.addEventListener('pointercancel', onUp);
+  }});
+}}
+
 function dcToggleCat(cat) {{
   dcLoadCollapsed(); dcCollapsed[cat] = !dcCollapsed[cat]; dcSaveCollapsed();
   var body = document.querySelector('#dc-root .dc-group-body[data-cat="' + cat + '"]');
@@ -5767,8 +5879,17 @@ function renderDrinkCosts() {{
     : '<div class="dc-stat"><span class="dc-st-lab">⚠️ ต้องระวัง</span><span class="dc-st-val" style="color:var(--text-muted)">–</span></div>');
 
   // controls (เหลือแค่ เรียงตาม + หุบ/กาง — ช่องทางย้ายไปคลิกกลีบ chart)
-  var sortDefs = [['margin', 'กำไร %'], ['profit', 'กำไร ฿'], ['cost', 'ต้นทุน/แก้ว']];
+  var sortDefs = [['margin', 'กำไร %'], ['profit', 'กำไร ฿'], ['cost', 'ต้นทุน/แก้ว'], ['custom', '⠿ กำหนดเอง']];
   var sortBtns = sortDefs.map(function(s) {{ return '<button class="ov-mtab' + (s[0] === dcSort ? ' active' : '') + '" onclick="dcSetSort(\\'' + s[0] + '\\')">' + s[1] + '</button>'; }}).join('');
+  var dragMode = dcSort === 'custom';
+  // จัดลำดับกลุ่มเมนูตามที่ผู้ใช้เคยลากไว้ (เฉพาะโหมด "กำหนดเอง") — แยกลำดับต่อกลุ่ม/หมวดคนละชุด ไม่ปนกัน
+  function dcOrderedGroup(groupKey, itemsArr) {{
+    if (!dragMode) return itemsArr;
+    var ids = itemsArr.map(function(m) {{ return m.id; }});
+    var orderedIds = dcOrderApply('menu:' + groupKey, ids);
+    var byId = {{}}; itemsArr.forEach(function(m) {{ byId[m.id] = m; }});
+    return orderedIds.map(function(id) {{ return byId[id]; }}).filter(Boolean);
+  }}
 
   // sticky header: Polar chart (กึ่งกลาง) → stats แถวเต็ม → controls
   h.push('<div class="dc-sticky-header">'
@@ -5804,13 +5925,13 @@ function renderDrinkCosts() {{
   dcLoadCollapsed();
 
   // 🟢 กลุ่มเมนูที่กำลังขายอยู่ — pinned บนสุด (ข้ามหมวด) แต่เมนูยังคงอยู่ในหมวดเดิมด้วย
-  var sellArr = menus.filter(dcIsActive).sort(function(a, b) {{ return key(b) - key(a); }});
+  var sellArr = dcOrderedGroup('__active__', menus.filter(dcIsActive).sort(function(a, b) {{ return key(b) - key(a); }}));
   if (sellArr.length) {{
     var scol = !!dcCollapsed['__active__'];
     h.push('<div class="dc-group-title sell-grp' + (scol ? ' dc-collapsed' : '') + '" data-cat="__active__" role="button" tabindex="0" aria-expanded="' + (scol ? 'false' : 'true') + '" onclick="dcToggleCat(\\'__active__\\')" onkeydown="dcCatKey(event,\\'__active__\\')">'
       + '<span class="dc-chev">▾</span> 🟢 เมนูที่กำลังขายอยู่ <span class="ct">' + sellArr.length + ' เมนู</span></div>');
     h.push('<div class="dc-group-body' + (scol ? ' dc-collapsed' : '') + '" data-cat="__active__"><div class="dc-list">');
-    sellArr.forEach(function(m, idx) {{ h.push(dcRow(m, idx + 1, ch, maxP, fixed)); }});
+    sellArr.forEach(function(m, idx) {{ h.push(dcRow(m, idx + 1, ch, maxP, fixed, dragMode)); }});
     h.push('</div></div>');
   }} else if (dcActiveOnly) {{
     h.push('<div class="dc-sell-hint">ยังไม่ได้เลือกเมนูที่กำลังขาย — ปิดตัวกรองนี้ แล้วกดปุ่ม ⚪ “ขายเมนูนี้” ที่เมนูที่ขายจริง</div>');
@@ -5821,7 +5942,7 @@ function renderDrinkCosts() {{
   // หมวดปกติ (ซ่อนเมื่อเปิดตัวกรอง “เฉพาะที่ขายอยู่”)
   if (!dcActiveOnly) {{
   DC_CATS.forEach(function(cat) {{
-    var arr = menus.filter(function(m) {{ return dcCategoryOf(m) === cat; }}).sort(function(a, b) {{ return key(b) - key(a); }});
+    var arr = dcOrderedGroup(cat, menus.filter(function(m) {{ return dcCategoryOf(m) === cat; }}).sort(function(a, b) {{ return key(b) - key(a); }}));
     var col = !!dcCollapsed[cat];
     h.push('<div class="dc-group-title' + (col ? ' dc-collapsed' : '') + '" data-cat="' + cat + '" role="button" tabindex="0" aria-expanded="' + (col ? 'false' : 'true') + '" onclick="dcToggleCat(\\'' + cat + '\\')" onkeydown="dcCatKey(event,\\'' + cat + '\\')">'
       + '<span class="dc-chev">▾</span> ' + (DC_CAT_ICON[cat] || '') + ' ' + DC_CAT_LABEL[cat] + ' <span class="ct">' + arr.length + ' เมนู</span>'
@@ -5830,7 +5951,7 @@ function renderDrinkCosts() {{
     if (!arr.length) {{ h.push('<div class="dc-empty-cat">— ยังไม่มีเมนูในหมวดนี้ —</div>'); }}
     else {{
       h.push('<div class="dc-list">');
-      arr.forEach(function(m, idx) {{ h.push(dcRow(m, idx + 1, ch, maxP, fixed)); }});
+      arr.forEach(function(m, idx) {{ h.push(dcRow(m, idx + 1, ch, maxP, fixed, dragMode)); }});
       h.push('</div>');
     }}
     h.push('</div>');
@@ -5845,6 +5966,20 @@ function renderDrinkCosts() {{
     dcRenderPolar(menus);
     teaRender();
   }});
+  if (dragMode) {{
+    root.querySelectorAll('.dc-group-body .dc-list').forEach(function(listEl) {{
+      dcInitDragReorder(listEl, {{
+        handleSel: '.dc-drag-handle', itemSel: '.dc-row', scrollEl: window,
+        onDrop: function(container) {{
+          var body = container.closest('.dc-group-body');
+          var groupKey = body ? body.getAttribute('data-cat') : null;
+          if (!groupKey) return;
+          var ids = Array.prototype.map.call(container.querySelectorAll('.dc-row[data-mid]'), function(el) {{ return el.getAttribute('data-mid'); }});
+          dcOrderSet('menu:' + groupKey, ids);
+        }}
+      }});
+    }});
+  }}
 }}
 
 function dcRenderPolar(menus) {{
@@ -5927,7 +6062,7 @@ function dcRenderPolar(menus) {{
   }});
 }}
 
-function dcRow(m, rank, ch, maxP, fixed) {{
+function dcRow(m, rank, ch, maxP, fixed, dragMode) {{
   var c = dcChannelCalc(m, ch);
   var loss = c && c.profit < 0;
   var costW = c ? (c.cost / maxP * 100) : 0;
@@ -5956,9 +6091,10 @@ function dcRow(m, rank, ch, maxP, fixed) {{
     + '<div class="dc-sellrow">' + dcSellBtn(m) + '</div>'
     + (hasRec ? '' : '<div class="dc-norec">ยังไม่ได้ตั้งสูตร (ใช้ต้นทุนตั้งต้น)</div>') + '</div>';
 
-  return '<div class="dc-row' + (dcIsActive(m) ? ' selling' : '') + '" tabindex="0" role="button" aria-expanded="false" onclick="dcToggle(this)" onkeydown="dcRowKey(event,this)">'
+  var handle = dragMode ? '<span class="dc-drag-handle" title="ลากเพื่อจัดลำดับ" onclick="event.stopPropagation()">⠿</span>' : '';
+  return '<div class="dc-row' + (dcIsActive(m) ? ' selling' : '') + '" data-mid="' + escapeHtml(m.id) + '" tabindex="0" role="button" aria-expanded="false" onclick="dcToggle(this)" onkeydown="dcRowKey(event,this)">'
     + '<div class="dc-row-top">'
-    + '<div class="dc-id"><span class="dc-rank">' + rank + '</span>' + dcThumb(m) + nameBlock + '</div>'
+    + '<div class="dc-id">' + handle + '<span class="dc-rank">' + rank + '</span>' + dcThumb(m) + nameBlock + '</div>'
     + '<div class="dc-barwrap">' + bar + '</div>'
     + '<div class="dc-figs">' + figs + '</div>'
     + '</div>'
@@ -6199,6 +6335,8 @@ function dcSaveMenu() {{
     dcDraft.id = newName;
     if (DCS.activeMenus) DCS.activeMenus = DCS.activeMenus.map(function(x) {{ return oldKeys.indexOf(x) >= 0 ? newName : x; }});
     if (DCS.posMenuMap) Object.keys(DCS.posMenuMap).forEach(function(k) {{ if (oldKeys.indexOf(DCS.posMenuMap[k]) >= 0) DCS.posMenuMap[k] = newName; }});
+    var menuOrderMap = {{}}; oldKeys.forEach(function(k) {{ menuOrderMap[k] = newName; }});
+    dcOrderRemapAllMenus(menuOrderMap);
   }}
   if (i >= 0) DCS.menus[i] = dcDraft; else DCS.menus.push(dcDraft);
   dcAfterChange(); dcCloseModal(); renderDrinkCosts(); showToast('บันทึกเมนู "' + dcDraft.name + '" แล้ว');
@@ -6280,10 +6418,11 @@ function dcApplyCatFilter() {{
 }}
 function dcOpenCatalog() {{ dcCatFilter = 'all'; dcRenderCatalogModal(); }}
 function dcRenderCatalogModal() {{
-  var keys = Object.keys(DCS.catalog).sort(function(a, b) {{ return a.localeCompare(b, 'th'); }});
+  var keys = dcOrderApply('catalog', Object.keys(DCS.catalog).sort(function(a, b) {{ return a.localeCompare(b, 'th'); }}));
   var rows = keys.map(function(k) {{
     var c = DCS.catalog[k];
     return '<div class="dc-cat-row" data-orig="' + escapeHtml(k) + '" data-group="' + dcIngGroup(k) + '">'
+      + '<span class="dc-drag-handle" title="ลากเพื่อจัดลำดับ">⠿</span>'
       + '<input class="dc-inp dc-c-name" value="' + escapeHtml(k) + '">'
       + '<input class="dc-inp dc-c-price" type="number" min="0" step="any" value="' + c.price + '" oninput="dcCatUC(this)">'
       + '<input class="dc-inp dc-c-qty" type="number" min="0" step="any" value="' + c.qty + '" oninput="dcCatUC(this)">'
@@ -6292,15 +6431,26 @@ function dcRenderCatalogModal() {{
   }}).join('');
   var html = '<div class="dc-modal-head"><h3>🧂 คลังวัตถุดิบ</h3><button class="dc-x" onclick="dcCloseModal()" aria-label="ปิด">✕</button></div>'
     + '<div class="dc-modal-scroll">'
-    + '<div class="dc-edithint" style="margin-bottom:10px">แก้ราคา/ปริมาณแพ็ก แล้วทุกเมนูที่ใช้วัตถุดิบนั้นจะคำนวณต้นทุนใหม่ทันที</div>'
+    + '<div class="dc-edithint" style="margin-bottom:10px">แก้ราคา/ปริมาณแพ็ก แล้วทุกเมนูที่ใช้วัตถุดิบนั้นจะคำนวณต้นทุนใหม่ทันที · ลากที่ ⠿ เพื่อจัดลำดับการ์ด (จำไว้ในเครื่องนี้)</div>'
     + '<div class="dc-catfilter">' + dcCatFilterBtns() + '</div>'
-    + '<div class="dc-cat-row"><span class="dc-cat-head">ชื่อวัตถุดิบ</span><span class="dc-cat-head">ราคาแพ็ก</span><span class="dc-cat-head">ปริมาณ</span><span class="dc-cat-head" style="text-align:right">฿/หน่วย</span><span></span></div>'
+    + '<div class="dc-cat-row"><span></span><span class="dc-cat-head">ชื่อวัตถุดิบ</span><span class="dc-cat-head">ราคาแพ็ก</span><span class="dc-cat-head">ปริมาณ</span><span class="dc-cat-head" style="text-align:right">฿/หน่วย</span><span></span></div>'
     + '<div class="dc-cat-list" id="dc-cat-list">' + rows + '</div>'
     + '<button class="dc-btn ghost" type="button" style="margin-top:10px" onclick="dcAddCatalogRow()">+ เพิ่มวัตถุดิบใหม่</button>'
     + '</div>'
     + '<div class="dc-modal-foot"><span class="spacer"></span><button class="dc-btn" onclick="dcCloseModal()">ยกเลิก</button><button class="dc-btn primary" onclick="dcSaveCatalog()">บันทึกคลัง</button></div>';
   dcSetModalBody(html);
   dcApplyCatFilter();
+  var list = document.getElementById('dc-cat-list');
+  if (list) {{
+    dcInitDragReorder(list, {{
+      handleSel: '.dc-drag-handle', itemSel: '.dc-cat-row',
+      scrollEl: function() {{ return list.closest('.dc-modal-scroll'); }},
+      onDrop: function(container) {{
+        var order = Array.prototype.map.call(container.querySelectorAll('.dc-cat-row'), function(r) {{ return r.getAttribute('data-orig'); }});
+        dcOrderSet('catalog', order);
+      }}
+    }});
+  }}
 }}
 function dcCatUC(inp) {{
   var row = inp.closest('.dc-cat-row');
@@ -6310,9 +6460,11 @@ function dcCatUC(inp) {{
 }}
 function dcAddCatalogRow() {{
   var list = document.getElementById('dc-cat-list');
-  var div = document.createElement('div'); div.className = 'dc-cat-row'; div.setAttribute('data-orig', '');
+  var div = document.createElement('div'); div.className = 'dc-cat-row';
+  div.setAttribute('data-orig', '__new_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7) + '__');
   div.setAttribute('data-group', dcCatFilter === 'all' ? 'other' : dcCatFilter);
-  div.innerHTML = '<input class="dc-inp dc-c-name" placeholder="ชื่อวัตถุดิบ">'
+  div.innerHTML = '<span class="dc-drag-handle" title="ลากเพื่อจัดลำดับ">⠿</span>'
+    + '<input class="dc-inp dc-c-name" placeholder="ชื่อวัตถุดิบ">'
     + '<input class="dc-inp dc-c-price" type="number" min="0" step="any" placeholder="ราคา" oninput="dcCatUC(this)">'
     + '<input class="dc-inp dc-c-qty" type="number" min="0" step="any" placeholder="ปริมาณ" oninput="dcCatUC(this)">'
     + '<span class="uc">0</span><button class="dc-rdel" type="button" onclick="this.closest(\\'.dc-cat-row\\').remove()">✕</button>';
@@ -6321,6 +6473,7 @@ function dcAddCatalogRow() {{
 }}
 function dcSaveCatalog() {{
   var cat = {{}};
+  var renameMap = {{}};
   document.querySelectorAll('#dc-cat-list .dc-cat-row').forEach(function(r) {{
     var name = r.querySelector('.dc-c-name').value.trim();
     if (!name) return;
@@ -6329,8 +6482,10 @@ function dcSaveCatalog() {{
     var orig = r.getAttribute('data-orig');
     var unit = (orig && DCS.catalog[orig]) ? DCS.catalog[orig].unit : '';
     cat[name] = {{ price: price, qty: qty, unit_cost: qty ? +(price / qty).toFixed(5) : 0, unit: unit }};
+    if (orig && orig !== name) renameMap[orig] = name;
   }});
   DCS.catalog = cat;
+  dcOrderRemap('catalog', renameMap);
   dcAfterChange(); dcCloseModal(); renderDrinkCosts(); showToast('บันทึกคลังวัตถุดิบแล้ว');
 }}
 
@@ -6635,6 +6790,18 @@ function renderStockView() {{
     +'</div>';
   var body=stkTab==='remain'?stkRenderRemain():stkTab==='usage'?stkRenderUsage():stkRenderHistory();
   root.innerHTML=kpi+toolbar+stkRenderWarnCards()+tabs+'<div>'+body+'</div>';
+  if (stkTab==='remain') {{
+    var grid=document.getElementById('stk-cards-grid');
+    if (grid) {{
+      dcInitDragReorder(grid, {{
+        handleSel: '.stk-drag-handle', itemSel: '.stk-card', scrollEl: window,
+        onDrop: function(container) {{
+          var visible=Array.prototype.map.call(container.querySelectorAll('.stk-card'), function(el) {{ return el.getAttribute('data-ing'); }});
+          dcOrderSpliceGroup('stock', stkNaturalOrder(), visible);
+        }}
+      }});
+    }}
+  }}
 }}
 // ประวัติการนำเข้า — แยกออกจาก "สต็อกคงเหลือ" (ตัวเลขสะสม) ให้เห็นเป็นรอบๆ ว่าซื้อเข้าตอนไหน
 // ล็อตไหนบ้าง ใช้ข้อมูล/การ์ดเดียวกับหน้าต้นทุน (vfPurchaseBills + vfBillsGrouped) ไม่ต้องสร้างซ้ำ
@@ -6703,6 +6870,16 @@ function stkRenderWarnCards() {{
 }}
 
 // ---- tab: สต็อกคงเหลือ ----
+// ลำดับตั้งต้น (ก่อนลากจัดเอง) ของ "วัตถุดิบทั้งหมด" — ใกล้หมดก่อน แล้วตามด้วยที่ยังไม่ตั้งสต็อกเต็ม (เรียงชื่อ)
+// ใช้เป็นฐานเดียวกันทั้งตอน render และตอน splice ลำดับกลุ่มย่อยกลับเข้าลำดับเต็ม กันกลุ่มที่ไม่ได้ลากสลับตำแหน่งเอง
+function stkNaturalOrder() {{
+  var ings=Object.keys(DCS.catalog);
+  var withPar=ings.filter(function(k) {{ return stkPct(k)!==null; }});
+  var noPar=ings.filter(function(k) {{ return stkPct(k)===null; }});
+  withPar.sort(function(a,b) {{ return (stkPct(a)||0)-(stkPct(b)||0); }});
+  noPar.sort(function(a,b) {{ return a.localeCompare(b,'th'); }});
+  return withPar.concat(noPar);
+}}
 function stkRenderRemain() {{
   var ings=Object.keys(DCS.catalog);
   if (!ings.length) return '<div class="ov-tile ov-soon"><div class="ov-soon-emoji">📦</div><div class="ov-soon-sub">ยังไม่มีวัตถุดิบ — ตั้งค่าที่หน้า ต้นทุนเครื่องดื่ม</div></div>';
@@ -6712,11 +6889,10 @@ function stkRenderRemain() {{
     +'</div>';
   var filtered=stkIgrpTab==='all'?ings:ings.filter(function(k) {{ return dcIngGroup(k)===stkIgrpTab; }});
   if (!filtered.length) return grpTabs+'<div class="ov-tile ov-soon"><div class="ov-soon-emoji">📦</div><div class="ov-soon-sub">ไม่มีวัตถุดิบในหมวดนี้</div></div>';
-  var withPar=filtered.filter(function(k) {{ return stkPct(k)!==null; }});
-  var noPar=filtered.filter(function(k) {{ return stkPct(k)===null; }});
-  withPar.sort(function(a,b) {{ return (stkPct(a)||0)-(stkPct(b)||0); }});
-  noPar.sort(function(a,b) {{ return a.localeCompare(b,'th'); }});
-  var cards=withPar.concat(noPar).map(function(k) {{
+  var filteredSet={{}}; filtered.forEach(function(k) {{ filteredSet[k]=true; }});
+  var natural=stkNaturalOrder().filter(function(k) {{ return filteredSet[k]; }});
+  var ordered=dcOrderApply('stock', natural);
+  var cards=ordered.map(function(k) {{
     var bu=stkBaseUnit(k);
     var bought=stkBoughtBase(k); var usedB=stkUsedBase(k);
     var rem=stkRemainBase(k); var parB=stkParBase(k);
@@ -6729,10 +6905,10 @@ function stkRenderRemain() {{
     var imgEl=imgUrl
       ?'<div class="stk-card-img"><img src="'+escapeHtml(imgUrl)+'" alt="" referrerpolicy="no-referrer" loading="lazy" onerror="this.parentElement.textContent=\\''+icon+'\\'"></div>'
       :'<div class="stk-card-img">'+icon+'</div>';
-    return '<div class="stk-card'+(low?' low':'')+'">'
+    return '<div class="stk-card'+(low?' low':'')+'" data-ing="'+escapeHtml(k)+'">'
       +imgEl
       +'<div class="stk-card-body">'
-      +'<div class="stk-top"><span class="stk-name">'+escapeHtml(k)+'</span>'+badge
+      +'<div class="stk-top"><span class="stk-drag-handle" title="ลากเพื่อจัดลำดับ">⠿</span><span class="stk-name">'+escapeHtml(k)+'</span>'+badge
       +'<button class="stk-edit-btn" data-ing="'+escapeHtml(k)+'" onclick="stkEditIngBtn(this)" title="แก้ไข">✏️</button>'
       +'</div>'
       +'<div class="stk-nums">'
@@ -6745,7 +6921,7 @@ function stkRenderRemain() {{
       +'<div class="stk-bar-lbl">'+(pct!==null?Math.round(pct)+'%':'—')+'</div>'
       +'</div></div>';
   }}).join('');
-  return grpTabs+cards;
+  return grpTabs+'<div id="stk-cards-grid">'+cards+'</div>';
 }}
 
 // ---- tab: การใช้ต่อเมนู ----
