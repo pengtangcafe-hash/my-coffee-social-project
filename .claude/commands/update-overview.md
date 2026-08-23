@@ -17,6 +17,12 @@
    python src/generate_dashboard.py data/imports/
    copy dashboard\index.html docs\index.html
    ```
+   **⚠️ เช็ค output ก่อนไปต่อ** — ถ้าเจอ `[warn] normalize.py failed for ...` พร้อม `[SAFETY CHECK]`
+   ในรายละเอียด → **หยุดทันที ห้าม commit/push ต่อ** นี่คือ safety check ที่ตรวจพบว่าไฟล์ CSV ที่ import
+   ทำให้ยอดวันที่เคยมีข้อมูลจริง (ในไฟล์ history เดิม) หาย/ตกฮวบผิดปกติ (เคยเกิดจริง: ยอดดู TikTok
+   หล่นจาก 462 เหลือ 12 เพราะ import ไฟล์ CSV ผิด/ไม่ครบ — ดูรายละเอียดใน CLAUDE.md) แพลตฟอร์มนั้นจะ
+   ถูกข้าม (ไม่เขียนทับ) โดยอัตโนมัติ แต่ **ต้องแจ้งผู้ใช้ทันที** พร้อมรายละเอียดวันที่/ยอดเก่า-ใหม่
+   จาก error message ให้ตรวจสอบไฟล์ CSV ต้นทางก่อน — อย่าเดาว่า "คงไม่เป็นไร" แล้วรันข้ามไปเอง
 
 4. **Push ขึ้น GitHub** (การ import platform ถูกบันทึก log อัตโนมัติโดย generate_dashboard.py แล้ว)
    ```

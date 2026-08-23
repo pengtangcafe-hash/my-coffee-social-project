@@ -193,7 +193,14 @@ def main():
     history_df = pd.concat([history_df, pd.DataFrame([new_row])], ignore_index=True)
     history_df = history_df.sort_values("date").reset_index(drop=True)
 
-    out_path = save_history(history_df, "tiktok")
+    try:
+        out_path = save_history(history_df, "tiktok")
+    except ValueError as e:
+        # 🛡️ safety check ใน save_history() เจอวันที่เคยมีข้อมูลจริงหายไป/ตกฮวบ — ปกติไม่ควรเกิดกับ
+        # เส้นทาง API นี้ (ต่อยอดจาก history เดิมเสมอ) ถ้าเกิดจริงแปลว่า history เดิมพังมาก่อนแล้ว
+        # ให้หยุดตรงนี้แทนที่จะเขียนทับซ้ำ — ต้องตรวจ data/history/tiktok_*.json ก่อน
+        print(str(e))
+        sys.exit(1)
     print(f"บันทึกแล้ว: {out_path}")
     print(f"ยอดวันนี้ ({new_row['date']}): reach={new_row['reach']} likes={new_row['likes']} "
           f"comments={new_row['comments']} shares={new_row['shares']}")

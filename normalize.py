@@ -204,8 +204,57 @@ def _read_narrow_csv(filepath: Path) -> pd.DataFrame:
 # Save output
 # ──────────────────────────────────────────────
 
-def save_history(df: pd.DataFrame, platform: str, output_dir="data/history") -> Path:
+def _detect_history_regression(df: pd.DataFrame, platform: str, output_dir: str, metric: str = "reach"):
+    """🛡️ Safety check — เทียบกับไฟล์ history ล่าสุดที่มีอยู่ก่อนเขียนทับ
+    เตือนถ้าวันที่ "เคยมีข้อมูลจริง" (metric > 0 ในไฟล์เดิม) กลายเป็นข้อมูลหาย/ตกฮวบในไฟล์ใหม่
+    ที่กำลังจะบันทึก — สัญญาณของการ import ไฟล์ผิด/ไฟล์ไม่ครบทับข้อมูลถูกต้องแบบเงียบๆ
+    (เคยเกิดจริง: ยอดดู TikTok วันที่ 14 ส.ค. หล่นจาก 450 เหลือ 0 เพราะ import CSV ผิดไฟล์ — แก้ 2026-08-23)
+    เทียบทีละวันที่ทับซ้อนกัน แทนการเทียบผลรวม เพราะไฟล์ CSV แต่ละรอบอาจครอบคลุมช่วงวันที่ไม่เท่ากัน
+    (เช่น export 60 วันล่าสุด vs 30 วันล่าสุด) — เทียบผลรวมตรงๆ จะ false-positive ได้ง่าย
+    คืน (prev_filename, [(date, old_val, new_val), ...]) เรียงจากวันที่หายมากสุดก่อน หรือ None ถ้าไม่พบความผิดปกติ
+    """
+    if metric not in df.columns or "date" not in df.columns:
+        return None
+    files = sorted(Path(output_dir).glob(f"{platform}_*.json"))
+    if not files:
+        return None
+    try:
+        prev = json.loads(files[-1].read_text(encoding="utf-8"))
+    except Exception:
+        return None
+    prev_rows = {r.get("date"): r.get(metric, 0) or 0 for r in prev.get("data", []) if r.get("date")}
+    new_rows = dict(zip(df["date"], df[metric]))
+    regressed = [
+        (date, old_val, new_rows.get(date, 0))
+        for date, old_val in prev_rows.items()
+        if old_val >= 5 and new_rows.get(date, 0) < old_val * 0.5
+    ]
+    if not regressed:
+        return None
+    regressed.sort(key=lambda x: x[1], reverse=True)
+    return files[-1].name, regressed
+
+
+def save_history(df: pd.DataFrame, platform: str, output_dir="data/history", allow_regression=False) -> Path:
     os.makedirs(output_dir, exist_ok=True)
+
+    regression = _detect_history_regression(df, platform, output_dir)
+    if regression and not allow_regression:
+        prev_name, regressed = regression
+        # หมายเหตุ: ห้ามใช้ emoji/สัญลักษณ์นอก BMP (เช่น 🛑) ในข้อความนี้ — เคยทดสอบแล้วทำให้ Python
+        # print/raise ล้มเหลวด้วย UnicodeEncodeError บน Windows console (คนละสาเหตุกับ Thai text
+        # ซึ่ง cp874 รองรับได้ปกติ) ใช้ tag แบบ [SAFETY CHECK] ให้เหมือนสไตล์ [warn]/[ok]/[load] เดิม
+        lines = [f"    {d}: {old:,.0f} -> {new:,.0f}" for d, old, new in regressed[:8]]
+        more = f"\n    ...และอีก {len(regressed) - 8} วัน" if len(regressed) > 8 else ""
+        raise ValueError(
+            "\n[SAFETY CHECK] ล้มเหลว — ข้อมูล '" + platform + "' ที่กำลังจะบันทึกทำให้ยอดวันที่เคยมีข้อมูลจริง "
+            f"หายไป/ตกฮวบ เทียบกับไฟล์เดิม ({prev_name}):\n" + "\n".join(lines) + more +
+            "\n  -> มักเกิดจาก import ไฟล์ CSV ผิด/ไม่ครบ (เช่น ไฟล์ตัวอย่างว่างเปล่า) ทับข้อมูลจริงที่ถูกต้องไว้ก่อนหน้า\n"
+            "  -> ตรวจสอบไฟล์ CSV ต้นทางก่อน — อย่าเพิ่ง rebuild/commit/push ต่อ\n"
+            "  -> ถ้ามั่นใจว่าข้อมูลใหม่ถูกต้องจริง (เช่น ยอดตกลงจริงตามธรรมชาติ) ให้เรียก "
+            "save_history(df, platform, allow_regression=True) แทน\n"
+        )
+
     today = datetime.now().strftime("%Y%m%d")
     out_path = Path(output_dir) / f"{platform}_{today}.json"
 
@@ -255,6 +304,10 @@ def normalize(input_path: str, schema_path="data/schema.json") -> Path | None:
         print("ERROR: ไม่มีข้อมูลหลัง normalize")
         return None
 
+    # หมายเหตุ: ไม่ครอบ try/except ตรงนี้ — ปล่อยให้ ValueError จาก safety check ใน save_history()
+    # หลุดขึ้นไปถึง __main__ เพื่อให้ exit code ไม่เป็น 0 (generate_dashboard.py เช็ค returncode
+    # แล้วพิมพ์ stderr ทั้งก้อนให้เห็นรายละเอียดวันที่ข้อมูลหาย — ถ้า catch ไว้ตรงนี้แล้ว return None
+    # เฉยๆ รายละเอียดจะหายไป เหลือแค่ "[warn] ไม่พบ normalized file" ซึ่งไม่บอกอะไรเลย)
     out_path = save_history(df, platform)
 
     print()
@@ -269,4 +322,12 @@ if __name__ == "__main__":
         print("Usage: python normalize.py <path>")
         print("  <path> = ไฟล์ CSV (TikTok) หรือ folder (Facebook/Instagram)")
         sys.exit(1)
-    normalize(sys.argv[1])
+    try:
+        result = normalize(sys.argv[1])
+    except ValueError as e:
+        # จาก safety check ใน save_history() — พิมพ์ลง stderr + exit code != 0
+        # ให้ generate_dashboard.py (เรียกผ่าน subprocess) เห็นและ skip platform นี้แทนที่จะเขียนทับข้อมูล
+        print(str(e), file=sys.stderr)
+        sys.exit(1)
+    if result is None:
+        sys.exit(1)

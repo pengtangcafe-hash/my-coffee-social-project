@@ -41,6 +41,15 @@
   (`git status --short` ต้องว่างสำหรับไฟล์ที่เกี่ยวข้อง + `git log origin/master..HEAD --oneline` ต้องว่างเปล่า) —
   เคยเกิดเหตุการณ์ข้อมูล TikTok/Facebook/Instagram อัปเดตสำเร็จและบันทึก log ไว้แล้ว แต่ไฟล์ไม่เคยถูก commit/push จริง
   เว็บที่ deploy เลยค้างข้อมูลเก่าหลายวันโดยไม่มีใครรู้ (แก้ไปแล้ว 2026-08-21 — ดูขั้นตอนยืนยันใน `.claude/commands/update-*.md` ทุกไฟล์)
+- **🛡️ Safety check กันข้อมูล history ตกฮวบผิดปกติ** — `save_history()` ใน `normalize.py` (ใช้ร่วมกันทั้ง
+  CSV import และ `fetch_tiktok.py`) เทียบไฟล์ใหม่กับไฟล์ history ล่าสุดที่มีอยู่ **ทีละวันที่ทับซ้อนกัน**
+  ถ้าวันไหนเคยมีข้อมูลจริง (≥5) แล้วไฟล์ใหม่ทำให้ตกลงเกินครึ่ง → ไม่เขียนทับ, `raise ValueError` พร้อม
+  รายละเอียดวันที่/ยอดเก่า-ใหม่ (CLI: exit code != 0 พิมพ์ `[SAFETY CHECK]` ให้เห็นใน console)
+  เคยเกิดเหตุการณ์จริง: import CSV ผิดไฟล์ 19 ส.ค. 2569 ทำให้ยอดดู TikTok หล่นจาก 462 เหลือ 12 แบบเงียบๆ
+  (แก้ข้อมูลไปแล้ว 2026-08-23 + เพิ่ม safety check นี้กันไม่ให้เกิดซ้ำ)
+  ถ้ามั่นใจว่ายอดตกลงจริงตามธรรมชาติ (ไม่ใช่ import ผิด) ให้เรียก `save_history(df, platform, allow_regression=True)`
+  — **ห้าม agent ข้ามเช็คนี้เองโดยไม่ถามผู้ใช้ก่อน** ดูขั้นตอนที่ต้องทำเมื่อเจอ warning ใน
+  `.claude/commands/update-tiktok.md`, `update-overview.md`, `analyze.md`
 
 ## Backbar — ต้นทุนเครื่องดื่ม (Drink Costs)
 หน้า `view-cost-drinks` คำนวณต้นทุน/แก้ว, กำไร & กำไร %, สัดส่วนวัตถุดิบ, จุดคุ้มทุน — ต่อ 3 ช่องทาง (หน้าร้าน/Lineman/Shoppee)

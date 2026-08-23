@@ -13,6 +13,14 @@ credential อยู่ใน `.env` (TIKTOK_CLIENT_KEY / TIKTOK_CLIENT_SECRET /
    ถ้า error เรื่อง refresh token หมดอายุ/ใช้ไม่ได้ → ต้องขอ auth code ใหม่จากผู้ใช้ (ดูขั้นตอนใน
    ประวัติแชทที่ตั้งค่าครั้งแรก — ต้องเปิดลิงก์ authorize ใหม่ เพราะ refresh_token มีอายุ ~365 วัน)
 
+   **⚠️ ถ้าเจอ `[SAFETY CHECK]` ในผลลัพธ์ (exit code != 0) → หยุดทันที ห้ามทำขั้นตอนถัดไป**
+   (rebuild/log/push ทั้งหมด) — นี่คือ safety check ใน `save_history()` (normalize.py) ที่ตรวจพบว่า
+   ยอดวันที่เคยมีข้อมูลจริงกลายเป็นหาย/ตกฮวบเทียบกับไฟล์ history เดิม (เคยเกิดจริง: ยอดดู TikTok
+   14 ส.ค. หล่นจาก 450 เหลือ 0 เพราะ import ผิดไฟล์ — ดูรายละเอียดเหตุการณ์ใน CLAUDE.md)
+   → แจ้งผู้ใช้ทันทีพร้อมรายละเอียดวันที่/ยอดเก่า-ใหม่จากข้อความ error ให้ผู้ใช้ตรวจสอบก่อน
+   → ถ้าตรวจสอบแล้วมั่นใจว่าข้อมูลใหม่ถูกต้องจริง ค่อยแก้ให้เรียก `save_history(..., allow_regression=True)`
+     แล้วรันใหม่ — **ห้ามข้ามด้วยตัวเองโดยไม่ถามผู้ใช้ก่อน**
+
 2. **Rebuild + คัดลอกไป docs/** (⚠️ ห้ามลืม — GitHub Pages เสิร์ฟจาก `docs/` ไม่ใช่ `dashboard/`)
    ```
    python src/generate_dashboard.py --rebuild

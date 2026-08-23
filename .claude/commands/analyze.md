@@ -38,6 +38,11 @@
    ```
    เพื่ออัปเดต dashboard
 
+   **⚠️ เช็ค output ก่อนไปต่อ** — ถ้าเจอ `[warn] normalize.py failed for ...` พร้อม `[SAFETY CHECK]`
+   ในรายละเอียด → หยุดทันที ห้าม commit/push ต่อ นี่คือ safety check ที่ตรวจพบว่าไฟล์ CSV ที่ import
+   ทำให้ยอดวันที่เคยมีข้อมูลจริงหาย/ตกฮวบผิดปกติเทียบกับไฟล์ history เดิม (ดูรายละเอียดเหตุการณ์จริง
+   ที่เคยเกิดใน CLAUDE.md) — แจ้งผู้ใช้ทันทีพร้อมรายละเอียดวันที่/ยอดเก่า-ใหม่จาก error message
+
 5. สร้าง Full Report รวมทุก section บันทึกที่ `reports/full-report-<YYYYMMDD>.md`:
 
    ```markdown
