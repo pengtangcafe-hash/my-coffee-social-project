@@ -1,6 +1,6 @@
 {
   "platform": "tiktok",
-  "generated_at": "2026-08-19",
+  "generated_at": "2026-08-23",
   "row_count": 365,
   "columns": [
     "date",
@@ -2931,6 +2931,5 @@
       "comments": 0,
       "shares": 0
     }
-  ],
-  "_corrected_note": "กู้คืนจาก tiktok_20260818.json (ของ API) แทนไฟล์เดิมที่มาจาก CSV import ผิดพลาด (sum reach เหลือแค่ 12) — แก้เมื่อ 2026-08-21"
+  ]
 }
