@@ -267,13 +267,13 @@ INTEL_DATA_FALLBACK = [
     {
         "id": "competitor-allofkk",
         "category": "competitor",
-        "title": "All of KK สกลนคร (Limited Data — Re-verified 9 Jun 2026)",
-        "summary": "Small local café · Facebook เท่านั้น (~700 likes) · Tagline 'You can taste the passion' · ไม่พบ delivery · ข้อมูลจำกัดมาก — re-verified 9 Jun 2026 ยังไม่ได้ข้อมูลเพิ่ม · ต้องการ field visit",
-        "updated": "9 Jun 2026",
+        "title": "All of KK สกลนคร (Limited Data — Re-verified 5 Oct 2026)",
+        "summary": "Small local café · ที่อยู่ 460/1 ถ.กลางสวัสดิ์ ต.ธาตุเชิงชุม (พบใหม่ 5 ต.ค. 2026) · Facebook ~726 likes (ขึ้นเล็กน้อยจาก ~700) · Tagline 'You can taste the passion' · ไม่พบ delivery · ยังไม่พบ Wongnai listing",
+        "updated": "5 Oct 2026",
         "source_url": "https://www.facebook.com/allofkk", "thumbnail_url": "",
         "tags": ["สกลนคร", "Local", "Independent", "LimitedData"],
         "relevance": "medium",
-        "detail": "All of KK — Facebook: facebook.com/allofkk\nTagline: 'You can taste the passion'\n\n⚠️ ข้อมูลจำกัดมาก — Facebook blocking crawlers:\n• Facebook: ~700 likes / ~205 check-ins (เท่านั้นที่ยืนยันได้)\n• ไม่พบ Instagram, TikTok, Wongnai, Google Maps listing\n• ไม่ทราบ: ที่อยู่, เวลาเปิด, เมนู, ราคา\n\nภาพรวม: ร้านเล็ก low-profile ยังไม่ถูก 'ค้นพบ' โดย community นักรีวิว\nCheck-in 205 คน บ่งชี้มีลูกค้าจริง แต่ social presence ต่ำที่สุดในบรรดาคู่แข่งที่ track\n\n⚠️ แนะนำ: เข้าดู facebook.com/allofkk โดยตรง หรือ field visit เพื่อ update ข้อมูล",
+        "detail": "All of KK — Facebook: facebook.com/allofkk\nTagline: 'You can taste the passion'\n\n⚠️ ข้อมูลจำกัดมาก — Facebook blocking crawlers:\n• Facebook: ~726 likes (5 ต.ค. 2026 — ขึ้นเล็กน้อยจาก ~700/~205 check-ins รอบก่อน)\n• ที่อยู่ที่พบใหม่ (5 ต.ค. 2026): 460/1 ถนนกลางสวัสดิ์ ตำบลธาตุเชิงชุม อำเภอเมืองสกลนคร · โทร 093-551-3656 (ยังไม่ยืนยันซ้ำด้วยแหล่งที่สอง — ควร field visit เพื่อ confirm)\n• ไม่พบ Instagram, TikTok, Wongnai, Google Maps listing เลยในรอบนี้ (เหมือนเดิม) — ไม่พบสัญญาณ delivery app\n• ไม่ทราบ: เวลาเปิด, เมนู, ราคา\n\nภาพรวม: ร้านเล็ก low-profile ยังไม่ถูก 'ค้นพบ' โดย community นักรีวิว แต่ตอนนี้มีที่อยู่+เบอร์โทรชัดเจนแล้ว ทำให้ field visit ทำได้ง่ายขึ้น\n\n⚠️ แนะนำ: ไปที่ 460/1 ถ.กลางสวัสดิ์ โดยตรง หรือโทร 093-551-3656 เพื่อยืนยันเวลาเปิด-เมนู-ราคา",
         "pricing": {
             "espresso":{"price":"","note":"ไม่ทราบ"},"americano":{"price":"","note":"ไม่ทราบ"},
             "latte":{"price":"","note":""},"cappuccino":{"price":"","note":""},
@@ -285,14 +285,14 @@ INTEL_DATA_FALLBACK = [
         "strengths": ["มีลูกค้าจริง (205 check-ins)", "Tagline passion-driven"],
         "promotions": [],
         "weaknesses": ["Facebook เท่านั้น (ไม่มี IG/TikTok)", "ไม่มี delivery platform", "ไม่มี Wongnai listing", "ข้อมูลสาธารณะน้อยมาก"],
-        "location": "สกลนคร (ไม่ทราบที่อยู่ชัดเจน)", "hours": "ไม่ทราบ",
+        "location": "460/1 ถนนกลางสวัสดิ์ ตำบลธาตุเชิงชุม อำเภอเมืองสกลนคร (พบใหม่ 5 ต.ค. 2026 — ยังไม่ confirm ซ้ำ)", "hours": "ไม่ทราบ",
         "social_trend": {"primary_platform":"Facebook","posting_frequency":"ไม่ทราบ","content_style":"ไม่ทราบ — ต้องการ field visit","engagement_level":"low"},
         "delivery": {
             "primary_app": "ไม่มี",
             "apps": [],
             "peak_hours": "N/A",
             "active_promos": [],
-            "notes": "ไม่พบบน LINE MAN, GrabFood, Wongnai Delivery — dine-in เท่านั้น (สันนิษฐาน)"
+            "notes": "ไม่พบบน LINE MAN, GrabFood, Wongnai Delivery — dine-in เท่านั้น (สันนิษฐาน) · รีเช็คซ้ำ 5 ต.ค. 2026 ยังไม่พบหลักฐาน delivery"
         }
     },
     {
@@ -434,14 +434,14 @@ INTEL_DATA_FALLBACK = [
     {
         "id": "competitor-sipone",
         "category": "competitor",
-        "title": "SIP ONE / SIP-1 Slowbar สกลนคร (Verified 13 Aug 2026)",
-        "summary": "Slow bar \"คาเฟ่ลับ\" หลังประตูเมืองสกลนคร · ดริปมือ + ตีมัทฉะ · FB followers (ตัวเลขล่าสุดยืนยันไม่ได้ — ดูหมายเหตุ) · IG @sip1_slowbar ยัง active (โพสต์ต่อเนื่องถึง ส.ค. 2026) · โปรทุกวันที่ 11 (ฟรี 3 แก้วแรก + ลด 11฿ ทั้งวัน เฉพาะหน้าร้าน) — ยังไม่พบสัญญาณยกเลิก · อยู่ในเครือข่าย specialty ไทย (SCATH) · ยังไม่มีรีวิวสาธารณะเลย (0 รีวิว)",
-        "updated": "13 Aug 2026",
+        "title": "SIP ONE / SIP-1 Slowbar สกลนคร (Verified 5 Oct 2026 — เคสปิด: ไม่มี delivery)",
+        "summary": "Slow bar \"คาเฟ่ลับ\" หลังประตูเมืองสกลนคร · ดริปมือ + ตีมัทฉะ · FB followers (ตัวเลขล่าสุดยืนยันไม่ได้ — ดูหมายเหตุ) · IG @sip1_slowbar ยัง active (โพสต์ต่อเนื่องถึง ส.ค. 2026) · โปรทุกวันที่ 11 (ฟรี 3 แก้วแรก + ลด 11฿ ทั้งวัน เฉพาะหน้าร้าน) — ยังไม่พบสัญญาณยกเลิก · อยู่ในเครือข่าย specialty ไทย (SCATH) · ยังไม่มีรีวิวสาธารณะเลย (0 รีวิว) · ✅ สรุปแล้ว: ไม่มี LINE MAN delivery (3 รอบเช็คต่อเนื่องยืนยันไม่พบ + ไม่มีชื่อบน Wongnai เลย)",
+        "updated": "5 Oct 2026",
         "source_url": "https://web.facebook.com/profile.php?id=61553979445148",
         "thumbnail_url": "",
         "tags": ["สกลนคร", "Local", "Independent", "Slow bar", "Specialty", "Hidden café", "Community"],
         "relevance": "high",
-        "detail": "SIP ONE (SIP-1 Slowbar)\n\nที่อยู่: 149 ถนนมรรคาลัย เมืองสกลนคร 47000\nจุดสังเกต: หลังประตูเมืองสกลนคร หัวมุม รร.เทศบาล 3\nโทร: 061 114 2206\n\nเวลาเปิด: ⚠️ ข้อมูลขัดกัน — Facebook ตั้งไว้ \"เปิดตลอดเวลา\" แต่โพสต์รีวิว (ก.ค. 2567) ระบุ ทุกวัน 08:00-18:00 น. (ควรยืนยันอีกครั้ง)\n\nConcept: Slow bar — ดริปมือทีละแก้ว + ตีมัทฉะสด เน้นงานคราฟท์\nสโลแกน: #IJLTR · \"#ร้านกาแฟที่แคร์คุณ\" · \"มาพูดมาคุยกันได้ครับ สบายๆ อบอุ่นๆ\"\nแฮชแท็กประจำ: #sip1slowbar #สงบสุขคือเก่า #ร้านกาแฟสกลนคร\n\nจุดยืน: \"คาเฟ่ลับ\" — เจ้าของโพสต์เองว่า \"ขี่ผ่านกี่รอบก็มองไม่เห็น\" ใช้ความลับเป็นเสน่ห์ (คล้ายจุมพฏ) · เน้นความสัมพันธ์/พูดคุยกับลูกค้ามากกว่ายอดขาย\n\nSocial:\n• Facebook: SIP ONE — ยังโพสต์อยู่, ยืนยันตัวเลข followers รอบนี้ไม่ได้แน่ชัด (FB บล็อกการเข้าถึงแบบไม่ล็อกอิน) — ครั้งก่อน (ก.ค. 2026) นับได้ 456 คน\n• Instagram: @sip1_slowbar — ยัง active ต่อเนื่องถึง ส.ค. 2026 (bio ยังใช้ #IJLTR) แต่ตัวเลข followers อ่านได้ไม่นิ่ง (90-133 ตามแหล่งที่ดึง) เพราะบัญชีขนาดเล็กและเครื่องมือ scrape เข้าไม่เสถียร\n• Facebook rating: ยังไม่มีคะแนน (0 รีวิว) · ไม่พบบน Wongnai / Google / Tripadvisor เลย (เหมือนเดิม)\n\nกิจกรรมเด่น: #ซิบวันสัญจร — ยกร้านไปออกบูธร่วมกับร้านอื่น (เช่น มิตรไทย coffee x อีบ้านนอกแลนด์ ก.พ. 2568) ดริปกาแฟ + ตีมัทฉะให้ลูกค้าร้านพันธมิตร = ขยายฐานลูกค้าแบบ collab ต้นทุนต่ำ\n\nเครือข่าย: ติดตาม/แชร์ SCATH (Specialty Coffee Association of Thailand) · โพสต์ \"ปักหมุดจุดชิมกาแฟพิเศษไทย 2026\" = อยู่ในวงการ specialty ไทยจริง\n\nรีเช็ค ส.ค. 2026: ค้นหาซ้ำแล้วไม่พบข้อมูลใหม่ที่ยืนยันได้เรื่องโปรโมชัน/ราคา/เดลิเวอรี — ไม่มีหลักฐานว่าเปลี่ยนแปลงจากรอบก่อน (22 ก.ค.) ธุรกิจขนาดเล็กแบบนี้มีข้อมูลสาธารณะจำกัด แนะนำเช็คหน้าร้าน/โทรสอบถามถ้าต้องการข้อมูลแม่นยำกว่านี้\n\nช่องว่างสำหรับเรา:\n• ฐานผู้ติดตามเล็ก (หลักร้อย) — แซงได้ด้วย content สม่ำเสมอกว่า\n• ไม่มีรีวิวสาธารณะเลย — ลูกค้าใหม่ตัดสินใจยาก\n• ไม่พบช่องทางเดลิเวอรี — ตลาด delivery ยังว่าง\n• ไม่โชว์เมนู/ราคาออนไลน์ — ต้องมาถึงร้านถึงรู้ราคา",
+        "detail": "SIP ONE (SIP-1 Slowbar)\n\nที่อยู่: 149 ถนนมรรคาลัย เมืองสกลนคร 47000\nจุดสังเกต: หลังประตูเมืองสกลนคร หัวมุม รร.เทศบาล 3\nโทร: 061 114 2206\n\nเวลาเปิด: ⚠️ ข้อมูลขัดกัน — Facebook ตั้งไว้ \"เปิดตลอดเวลา\" แต่โพสต์รีวิว (ก.ค. 2567) ระบุ ทุกวัน 08:00-18:00 น. (ควรยืนยันอีกครั้ง)\n\nConcept: Slow bar — ดริปมือทีละแก้ว + ตีมัทฉะสด เน้นงานคราฟท์\nสโลแกน: #IJLTR · \"#ร้านกาแฟที่แคร์คุณ\" · \"มาพูดมาคุยกันได้ครับ สบายๆ อบอุ่นๆ\"\nแฮชแท็กประจำ: #sip1slowbar #สงบสุขคือเก่า #ร้านกาแฟสกลนคร\n\nจุดยืน: \"คาเฟ่ลับ\" — เจ้าของโพสต์เองว่า \"ขี่ผ่านกี่รอบก็มองไม่เห็น\" ใช้ความลับเป็นเสน่ห์ (คล้ายจุมพฏ) · เน้นความสัมพันธ์/พูดคุยกับลูกค้ามากกว่ายอดขาย\n\nSocial:\n• Facebook: SIP ONE — ยังโพสต์อยู่, ยืนยันตัวเลข followers รอบนี้ไม่ได้แน่ชัด (FB บล็อกการเข้าถึงแบบไม่ล็อกอิน) — ครั้งก่อน (ก.ค. 2026) นับได้ 456 คน\n• Instagram: @sip1_slowbar — ยัง active ต่อเนื่องถึง ส.ค. 2026 (bio ยังใช้ #IJLTR) แต่ตัวเลข followers อ่านได้ไม่นิ่ง (90-133 ตามแหล่งที่ดึง) เพราะบัญชีขนาดเล็กและเครื่องมือ scrape เข้าไม่เสถียร\n• Facebook rating: ยังไม่มีคะแนน (0 รีวิว) · ไม่พบบน Wongnai / Google / Tripadvisor เลย (เหมือนเดิม)\n\nกิจกรรมเด่น: #ซิบวันสัญจร — ยกร้านไปออกบูธร่วมกับร้านอื่น (เช่น มิตรไทย coffee x อีบ้านนอกแลนด์ ก.พ. 2568) ดริปกาแฟ + ตีมัทฉะให้ลูกค้าร้านพันธมิตร = ขยายฐานลูกค้าแบบ collab ต้นทุนต่ำ\n\nเครือข่าย: ติดตาม/แชร์ SCATH (Specialty Coffee Association of Thailand) · โพสต์ \"ปักหมุดจุดชิมกาแฟพิเศษไทย 2026\" = อยู่ในวงการ specialty ไทยจริง\n\nรีเช็ค ส.ค. 2026: ค้นหาซ้ำแล้วไม่พบข้อมูลใหม่ที่ยืนยันได้เรื่องโปรโมชัน/ราคา/เดลิเวอรี — ไม่มีหลักฐานว่าเปลี่ยนแปลงจากรอบก่อน (22 ก.ค.) ธุรกิจขนาดเล็กแบบนี้มีข้อมูลสาธารณะจำกัด แนะนำเช็คหน้าร้าน/โทรสอบถามถ้าต้องการข้อมูลแม่นยำกว่านี้\n\n✅ ปิดเคส 5 ต.ค. 2026: ค้นหาตรงใน site:wongnai.com ด้วยชื่อร้าน + ที่อยู่ (149 ถ.มรรคาลัย) ไม่พบ listing ของ SIP ONE เลยแม้แต่รายการเดียว — นี่คือรอบที่ 3 ติดต่อกัน (13 ส.ค. / 19 ส.ค. / 5 ต.ค. 2026) ที่ยืนยัน LINE MAN ไม่ได้ สรุปว่าข้อมูล 22 ก.ค. 2026 (ที่เคยพบผ่าน Wongnai amenities) น่าจะคลาดเคลื่อนหรือร้านถอด listing ออกไปแล้วถาวร — ปรับสถานะ delivery เป็น \"ไม่มี\" อย่างเป็นทางการ จนกว่าจะมีหลักฐานใหม่ยืนยันตรงกันข้าม\n\nช่องว่างสำหรับเรา:\n• ฐานผู้ติดตามเล็ก (หลักร้อย) — แซงได้ด้วย content สม่ำเสมอกว่า\n• ไม่มีรีวิวสาธารณะเลย — ลูกค้าใหม่ตัดสินใจยาก\n• ไม่พบช่องทางเดลิเวอรี — ตลาด delivery ยังว่าง\n• ไม่โชว์เมนู/ราคาออนไลน์ — ต้องมาถึงร้านถึงรู้ราคา",
         "pricing": {
             "espresso": {"price": "", "note": "ไม่เปิดเผยออนไลน์"},
             "americano": {"price": "", "note": "ไม่เปิดเผยออนไลน์"},
@@ -461,24 +461,24 @@ INTEL_DATA_FALLBACK = [
         "hours": "⚠️ ขัดกัน: Facebook = \"เปิดตลอดเวลา\" · รีวิว ก.ค. 2567 = ทุกวัน 08:00-18:00",
         "social_trend": {"primary_platform": "Facebook + Instagram", "posting_frequency": "ปานกลาง (IG ยังโพสต์ต่อเนื่องถึง ส.ค. 2026)", "content_style": "Slow bar craft · community/พูดคุย · ออกบูธสัญจร · เกาะกระแส specialty ไทย", "engagement_level": "low-medium (ฐาน followers หลักร้อยคน · reaction หลักหน่วย)"},
         "delivery": {
-            "primary_app": "LINE MAN (ยืนยันครั้งก่อน 22 ก.ค. 2026 — recheck 13 ส.ค. ยืนยันซ้ำไม่ได้)",
-            "apps": ["LINE MAN"],
-            "peak_hours": "จ-พ 08:00-15:30 · ส-อา 08:00-16:00 และ 18:00-23:00 (ช่วงเย็นวันหยุดส่งได้แม้หน้าร้านปิดแล้ว — ตามข้อมูล 22 ก.ค. 2026)",
+            "primary_app": "ไม่มี",
+            "apps": [],
+            "peak_hours": "N/A — ไม่มี delivery",
             "active_promos": [],
-            "notes": "⚠️ ข้อมูลขัดกันระหว่าง 2 รอบเช็ค: รอบ 22 ก.ค. 2026 ยืนยัน LINE MAN ผ่าน amenities บน Wongnai พร้อมช่วงเวลาส่งชัดเจน แต่รอบ 13 ส.ค. 2026 (และรีเช็คซ้ำ 19 ส.ค.) หาไม่เจอ/ยืนยันซ้ำไม่ได้ — อาจเป็นเพราะร้านถอด listing ออก หรือ search engine เข้าถึงไม่ได้เฉยๆ แนะนำเช็คแอป LINE MAN ตรงๆ (พิมพ์ชื่อร้าน) เพื่อยืนยันสถานะปัจจุบัน (รวม 2 เอนทรีที่เคยซ้ำกัน — competitor-sip1 กับ competitor-sipone — เป็นรายการเดียว 19 ส.ค. 2026)"
+            "notes": "✅ ปิดเคส 5 ต.ค. 2026: รีเช็ค 3 รอบต่อเนื่อง (13 ส.ค. / 19 ส.ค. / 5 ต.ค. 2026) ยืนยัน LINE MAN ไม่ได้เลย และค้นหาตรงใน site:wongnai.com ด้วยชื่อร้าน+ที่อยู่ก็ไม่พบ listing เลยแม้แต่รายการเดียว — สรุปว่าข้อมูล 22 ก.ค. 2026 (ที่เคยพบผ่าน Wongnai amenities) คลาดเคลื่อนหรือร้านถอด listing ออกไปแล้วถาวร ปรับเป็น \"ไม่มี delivery\" อย่างเป็นทางการ (รวม 2 เอนทรีที่เคยซ้ำกัน — competitor-sip1 กับ competitor-sipone — เป็นรายการเดียวตั้งแต่ 19 ส.ค. 2026)"
         }
     },
     {
         "id": "competitor-sniff",
         "category": "competitor",
-        "title": "SNIFF specialty coffee สกลนคร (Verified 22 May 2026)",
-        "summary": "ใหญ่ที่สุดใน local specialty สกลนคร · FB 6,800 followers · 2 สาขา (สาขาหลัก + SNIFF Roastery บายพาส) · In-house roasting · LINE MAN delivery ✅ · Wongnai 4.1/5 (28 reviews) สูงสุดกลุ่ม · Instagram อ่อน (448 followers) · TikTok official ยังไม่มี",
-        "updated": "22 May 2026",
+        "title": "SNIFF specialty coffee สกลนคร (Re-verified 5 Oct 2026)",
+        "summary": "ใหญ่ที่สุดใน local specialty สกลนคร · ได้รางวัล LINE MAN Wongnai Users' Choice Best of 2026 (พบใหม่ 5 ต.ค. 2026) · FB 6,800 followers · 2 สาขา (สาขาหลัก + SNIFF Roastery บายพาส) · In-house roasting · LINE MAN delivery ✅ · Wongnai 4.1/5 (28 reviews) สูงสุดกลุ่ม · Instagram อ่อน (448 followers) · TikTok official ยังไม่มี",
+        "updated": "5 Oct 2026",
         "source_url": "https://www.facebook.com/SNIFFspecialtycoffee",
         "thumbnail_url": "",
         "tags": ["สกลนคร", "Local", "Independent", "Specialty", "Roastery", "Multi-branch", "Blue-aesthetic"],
         "relevance": "high",
-        "detail": "SNIFF specialty coffee (สนิฟ สเปเชียลตี้ คอฟฟี่)\nสาขาหลัก: 1748/25-26 ถ.ต.พัฒนา ต.ธาตุเชิงชุม อ.เมืองสกลนคร (ใกล้โรงเรียนเปลี่ยนชัย แยก 4 นาฬิกา)\nSNIFF Roastery: 985 ตำบลดงมะไฟ อ.เมืองสกลนคร (บายพาส — สาขาใหม่ ใหญ่กว่า)\nโทร: 096-946-4792 / 088-736-8446\nเวลา: สาขาหลัก ทุกวัน 07:30-19:00 | Roastery จ-ศ 07:30-19:00, เสาร์-อาทิตย์ 10:00-19:00\n\nConcept: In-house Roastery + Specialty Coffee — ย่างเมล็ดเอง, single-origin หลากหลาย (light-dark roast)\nSpecialty bean surcharge: +10฿ — signal คุณภาพที่ชัดเจน\n\nSocial Media (verified):\n• Facebook: SNIFFspecialtycoffee · 6,800 followers · 100% recommend (50 reviews) — ใหญ่ที่สุดใน local specialty สกลนคร\n• Instagram: @sniffspecialtycoffee · 448 followers (อ่อนมาก ไม่สัมพันธ์กับขนาดร้าน)\n• TikTok: ไม่มี official account — แต่ visitor content มีอยู่\n• Wongnai: 4.1/5 (35 ratings, 28 reviews) · WongnaiSpecialist + CoffeeSpecialist badge\n• TripAdvisor: Listed, 0 reviews\n\nบรรยากาศ: ผนังสีน้ำเงิน + ivy plants + pendant lights + artwork · Counter bar ชมบาริสต้าได้ · Indoor + Outdoor · 11-40 ที่นั่ง\nRoastery สาขาใหม่: ใหญ่กว่า มีสไตล์ บรรยากาศดี ถ่ายรูปสวย\n\nExtra: ขายเมล็ดกาแฟ retail · Pet-friendly · Wi-Fi · Credit card · Parking\n\nช่องว่างสำหรับคู่แข่ง:\n• TikTok official ยังไม่มี — blind spot ใหญ่ reach คนรุ่นใหม่\n• Instagram อ่อน (448 followers) ทั้งที่ร้านใหญ่ที่สุดในกลุ่ม\n• TripAdvisor 0 reviews — เสีย SEO นักท่องเที่ยวต่างชาติ",
+        "detail": "SNIFF specialty coffee (สนิฟ สเปเชียลตี้ คอฟฟี่)\nสาขาหลัก: 1748/25-26 ถ.ต.พัฒนา ต.ธาตุเชิงชุม อ.เมืองสกลนคร (ใกล้โรงเรียนเปลี่ยนชัย แยก 4 นาฬิกา)\nSNIFF Roastery: 985 ตำบลดงมะไฟ อ.เมืองสกลนคร (บายพาส — สาขาใหม่ ใหญ่กว่า)\nโทร: 096-946-4792 / 088-736-8446\nเวลา: สาขาหลัก ทุกวัน 07:30-19:00 | Roastery จ-ศ 07:30-19:00, เสาร์-อาทิตย์ 10:00-19:00\n\nConcept: In-house Roastery + Specialty Coffee — ย่างเมล็ดเอง, single-origin หลากหลาย (light-dark roast)\nSpecialty bean surcharge: +10฿ — signal คุณภาพที่ชัดเจน\n\nSocial Media (verified):\n• Facebook: SNIFFspecialtycoffee · 6,800 followers · 100% recommend (50 reviews) — ใหญ่ที่สุดใน local specialty สกลนคร\n• Instagram: @sniffspecialtycoffee · 448 followers (อ่อนมาก ไม่สัมพันธ์กับขนาดร้าน)\n• TikTok: ไม่มี official account — แต่ visitor content มีอยู่\n• Wongnai: 4.1/5 (35 ratings, 28 reviews) · WongnaiSpecialist + CoffeeSpecialist badge\n• TripAdvisor: Listed, 0 reviews\n\nบรรยากาศ: ผนังสีน้ำเงิน + ivy plants + pendant lights + artwork · Counter bar ชมบาริสต้าได้ · Indoor + Outdoor · 11-40 ที่นั่ง\nRoastery สาขาใหม่: ใหญ่กว่า มีสไตล์ บรรยากาศดี ถ่ายรูปสวย\n\nExtra: ขายเมล็ดกาแฟ retail · Pet-friendly · Wi-Fi · Credit card · Parking\n\nช่องว่างสำหรับคู่แข่ง:\n• TikTok official ยังไม่มี — blind spot ใหญ่ reach คนรุ่นใหม่\n• Instagram อ่อน (448 followers) ทั้งที่ร้านใหญ่ที่สุดในกลุ่ม\n• TripAdvisor 0 reviews — เสีย SEO นักท่องเที่ยวต่างชาติ\n\n🏆 พบใหม่ 5 ต.ค. 2026: ติดรางวัล \"LINE MAN Wongnai Users' Choice Best of 2026\" (rating 4.1 ตรงกับที่บันทึกไว้) — ยืนยันว่าเป็นร้าน specialty ที่แข็งแรงที่สุดในกลุ่มต่อเนื่อง ใช้เป็น social proof ได้",
         "pricing": {
             "espresso": {"price": "75", "note": ""},
             "americano": {"price": "75", "note": "+10฿ specialty bean surcharge"},
@@ -1373,38 +1373,45 @@ INTEL_DATA_FALLBACK = [
     {
         "id": "competitor-thehousecafe",
         "category": "competitor",
-        "title": "The House Cafe สกลนคร (Verified 11 Aug 2026)",
-        "summary": "ร้านกาแฟ+อาหาร+บิงซู+เบียร์เย็น ตรงข้ามธนาคารออมสิน · ราคาต่อคน &lt;100฿ (ถูกกว่ากลุ่มคาเฟ่ถ่ายรูป) · เมนูขายดี ลาเต้เย็น/คาปูชิโน่เย็น · เปิด 10:30-22:30 (ปิดอาทิตย์) · ไม่พบหลักฐานว่า active บน TikTok",
-        "updated": "11 Aug 2026",
+        "title": "The House Cafe สกลนคร (Updated 5 Oct 2026)",
+        "summary": "ร้านกาแฟ+อาหาร+บิงซู+เบียร์เย็น · ราคาต่อคน &lt;100฿ (ถูกกว่ากลุ่มคาเฟ่ถ่ายรูป) · พบราคาเมนูจริงแล้ว (5 ต.ค. 2026): Americano 65฿ ฯลฯ · เปิด 10:30-22:30 (ปิดอาทิตย์) · ✅ มี LINE MAN delivery (ยืนยันใหม่ 5 ต.ค. 2026) · ไม่พบหลักฐานว่า active บน TikTok",
+        "updated": "5 Oct 2026",
         "source_url": "https://www.facebook.com/thehousecafebar/", "thumbnail_url": "",
         "tags": ["สกลนคร", "Local", "Independent", "ราคาประหยัด", "Facebook"],
         "relevance": "medium",
-        "detail": "The House Cafe — ตรงข้ามธนาคารออมสิน จ.สกลนคร\nเปิด 10:30-22:30 ทุกวัน ยกเว้นวันอาทิตย์\n\nเมนู: กาแฟ, ชา, บิงซู, อาหาร, เบียร์เย็น — ครบวงจรกว่าคาเฟ่ทั่วไป ขยายฐานลูกค้านอกช่วงเวลากาแฟ (เย็น/มื้อค่ำ)\nราคาต่อคนโดยรวม &lt;100 บาท ถูกกว่ากลุ่มคาเฟ่ถ่ายรูปอย่าง Raintree/Kraam House อย่างชัดเจน\n\nSocial: มีเพจ Facebook แต่ไม่พบหลักฐานว่า active บน TikTok หรือ Instagram — น่าจะพึ่งพา foot traffic/word-of-mouth มากกว่า social content\n\nไม่พบราคาเมนูรายตัวที่ชัดเจนจากแหล่งที่ค้นได้ (มีแค่ราคาเฉลี่ยต่อคน)",
+        "detail": "The House Cafe — จ.สกลนคร (ที่ตั้งอธิบายไม่ตรงกันระหว่างแหล่งข้อมูล: บันทึกเดิม 11 ส.ค. 2026 ระบุ \"ตรงข้ามธนาคารออมสิน\" ส่วนผลค้นหา 5 ต.ค. 2026 ระบุ \"ตรงข้ามธนาคารกรุงไทย\" — ยังไม่ยืนยันได้ว่าอันไหนถูก ควร field visit)\nเปิด 10:30-22:30 ทุกวัน ยกเว้นวันอาทิตย์\n\nเมนู: กาแฟ, ชา, บิงซู, อาหาร, เบียร์เย็น — ครบวงจรกว่าคาเฟ่ทั่วไป ขยายฐานลูกค้านอกช่วงเวลากาแฟ (เย็น/มื้อค่ำ)\nราคาต่อคนโดยรวม &lt;100 บาท ถูกกว่ากลุ่มคาเฟ่ถ่ายรูปอย่าง Raintree/Kraam House อย่างชัดเจน\n\nพบราคาเมนูจริงแล้ว (5 ต.ค. 2026): Americano 65฿ · โกโก้เย็น 70฿ · นมสตรอว์เบอร์รี่สด 70฿ · มะพร้าวสดเย็น 75฿ · โซดาเสาวรส 55฿\n\nDelivery: ✅ พบหลักฐานว่ามี LINE MAN (5 ต.ค. 2026) — ก่อนหน้านี้ไม่มีข้อมูล delivery เลย\n\nSocial: มีเพจ Facebook แต่ไม่พบหลักฐานว่า active บน TikTok หรือ Instagram — น่าจะพึ่งพา foot traffic/word-of-mouth มากกว่า social content",
         "pricing": {
-            "espresso":{"price":"","note":""},"americano":{"price":"","note":""},
+            "espresso":{"price":"","note":""},"americano":{"price":"65","note":"พบราคาจริง 5 ต.ค. 2026"},
             "latte":{"price":"","note":"เมนูยอดนิยม (ลาเต้เย็น) แต่ไม่พบราคาตัวเลข"},
             "cappuccino":{"price":"","note":"เมนูยอดนิยม (คาปูชิโน่เย็น) แต่ไม่พบราคาตัวเลข"},
             "cold_brew":{"price":"","note":""},"frappe":{"price":"","note":""},
             "matcha":{"price":"","note":""},"signature_drink":{"price":"","note":""},
             "food":{"price":"","note":"มีอาหาร+บิงซู+เบียร์เย็น แต่ไม่พบราคา"},
-            "other": [{"name":"เฉลี่ย/คน","price":"<100"}]
+            "other": [{"name":"เฉลี่ย/คน","price":"<100"},{"name":"โกโก้เย็น","price":"70"},{"name":"นมสตรอว์เบอร์รี่สด","price":"70"},{"name":"มะพร้าวสดเย็น","price":"75"},{"name":"โซดาเสาวรส","price":"55"}]
         },
-        "strengths": ["ราคาย่อมเยากว่าคาเฟ่ถ่ายรูป", "เมนูครบ อาหาร+บิงซู+เบียร์ ขยายฐานลูกค้านอกเวลากาแฟ", "เปิดยาวถึง 22:30"],
+        "strengths": ["ราคาย่อมเยากว่าคาเฟ่ถ่ายรูป", "เมนูครบ อาหาร+บิงซู+เบียร์ ขยายฐานลูกค้านอกเวลากาแฟ", "เปิดยาวถึง 22:30", "มี LINE MAN delivery"],
         "promotions": [],
-        "weaknesses": ["ไม่พบหลักฐาน active บน TikTok/Instagram", "ราคาเมนูไม่โปร่งใสออนไลน์", "ปิดวันอาทิตย์"],
-        "location": "ตรงข้ามธนาคารออมสิน จ.สกลนคร", "hours": "10:30-22:30 (ปิดวันอาทิตย์)",
-        "social_trend": {"primary_platform":"Facebook","posting_frequency":"ไม่ทราบ","content_style":"ไม่ทราบ","engagement_level":"ไม่ทราบ"}
+        "weaknesses": ["ไม่พบหลักฐาน active บน TikTok/Instagram", "ราคาเมนูกาแฟหลักยังไม่โปร่งใสออนไลน์ครบ", "ปิดวันอาทิตย์", "ที่ตั้งยังขัดกันระหว่างแหล่งข้อมูล — ต้อง field visit ยืนยัน"],
+        "location": "จ.สกลนคร (ที่ตั้งขัดกัน: ออมสิน vs กรุงไทย — ดูหมายเหตุ)", "hours": "10:30-22:30 (ปิดวันอาทิตย์)",
+        "social_trend": {"primary_platform":"Facebook","posting_frequency":"ไม่ทราบ","content_style":"ไม่ทราบ","engagement_level":"ไม่ทราบ"},
+        "delivery": {
+            "primary_app": "LINE MAN",
+            "apps": ["LINE MAN"],
+            "peak_hours": "ยังไม่มีข้อมูล",
+            "active_promos": [],
+            "notes": "✅ ยืนยันใหม่ 5 ต.ค. 2026 ว่ามี LINE MAN — ไม่พบ GrabFood/ShopeeFood"
+        }
     },
     {
         "id": "competitor-kraamhouse",
         "category": "competitor",
-        "title": "Kraam House Cafe ครามเฮ้าส์คาเฟ่ สกลนคร (Verified 11 Aug 2026)",
-        "summary": "คาเฟ่โทนสีขาว-คราม สื่ออัตลักษณ์ท้องถิ่น มินิมอล มีสวนในร่ม+กลางแจ้ง ถ.เจริญเมือง เปิด 07:00-19:30 (ปิดพุธ) · มีระบบสมาชิกสะสมแต้ม+ครัวซองต์อบสด · Instagram @kraamhouse ยังไม่พบ TikTok",
-        "updated": "11 Aug 2026",
+        "title": "Kraam House Cafe ครามเฮ้าส์คาเฟ่ สกลนคร (Updated 5 Oct 2026)",
+        "summary": "คาเฟ่โทนสีขาว-คราม สื่ออัตลักษณ์ท้องถิ่น มินิมอล มีสวนในร่ม+กลางแจ้ง ถ.เจริญเมือง เปิด 07:00-19:30 (ปิดพุธ) · มีระบบสมาชิกสะสมแต้ม+ครัวซองต์อบสด · ✅ มี LINE MAN ผ่าน Wongnai ค่าส่งเริ่ม 0฿ (ยืนยันใหม่ 5 ต.ค. 2026) · Instagram @kraamhouse ยังไม่พบ TikTok",
+        "updated": "5 Oct 2026",
         "source_url": "https://www.facebook.com/p/Kraam-House-Cafe-61557766514967/", "thumbnail_url": "",
         "tags": ["สกลนคร", "Local", "Independent", "อัตลักษณ์ท้องถิ่น", "โทนสีคราม", "Bakery"],
         "relevance": "medium",
-        "detail": "Kraam House Cafe (ครามเฮ้าส์คาเฟ่) — 643/1 ถ.เจริญเมือง ต.ธาตุเชิงชุม อ.เมือง จ.สกลนคร 47000 (ตรงข้ามร้านข้าวมันไก่เที่ยงคืน)\nเปิด 07:00-19:30 ทุกวัน ยกเว้นวันพุธ\n\nConcept: โทนสีขาว-คราม สื่ออัตลักษณ์ท้องถิ่น (ผ้าคราม) ตกแต่งมินิมอล มีสวนทั้งในร่มและกลางแจ้ง — แยกตัวชัดเจนจากคาเฟ่ nature-concept อย่าง Raintree\n\nเมนู: กาแฟ, มัทฉะ, โซดาผลไม้สด, ครัวซองต์อบสด, เค้กโฮมเมด และของหวานหลากหลาย\nบริการ: ระบบสมาชิกสะสมแต้ม, Wi-Fi ฟรี, รับ QR payment\n\nSocial: Instagram @kraamhouse — ยังไม่พบหลักฐานว่า active บน TikTok\nไม่พบราคาเมนูที่ชัดเจน (หน้าเมนู Wongnai เข้าไม่ได้ 403)",
+        "detail": "Kraam House Cafe (ครามเฮ้าส์คาเฟ่) — 643/1 ถ.เจริญเมือง ต.ธาตุเชิงชุม อ.เมือง จ.สกลนคร 47000 (ตรงข้ามร้านข้าวมันไก่เที่ยงคืน)\nเปิด 07:00-19:30 ทุกวัน ยกเว้นวันพุธ\n\nConcept: โทนสีขาว-คราม สื่ออัตลักษณ์ท้องถิ่น (ผ้าคราม) ตกแต่งมินิมอล มีสวนทั้งในร่มและกลางแจ้ง — แยกตัวชัดเจนจากคาเฟ่ nature-concept อย่าง Raintree\n\nเมนู: กาแฟ, มัทฉะ, โซดาผลไม้สด, ครัวซองต์อบสด, เค้กโฮมเมด และของหวานหลากหลาย\nบริการ: ระบบสมาชิกสะสมแต้ม, Wi-Fi ฟรี, รับ QR payment\n\nDelivery: ✅ ยืนยันใหม่ 5 ต.ค. 2026 — มี LINE MAN ผ่าน Wongnai listing ค่าส่งเริ่ม 0฿ ในพื้นที่บริการ (ก่อนหน้านี้ไม่มีข้อมูล delivery เลย)\n\nSocial: Instagram @kraamhouse — ยังไม่พบหลักฐานว่า active บน TikTok\nไม่พบราคาเมนูที่ชัดเจน (หน้าเมนู Wongnai เข้าไม่ได้ 403)",
         "pricing": {
             "espresso":{"price":"","note":""},"americano":{"price":"","note":""},
             "latte":{"price":"","note":""},"cappuccino":{"price":"","note":""},
@@ -1413,11 +1420,18 @@ INTEL_DATA_FALLBACK = [
             "food":{"price":"","note":"ครัวซองต์อบสด+เค้กโฮมเมด แต่ไม่พบราคา"},
             "other": []
         },
-        "strengths": ["ธีมสีคราม+อัตลักษณ์ท้องถิ่นชัดเจน แยกตัวจากคาเฟ่ทั่วไป", "เบเกอรี่อบสดในร้าน", "มีระบบสมาชิกสะสมแต้ม", "เปิดเช้าสุด 07:00"],
+        "strengths": ["ธีมสีคราม+อัตลักษณ์ท้องถิ่นชัดเจน แยกตัวจากคาเฟ่ทั่วไป", "เบเกอรี่อบสดในร้าน", "มีระบบสมาชิกสะสมแต้ม", "เปิดเช้าสุด 07:00", "มี LINE MAN delivery ค่าส่งเริ่ม 0฿"],
         "promotions": [],
         "weaknesses": ["ไม่พบหลักฐาน active บน TikTok", "ราคาเมนูไม่โปร่งใสออนไลน์ (Wongnai เข้าไม่ได้)", "ปิดวันพุธ"],
         "location": "643/1 ถ.เจริญเมือง ต.ธาตุเชิงชุม อ.เมือง จ.สกลนคร 47000", "hours": "07:00-19:30 (ปิดวันพุธ)",
-        "social_trend": {"primary_platform":"Instagram","posting_frequency":"ไม่ทราบ","content_style":"ภาพบรรยากาศร้าน/เบเกอรี่","engagement_level":"ไม่ทราบ"}
+        "social_trend": {"primary_platform":"Instagram","posting_frequency":"ไม่ทราบ","content_style":"ภาพบรรยากาศร้าน/เบเกอรี่","engagement_level":"ไม่ทราบ"},
+        "delivery": {
+            "primary_app": "LINE MAN",
+            "apps": ["LINE MAN", "Wongnai Delivery"],
+            "peak_hours": "ยังไม่มีข้อมูล",
+            "active_promos": ["ค่าส่งเริ่ม 0฿ ในพื้นที่บริการ"],
+            "notes": "✅ ยืนยันใหม่ 5 ต.ค. 2026 ผ่าน Wongnai listing — ไม่พบ GrabFood/ShopeeFood"
+        }
     },
     {
         "id": "delivery-apps-overview",

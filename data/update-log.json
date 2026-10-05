@@ -1246,6 +1246,21 @@
         "ขึ้นเล็กน้อย: นมข้นหวาน 23.63->23.65 บาท/กระป๋อง | ลดราคา: ชาตรามือแดง 80->75 (-6%), ชาตรามือเขียว 80->75 (-6%), พีชไซรัป(LongBeach) 139->133 (-4%)"
       ],
       "count": 18
+    },
+    {
+      "id": "20261005-131300",
+      "ts": "2026-10-05T13:13:00",
+      "date_th": "5 ต.ค. 2569",
+      "time_th": "13:13",
+      "category": "intel",
+      "scope": "วิเคราะห์เชิงลึก 6 มิติ",
+      "action": "research",
+      "summary": "วิเคราะห์คู่แข่งเชิงลึก 31 ร้าน (6 มิติ) — deep-dive 5 ร้าน + ยืนยันสถานะ 23 ร้าน",
+      "details": [
+        "คู่แข่งเปลี่ยนแปลงมากสุด: SIP ONE (ปิดเคสข้อมูลขัดกัน delivery->ไม่มี), The House Cafe + Kraam House Cafe (เติม LINE MAN delivery ที่ขาดหาย)",
+        "delivery: The House Cafe และ Kraam House Cafe พบ LINE MAN ใหม่ · SIP ONE ยืนยันไม่มี delivery 3 รอบต่อเนื่อง · SNIFF ได้รางวัล LINE MAN Wongnai Users' Choice Best of 2026"
+      ],
+      "count": 31
     }
   ]
 }
